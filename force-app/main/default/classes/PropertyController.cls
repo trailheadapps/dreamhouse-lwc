@@ -42,8 +42,6 @@ public with sharing class PropertyController {
     @AuraEnabled(cacheable=true)
     public static List<ContentVersion> getPictures (Id propertyId) {
 
-        System.debug('***' + propertyId);
-
         List<ContentDocumentLink> links = [SELECT Id, LinkedEntityId, ContentDocumentId FROM ContentDocumentLink 
                                            WHERE LinkedEntityId=:propertyId AND ContentDocument.FileType in ('PNG','JPG','GIF')];
 
