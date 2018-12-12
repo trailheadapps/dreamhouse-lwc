@@ -1,0 +1,16 @@
+.THIS {
+    min-height: 226px;
+}
+
+.THIS .property-pic,
+.THIS .broker-pic {
+    height: 70px;
+    width: 70px;
+    border-radius: 4px;
+    border: none;
+}
+
+.THIS .placeholder {
+    text-align: center;
+    margin-top: 60px;
+}

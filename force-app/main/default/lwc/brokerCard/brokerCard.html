@@ -1,0 +1,15 @@
+<template>
+
+    <lightning-card title="Broker" icon-name="standard:contact">
+        <template if:true={property.data}>
+            <lightning-button-icon icon-name="utility:expand_alt" slot="actions" onclick={handleNavigateToRecord}></lightning-button-icon>
+            <div class="slds-m-around_medium">
+                <lightning-record-form object-api-name="Broker__c" record-id={brokerId} fields={brokerFields} columns="2"></lightning-record-form>
+            </div>
+        </template>
+        <template if:true={property.error}>
+            <c-inline-message message="Error retrieving data" errors={property.error}></c-inline-message>
+        </template>
+    </lightning-card>
+
+</template>

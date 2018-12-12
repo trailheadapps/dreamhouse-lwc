@@ -1,0 +1,28 @@
+<template>
+
+    <div class="slds-card slds-p-around_small">
+        <template if:true={daysOnMarket}>
+            <div class="content">
+                <div class={badgeClass}>
+                    <div class="days">{daysOnMarket}</div>days on
+                    <br/>the market
+                </div>
+                <div class="chart">
+                    <div class={chartClass} style={chartStyle}></div>
+                    <div class="axis">
+                        <div><div class="legend"><lightning-formatted-date-time value={dateListed}></lightning-formatted-date-time></div></div>
+                        <div><div class="legend">30 days</div></div>
+                        <div><div class="legend">60 days</div></div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template if:false={recordId}>
+            <c-inline-message message="Select a property to see days on the market"></c-inline-message>
+        </template>
+        <template if:true={error}>
+            <c-inline-message variant="error" message="Error retrieving data" errors={property.error}></c-inline-message>
+        </template>
+    </div>
+
+</template>

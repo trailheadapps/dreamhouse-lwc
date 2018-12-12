@@ -1,0 +1,16 @@
+.classpath
+.DS_Store
+.idea
+.project
+.salesforce
+.settings
+.sfdx/
+.tern-project
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+assets/
+!assets/server.key.enc
+node_modules/
+selenium-client-jars/
+test/artifacts/

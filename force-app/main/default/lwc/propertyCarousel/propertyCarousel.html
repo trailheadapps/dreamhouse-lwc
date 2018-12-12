@@ -1,0 +1,27 @@
+<template>
+
+    <lightning-card icon-name="custom:custom38">
+        <template if:true={property.data}>
+            <span slot="title">{address}</span>
+            <div class="slds-m-around_medium">
+                <template if:true={urls}>
+                    <lightning-carousel>
+                        <template for:each={urls} for:item="url">
+                            <lightning-carousel-image key={url} src={url} description={description}></lightning-carousel-image>
+                        </template>
+                    </lightning-carousel>
+                </template>
+                <template if:false={urls}>
+                    <lightning-icon icon-name="utility:photo" size="medium" class="slds-align_absolute-center"></lightning-icon>
+                    <p class="slds-text-color--weak">There are currently no pictures for this property.</p>
+                </template>
+                <lightning-file-upload label="Add picture" multiple accept=".jpg,.png,.gif" record-id={recordId} onuploadfinished={handleUploadFinished}></lightning-file-upload>
+            </div>
+        </template>
+        <template if:true={errors}>
+            <c-inline-message variant="error" message="Error retrieving pictures" errors={errors}></c-inline-message>
+        </template>                
+ 
+    </lightning-card>
+
+</template>

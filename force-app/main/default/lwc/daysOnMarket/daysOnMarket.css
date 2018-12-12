@@ -1,0 +1,101 @@
+.slds-card {
+    padding: 8px;
+}
+
+.content {
+    display: flex;
+}
+
+.chart {
+    flex: 2;
+}
+
+.badge {
+	text-align: center;
+    margin-right: 8px;
+    padding: 8px 12px;
+    border-radius: 0.25rem;
+    border: solid 1px rgb(216, 221, 230);
+} 
+.badge.alert {
+	background-color: #C23934;
+	color: #FFFFFF;
+    border: solid 1px #C23934;
+} 
+
+.badge.normal {
+	background-color: #00716B;
+	color: #FFFFFF;
+    border: solid 1px #00716B;
+} 
+
+.badge.warning {
+	background-color: #F28C00;
+	color: #FFFFFF;
+    border: solid 1px #F28C00;
+} 
+
+.days {
+	font-size: 28px;
+	line-height: 28px;
+	font-weight: 300;
+    margin-right: 12px;
+    margin: 0;
+    padding: 0;
+} 
+
+.chart {
+    position: relative;
+    height: 40px;
+}
+
+.bar {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    height: 32px;
+    width: 0;
+    transition: all .5s ease-in-out;
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 0;
+}
+
+.bar.normal {
+    background-color: #00716B;
+}
+
+.bar.warning {
+    background-color: #F28C00;
+}
+
+.bar.alert {
+    background-color: #C23934;
+}
+
+.axis {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    bottom: 0;
+
+}
+
+.axis > div {
+    height: 34px;
+	flex: 1;
+	border-bottom: solid 1px rgb(216, 221, 230);
+	border-left: solid 1px rgb(216, 221, 230);
+}
+
+.axis .legend {
+    margin-top: 36px;
+}
+
+.placeholder {
+    text-align: center;
+    height: 102px;
+    margin-top: 10px;
+    padding: 20px;
+}

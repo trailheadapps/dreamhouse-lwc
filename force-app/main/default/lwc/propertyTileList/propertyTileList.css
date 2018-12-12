@@ -1,0 +1,10 @@
+.tile-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+c-property-tile {
+    flex: 1;
+    min-width: 220px;
+    margin: 4px;
+}

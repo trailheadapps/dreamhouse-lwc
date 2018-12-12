@@ -1,0 +1,10 @@
+<template>
+
+    <lightning-card title={address} icon-name="custom:custom106">
+        <lightning-map map-markers={markers} zoom-level={zoomLevel}></lightning-map>
+        <template if:true={error}>
+            <c-inline-message variant="error" message="Error retrieving pictures" errors={error}></c-inline-message>
+        </template>                
+    </lightning-card>
+
+</template>

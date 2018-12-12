@@ -1,0 +1,33 @@
+.slds-card {
+    min-height: 150px;
+}
+
+.property-pic {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.label {
+    padding-right: 8px;
+}
+
+.placeholder {
+    text-align: center;
+    height: 150px;
+    margin-top: 150px;
+    padding: 20px;
+}
+
+.broker-pic {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: none;
+    margin-right: 8px;
+}
+
+.broker {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+}
