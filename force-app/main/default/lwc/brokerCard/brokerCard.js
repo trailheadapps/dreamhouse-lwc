@@ -9,7 +9,12 @@ import MOBILE_PHONE_FIELD from '@salesforce/schema/Broker__c.Mobile_Phone__c';
 import EMAIL_FIELD from '@salesforce/schema/Broker__c.Email__c';
 
 const PROPERTY_FIELDS = [BROKER_FIELD];
-const BROKER_FIELDS = [NAME_FIELD, PHONE_FIELD, MOBILE_PHONE_FIELD, EMAIL_FIELD];
+const BROKER_FIELDS = [
+    NAME_FIELD,
+    PHONE_FIELD,
+    MOBILE_PHONE_FIELD,
+    EMAIL_FIELD,
+];
 
 export default class BrokerCard extends NavigationMixin(LightningElement) {
     @api recordId;

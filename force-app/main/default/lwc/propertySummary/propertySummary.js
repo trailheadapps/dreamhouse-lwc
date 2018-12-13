@@ -16,7 +16,10 @@ export default class PropertySummary extends NavigationMixin(LightningElement) {
 
     @wire(CurrentPageReference) pageRef;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [NAME_FIELD, PICTURE_FIELD] })
+    @wire(getRecord, {
+        recordId: '$recordId',
+        fields: [NAME_FIELD, PICTURE_FIELD],
+    })
     property;
 
     get propertyName() {

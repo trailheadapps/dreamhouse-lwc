@@ -8,7 +8,12 @@
  */
 import { LightningElement, api, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
-import { registerListener, unregisterListener, unregisterAllListeners, fireEvent } from 'c/pubsub';
+import {
+    registerListener,
+    unregisterListener,
+    unregisterAllListeners,
+    fireEvent,
+} from 'c/pubsub';
 
 export default class AuraPubsub extends LightningElement {
     @wire(CurrentPageReference) pageRef;
