@@ -16,7 +16,11 @@ export default class PropertyTileList extends LightningElement {
     minBathrooms = 0;
 
     connectedCallback() {
-        registerListener('dreamhouse__filterChange', this.handleFilterChange, this);
+        registerListener(
+            'dreamhouse__filterChange',
+            this.handleFilterChange,
+            this,
+        );
     }
 
     disconnectedCallback() {

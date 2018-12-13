@@ -25,7 +25,9 @@ export default class PropertyCarousel extends LightningElement {
         if (pictures.data) {
             const files = pictures.data;
             if (Array.isArray(files) && files.length) {
-                this.urls = files.map(file => '/sfc/servlet.shepherd/version/download/' + file.Id);
+                this.urls = files.map(
+                    file => '/sfc/servlet.shepherd/version/download/' + file.Id,
+                );
             } else {
                 this.urls = null;
             }
@@ -45,9 +47,13 @@ export default class PropertyCarousel extends LightningElement {
     }
 
     get errors() {
-        if (this.property.error) window.console.log(this.property.error.message);
-        if (this.pictures.error) window.console.log(this.pictures.error.message);
-        const errors = [this.property.error, this.pictures.error].filter(error => error);
+        if (this.property.error)
+            window.console.log(this.property.error.message);
+        if (this.pictures.error)
+            window.console.log(this.pictures.error.message);
+        const errors = [this.property.error, this.pictures.error].filter(
+            error => error,
+        );
         return errors.length ? errors : null;
     }
 

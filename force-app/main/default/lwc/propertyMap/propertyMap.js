@@ -28,7 +28,9 @@ export default class PropertyMap extends LightningElement {
     wiredRecord({ error, data }) {
         if (data) {
             const property = data.fields;
-            this.address = `${property.Address__c.value}, ${property.City__c.value}`;
+            this.address = `${property.Address__c.value}, ${
+                property.City__c.value
+            }`;
             this.markers = [
                 {
                     location: {

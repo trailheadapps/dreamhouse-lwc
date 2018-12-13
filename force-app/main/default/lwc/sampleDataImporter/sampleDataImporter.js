@@ -3,8 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import importSampleData from '@salesforce/apex/SampleDataController.importSampleData';
 
 export default class SampleDataImporter extends LightningElement {
-
-   handleImportSampleData() {
+    handleImportSampleData() {
         importSampleData()
             .then(() => {
                 const evt = new ShowToastEvent({
