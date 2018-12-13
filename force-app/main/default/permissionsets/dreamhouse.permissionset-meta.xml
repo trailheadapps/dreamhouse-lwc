@@ -14,6 +14,11 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Broker__c.Broker_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Broker__c.Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -206,6 +211,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Property__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Settings</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

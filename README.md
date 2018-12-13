@@ -77,9 +77,9 @@ There are two ways to install Dreamhouse:
 
 1. Select **Install for All Users**
 
-1. In App Launcher, type **Import Sample Data** in the search box and click the **Import Sample Data** link. Click the **Import Data** button.
-
 1. In App Launcher, select the Dreamhouse app.
+
+1. Click the **Settings** tab and click the **Import Data** button in the **Sample Data Import** component.
 
 ## Optional Installation Instructions
 

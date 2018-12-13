@@ -26,5 +26,6 @@
     <tabs>Property__c</tabs>
     <tabs>Broker__c</tabs>
     <tabs>standard-File</tabs>
+    <tabs>Settings</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
