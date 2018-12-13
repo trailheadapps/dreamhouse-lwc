@@ -19,10 +19,10 @@ There are two ways to install Dreamhouse:
 
 1. Set up your environment. Follow the steps in the [Quick Start: Lightning Web Components](https://trailhead.salesforce.com/content/learn/projects/quick-start-lightning-web-components/) Trailhead project. The steps include:
 
-    - Sign up for a Spring '19 prerelease org and enable Dev Hub
+    - Sign up for a Spring '19 pre release org and enable Dev Hub
     - Install the pre-release version of the Salesforce CLI
     - Install Visual Studio Code
-    - Install the Visual Studio Code Salesforce extensions, including the LWC extension
+    - Install the Visual Studio Code Salesforce extensions, including the Lighting Web Components extension
 
 1. If you haven't already done so, authenticate with your Spring '19 hub org and provide it with an alias (spring19hub):
 
@@ -37,10 +37,10 @@ There are two ways to install Dreamhouse:
     cd dreamhouse-lwc
     ```
 
-1. Create a scratch org and provide it with an alias (dh):
+1. Create a scratch org and provide it with an alias (dreamhouse):
 
     ```
-    sfdx force:org:create -s -f config/project-scratch-def.json -a dh
+    sfdx force:org:create -s -f config/project-scratch-def.json -a dreamhouse
     ```
 
 1. Push the app to your scratch org:
