@@ -1,8 +1,11 @@
 {
     "orgName": "Dreamhouse",
     "edition": "Developer",
-    "orgPreferences" : {
-        "enabled": ["S1DesktopEnabled"],
-        "disabled": ["S1EncryptedStoragePref2"]
-    }
+    "settings": {
+      "orgPreferenceSettings": {
+          "s1DesktopEnabled": true,
+          "selfSetPasswordInApi": true,
+          "s1EncryptedStoragePref2": false
+      }
+  }
 }
