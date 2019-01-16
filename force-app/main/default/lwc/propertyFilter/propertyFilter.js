@@ -55,7 +55,7 @@ export default class PropertyFilter extends LightningElement {
                 searchKey: this.searchKey,
                 maxPrice: this.maxPrice,
                 minBedrooms: this.minBedrooms,
-                minBathrooms: this.minBathrooms,
+                minBathrooms: this.minBathrooms
             };
             fireEvent(this.pageRef, 'dreamhouse__filterChange', filters);
         }, DELAY);

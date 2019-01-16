@@ -18,7 +18,7 @@ export default class PropertySummary extends NavigationMixin(LightningElement) {
 
     @wire(getRecord, {
         recordId: '$recordId',
-        fields: [NAME_FIELD, PICTURE_FIELD],
+        fields: [NAME_FIELD, PICTURE_FIELD]
     })
     property;
 
@@ -34,7 +34,7 @@ export default class PropertySummary extends NavigationMixin(LightningElement) {
         registerListener(
             'dreamhouse__propertySelected',
             this.handlePropertySelected,
-            this,
+            this
         );
     }
 
@@ -52,8 +52,8 @@ export default class PropertySummary extends NavigationMixin(LightningElement) {
             attributes: {
                 recordId: this.recordId,
                 objectApiName: 'Property__c',
-                actionName: 'view',
-            },
+                actionName: 'view'
+            }
         });
     }
 }

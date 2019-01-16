@@ -19,7 +19,7 @@ export default class PropertyTileList extends LightningElement {
         registerListener(
             'dreamhouse__filterChange',
             this.handleFilterChange,
-            this,
+            this
         );
     }
 
@@ -35,7 +35,7 @@ export default class PropertyTileList extends LightningElement {
         minBedrooms: '$minBedrooms',
         minBathrooms: '$minBathrooms',
         pageSize: '$pageSize',
-        pageNumber: '$pageNumber',
+        pageNumber: '$pageNumber'
     })
     properties;
 
