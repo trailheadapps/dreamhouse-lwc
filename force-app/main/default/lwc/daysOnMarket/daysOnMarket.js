@@ -52,7 +52,7 @@ export default class DaysOnMarket extends LightningElement {
     }
 
     get chartStyle() {
-        const value = (this.daysOnMarket / MAX_DAYS_CHART) * 100;
+        const value = this.daysOnMarket / MAX_DAYS_CHART * 100;
         return 'width:' + value + '%';
     }
 
@@ -60,7 +60,7 @@ export default class DaysOnMarket extends LightningElement {
         registerListener(
             'dreamhouse__propertySelected',
             this.handlePropertySelected,
-            this,
+            this
         );
     }
 

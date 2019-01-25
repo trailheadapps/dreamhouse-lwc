@@ -9,7 +9,7 @@ export default class SampleDataImporter extends LightningElement {
                 const evt = new ShowToastEvent({
                     title: 'Success',
                     message: 'Sample data successfully imported',
-                    variant: 'success',
+                    variant: 'success'
                 });
                 this.dispatchEvent(evt);
             })
@@ -17,7 +17,7 @@ export default class SampleDataImporter extends LightningElement {
                 const evt = new ShowToastEvent({
                     title: 'Error while importing data',
                     message: e.message,
-                    variant: 'error',
+                    variant: 'error'
                 });
                 this.dispatchEvent(evt);
             });

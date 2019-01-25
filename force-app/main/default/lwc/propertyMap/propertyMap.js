@@ -8,7 +8,7 @@ const fields = [
     'Property__c.Address__c',
     'Property__c.City__c',
     'Property__c.Location__Latitude__s',
-    'Property__c.Location__Longitude__s',
+    'Property__c.Location__Longitude__s'
 ];
 
 export default class PropertyMap extends LightningElement {
@@ -35,9 +35,9 @@ export default class PropertyMap extends LightningElement {
                 {
                     location: {
                         Latitude: property.Location__Latitude__s.value,
-                        Longitude: property.Location__Longitude__s.value,
-                    },
-                },
+                        Longitude: property.Location__Longitude__s.value
+                    }
+                }
             ];
         } else if (error) {
             this.error = error;
@@ -48,7 +48,7 @@ export default class PropertyMap extends LightningElement {
         registerListener(
             'dreamhouse__propertySelected',
             this.handlePropertySelected,
-            this,
+            this
         );
     }
 

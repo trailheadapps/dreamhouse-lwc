@@ -13,7 +13,7 @@ const BROKER_FIELDS = [
     NAME_FIELD,
     PHONE_FIELD,
     MOBILE_PHONE_FIELD,
-    EMAIL_FIELD,
+    EMAIL_FIELD
 ];
 
 export default class BrokerCard extends NavigationMixin(LightningElement) {
@@ -34,8 +34,8 @@ export default class BrokerCard extends NavigationMixin(LightningElement) {
             attributes: {
                 recordId: this.brokerId,
                 objectApiName: 'Property__c',
-                actionName: 'view',
-            },
+                actionName: 'view'
+            }
         });
     }
 }

@@ -5,7 +5,7 @@ export default class PropertyTile extends LightningElement {
 
     handlePropertySelected() {
         const selectedEvent = new CustomEvent('selected', {
-            detail: this.property.Id,
+            detail: this.property.Id
         });
         this.dispatchEvent(selectedEvent);
     }
