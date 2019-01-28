@@ -47,10 +47,6 @@ export default class PropertyCarousel extends LightningElement {
     }
 
     get errors() {
-        if (this.property.error)
-            window.console.log(this.property.error.message);
-        if (this.pictures.error)
-            window.console.log(this.pictures.error.message);
         const errors = [this.property.error, this.pictures.error].filter(
             error => error,
         );
