@@ -22,14 +22,17 @@
         var recordId = component.get('v.recordId');
         var editRecordEvent = $A.get('e.force:editRecord');
         editRecordEvent.setParams({
-            recordId: recordId,
+            recordId: recordId
         });
         editRecordEvent.fireEvent();
     },
 
     handleNavigateToBrokerRecord: function(component, event) {
         var navigateEvent = $A.get('e.force:navigateToSObject');
-        navigateEvent.setParams({ recordId: component.get('v.property').Broker__r.Id, slideDevName: 'detail' });
+        navigateEvent.setParams({
+            recordId: component.get('v.property').Broker__r.Id,
+            slideDevName: 'detail'
+        });
         navigateEvent.fireEvent();
-    },
+    }
 });

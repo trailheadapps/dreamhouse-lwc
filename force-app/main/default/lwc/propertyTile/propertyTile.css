@@ -1,5 +1,5 @@
 .tile {
-    position:relative;
+    position: relative;
     height: 220px;
     background-size: cover;
     background-position: center;
@@ -11,13 +11,13 @@
     bottom: 0;
     left: 0;
     right: 0;
-    color: #FFF;
-    background-color: rgba(0, 0, 0, .3);
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
     padding: 6px 8px;
 }
 
 .lower-third > p {
-	padding: 0;
+    padding: 0;
     margin: 0;
 }
 
@@ -34,8 +34,8 @@
 }
 
 .truncate {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

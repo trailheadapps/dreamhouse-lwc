@@ -11,38 +11,38 @@
 }
 
 .badge {
-	text-align: center;
+    text-align: center;
     margin-right: 8px;
     padding: 8px 12px;
     border-radius: 0.25rem;
     border: solid 1px rgb(216, 221, 230);
-} 
+}
 .badge.alert {
-	background-color: #C23934;
-	color: #FFFFFF;
-    border: solid 1px #C23934;
-} 
+    background-color: #c23934;
+    color: #ffffff;
+    border: solid 1px #c23934;
+}
 
 .badge.normal {
-	background-color: #00716B;
-	color: #FFFFFF;
-    border: solid 1px #00716B;
-} 
+    background-color: #00716b;
+    color: #ffffff;
+    border: solid 1px #00716b;
+}
 
 .badge.warning {
-	background-color: #F28C00;
-	color: #FFFFFF;
-    border: solid 1px #F28C00;
-} 
+    background-color: #f28c00;
+    color: #ffffff;
+    border: solid 1px #f28c00;
+}
 
 .days {
-	font-size: 28px;
-	line-height: 28px;
-	font-weight: 300;
+    font-size: 28px;
+    line-height: 28px;
+    font-weight: 300;
     margin-right: 12px;
     margin: 0;
     padding: 0;
-} 
+}
 
 .chart {
     position: relative;
@@ -54,7 +54,7 @@
     transform: translate3d(0, 0, 0);
     height: 32px;
     width: 0;
-    transition: all .5s ease-in-out;
+    transition: all 0.5s ease-in-out;
     position: absolute;
     bottom: 2px;
     left: 2px;
@@ -62,15 +62,15 @@
 }
 
 .bar.normal {
-    background-color: #00716B;
+    background-color: #00716b;
 }
 
 .bar.warning {
-    background-color: #F28C00;
+    background-color: #f28c00;
 }
 
 .bar.alert {
-    background-color: #C23934;
+    background-color: #c23934;
 }
 
 .axis {
@@ -79,14 +79,13 @@
     right: 0;
     display: flex;
     bottom: 0;
-
 }
 
 .axis > div {
     height: 34px;
-	flex: 1;
-	border-bottom: solid 1px rgb(216, 221, 230);
-	border-left: solid 1px rgb(216, 221, 230);
+    flex: 1;
+    border-bottom: solid 1px rgb(216, 221, 230);
+    border-left: solid 1px rgb(216, 221, 230);
 }
 
 .axis .legend {
