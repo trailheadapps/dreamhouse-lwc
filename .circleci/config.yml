@@ -206,7 +206,6 @@ workflows:
                       branches:
                           ignore: master
             - setup_dx_orgs:
-                  context: trailhead-global
                   requires:
                       - lint_aura
                   filters:
