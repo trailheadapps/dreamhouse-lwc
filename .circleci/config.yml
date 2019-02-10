@@ -187,12 +187,12 @@ workflows:
                   filters:
                       branches:
                           ignore: master
-            - unit_test_lwc:
-                  requires:
-                      - lint_lwc
-                  filters:
-                      branches:
-                          ignore: master
+            # - unit_test_lwc:
+            #       requires:
+            #           - lint_lwc
+            #       filters:
+            #           branches:
+            #               ignore: master
             - install_cli:
                   requires:
                       - unit_test_lwc
