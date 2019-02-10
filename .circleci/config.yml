@@ -195,7 +195,7 @@ workflows:
             #               ignore: master
             - install_cli:
                   requires:
-                      - unit_test_lwc
+                      - lint_lwc
                   filters:
                       branches:
                           ignore: master
