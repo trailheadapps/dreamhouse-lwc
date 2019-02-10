@@ -6,8 +6,8 @@
         "lint": "npm run lint:lwc && npm run lint:aura",
         "lint:lwc": "eslint **/lwc/**",
         "lint:aura": "sfdx force:lightning:lint **/aura/** --exit",
-        "prettier": "npm run prettier:lwc",
-        "prettier:lwc": "prettier --write '**/lwc/**'",
+        "prettier": "prettier --write **/lwc/** **/aura/**",
+        "prettier:verify": "prettier --list-different **/lwc/** **/aura/**",
         "postinstall": "node bin/check-version.js"
     },
     "author": "salesforce.com",
@@ -37,6 +37,10 @@
         "**/lwc/**": [
             "prettier --write",
             "eslint",
+            "git add"
+        ],
+        "**/aura/**": [
+            "prettier --write",
             "git add"
         ]
     }

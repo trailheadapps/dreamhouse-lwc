@@ -21,6 +21,16 @@ jobs:
                   root: ~/
                   paths:
                       - project/*
+    prettier_verify:
+        # This verifies Prettier formatting
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                  at: ~/
+            - run:
+                  name: Verify Prettier formatting
+                  command: |
+                      npm run prettier:verify
     lint_lwc:
         # This lints Lightning Web Components.
         <<: *defaults
@@ -161,28 +171,56 @@ workflows:
     version: 2
     build_and_test:
         jobs:
-            - setup_dx
-            - lint_lwc:
-                  requires:
-                      - setup_dx
+            - setup_tooling:
                   filters:
                       branches:
                           ignore: master
-            # - unit_test_lwc:
-            #     requires:
-            #       - lint_lwc
-            #     filters:
-            #       branches:
-            #         ignore: master
-            - deploy_source:
+            - prettier_verify:
+                  requires:
+                      - setup_tooling
+                  filters:
+                      branches:
+                          ignore: master
+            - lint_lwc:
+                  requires:
+                      - prettier_verify
+                  filters:
+                      branches:
+                          ignore: master
+            - unit_test_lwc:
                   requires:
                       - lint_lwc
                   filters:
                       branches:
                           ignore: master
+            - install_cli:
+                  requires:
+                      - unit_test_lwc
+                  filters:
+                      branches:
+                          ignore: master
+            - lint_aura:
+                  requires:
+                      - install_cli
+                  filters:
+                      branches:
+                          ignore: master
+            - setup_dx_orgs:
+                  context: trailhead-global
+                  requires:
+                      - lint_aura
+                  filters:
+                      branches:
+                          ignore: master
+            - deploy_source:
+                  requires:
+                      - setup_dx_orgs
+                  filters:
+                      branches:
+                          ignore: master
             - create_and_test_package:
                   requires:
-                      - setup_dx
+                      - setup_dx_orgs
                   filters:
                       branches:
                           only: master
@@ -194,9 +232,7 @@ workflows:
                           ignore: master
             - cleanup_scratch_org:
                   requires:
-                      - setup_dx
+                      - setup_dx_orgs
                       - deploy_source
                       - create_and_test_package
                       - run_apex_tests
-                      - lint_lwc
-                      # - unit_test_lwc
