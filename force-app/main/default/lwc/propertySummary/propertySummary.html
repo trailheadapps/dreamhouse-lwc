@@ -1,25 +1,38 @@
 <template>
-
     <lightning-card icon-name="custom:custom85">
         <template if:true={property.data}>
             <span slot="title">{propertyName}</span>
-            <lightning-button-icon icon-name="utility:expand_alt" slot="actions" onclick={handleNavigateToRecord}></lightning-button-icon>
+            <lightning-button-icon
+                icon-name="utility:expand_alt"
+                slot="actions"
+                onclick={handleNavigateToRecord}
+            ></lightning-button-icon>
             <div class="slds-m-horizontal_medium">
-                <img src={pictureURL} alt="Property picture" class="property-pic">
-                <lightning-record-form 
+                <img
+                    src={pictureURL}
+                    alt="Property picture"
+                    class="property-pic"
+                />
+                <lightning-record-form
                     object-api-name="Property__c"
-                    record-id={recordId} 
+                    record-id={recordId}
                     fields={propertyFields}
-                    columns="2">
+                    columns="2"
+                >
                 </lightning-record-form>
             </div>
         </template>
         <template if:false={recordId}>
-            <c-inline-message message="Select a property to see details"></c-inline-message>
+            <c-inline-message
+                message="Select a property to see details"
+            ></c-inline-message>
         </template>
         <template if:true={property.error}>
-            <c-inline-message variant="error" message="Error retrieving data" errors={property.error}></c-inline-message>
+            <c-inline-message
+                variant="error"
+                message="Error retrieving data"
+                errors={property.error}
+            ></c-inline-message>
         </template>
     </lightning-card>
-
 </template>
