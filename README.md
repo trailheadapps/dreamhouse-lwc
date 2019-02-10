@@ -17,26 +17,24 @@ There are two ways to install Dreamhouse:
 
 ## Installing Dreamhouse using Salesforce DX
 
-> **IMPORTANT**: Because of a current issue in pre-release, make sure your project path doesn't include any of the following folder names: **lwc**, **aura**, **wave**. For example, DO NOT clone this repository in a folder called **/Projects/lwc**.
-
 1. Set up your environment. Follow the steps in the [Quick Start: Lightning Web Components](https://trailhead.salesforce.com/content/learn/projects/quick-start-lightning-web-components/) Trailhead project. The steps include:
 
-  - Sign up for a Spring '19 pre release org and enable Dev Hub
-  - Install the pre-release version of the Salesforce CLI
+  - Enable Dev Hub in your Trailhead Playground
+  - Install Salesforce CLI
   - Install Visual Studio Code
-  - Install the Visual Studio Code Salesforce extensions, including the Lighting Web Components extension
+  - Install the Visual Studio Code Salesforce extensions, including the Lightning Web Components extension
 
-2. If you haven't already done so, authenticate with your Spring '19 hub org and provide it with an alias (spring19hub):
+2. If you haven't already done so, authenticate with your hub org (if not already done)::
 
   ```
-  sfdx force:auth:web:login -d -a spring19hub
+  sfdx force:auth:web:login -d -a myhuborg
   ```
 
 3. Clone this repository:
 
   ```
   git clone https://github.com/dreamhouseapp/dreamhouse-lwc
-   cd dreamhouse-lwc
+  cd dreamhouse-lwc
   ```
 
 4. Create a scratch org and provide it with an alias (dreamhouse):
@@ -73,15 +71,17 @@ There are two ways to install Dreamhouse:
 
 ## Installing Dreamhouse using an Unlocked Package
 
-1. [Sign up](https://www.salesforce.com/form/signup/prerelease-spring19/) for a Spring '19 prerelease org, enable My Domain, and deploy it to all users.
+1. [Sign up](https://developer.salesforce.com/signup) for a Developer Edition (DE) org.
 
-2. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tB0000000YGYTIA4) to install the Dreamhouse unlocked package in your Spring '19 pre-release org.
+2. Enable MyDomain in your DE org. Instructions to do this are [here](https://trailhead.salesforce.com/modules/identity_login/units/identity_login_my_domain).
 
-3. Select **Install for All Users**
+3. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tB0000000YGYTIA4) to install the Dreamhouse unlocked package in your DE org.
 
-4. In App Launcher, select the Dreamhouse app.
+4. Select **Install for All Users**
 
-5. Click the **Settings** tab and click the **Import Data** button in the **Sample Data Import** component.
+5. In App Launcher, select the Dreamhouse app.
+
+6. Click the **Settings** tab and click the **Import Data** button in the **Sample Data Import** component.
 
 ## Optional Installation Instructions
 
@@ -97,14 +97,18 @@ This repository contains several files that are relevant if you want to integrat
 
 ### Pre-commit hook
 
-This repository also comes with a <package.json> file that makes it easy to set up a pre-commit hook that enforces code formatting and linting by running Prettier and ESLint every time you `git commit` changes.
+This repository also comes with a
+
+<package.json> file that makes it easy to set up a pre-commit hook that enforces code formatting and linting by running Prettier and ESLint every time you <code>git commit</code> changes.</package.json>
 
 To set up the formatting and linting pre-commit hook:
 
 1. Install [Node.js](https://nodejs.org) if you haven't already done so
 2. Run `npm install` in your project's root folder to install the ESLint and Prettier modules (Note: Mac users should verify that Xcode command line tools are installed before running this command.)
 
-Prettier and ESLint will now run automatically every time you commit changes. The commit will fail if linting errors are detected. You can also run the formatting and linting from the command line using the following commands (check out <package.json> for the full list):
+Prettier and ESLint will now run automatically every time you commit changes. The commit will fail if linting errors are detected. You can also run the formatting and linting from the command line using the following commands (check out
+
+<package.json> for the full list):</package.json>
 
 ```
 npm run lint:lwc
