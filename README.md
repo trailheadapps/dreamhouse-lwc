@@ -75,7 +75,7 @@ There are two ways to install Dreamhouse:
 
 2. Enable MyDomain in your DE org. Instructions to do this are [here](https://trailhead.salesforce.com/modules/identity_login/units/identity_login_my_domain).
 
-3. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tB0000000YGYTIA4) to install the Dreamhouse unlocked package in your DE org.
+3. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tB0000000KAfEIAW) to install the Dreamhouse unlocked package in your DE org.
 
 4. Select **Install for All Users**
 
