@@ -37,7 +37,8 @@ export default class PropertyMap extends LightningElement {
                     location: {
                         Latitude: property.Location__Latitude__s.value,
                         Longitude: property.Location__Longitude__s.value
-                    }
+                    },
+                    title: `${property.Address__c.value}`
                 }
             ];
         } else if (error) {

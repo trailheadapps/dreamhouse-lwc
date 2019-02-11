@@ -38,5 +38,4 @@ export default class InlineMessage extends LightningElement {
     handleCheckboxChange(event) {
         this.viewDetails = event.target.checked;
     }
-
 }

@@ -5,7 +5,7 @@
             searchKey: component.get('v.searchKey'),
             maxPrice: component.get('v.maxPrice'),
             minBedrooms: component.get('v.minBedrooms'),
-            minBathrooms: component.get('v.minBathrooms'),
+            minBathrooms: component.get('v.minBathrooms')
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
@@ -17,11 +17,11 @@
                 toastEvent.setParams({
                     title: 'Error',
                     message: 'Error retrieving properties.',
-                    type: 'error',
+                    type: 'error'
                 });
                 toastEvent.fire();
             }
         });
         $A.enqueueAction(action);
-    },
+    }
 });

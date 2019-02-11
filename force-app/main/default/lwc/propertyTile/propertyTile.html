@@ -1,16 +1,17 @@
 <template>
-
     <a onclick={handlePropertySelected}>
         <div class="tile" style={backgroundImageStyle}>
-
             <div class="lower-third">
                 <h1 class="truncate">{property.City__c}</h1>
                 <p>Beds: {property.Beds__c} - Baths: {property.Baths__c}</p>
                 <p>
-                    <lightning-formatted-number format-style="currency" currency-code="USD" value={property.Price__c}></lightning-formatted-number>
+                    <lightning-formatted-number
+                        format-style="currency"
+                        currency-code="USD"
+                        value={property.Price__c}
+                    ></lightning-formatted-number>
                 </p>
             </div>
         </div>
     </a>
-
 </template>
