@@ -1,16 +1,12 @@
 [
     {
-      "sobject": "Broker__c",
-      "saveRefs": true,
-      "files": [
-        "brokers-data.json"
-      ]
+        "sobject": "Broker__c",
+        "saveRefs": true,
+        "files": ["brokers-data.json"]
     },
     {
-      "sobject": "Property__c",
-      "resolveRefs": true,
-      "files": [
-        "properties-data.json"
-      ]
+        "sobject": "Property__c",
+        "resolveRefs": true,
+        "files": ["properties-data.json"]
     }
-  ]
+]
