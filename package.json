@@ -6,8 +6,8 @@
         "lint": "npm run lint:lwc && npm run lint:aura",
         "lint:lwc": "eslint **/lwc/**",
         "lint:aura": "sfdx force:lightning:lint **/aura/** --exit",
-        "prettier": "prettier --write **/*.{cmp,component,css,html,js,json,md,page,yaml,yml}",
-        "prettier:verify": "prettier --list-different **/*.{cmp,component,css,html,js,json,md,page,yaml,yml}",
+        "prettier": "prettier --write '**/*.{cmp,component,css,html,js,json,md,page,yaml,yml}'",
+        "prettier:verify": "prettier --list-different '**/*.{cmp,component,css,html,js,json,md,page,yaml,yml}'",
         "postinstall": "node bin/check-version.js"
     },
     "author": "salesforce.com",
