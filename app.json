@@ -1,0 +1,42 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/salesforce-cli-buildpack#v3"
+    },
+    {
+      "url": "https://github.com/heroku/salesforce-buildpack#v1"
+    }
+  ],
+  "env": {
+    "SFDX_AUTH_URL": {
+      "required": true
+    },
+    "SFDX_BUILDPACK_DEBUG": {
+      "required": true
+    },
+    "SFDX_CREATE_PACKAGE_VERSION": {
+      "required": true
+    },
+    "SFDX_DEV_HUB_AUTH_URL": {
+      "required": true
+    },
+    "SFDX_INSTALL_PACKAGE_VERSION": {
+      "required": true
+    },
+    "SFDX_PACKAGE_NAME": {
+      "required": true
+    },
+    "STAGE": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "name": "dreamhouse-lwc",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
