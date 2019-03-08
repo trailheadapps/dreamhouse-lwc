@@ -9,7 +9,7 @@
 DreamHouse is a sample application that demonstrates the unique value proposition of the Salesforce platform for building Employee Productivity and Customer Engagement apps.
 
 ## Installation Instructions
-
+xxx
 There are two ways to install Dreamhouse:
 
 -   [Using Salesforce DX](#installing-dreamhouse-using-salesforce-dx): This is the recommended installation option. Use this option if you are a developer who wants to experience the app and the code.
