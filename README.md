@@ -67,7 +67,9 @@ sfdx force:data:tree:import --plan data/sample-data.json
 sfdx force:org:open
 ```
 
-9. Select **DreamHouse** in the App Launcher
+9. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
+
+10. In App Launcher, select the **Dreamhouse** app.
 
 ## Installing Dreamhouse using an Unlocked Package
 
@@ -82,6 +84,10 @@ sfdx force:org:open
 5. In App Launcher, select the Dreamhouse app.
 
 6. Click the **Settings** tab and click the **Import Data** button in the **Sample Data Import** component.
+
+7. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
+
+8. In App Launcher, select the **Dreamhouse** app.
 
 ## Optional Installation Instructions
 
