@@ -5,4 +5,9 @@
     <targets>
         <target>lightning__AppPage</target>
     </targets>
+    <targetConfigs>
+      <targetConfig targets="lightning__AppPage">
+          <property name="priceSliderMaxValue" label="Max Value for Price Slider" type="Integer" default="1200000" required="true"/>
+      </targetConfig>
+  </targetConfigs>
 </LightningComponentBundle>

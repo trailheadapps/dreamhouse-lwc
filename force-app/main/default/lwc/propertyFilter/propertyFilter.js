@@ -1,14 +1,16 @@
-import { LightningElement, wire, track } from 'lwc';
+import { LightningElement, wire, track, api } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { fireEvent } from 'c/pubsub';
 
 const DELAY = 350;
-const MAX_PRICE = 1200000;
 
 export default class PropertyFilter extends LightningElement {
+    // Set the price slider's max value via a parameter exposed in App Builder
+    @api priceSliderMaxValue;
+
     @track searchKey = '';
 
-    @track maxPrice = MAX_PRICE;
+    @track maxPrice = 0;
 
     @track minBedrooms = 0;
 
@@ -16,9 +18,14 @@ export default class PropertyFilter extends LightningElement {
 
     @wire(CurrentPageReference) pageRef;
 
+    connectedCallback() {
+        // Set the price slider to its max value
+        this.maxPrice = this.priceSliderMaxValue;
+    }
+
     handleReset() {
         this.searchKey = '';
-        this.maxPrice = MAX_PRICE;
+        this.maxPrice = this.priceSliderMaxValue;
         this.minBedrooms = 0;
         this.minBathrooms = 0;
         this.fireChangeEvent();

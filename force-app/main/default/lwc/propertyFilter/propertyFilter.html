@@ -13,14 +13,16 @@
                 value={searchKey}
                 onchange={handleSearchKeyChange}
             ></lightning-input>
+
             <lightning-slider
                 label="Max Price"
                 step="50000"
                 min="0"
-                max="1200000"
+                max={priceSliderMaxValue}
                 value={maxPrice}
                 onchange={handleMaxPriceChange}
             ></lightning-slider>
+
             <lightning-slider
                 label="Bedrooms"
                 step="1"
@@ -29,6 +31,7 @@
                 value={minBedrooms}
                 onchange={handleMinBedroomsChange}
             ></lightning-slider>
+
             <lightning-slider
                 label="Bathrooms"
                 step="1"
