@@ -12,10 +12,10 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 
 There are two ways to install Dreamhouse:
 
--   [Using Salesforce DX](#installing-dreamhouse-using-salesforce-dx): This is the recommended installation option. Use this option if you are a developer who wants to experience the app and the code.
+-   [Using a Scratch Org](#installing-dreamhouse-using-a-scratch-org): This is the recommended installation option. Use this option if you are a developer who wants to experience the app and the code.
 -   [Using an Unlocked Package](#installing-dreamhouse-using-an-unlocked-package): This option allows anybody to experience the sample app without installing a local development environment.
 
-## Installing Dreamhouse using Salesforce DX
+## Installing Dreamhouse using a Scratch Org
 
 1. Set up your environment. Follow the steps in the [Quick Start: Lightning Web Components](https://trailhead.salesforce.com/content/learn/projects/quick-start-lightning-web-components/) Trailhead project. The steps include:
 
