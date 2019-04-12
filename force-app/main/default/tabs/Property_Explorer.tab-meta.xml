@@ -3,6 +3,5 @@
     <description>Created by Lightning App Builder</description>
     <flexiPage>Property_Explorer</flexiPage>
     <label>Property Explorer</label>
-    <mobileReady>true</mobileReady>
     <motif>Custom39: Telescope</motif>
 </CustomTab>
