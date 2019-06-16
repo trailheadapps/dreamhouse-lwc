@@ -29,9 +29,7 @@ export default class PropertyMap extends LightningElement {
         if (data) {
             this.error = undefined;
             const property = data.fields;
-            this.address = `${property.Address__c.value}, ${
-                property.City__c.value
-            }`;
+            this.address = `${property.Address__c.value}, ${property.City__c.value}`;
             this.markers = [
                 {
                     location: {

@@ -3,6 +3,5 @@
     <description>Created by Lightning App Builder</description>
     <flexiPage>Settings</flexiPage>
     <label>Settings</label>
-    <mobileReady>true</mobileReady>
     <motif>Custom19: Wrench</motif>
 </CustomTab>
