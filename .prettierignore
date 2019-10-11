@@ -3,4 +3,5 @@
 #
 
 **/staticresources/**
+.localdevserver
 .sfdx
