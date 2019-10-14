@@ -79,7 +79,7 @@ sfdx force:org:open
 
 2. Enable MyDomain in your DE org. Instructions to do this are [here](https://trailhead.salesforce.com/modules/identity_login/units/identity_login_my_domain).
 
-3. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tB0000000AjVQIA0) to install the Dreamhouse unlocked package in your DE org.
+3. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tB0000000OE9wIAG) to install the Dreamhouse unlocked package in your DE org.
 
 4. Select **Install for All Users**
 
@@ -101,7 +101,7 @@ This repository contains several files that are relevant if you want to integrat
 
 ### Code linting
 
-[ESLint](https://eslint.org/) is a popular JavaScript linting tool used to identify stylistic errors and erroneous constructs. To use ESLint with Visual Studio Code, install [this extension](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-lwc) from the Visual Studio Code Marketplace. The [.eslintignore](/.eslintignore) file is provided as part of this repository to exclude specific files from the linting process in the context of Lighning Web Components development.
+[ESLint](https://eslint.org/) is a popular JavaScript linting tool used to identify stylistic errors and erroneous constructs. To use ESLint with Visual Studio Code, install [this extension](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-lwc) from the Visual Studio Code Marketplace. The [.eslintignore](/.eslintignore) file is provided as part of this repository to exclude specific files from the linting process in the context of Lightning Web Components development.
 
 ### Pre-commit hook
 
