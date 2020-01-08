@@ -49,7 +49,7 @@ jobs:
         runs-on: ubuntu-latest
         needs: formatting-and-linting
         steps:
-            # Install and update Salesforce CLI
+            # Install Salesforce CLI
             - name: Install Salesforce CLI
               run: |
                   wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
