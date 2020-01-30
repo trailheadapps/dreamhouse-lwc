@@ -1,4 +1,4 @@
-import { LightningElement, track, wire, api } from 'lwc';
+import { LightningElement, wire, api } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import getPictures from '@salesforce/apex/PropertyController.getPictures';
@@ -12,7 +12,7 @@ const FIELDS = [ADDRESS_FIELD, CITY_FIELD, DESCRIPTION_FIELD];
 export default class PropertyCarousel extends LightningElement {
     @api recordId;
 
-    @track urls;
+    urls;
 
     pictures;
 

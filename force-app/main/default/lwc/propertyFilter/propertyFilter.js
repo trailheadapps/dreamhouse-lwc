@@ -1,4 +1,4 @@
-import { LightningElement, wire, track } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { fireEvent } from 'c/pubsub';
 
@@ -6,13 +6,10 @@ const DELAY = 350;
 const MAX_PRICE = 1200000;
 
 export default class PropertyFilter extends LightningElement {
-    @track searchKey = '';
-
-    @track maxPrice = MAX_PRICE;
-
-    @track minBedrooms = 0;
-
-    @track minBathrooms = 0;
+    searchKey = '';
+    maxPrice = MAX_PRICE;
+    minBedrooms = 0;
+    minBathrooms = 0;
 
     @wire(CurrentPageReference) pageRef;
 

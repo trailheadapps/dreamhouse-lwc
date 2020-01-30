@@ -1,4 +1,4 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
@@ -12,7 +12,7 @@ import PICTURE_FIELD from '@salesforce/schema/Property__c.Picture__c';
 
 export default class PropertySummary extends NavigationMixin(LightningElement) {
     @api recordId;
-    @track propertyFields = [BED_FIELD, BATH_FIELD, PRICE_FIELD, BROKER_FIELD];
+    propertyFields = [BED_FIELD, BATH_FIELD, PRICE_FIELD, BROKER_FIELD];
 
     @wire(CurrentPageReference) pageRef;
 
