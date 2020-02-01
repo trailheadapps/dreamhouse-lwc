@@ -3,8 +3,7 @@ name: Salesforce DX packaging)
 
 # Definition when the workflow should run
 on:
-    pull_request:
-        types: [opened, edited, synchronize, reopened]
+    push:
         branches:
             - master
         paths:
