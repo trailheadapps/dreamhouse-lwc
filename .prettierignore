@@ -5,3 +5,4 @@
 **/staticresources/**
 .localdevserver
 .sfdx
+.vscode
