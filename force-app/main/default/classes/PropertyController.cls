@@ -28,6 +28,7 @@ public with sharing class PropertyController {
                 AND price__c <= :maxPrice
                 AND beds__c >= :minBedrooms
                 AND baths__c >= :minBathrooms
+            WITH SECURITY_ENFORCED
             ORDER BY price__c
             LIMIT 100
         ];
@@ -76,7 +77,7 @@ public with sharing class PropertyController {
                 baths__c,
                 beds__c,
                 thumbnail__c
-            FROM property__c
+            FROM property__c 
             WHERE
                 (title__c LIKE :key
                 OR city__c LIKE :key
@@ -84,6 +85,7 @@ public with sharing class PropertyController {
                 AND price__c <= :maxPrice
                 AND beds__c >= :minBedrooms
                 AND baths__c >= :minBathrooms
+            WITH SECURITY_ENFORCED
             ORDER BY price__c
             LIMIT :pSize
             OFFSET :offset
@@ -99,6 +101,7 @@ public with sharing class PropertyController {
             WHERE
                 LinkedEntityId = :propertyId
                 AND ContentDocument.FileType IN ('PNG', 'JPG', 'GIF')
+            WITH SECURITY_ENFORCED
         ];
 
         if (links.isEmpty()) {
@@ -115,6 +118,7 @@ public with sharing class PropertyController {
             SELECT Id, Title
             FROM ContentVersion
             WHERE ContentDocumentId IN :contentIds AND IsLatest = true
+            WITH SECURITY_ENFORCED
             ORDER BY CreatedDate
         ];
     }
