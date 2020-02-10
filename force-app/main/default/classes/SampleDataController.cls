@@ -9,6 +9,7 @@ public with sharing class SampleDataController {
                 SELECT Id, Body
                 FROM StaticResource
                 WHERE Name = 'sample_data_brokers'
+                WITH SECURITY_ENFORCED
             ];
             String brokersJSON = brokersResource.body.toString();
             List<Broker__c> brokers = (List<Broker__c>) JSON.deserialize(
@@ -21,6 +22,7 @@ public with sharing class SampleDataController {
                 SELECT Id, Body
                 FROM StaticResource
                 WHERE Name = 'sample_data_properties'
+                WITH SECURITY_ENFORCED
             ];
             String propertiesJSON = propertiesResource.body.toString();
             List<Property__c> properties = (List<Property__c>) JSON.deserialize(
