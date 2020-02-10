@@ -9,6 +9,15 @@
         <type>Flexipage</type>
         <pageOrSobjectType>Property__c</pageOrSobjectType>
     </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Broker_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Broker__c</pageOrSobjectType>
+    </actionOverrides>
     <brand>
         <headerColor>#86BD4A</headerColor>
         <logo>dreamhouselogosquare</logo>
