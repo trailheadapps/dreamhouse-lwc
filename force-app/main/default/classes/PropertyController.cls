@@ -77,7 +77,7 @@ public with sharing class PropertyController {
                 baths__c,
                 beds__c,
                 thumbnail__c
-            FROM property__c 
+            FROM property__c
             WHERE
                 (title__c LIKE :key
                 OR city__c LIKE :key
