@@ -1,4 +1,4 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -19,7 +19,7 @@ const BROKER_FIELDS = [
 export default class BrokerCard extends NavigationMixin(LightningElement) {
     @api recordId;
 
-    @track brokerFields = BROKER_FIELDS;
+    brokerFields = BROKER_FIELDS;
 
     @wire(getRecord, { recordId: '$recordId', fields: PROPERTY_FIELDS })
     property;
