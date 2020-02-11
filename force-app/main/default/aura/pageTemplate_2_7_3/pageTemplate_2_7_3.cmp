@@ -33,9 +33,7 @@
                     size="12"
                     class="center"
                 >
-                    {!v.left}
-                    {!v.center}
-                    {!v.right}
+                    {!v.left} {!v.center} {!v.right}
                 </lightning:layoutItem>
             </lightning:layout>
         </aura:if>
