@@ -11,7 +11,8 @@
         if (!component.map) {
             var mapElement = component.find('map').getElement();
             component.map = window.L.map(mapElement, {
-                zoomControl: true
+                zoomControl: true,
+                tap:false
             }).setView([42.356045, -71.08565], 13);
             component.map.scrollWheelZoom.disable();
             var url =
