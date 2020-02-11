@@ -8,5 +8,10 @@
         "sobject": "Property__c",
         "resolveRefs": true,
         "files": ["properties-data.json"]
+    },
+    {
+        "sobject": "Contact",
+        "resolveRefs": false,
+        "files": ["contacts-data.json"]
     }
 ]
