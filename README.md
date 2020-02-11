@@ -92,6 +92,7 @@ sfdx force:org:open
 8. In App Launcher, select the **Dreamhouse** app.
 
 ## Sample Data Import
+
 Properties inserted using the Salesforce CLI will appear as listed on TODAY() - 10 days. If you want to have this value randomized, perform the data import from the app Settings tab instead.
 
 ## Optional Installation Instructions
