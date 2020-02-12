@@ -5,3 +5,5 @@
 **/staticresources/**
 .localdevserver
 .sfdx
+.vscode
+jsconfig.json
