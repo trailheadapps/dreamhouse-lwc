@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "DreamhouseLWC",
-            "versionName": "Winter '20",
-            "versionNumber": "3.0.0.NEXT"
+            "versionName": "Spring '20",
+            "versionNumber": "4.0.0.NEXT"
         }
     ],
     "namespace": "",
