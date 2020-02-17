@@ -1,4 +1,4 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
 
@@ -14,13 +14,10 @@ const fields = [
 export default class PropertyMap extends LightningElement {
     @api recordId;
 
-    @track address;
-
-    @track zoomLevel = 14;
-
-    @track markers = [];
-
-    @track error;
+    address;
+    zoomLevel = 14;
+    markers = [];
+    error;
 
     @wire(CurrentPageReference) pageRef;
 

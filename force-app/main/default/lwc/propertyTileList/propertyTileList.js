@@ -1,4 +1,4 @@
-import { LightningElement, wire, track } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { registerListener, unregisterAllListeners, fireEvent } from 'c/pubsub';
 import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPropertyList';
@@ -6,9 +6,8 @@ import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPr
 const PAGE_SIZE = 9;
 
 export default class PropertyTileList extends LightningElement {
-    @track pageNumber = 1;
-
-    @track pageSize = PAGE_SIZE;
+    pageNumber = 1;
+    pageSize = PAGE_SIZE;
 
     searchKey = '';
     maxPrice = 9999999;

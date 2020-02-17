@@ -1,4 +1,4 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { registerListener, unregisterAllListeners } from 'c/pubsub';
 import { CurrentPageReference } from 'lightning/navigation';
@@ -15,10 +15,10 @@ const FIELDS = [DATE_LISTED_FIELD, DAYS_ON_MARKET_FIELD];
 export default class DaysOnMarket extends LightningElement {
     @api recordId;
 
-    @track daysOnMarket;
-    @track dateListed;
-    @track status;
-    @track error;
+    daysOnMarket;
+    dateListed;
+    status;
+    error;
 
     @wire(CurrentPageReference) pageRef;
 
