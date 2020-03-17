@@ -21,75 +21,79 @@ There are two ways to install Dreamhouse:
 
 1. Set up your environment. Follow the steps in the [Quick Start: Lightning Web Components](https://trailhead.salesforce.com/content/learn/projects/quick-start-lightning-web-components/) Trailhead project. The steps include:
 
--   Enable Dev Hub in your Trailhead Playground
--   Install Salesforce CLI
--   Install Visual Studio Code
--   Install the Visual Studio Code Salesforce extensions, including the Lightning Web Components extension
+    - Enable Dev Hub in your Trailhead Playground
+    - Install Salesforce CLI
+    - Install Visual Studio Code
+    - Install the Visual Studio Code Salesforce extensions, including the Lightning Web Components extension
 
-2. If you haven't already done so, authenticate with your hub org and provide it with an alias (**myhuborg** in the command below):
+1. If you haven't already done so, authenticate with your hub org and provide it with an alias (**myhuborg** in the command below):
 
-```
-sfdx force:auth:web:login -d -a myhuborg
-```
+    ```
+    sfdx force:auth:web:login -d -a myhuborg
+    ```
 
-3. Clone this repository:
+1. Clone this repository:
 
-```
-git clone https://github.com/dreamhouseapp/dreamhouse-lwc
-cd dreamhouse-lwc
-```
+    ```
+    git clone https://github.com/dreamhouseapp/dreamhouse-lwc
+    cd dreamhouse-lwc
+    ```
 
-4. Create a scratch org and provide it with an alias (**dreamhouse** in the command below):
+1. Create a scratch org and provide it with an alias (**dreamhouse** in the command below):
 
-```
-sfdx force:org:create -s -f config/project-scratch-def.json -a dreamhouse
-```
+    ```
+    sfdx force:org:create -s -f config/project-scratch-def.json -a dreamhouse
+    ```
 
-5. Push the app to your scratch org:
+1. Push the app to your scratch org:
 
-```
-sfdx force:source:push
-```
+    ```
+    sfdx force:source:push
+    ```
 
-6. Assign the **dreamhouse** permission set to the default user:
+1. Assign the **dreamhouse** permission set to the default user:
 
-```
-sfdx force:user:permset:assign -n dreamhouse
-```
+    ```
+    sfdx force:user:permset:assign -n dreamhouse
+    ```
 
-7. Import sample data:
+1. Import sample data:
 
-```
-sfdx force:data:tree:import --plan data/sample-data.json
-```
+    ```
+    sfdx force:data:tree:import -p data/sample-data.json
+    ```
 
-8. Open the scratch org:
+1. Open the scratch org:
 
-```
-sfdx force:org:open
-```
+    ```
+    sfdx force:org:open
+    ```
 
-9. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
+1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
 
-10. In App Launcher, select the **Dreamhouse** app.
+1. In App Launcher, select the **Dreamhouse** app.
 
 ## Installing Dreamhouse using an Unlocked Package
 
-1. [Sign up](https://developer.salesforce.com/signup) for a Developer Edition (DE) org.
+Follow this set of instructions if you want to deploy the app to a more permanent environment than a Scratch org or if you don't want to install the local developement tools. You can use a non source-tracked orgs such as a free [Developer Edition Org](https://developer.salesforce.com/signup) or a [Trailhead Playground](https://trailhead.salesforce.com/).
 
-2. Enable MyDomain in your DE org. Instructions to do this are [here](https://trailhead.salesforce.com/modules/identity_login/units/identity_login_my_domain).
+Make sure to start from a brand-new environment to avoid conflicts with previous work you may have done.
 
-3. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tB0000000OE9wIAG) to install the Dreamhouse unlocked package in your DE org.
+1. Log in to your org
 
-4. Select **Install for All Users**
+1. If you are setting up a Developer Edition: go to **Setup**, under **My Domain**, [register a My Domain](https://help.salesforce.com/articleView?id=domain_name_setup.htm&type=5).
 
-5. In App Launcher, select the Dreamhouse app.
+1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tB0000000OE9wIAG) to install the Dreamhouse unlocked package in your org.
 
-6. Click the **Settings** tab and click the **Import Data** button in the **Sample Data Import** component.
+1. Select **Install for All Users**
 
-7. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
+1. In App Launcher, click **View all**, select the Dreamhouse app.
 
-8. In App Launcher, select the **Dreamhouse** app.
+1. Click the **Settings** tab and click the **Import Data** button in the **Sample Data Import** component.
+
+1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
+
+1. In App Launcher, select the **Dreamhouse** app.
 
 ## Sample Data Import
 
@@ -114,7 +118,7 @@ This repository also comes with a [package.json](./package.json) file that makes
 To set up the formatting and linting pre-commit hook:
 
 1. Install [Node.js](https://nodejs.org) if you haven't already done so
-2. Run `npm install` in your project's root folder to install the ESLint and Prettier modules (Note: Mac users should verify that Xcode command line tools are installed before running this command.)
+1. Run `npm install` in your project's root folder to install the ESLint and Prettier modules (Note: Mac users should verify that Xcode command line tools are installed before running this command.)
 
 Prettier and ESLint will now run automatically every time you commit changes. The commit will fail if linting errors are detected. You can also run the formatting and linting from the command line using the following commands (check out [package.json](./package.json) for the full list):
 
