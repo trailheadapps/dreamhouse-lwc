@@ -24,7 +24,7 @@ public with sharing class PropertyController {
             WHERE
                 (title__c LIKE :key
                 OR city__c LIKE :key
-                OR tags__c LIKE :key)
+                OR Tags__c LIKE :key)
                 AND price__c <= :maxPrice
                 AND beds__c >= :minBedrooms
                 AND baths__c >= :minBathrooms
