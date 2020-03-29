@@ -10,16 +10,16 @@ public with sharing class PropertyController {
         return [
             SELECT
                 Id,
-                address__c,
-                city__c,
-                state__c,
-                description__c,
-                price__c,
-                baths__c,
-                beds__c,
-                thumbnail__c,
-                location__latitude__s,
-                location__longitude__s
+                Address__c,
+                City__c,
+                State__c,
+                Description__c,
+                Price__c,
+                Baths__c,
+                Beds__c,
+                Thumbnail__c,
+                Location__Latitude__s,
+                Location__Longitude__s
             FROM property__c
             WHERE
                 (title__c LIKE :key
@@ -30,7 +30,7 @@ public with sharing class PropertyController {
                 AND baths__c >= :minBathrooms
             WITH SECURITY_ENFORCED
             ORDER BY price__c
-            LIMIT 100
+            LIMIT 90
         ];
     }
 
