@@ -30,7 +30,7 @@ public with sharing class PropertyController {
                 AND Baths__c >= :minBathrooms
             WITH SECURITY_ENFORCED
             ORDER BY Price__c
-            LIMIT 90
+            LIMIT 100
         ];
     }
 
