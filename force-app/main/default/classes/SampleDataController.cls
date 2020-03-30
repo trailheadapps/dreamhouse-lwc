@@ -1,7 +1,7 @@
 public with sharing class SampleDataController {
     @AuraEnabled
     public static void importSampleData() {
-        try {
+            delete [SELECT Id FROM Case];
             delete [SELECT Id FROM Property__c];
             delete [SELECT Id FROM Broker__c];
             delete [SELECT Id FROM Contact];
@@ -9,9 +9,6 @@ public with sharing class SampleDataController {
             insertBrokers();
             insertProperties();
             insertContacts();
-        } catch (Exception e) {
-            System.debug(e);
-        }
     }
 
     private static void insertBrokers() {
