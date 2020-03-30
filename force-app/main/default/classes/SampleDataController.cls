@@ -1,14 +1,14 @@
 public with sharing class SampleDataController {
     @AuraEnabled
     public static void importSampleData() {
-            delete [SELECT Id FROM Case];
-            delete [SELECT Id FROM Property__c];
-            delete [SELECT Id FROM Broker__c];
-            delete [SELECT Id FROM Contact];
+        delete [SELECT Id FROM Case];
+        delete [SELECT Id FROM Property__c];
+        delete [SELECT Id FROM Broker__c];
+        delete [SELECT Id FROM Contact];
 
-            insertBrokers();
-            insertProperties();
-            insertContacts();
+        insertBrokers();
+        insertProperties();
+        insertContacts();
     }
 
     private static void insertBrokers() {
