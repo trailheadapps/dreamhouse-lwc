@@ -20,6 +20,8 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 
 -   [Installing Dreamhouse using a Developer Edition Org or a Trailhead Playground](#installing-dreamhouse-using-a-developer-edition-org-or-a-trailhead-playground): Useful when tackling Trailhead Badges or if you want the app deployed to a more permanent environment than a Scratch org.
 
+-   [Note on Sample Data Import](#note-on-sample-data-import)
+
 -   [Optional installation instructions](#optional-installation-instructions)
 
 ## Installing Dreamhouse using a Scratch Org
@@ -143,7 +145,6 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
 
 1. In App Launcher, select the **Dreamhouse** app.
-
 
 ## Note on Sample Data Import
 
