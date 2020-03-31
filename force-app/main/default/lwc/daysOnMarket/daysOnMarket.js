@@ -14,7 +14,6 @@ const FIELDS = [DATE_LISTED_FIELD, DAYS_ON_MARKET_FIELD];
 
 export default class DaysOnMarket extends LightningElement {
     propertyId;
-
     daysOnMarket;
     dateListed;
     status;
@@ -43,6 +42,15 @@ export default class DaysOnMarket extends LightningElement {
         }
     }
 
+    @api
+    get recordId() {
+        return this.propertyId;
+    }
+
+    set recordId(propertyId) {
+        this.propertyId = propertyId;
+    }
+
     get badgeClass() {
         return 'badge ' + this.status;
     }
@@ -54,15 +62,6 @@ export default class DaysOnMarket extends LightningElement {
     get chartStyle() {
         const value = (this.daysOnMarket / MAX_DAYS_CHART) * 100;
         return 'width:' + value + '%';
-    }
-
-    @api
-    get recordId() {
-        return this.propertyId;
-    }
-
-    set recordId(propertyId) {
-        this.propertyId = propertyId;
     }
 
     connectedCallback() {

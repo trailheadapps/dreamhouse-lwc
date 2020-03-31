@@ -15,14 +15,14 @@
                 />
                 <lightning-record-form
                     object-api-name="Property__c"
-                    record-id={recordId}
+                    record-id={propertyId}
                     fields={propertyFields}
                     columns="2"
                 >
                 </lightning-record-form>
             </div>
         </template>
-        <template if:false={recordId}>
+        <template if:false={propertyId}>
             <c-inline-message
                 message="Select a property to see details"
             ></c-inline-message>
