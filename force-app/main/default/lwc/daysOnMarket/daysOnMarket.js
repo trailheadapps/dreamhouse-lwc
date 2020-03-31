@@ -13,7 +13,7 @@ const MAX_DAYS_CHART = 90;
 const FIELDS = [DATE_LISTED_FIELD, DAYS_ON_MARKET_FIELD];
 
 export default class DaysOnMarket extends LightningElement {
-    @api recordId;
+    propertyId;
 
     daysOnMarket;
     dateListed;
@@ -22,7 +22,7 @@ export default class DaysOnMarket extends LightningElement {
 
     @wire(CurrentPageReference) pageRef;
 
-    @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
+    @wire(getRecord, { recordId: '$propertyId', fields: FIELDS })
     wiredRecord({ error, data }) {
         if (data) {
             this.error = undefined;
@@ -56,6 +56,15 @@ export default class DaysOnMarket extends LightningElement {
         return 'width:' + value + '%';
     }
 
+    @api
+    get recordId() {
+        return this.propertyId;
+    }
+
+    set recordId(propertyId) {
+        this.propertyId = propertyId;
+    }
+
     connectedCallback() {
         registerListener(
             'dreamhouse__propertySelected',
@@ -69,6 +78,6 @@ export default class DaysOnMarket extends LightningElement {
     }
 
     handlePropertySelected(propertyId) {
-        this.recordId = propertyId;
+        this.propertyId = propertyId;
     }
 }
