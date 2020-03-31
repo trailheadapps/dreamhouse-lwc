@@ -11,16 +11,25 @@ import BROKER_FIELD from '@salesforce/schema/Property__c.Broker__c';
 import PICTURE_FIELD from '@salesforce/schema/Property__c.Picture__c';
 
 export default class PropertySummary extends NavigationMixin(LightningElement) {
-    @api recordId;
+    propertyId;
     propertyFields = [BED_FIELD, BATH_FIELD, PRICE_FIELD, BROKER_FIELD];
 
     @wire(CurrentPageReference) pageRef;
 
     @wire(getRecord, {
-        recordId: '$recordId',
+        recordId: '$propertyId',
         fields: [NAME_FIELD, PICTURE_FIELD]
     })
     property;
+
+    @api
+    get recordId() {
+        return this.propertyId;
+    }
+
+    set recordId(propertyId) {
+        this.propertyId = propertyId;
+    }
 
     get propertyName() {
         return getFieldValue(this.property.data, NAME_FIELD);
@@ -43,14 +52,14 @@ export default class PropertySummary extends NavigationMixin(LightningElement) {
     }
 
     handlePropertySelected(propertyId) {
-        this.recordId = propertyId;
+        this.propertyId = propertyId;
     }
 
     handleNavigateToRecord() {
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
-                recordId: this.recordId,
+                recordId: this.propertyId,
                 objectApiName: 'Property__c',
                 actionName: 'view'
             }

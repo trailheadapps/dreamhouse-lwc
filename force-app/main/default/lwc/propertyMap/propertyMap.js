@@ -12,8 +12,7 @@ const fields = [
 ];
 
 export default class PropertyMap extends LightningElement {
-    @api recordId;
-
+    propertyId;
     address;
     zoomLevel = 14;
     markers = [];
@@ -21,7 +20,7 @@ export default class PropertyMap extends LightningElement {
 
     @wire(CurrentPageReference) pageRef;
 
-    @wire(getRecord, { recordId: '$recordId', fields })
+    @wire(getRecord, { recordId: '$propertyId', fields })
     wiredRecord({ error, data }) {
         if (data) {
             this.error = undefined;
@@ -43,6 +42,15 @@ export default class PropertyMap extends LightningElement {
         }
     }
 
+    @api
+    get recordId() {
+        return this.propertyId;
+    }
+
+    set recordId(propertyId) {
+        this.propertyId = propertyId;
+    }
+
     connectedCallback() {
         registerListener(
             'dreamhouse__propertySelected',
@@ -56,6 +64,6 @@ export default class PropertyMap extends LightningElement {
     }
 
     handlePropertySelected(propertyId) {
-        this.recordId = propertyId;
+        this.propertyId = propertyId;
     }
 }
