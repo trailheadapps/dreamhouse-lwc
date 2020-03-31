@@ -67,7 +67,7 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 1. Import sample data:
 
     ```
-    sfdx force:data:tree:import -p data/sample-data.json
+    sfdx force:data:tree:import -p data/sample-data-plan.json
     ```
 
 1. Open the scratch org:
