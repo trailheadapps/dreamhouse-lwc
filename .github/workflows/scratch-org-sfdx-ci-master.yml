@@ -83,7 +83,7 @@ jobs:
 
             # Import sample data
             - name: 'Import sample data'
-              run: 'sfdx force:data:tree:import -p ./data/sample-data.json'
+              run: 'sfdx force:data:tree:import -p ./data/sample-data-plan.json'
 
             # Run Apex tests in scratch org
             - name: 'Run Apex tests'
