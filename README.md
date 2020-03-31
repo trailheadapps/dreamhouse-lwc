@@ -12,10 +12,15 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 
 ## Installation Instructions
 
-There are two ways to install Dreamhouse:
+## Table of contents
 
--   [Using a Scratch Org](#installing-dreamhouse-using-a-scratch-org): This is the recommended installation option. Use this option if you are a developer who wants to experience the app and the code.
--   [Using an Unlocked Package](#installing-dreamhouse-using-an-unlocked-package): This option allows anybody to experience the sample app without installing a local development environment.
+-   [Installing Dreamhouse Using a Scratch Org](#installing-dreamhouse-using-a-scratch-org): This is the recommended installation option. Use this option if you are a developer who wants to experience the app and the code.
+
+-   [Installing Dreamhouse Using an Unlocked Package](#installing-dreamhouse-using-an-unlocked-package): This option allows anybody to experience the sample app without installing a local development environment.
+
+-   [Installing Dreamhouse using a Developer Edition Org or a Trailhead Playground](#installing-dreamhouse-using-a-developer-edition-org-or-a-trailhead-playground): Useful when tackling Trailhead Badges or if you want the app deployed to a more permanent environment than a Scratch org.
+
+-   [Optional installation instructions](#optional-installation-instructions)
 
 ## Installing Dreamhouse using a Scratch Org
 
@@ -95,7 +100,52 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 
 1. In App Launcher, select the **Dreamhouse** app.
 
-## Sample Data Import
+## Installing Dreamhouse using a Developer Edition Org or a Trailhead Playground
+
+Follow this set of instructions if you want to deploy the app to a more permanent environment than a Scratch org.
+This includes non source-tracked orgs such as a [free Developer Edition Org](https://developer.salesforce.com/signup) or a [Trailhead Playground](https://trailhead.salesforce.com/).
+
+Make sure to start from a brand-new environment to avoid conflicts with previous work you may have done.
+
+1. Authenticate with your Trailhead Playground or Developer org and provide it with an alias (**mydevorg** in the command below):
+
+    ```
+    sfdx force:auth:web:login -d -a mydevorg
+    ```
+
+1. Clone this repository:
+
+    ```
+    git clone https://github.com/dreamhouseapp/dreamhouse-lwc
+    cd dreamhouse-lwc
+    ```
+
+1. If you are setting up a Developer Edition: go to **Setup**, under **My Domain**, [register a My Domain](https://help.salesforce.com/articleView?id=domain_name_setup.htm&type=5).
+
+1. Run this command in a terminal to deploy the app.
+
+    ```
+    sfdx force:source:deploy -p force-app
+    ```
+
+1. Assign the `dreamhouse` permission set to the default user.
+
+    ```
+    sfdx force:user:permset:assign -n dreamhouse
+    ```
+
+1. Import some sample data.
+
+    ```
+    sfdx force:data:tree:import -p ./data/sample-data-plan.json
+    ```
+
+1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
+
+1. In App Launcher, select the **Dreamhouse** app.
+
+
+## Note on Sample Data Import
 
 Properties inserted using the Salesforce CLI will appear as listed on TODAY() - 10 days. If you want to have this value randomized, perform the data import from the app Settings tab instead.
 
