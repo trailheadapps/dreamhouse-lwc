@@ -13,7 +13,7 @@ export default class SampleDataImporter extends LightningElement {
                 });
                 this.dispatchEvent(evt);
             })
-            .catch((e) => {
+            .catch(e => {
                 const evt = new ShowToastEvent({
                     title: 'Error while importing data',
                     message: e.message,
