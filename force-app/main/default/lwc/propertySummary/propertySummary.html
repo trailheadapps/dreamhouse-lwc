@@ -23,16 +23,16 @@
             </div>
         </template>
         <template if:false={propertyId}>
-            <c-inline-message
+            <c-error-panel
                 message="Select a property to see details"
-            ></c-inline-message>
+            ></c-error-panel>
         </template>
         <template if:true={property.error}>
-            <c-inline-message
+            <c-error-panel
                 variant="error"
                 message="Error retrieving data"
                 errors={property.error}
-            ></c-inline-message>
+            ></c-error-panel>
         </template>
     </lightning-card>
 </template>

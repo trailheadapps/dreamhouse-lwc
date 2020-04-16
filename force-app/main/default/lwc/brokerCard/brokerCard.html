@@ -16,10 +16,10 @@
             </div>
         </template>
         <template if:true={property.error}>
-            <c-inline-message
+            <c-error-panel
                 message="Error retrieving data"
                 errors={property.error}
-            ></c-inline-message>
+            ></c-error-panel>
         </template>
     </lightning-card>
 </template>

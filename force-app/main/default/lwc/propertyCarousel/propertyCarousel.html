@@ -34,11 +34,11 @@
             </div>
         </template>
         <template if:true={errors}>
-            <c-inline-message
+            <c-error-panel
                 variant="error"
                 message="Error retrieving pictures"
                 errors={errors}
-            ></c-inline-message>
+            ></c-error-panel>
         </template>
     </lightning-card>
 </template>
