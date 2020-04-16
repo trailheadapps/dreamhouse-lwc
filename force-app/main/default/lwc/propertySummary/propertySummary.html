@@ -24,12 +24,12 @@
         </template>
         <template if:false={propertyId}>
             <c-error-panel
-                message="Select a property to see details"
+                friendly-message="Select a property to see details"
             ></c-error-panel>
         </template>
         <template if:true={property.error}>
             <c-error-panel
-                message="Error retrieving data"
+                friendly-message="Error retrieving data"
                 errors={property.error}
             ></c-error-panel>
         </template>
