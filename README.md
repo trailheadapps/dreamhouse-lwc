@@ -140,7 +140,13 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
     sfdx force:data:tree:import -p ./data/sample-data-plan.json
     ```
 
-1. If your org isn't already open, open it now: `sfdx force:org:open -u mydevorg`. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
+1. If your org isn't already open, open it now:
+
+    ```
+    sfdx force:org:open -u mydevorg
+    ```
+
+1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
 
 1. In App Launcher, select the **Dreamhouse** app.
 
