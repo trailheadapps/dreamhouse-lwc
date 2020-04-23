@@ -22,11 +22,10 @@
             ></c-paginator>
         </template>
         <template if:true={properties.error}>
-            <c-inline-message
-                variant="error"
-                message="Error retrieving data"
+            <c-error-panel
+                friendly-message="Error retrieving data"
                 errors={properties.error}
-            ></c-inline-message>
+            ></c-error-panel>
         </template>
     </div>
 </template>
