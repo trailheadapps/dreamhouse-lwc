@@ -1,23 +1,23 @@
 <template>
-    <div class="slds-card slds-p-around_small">
+    <div class="slds-card slds-var-p-around_x-small">
         <template if:true={daysOnMarket}>
-            <div class="content">
+            <div class="slds-grid">
                 <div class={badgeClass}>
                     <div class="days">{daysOnMarket}</div>
                     days on <br />the market
                 </div>
-                <div class="chart">
-                    <div class={chartClass} style={chartStyle}></div>
-                    <div class="axis">
-                        <div>
+                <div class="slds-col slds-is-relative">
+                    <div class={barClass} style={barStyle}></div>
+                    <div class="axis slds-grid">
+                        <div class="slds-col">
                             <div class="legend">
                                 <lightning-formatted-date-time
                                     value={dateListed}
                                 ></lightning-formatted-date-time>
                             </div>
                         </div>
-                        <div><div class="legend">30 days</div></div>
-                        <div><div class="legend">60 days</div></div>
+                        <div class="slds-col"><div class="legend">30 days</div></div>
+                        <div class="slds-col"><div class="legend">60 days</div></div>
                     </div>
                 </div>
             </div>
