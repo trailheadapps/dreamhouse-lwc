@@ -16,7 +16,7 @@
                 <lightning:layoutItem
                     aura:id="centerColumn"
                     size="7"
-                    class="center"
+                    class="slds-var-p-horizontal_small"
                 >
                     {!v.center}
                 </lightning:layoutItem>
