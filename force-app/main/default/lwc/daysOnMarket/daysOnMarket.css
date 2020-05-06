@@ -1,64 +1,41 @@
-.slds-card {
-    padding: 8px;
-}
-
-.content {
-    display: flex;
-}
-
-.chart {
-    flex: 2;
-}
-
 .badge {
     text-align: center;
-    margin-right: 8px;
-    padding: 8px 12px;
-    border-radius: 0.25rem;
-    border: solid 1px rgb(216, 221, 230);
+    margin-right: var(--lwc-varSpacingXxSmall, 4px);
+    padding: var(--lwc-varSpacingXSmall, 8px) var(--lwc-varSpacingSmall, 12px);
+    border-radius: var(--lwc-borderRadiusMedium, 0.25rem);
 }
+
 .badge.alert {
-    background-color: #c23934;
-    color: #ffffff;
-    border: solid 1px #c23934;
+    background-color: rgb(194, 57, 52); /* Using RGB as var(--lwc-colorBackgroundDestructive); is internal */
+    color: var(--lwc-colorTextInverse, #ffffff);
+    border: solid 1px rgb(194, 57, 52); /* Using RGB as var(--lwc-colorBorderDestructive); is internal */
 }
 
 .badge.normal {
     background-color: #00716b;
-    color: #ffffff;
-    border: solid 1px #00716b;
+    color: var(--lwc-colorTextInverse, #ffffff);
+    border: solid var(--lwc-borderWidthThin, 1px) #00716b;
 }
 
 .badge.warning {
     background-color: #f28c00;
-    color: #ffffff;
-    border: solid 1px #f28c00;
+    color: var(--lwc-colorTextInverse, #ffffff);
+    border: solid var(--lwc-borderWidthThin, 1px) #f28c00;
 }
 
 .days {
-    font-size: 28px;
+    font-size: 28px; /* Using RGB as var(--lwc-varFontSize9); is internal */
     line-height: 28px;
-    font-weight: 300;
-    margin-right: 12px;
-    margin: 0;
-    padding: 0;
-}
-
-.chart {
-    position: relative;
-    height: 40px;
+    font-weight: var(--lwc-fontWeightLight, 300);
 }
 
 .bar {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    height: 32px;
-    width: 0;
+    height: var(--lwc-squareIconLargeContent, 32px);
     transition: all 0.5s ease-in-out;
     position: absolute;
-    bottom: 2px;
-    left: 2px;
-    right: 0;
+    left: var(--lwc-spacingXxxSmall, 2px);
 }
 
 .bar.normal {
@@ -70,31 +47,19 @@
 }
 
 .bar.alert {
-    background-color: #c23934;
+    background-color: rgb(194, 57, 52); /* Using RGB as var(--lwc-colorBackgroundDestructive); is internal */
 }
 
 .axis {
-    position: absolute;
-    left: 0;
-    right: 0;
-    display: flex;
-    bottom: 0;
+    font-weight: 200;
 }
 
 .axis > div {
     height: 34px;
-    flex: 1;
-    border-bottom: solid 1px rgb(216, 221, 230);
-    border-left: solid 1px rgb(216, 221, 230);
+    border-bottom: solid var(--lwc-borderWidthThin, 1px) rgb(216, 221, 230);
+    border-left: solid var(--lwc-borderWidthThin, 1px) rgb(216, 221, 230);
 }
 
 .axis .legend {
     margin-top: 36px;
-}
-
-.placeholder {
-    text-align: center;
-    height: 102px;
-    margin-top: 10px;
-    padding: 20px;
 }

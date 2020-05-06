@@ -1,7 +1,7 @@
 <template>
-    <div class="slds-card slds-p-around_small">
+    <div class="slds-card slds-var-p-around_small">
         <template if:true={properties.data}>
-            <div class="tile-list">
+            <div class="slds-grid slds-wrap">
                 <template
                     for:each={properties.data.records}
                     for:item="property"
@@ -10,6 +10,7 @@
                         property={property}
                         key={property.Id}
                         onselected={handlePropertySelected}
+                        class="slds-col slds-var-m-around_xx-small"
                     ></c-property-tile>
                 </template>
             </div>
