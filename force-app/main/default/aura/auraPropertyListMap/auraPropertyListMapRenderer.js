@@ -1,5 +1,5 @@
 ({
-    rerender: function(component) {
+    rerender: function (component) {
         var nodes = this.superRerender();
 
         // If the Leaflet library is not yet loaded, we can't draw the map: return
@@ -35,7 +35,7 @@
             return nodes;
         }
         var markers = [];
-        properties.forEach(function(property) {
+        properties.forEach(function (property) {
             var latLng = [
                 property.Location__Latitude__s,
                 property.Location__Longitude__s
@@ -47,7 +47,7 @@
             });
             var marker = window.L.marker(latLng, { icon: myIcon });
             marker.propertyId = property.Id;
-            var callback = $A.getCallback(function(event) {
+            var callback = $A.getCallback(function (event) {
                 var pubsub = component.find('pubsub');
                 pubsub.fireEvent(
                     'dreamhouse__propertySelected',

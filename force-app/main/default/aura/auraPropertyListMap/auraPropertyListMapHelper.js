@@ -1,5 +1,5 @@
 ({
-    getProperties: function(component) {
+    getProperties: function (component) {
         var action = component.get('c.getPropertyList');
         action.setParams({
             searchKey: component.get('v.searchKey'),
@@ -7,7 +7,7 @@
             minBedrooms: component.get('v.minBedrooms'),
             minBathrooms: component.get('v.minBathrooms')
         });
-        action.setCallback(this, function(response) {
+        action.setCallback(this, function (response) {
             var state = response.getState();
             if (state === 'SUCCESS') {
                 var properties = response.getReturnValue();
