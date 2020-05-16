@@ -26,8 +26,7 @@ export default class PropertyCarousel extends LightningElement {
             const files = pictures.data;
             if (Array.isArray(files) && files.length) {
                 this.urls = files.map(
-                    (file) =>
-                        '/sfc/servlet.shepherd/version/download/' + file.Id
+                    file => '/sfc/servlet.shepherd/version/download/' + file.Id
                 );
             } else {
                 this.urls = null;
@@ -49,7 +48,7 @@ export default class PropertyCarousel extends LightningElement {
 
     get errors() {
         const errors = [this.property.error, this.pictures.error].filter(
-            (error) => error
+            error => error
         );
         return errors.length ? errors : null;
     }

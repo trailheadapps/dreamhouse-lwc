@@ -6,7 +6,11 @@
 }
 
 .badge.alert {
-    background-color: rgb(194, 57, 52); /* Using RGB as var(--lwc-colorBackgroundDestructive); is internal */
+    background-color: rgb(
+        194,
+        57,
+        52
+    ); /* Using RGB as var(--lwc-colorBackgroundDestructive); is internal */
     color: var(--lwc-colorTextInverse, #ffffff);
     border: solid 1px rgb(194, 57, 52); /* Using RGB as var(--lwc-colorBorderDestructive); is internal */
 }
@@ -47,7 +51,11 @@
 }
 
 .bar.alert {
-    background-color: rgb(194, 57, 52); /* Using RGB as var(--lwc-colorBackgroundDestructive); is internal */
+    background-color: rgb(
+        194,
+        57,
+        52
+    ); /* Using RGB as var(--lwc-colorBackgroundDestructive); is internal */
 }
 
 .axis {
