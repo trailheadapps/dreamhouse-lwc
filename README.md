@@ -107,12 +107,6 @@ This includes non source-tracked orgs such as a [free Developer Edition Org](htt
 
 Make sure to start from a brand-new environment to avoid conflicts with previous work you may have done.
 
-1. Authorize your Trailhead Playground or Developer org and provide it with an alias (**mydevorg** in the command below):
-
-    ```
-    sfdx force:auth:web:login -d -a mydevorg
-    ```
-
 1. Clone this repository:
 
     ```
