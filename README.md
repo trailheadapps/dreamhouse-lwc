@@ -119,6 +119,11 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
     git clone https://github.com/dreamhouseapp/dreamhouse-lwc
     cd dreamhouse-lwc
     ```
+1. Authorize your Trailhead Playground or Developer org and provide it with an alias (**mydevorg** in the command below):
+
+    ```
+    sfdx force:auth:web:login -s -a mydevorg
+    ```
 
 1. If you are setting up a Developer Edition: go to **Setup**, under **My Domain**, [register a My Domain](https://help.salesforce.com/articleView?id=domain_name_setup.htm&type=5).
 
