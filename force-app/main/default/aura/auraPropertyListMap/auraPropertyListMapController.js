@@ -3,16 +3,20 @@
         helper.getProperties(component);
     },
 
-    handlePubsubReady: function (component, event, helper) {
-        var pubsub = component.find('pubsub');
-        var callback = $A.getCallback(function (filters) {
-            component.set('v.searchKey', filters.searchKey);
-            component.set('v.maxPrice', filters.maxPrice);
-            component.set('v.minBedrooms', filters.minBedrooms);
-            component.set('v.minBathrooms', filters.minBathrooms);
+    handleFiltersChange: function (component, message, helper) {
+        if (message != null) {
+            component.set('v.searchKey', message.getParam('searchKey').value);
+            component.set('v.maxPrice', message.getParam('maxPrice').value);
+            component.set(
+                'v.minBedrooms',
+                message.getParam('minBedrooms').value
+            );
+            component.set(
+                'v.minBathrooms',
+                message.getParam('minBathrooms').value
+            );
             helper.getProperties(component);
-        });
-        pubsub.registerListener('dreamhouse__filterChange', callback);
+        }
     },
 
     handleJSLoaded: function (component) {

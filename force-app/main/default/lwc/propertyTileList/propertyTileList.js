@@ -1,6 +1,12 @@
 import { LightningElement, wire } from 'lwc';
-import { CurrentPageReference } from 'lightning/navigation';
-import { registerListener, unregisterAllListeners, fireEvent } from 'c/pubsub';
+import {
+    publish,
+    subscribe,
+    unsubscribe,
+    MessageContext
+} from 'lightning/messageService';
+import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
+import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPropertyList';
 
 const PAGE_SIZE = 9;
@@ -14,19 +20,8 @@ export default class PropertyTileList extends LightningElement {
     minBedrooms = 0;
     minBathrooms = 0;
 
-    connectedCallback() {
-        registerListener(
-            'dreamhouse__filterChange',
-            this.handleFilterChange,
-            this
-        );
-    }
-
-    disconnectedCallback() {
-        unregisterAllListeners(this);
-    }
-
-    @wire(CurrentPageReference) pageRef;
+    @wire(MessageContext)
+    messageContext;
 
     @wire(getPagedPropertyList, {
         searchKey: '$searchKey',
@@ -37,6 +32,24 @@ export default class PropertyTileList extends LightningElement {
         pageNumber: '$pageNumber'
     })
     properties;
+
+    connectedCallback() {
+        if (this.subscription) {
+            return;
+        }
+        this.subscription = subscribe(
+            this.messageContext,
+            FILTERSCHANGEMC,
+            (message) => {
+                this.handleFilterChange(message);
+            }
+        );
+    }
+
+    disconnectedCallback() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
 
     handleFilterChange(filters) {
         this.searchKey = filters.searchKey;
@@ -54,6 +67,7 @@ export default class PropertyTileList extends LightningElement {
     }
 
     handlePropertySelected(event) {
-        fireEvent(this.pageRef, 'dreamhouse__propertySelected', event.detail);
+        const message = { propertyId: event.detail };
+        publish(this.messageContext, PROPERTYSELECTEDMC, message);
     }
 }

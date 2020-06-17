@@ -1,8 +1,11 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import { registerListener, unregisterAllListeners } from 'c/pubsub';
-import { CurrentPageReference } from 'lightning/navigation';
-
+import {
+    subscribe,
+    unsubscribe,
+    MessageContext
+} from 'lightning/messageService';
+import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 import DATE_LISTED_FIELD from '@salesforce/schema/Property__c.Date_Listed__c';
 import DAYS_ON_MARKET_FIELD from '@salesforce/schema/Property__c.Days_On_Market__c';
 
@@ -13,13 +16,14 @@ const MAX_DAYS_CHART = 90;
 const FIELDS = [DATE_LISTED_FIELD, DAYS_ON_MARKET_FIELD];
 
 export default class DaysOnMarket extends LightningElement {
-    propertyId;
+    error;
     daysOnMarket;
     dateListed;
+    propertyId;
     status;
-    error;
 
-    @wire(CurrentPageReference) pageRef;
+    @wire(MessageContext)
+    messageContext;
 
     @wire(getRecord, { recordId: '$propertyId', fields: FIELDS })
     wiredRecord({ error, data }) {
@@ -65,18 +69,24 @@ export default class DaysOnMarket extends LightningElement {
     }
 
     connectedCallback() {
-        registerListener(
-            'dreamhouse__propertySelected',
-            this.handlePropertySelected,
-            this
+        if (this.subscription) {
+            return;
+        }
+        this.subscription = subscribe(
+            this.messageContext,
+            PROPERTYSELECTEDMC,
+            (message) => {
+                this.handlePropertySelected(message);
+            }
         );
     }
 
     disconnectedCallback() {
-        unregisterAllListeners(this);
+        unsubscribe(this.subscription);
+        this.subscription = null;
     }
 
-    handlePropertySelected(propertyId) {
-        this.propertyId = propertyId;
+    handlePropertySelected(message) {
+        this.propertyId = message.propertyId;
     }
 }

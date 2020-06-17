@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>Search Key</description>
+        <fieldName>searchKey</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Max Price</description>
+        <fieldName>maxPrice</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Minimum number of Bedrooms</description>
+        <fieldName>minBedrooms</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Minimum number of Bathrooms</description>
+        <fieldName>minBathrooms</fieldName>
+    </lightningMessageFields>
+    <masterLabel>Filters Change Message Channel</masterLabel>
+</LightningMessageChannel>

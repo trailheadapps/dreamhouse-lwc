@@ -1,8 +1,11 @@
 import { LightningElement, api, wire } from 'lwc';
-import { CurrentPageReference } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
-
-import { registerListener, unregisterAllListeners } from 'c/pubsub';
+import {
+    subscribe,
+    unsubscribe,
+    MessageContext
+} from 'lightning/messageService';
+import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 
 const fields = [
     'Property__c.Address__c',
@@ -12,13 +15,15 @@ const fields = [
 ];
 
 export default class PropertyMap extends LightningElement {
-    propertyId;
     address;
-    zoomLevel = 14;
-    markers = [];
     error;
+    markers = [];
+    propertyId;
+    subscription = null;
+    zoomLevel = 14;
 
-    @wire(CurrentPageReference) pageRef;
+    @wire(MessageContext)
+    messageContext;
 
     @wire(getRecord, { recordId: '$propertyId', fields })
     wiredRecord({ error, data }) {
@@ -52,18 +57,24 @@ export default class PropertyMap extends LightningElement {
     }
 
     connectedCallback() {
-        registerListener(
-            'dreamhouse__propertySelected',
-            this.handlePropertySelected,
-            this
+        if (this.subscription) {
+            return;
+        }
+        this.subscription = subscribe(
+            this.messageContext,
+            PROPERTYSELECTEDMC,
+            (message) => {
+                this.handlePropertySelected(message);
+            }
         );
     }
 
     disconnectedCallback() {
-        unregisterAllListeners(this);
+        unsubscribe(this.subscription);
+        this.subscription = null;
     }
 
-    handlePropertySelected(propertyId) {
-        this.propertyId = propertyId;
+    handlePropertySelected(message) {
+        this.propertyId = message.propertyId;
     }
 }

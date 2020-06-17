@@ -1,6 +1,6 @@
 import { LightningElement, wire } from 'lwc';
-import { CurrentPageReference } from 'lightning/navigation';
-import { fireEvent } from 'c/pubsub';
+import { publish, MessageContext } from 'lightning/messageService';
+import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
 
 const DELAY = 350;
 const MAX_PRICE = 1200000;
@@ -11,7 +11,8 @@ export default class PropertyFilter extends LightningElement {
     minBedrooms = 0;
     minBathrooms = 0;
 
-    @wire(CurrentPageReference) pageRef;
+    @wire(MessageContext)
+    messageContext;
 
     handleReset() {
         this.searchKey = '';
@@ -54,7 +55,7 @@ export default class PropertyFilter extends LightningElement {
                 minBedrooms: this.minBedrooms,
                 minBathrooms: this.minBathrooms
             };
-            fireEvent(this.pageRef, 'dreamhouse__filterChange', filters);
+            publish(this.messageContext, FILTERSCHANGEMC, filters);
         }, DELAY);
     }
 }
