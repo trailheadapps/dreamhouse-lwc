@@ -57,9 +57,6 @@ export default class PropertyMap extends LightningElement {
     }
 
     connectedCallback() {
-        if (this.subscription) {
-            return;
-        }
         this.subscription = subscribe(
             this.messageContext,
             PROPERTYSELECTEDMC,

@@ -34,9 +34,6 @@ export default class PropertyTileList extends LightningElement {
     properties;
 
     connectedCallback() {
-        if (this.subscription) {
-            return;
-        }
         this.subscription = subscribe(
             this.messageContext,
             FILTERSCHANGEMC,

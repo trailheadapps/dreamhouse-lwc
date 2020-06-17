@@ -46,9 +46,6 @@ export default class PropertySummary extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
-        if (this.subscription) {
-            return;
-        }
         this.subscription = subscribe(
             this.messageContext,
             PROPERTYSELECTEDMC,
