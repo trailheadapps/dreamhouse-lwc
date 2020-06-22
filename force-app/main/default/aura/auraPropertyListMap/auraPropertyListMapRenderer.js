@@ -48,11 +48,8 @@
             var marker = window.L.marker(latLng, { icon: myIcon });
             marker.propertyId = property.Id;
             var callback = $A.getCallback(function (event) {
-                var pubsub = component.find('pubsub');
-                pubsub.fireEvent(
-                    'dreamhouse__propertySelected',
-                    event.target.propertyId
-                );
+                var mc = component.find('propertySelectedMessageChannel');
+                mc.publish({ propertyId: event.target.propertyId });
             });
             marker.on('click', callback);
             markers.push(marker);
