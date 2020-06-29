@@ -1,0 +1,55 @@
+{
+  "title": "Property Finder",
+  "steps": [
+    {
+      "file": "force-app/main/default/messageChannels/FiltersChange.messageChannel-meta.xml",
+      "line": 2,
+      "description": "[Lightning Message Channel (LMS)](https://developer.salesforce.com/docs/component-library/bundle/lightning-message-service/documentation) is a new metadata type in Summer '20, that enables cross-component communication Aura components, Lightning Web Components, and Visualforce on the same page."
+    },
+    {
+      "file": "force-app/main/default/lwc/propertyFilter/propertyFilter.js",
+      "line": 2,
+      "description": "To make use of LMS you simply import its methods into you Lightning Web Component, as well as the `MessageChannel` object that you want to use.",
+      "selection": {
+        "start": {
+          "line": 2,
+          "character": 1
+        },
+        "end": {
+          "line": 3,
+          "character": 75
+        }
+      }
+    },
+    {
+      "file": "force-app/main/default/lwc/propertyFilter/propertyFilter.js",
+      "line": 58,
+      "description": "The shape of the data that you send using the `publish` method (3rd parameter) needs to map the shape that is defined in the `MessageChannel` object."
+    },
+    {
+      "file": "force-app/main/default/lwc/daysOnMarket/daysOnMarket.js",
+      "line": 72,
+      "description": "On the receiving component you use the `subscribe` method, that will then process the data of the sent message.",
+      "selection": {
+        "start": {
+          "line": 72,
+          "character": 29
+        },
+        "end": {
+          "line": 72,
+          "character": 38
+        }
+      }
+    },
+    {
+      "file": "force-app/main/default/aura/auraPropertyListMap/auraPropertyListMap.cmp",
+      "line": 24,
+      "description": "Within an Aura component you would use the `lightning:messageChannel` base component to publish or receive data."
+    },
+    {
+      "file": "force-app/main/default/aura/auraPropertyListMap/auraPropertyListMap.cmp",
+      "line": 6,
+      "description": "In the case of this component we use a 3rd party JavaScript library to display a map.\n\nVisit the **Property Finder** tab within the **DreamHouse** app for learning more about the end user experience."
+    }
+  ]
+}

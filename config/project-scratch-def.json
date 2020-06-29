@@ -1,6 +1,7 @@
 {
     "orgName": "Dreamhouse",
     "edition": "Developer",
+    "features": "Walkthroughs",
     "settings": {
         "lightningExperienceSettings": {
             "enableS1DesktopEnabled": true
@@ -12,6 +13,9 @@
         },
         "mobileSettings": {
             "enableS1EncryptedStoragePref2": false
+        },
+        "userEngagementSettings": {
+            "enableOrchestrationInSandbox": true
         }
     }
 }
