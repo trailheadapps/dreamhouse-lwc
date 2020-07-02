@@ -41,10 +41,7 @@
         "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,yaml,yml,xml}": [
             "prettier --write"
         ],
-        "**/lwc/**": [
-            "eslint"
-        ],
-        "**/aura/**": [
+        "**/{aura|lwc}/**": [
             "eslint"
         ]
     }
