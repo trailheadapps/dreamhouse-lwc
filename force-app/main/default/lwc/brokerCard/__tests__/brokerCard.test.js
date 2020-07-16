@@ -31,8 +31,6 @@ const BROKER_FIELDS_INPUT = [
     }
 ];
 
-const OBJECT_API_NAME_INPUT = 'Broker__c';
-
 describe('c-broker-card', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -66,7 +64,7 @@ describe('c-broker-card', () => {
                 const propertyEl = element.shadowRoot.querySelector(
                     'lightning-record-form'
                 );
-                expect(getFieldValue.mock.calls.length).toBe(1);
+                expect(getFieldValue).toHaveBeenCalled();
                 expect(propertyEl.recordId).toBe(BROKER_ID);
             });
         });
@@ -90,7 +88,6 @@ describe('c-broker-card', () => {
                 );
                 expect(propertyEl.fields).toEqual(BROKER_FIELDS_INPUT);
                 expect(propertyEl.recordId).toBe(BROKER_ID);
-                expect(propertyEl.objectApiName).toBe(OBJECT_API_NAME_INPUT);
             });
         });
     });
