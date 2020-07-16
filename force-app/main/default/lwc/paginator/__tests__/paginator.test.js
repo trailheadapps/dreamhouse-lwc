@@ -22,11 +22,11 @@ describe('c-paginator', () => {
         // Add event listener to catch child events
         element.addEventListener('next', handlerNext);
 
-        element.shadowRoot
-            .querySelectorAll('lightning-button-icon')
-            .forEach((button) => {
-                button.click();
-            });
+        // Click the next(>) button
+        const nextButtonEl = element.shadowRoot.querySelector(
+            '.right-button-icon'
+        );
+        nextButtonEl.click();
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
@@ -50,11 +50,11 @@ describe('c-paginator', () => {
         // Add event listener to catch child events
         element.addEventListener('previous', handlerPrevious);
 
-        element.shadowRoot
-            .querySelectorAll('lightning-button-icon')
-            .forEach((button) => {
-                button.click();
-            });
+        // Click the Previous(<) button
+        const prevButtonEl = element.shadowRoot.querySelector(
+            '.left-button-icon'
+        );
+        prevButtonEl.click();
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
