@@ -15,8 +15,6 @@ import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 import DATE_LISTED_FIELD from '@salesforce/schema/Property__c.Date_Listed__c';
 import DAYS_ON_MARKET_FIELD from '@salesforce/schema/Property__c.Days_On_Market__c';
 
-const MAX_DAYS_NORMAL_STATUS = 30;
-const MAX_DAYS_WARNING_STATUS = 60;
 const MAX_DAYS_CHART = 90;
 
 const mockGetRecord = require('./data/getRecord.json');
