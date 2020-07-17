@@ -1,12 +1,13 @@
 import { createElement } from 'lwc';
 import PropertyTile from 'c/propertyTile';
 
-const PROPERTY_DETAILS = {
+const PROPERTY = {
     City__c: 'Some City',
     Beds__c: '3',
     Baths__c: '1',
     Price__c: '450000',
-    Thumbnail__c: 'some-property.jpg'
+    Thumbnail__c: 'some-property.jpg',
+    Id: '12345'
 };
 
 describe('c-property-tile', () => {
@@ -21,41 +22,41 @@ describe('c-property-tile', () => {
         const element = createElement('c-property-tile', {
             is: PropertyTile
         });
-        element.property = PROPERTY_DETAILS;
+        element.property = PROPERTY;
         document.body.appendChild(element);
 
         const headerEl = element.shadowRoot.querySelector('.truncate');
-        expect(headerEl.textContent).toBe(PROPERTY_DETAILS.City__c);
+        expect(headerEl.textContent).toBe(PROPERTY.City__c);
 
-        const pElement = element.shadowRoot.querySelector('p');
-        expect(pElement.textContent).toBe(
-            `Beds: ${PROPERTY_DETAILS.Beds__c} - Baths: ${PROPERTY_DETAILS.Baths__c}`
+        const paragraphEl = element.shadowRoot.querySelector('p');
+        expect(paragraphEl.textContent).toBe(
+            `Beds: ${PROPERTY.Beds__c} - Baths: ${PROPERTY.Baths__c}`
         );
 
-        const priceElement = element.shadowRoot.querySelector(
+        const priceEl = element.shadowRoot.querySelector(
             'lightning-formatted-number'
         );
-        expect(priceElement.value).toBe(PROPERTY_DETAILS.Price__c);
+        expect(priceEl.value).toBe(PROPERTY.Price__c);
     });
 
     it('displays the correct background image in the tile', () => {
         const element = createElement('c-property-tile', {
             is: PropertyTile
         });
-        element.property = PROPERTY_DETAILS;
+        element.property = PROPERTY;
         document.body.appendChild(element);
 
-        const bgElement = element.shadowRoot.querySelector('.tile');
-        expect(bgElement.style.backgroundImage).toBe(
-            `url(${PROPERTY_DETAILS.Thumbnail__c})`
+        const backgroundEl = element.shadowRoot.querySelector('.tile');
+        expect(backgroundEl.style.backgroundImage).toBe(
+            `url(${PROPERTY.Thumbnail__c})`
         );
     });
 
-    it('fires the property selected event on click', () => {
+    it('fires the property "selected" event on click', () => {
         const element = createElement('c-property-tile', {
             is: PropertyTile
         });
-        element.property = PROPERTY_DETAILS;
+        element.property = PROPERTY;
         document.body.appendChild(element);
 
         // Mock handler for child event
@@ -68,6 +69,8 @@ describe('c-property-tile', () => {
         return Promise.resolve().then(() => {
             // Validate if event got fired
             expect(handler).toHaveBeenCalled();
+            const selectEvent = handler.mock.calls[0][0];
+            expect(selectEvent.detail).toBe(PROPERTY.Id);
         });
     });
 });
