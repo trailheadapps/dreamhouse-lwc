@@ -4,7 +4,7 @@
     },
 
     handleFiltersChange: function (component, message, helper) {
-        if (message != null) {
+        if (message !== null) {
             component.set('v.searchKey', message.getParam('searchKey').value);
             component.set('v.maxPrice', message.getParam('maxPrice').value);
             component.set(

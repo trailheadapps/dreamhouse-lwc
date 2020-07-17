@@ -55,6 +55,7 @@
             marker.propertyId = property.Id;
             var callback = $A.getCallback(function (event) {
                 var mc = component.find('propertySelectedMessageChannel');
+
                 mc.publish({ propertyId: event.target.propertyId });
             });
 
