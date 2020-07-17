@@ -19,32 +19,6 @@ describe('c-property-filter', () => {
         jest.clearAllMocks();
     });
 
-    it('renders the component with all the filters', () => {
-        // Create initial element
-        const element = createElement('c-property-filter', {
-            is: PropertyFilter
-        });
-        document.body.appendChild(element);
-
-        // Query lightning-button element
-        const lightningButtonEl = element.shadowRoot.querySelector(
-            'lightning-button'
-        );
-        expect(lightningButtonEl).not.toBeNull();
-
-        // Query lightning-input element
-        const lightningInputEl = element.shadowRoot.querySelector(
-            'lightning-input'
-        );
-        expect(lightningInputEl).not.toBeNull();
-
-        // Query lightning-slider elements
-        const lightningSliderEls = element.shadowRoot.querySelectorAll(
-            'lightning-slider'
-        );
-        expect(lightningSliderEls.length).toBe(3);
-    });
-
     it('fires the change event on new search input', () => {
         // Create initial element
         const element = createElement('c-property-filter', {
@@ -201,6 +175,41 @@ describe('c-property-filter', () => {
         });
     });
 
+    it('fires change event when reset button is clicked', () => {
+        // Create initial element
+        const element = createElement('c-property-filter', {
+            is: PropertyFilter
+        });
+        document.body.appendChild(element);
+
+        // Mock handlers for click event
+        const handleReset = jest.fn();
+        element.addEventListener('click', handleReset);
+
+        // Query lightning-input element
+        const lightningButtonEl = element.shadowRoot.querySelector(
+            'lightning-button'
+        );
+        lightningButtonEl.click();
+        // Run all fake timers.
+        jest.runAllTimers();
+
+        const DEFAULT_SEARCH_CRITERIA = {
+            searchKey: '',
+            maxPrice: MAX_PRICE,
+            minBedrooms: 0,
+            minBathrooms: 0
+        };
+        return Promise.resolve().then(() => {
+            // Was publish called and was it called with the correct params?
+            expect(publish).toHaveBeenCalledWith(
+                undefined,
+                FILTERSCHANGEMC,
+                DEFAULT_SEARCH_CRITERIA
+            );
+        });
+    });
+
     it('resets to default values when reset button is clicked', () => {
         // Create initial element
         const element = createElement('c-property-filter', {
@@ -220,18 +229,43 @@ describe('c-property-filter', () => {
         // Run all fake timers.
         jest.runAllTimers();
 
-        const SEARCH_CRITERIA = {
+        const DEFAULT_SEARCH_CRITERIA = {
             searchKey: '',
             maxPrice: MAX_PRICE,
             minBedrooms: 0,
             minBathrooms: 0
         };
         return Promise.resolve().then(() => {
-            // Was publish called and was it called with the correct params?
-            expect(publish).toHaveBeenCalledWith(
-                undefined,
-                FILTERSCHANGEMC,
-                SEARCH_CRITERIA
+            // Select element for validation
+            const searchKeyEl = element.shadowRoot.querySelector(
+                'lightning-input'
+            );
+            //check for default searchkey value
+            expect(searchKeyEl.value).toBe(DEFAULT_SEARCH_CRITERIA.searchKey);
+
+            // Select element for validation
+            const maxPriceEl = element.shadowRoot.querySelector(
+                'lightning-slider'
+            );
+            //check for default searchkey value
+            expect(maxPriceEl.value).toBe(DEFAULT_SEARCH_CRITERIA.maxPrice);
+
+            // Select element for validation
+            const minBedroomsEl = element.shadowRoot.querySelectorAll(
+                'lightning-slider'
+            )[1];
+            //check for default searchkey value
+            expect(minBedroomsEl.value).toBe(
+                DEFAULT_SEARCH_CRITERIA.minBedrooms
+            );
+
+            // Select element for validation
+            const minBathroomsEl = element.shadowRoot.querySelectorAll(
+                'lightning-slider'
+            )[2];
+            //check for default searchkey value
+            expect(minBathroomsEl.value).toBe(
+                DEFAULT_SEARCH_CRITERIA.minBathrooms
             );
         });
     });
