@@ -99,27 +99,25 @@ describe('c-days-on-market', () => {
 
     describe('getRecord @wire data', () => {
         function validateHTML(element, type) {
-            const contentFirstDivEl = element.shadowRoot.querySelector(
-                'div.content > div'
+            const badgeEl = element.shadowRoot.querySelector(
+                `div.badge.${type}`
             );
-            expect(contentFirstDivEl.classList.contains('badge')).toBeTruthy();
-            expect(contentFirstDivEl.classList.contains(type)).toBeTruthy();
+            expect(badgeEl).not.toBeNull();
 
             const daysDivEl = element.shadowRoot.querySelector('div.days');
             expect(daysDivEl.textContent).toBe(
                 getFieldValue(mockGetRecord, DAYS_ON_MARKET_FIELD).toString()
             );
 
-            const chartFirstDivEl = element.shadowRoot.querySelector(
-                'div.chart > div'
+            const chartBarEl = element.shadowRoot.querySelector(
+                `div.bar.${type}`
             );
-            expect(chartFirstDivEl.classList.contains('bar')).toBeTruthy();
-            expect(chartFirstDivEl.classList.contains(type)).toBeTruthy();
+            expect(chartBarEl).not.toBeNull();
             const width =
                 (getFieldValue(mockGetRecord, DAYS_ON_MARKET_FIELD) /
                     MAX_DAYS_CHART) *
                 100;
-            expect(chartFirstDivEl.style.width).toBe(`${width}%`);
+            expect(chartBarEl.style.width).toBe(`${width}%`);
 
             const formattedDateTimeEl = element.shadowRoot.querySelector(
                 'lightning-formatted-date-time'
@@ -130,6 +128,7 @@ describe('c-days-on-market', () => {
         }
 
         describe('renders days on market', () => {
+            // eslint-disable-next-line jest/expect-expect
             it('in normal case', () => {
                 // Create element
                 const element = createElement('c-days-on-market', {
@@ -150,6 +149,7 @@ describe('c-days-on-market', () => {
                 });
             });
 
+            // eslint-disable-next-line jest/expect-expect
             it('in warning case', () => {
                 // Create element
                 const element = createElement('c-days-on-market', {
@@ -171,6 +171,7 @@ describe('c-days-on-market', () => {
                 });
             });
 
+            // eslint-disable-next-line jest/expect-expect
             it('in alert case', () => {
                 // Create element
                 const element = createElement('c-days-on-market', {
@@ -194,7 +195,7 @@ describe('c-days-on-market', () => {
         });
     });
     describe('getRecord @wire error', () => {
-        it('renders an error panel when there is error', () => {
+        it('renders an error panel when there is an error', () => {
             const APEX_ERROR = {
                 body: 'Error retrieving records',
                 ok: false,
