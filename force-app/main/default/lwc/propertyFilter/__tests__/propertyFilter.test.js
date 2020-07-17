@@ -5,6 +5,13 @@ import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
 
 const MAX_PRICE = 1200000;
 
+const DEFAULT_SEARCH_CRITERIA = {
+    searchKey: '',
+    maxPrice: MAX_PRICE,
+    minBedrooms: 0,
+    minBathrooms: 0
+};
+
 describe('c-property-filter', () => {
     beforeAll(() => {
         // We use fake timers as setTimeout is used in the JavaScript file.
@@ -30,7 +37,6 @@ describe('c-property-filter', () => {
         const lightningInputEl = element.shadowRoot.querySelector(
             'lightning-input'
         );
-        lightningInputEl.value = 'Boston';
         lightningInputEl.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -69,7 +75,6 @@ describe('c-property-filter', () => {
         const lightningSliderEl = element.shadowRoot.querySelector(
             'lightning-slider'
         );
-        lightningSliderEl.value = 4500000;
         lightningSliderEl.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -108,7 +113,6 @@ describe('c-property-filter', () => {
         const lightningSliderEl = element.shadowRoot.querySelectorAll(
             'lightning-slider'
         )[1];
-        lightningSliderEl.value = 2;
         lightningSliderEl.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -147,7 +151,6 @@ describe('c-property-filter', () => {
         const lightningSliderEl = element.shadowRoot.querySelectorAll(
             'lightning-slider'
         )[2];
-        lightningSliderEl.value = 2;
         lightningSliderEl.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -182,11 +185,7 @@ describe('c-property-filter', () => {
         });
         document.body.appendChild(element);
 
-        // Mock handlers for click event
-        const handleReset = jest.fn();
-        element.addEventListener('click', handleReset);
-
-        // Query lightning-input element
+        // Click reset button
         const lightningButtonEl = element.shadowRoot.querySelector(
             'lightning-button'
         );
@@ -194,12 +193,6 @@ describe('c-property-filter', () => {
         // Run all fake timers.
         jest.runAllTimers();
 
-        const DEFAULT_SEARCH_CRITERIA = {
-            searchKey: '',
-            maxPrice: MAX_PRICE,
-            minBedrooms: 0,
-            minBathrooms: 0
-        };
         return Promise.resolve().then(() => {
             // Was publish called and was it called with the correct params?
             expect(publish).toHaveBeenCalledWith(
@@ -217,54 +210,58 @@ describe('c-property-filter', () => {
         });
         document.body.appendChild(element);
 
-        // Mock handlers for click event
-        const handleReset = jest.fn();
-        element.addEventListener('click', handleReset);
+        // Set inital form values
+        let searchKeyEl = element.shadowRoot.querySelector('lightning-input');
+        searchKeyEl.dispatchEvent(
+            new CustomEvent('change', {
+                detail: {
+                    value: 'someValue'
+                }
+            })
+        );
+        let sliderEls = element.shadowRoot.querySelectorAll('lightning-slider');
+        sliderEls[0].dispatchEvent(
+            new CustomEvent('change', {
+                detail: {
+                    value: 1
+                }
+            })
+        );
+        sliderEls[1].dispatchEvent(
+            new CustomEvent('change', {
+                detail: {
+                    value: 2
+                }
+            })
+        );
+        sliderEls[2].dispatchEvent(
+            new CustomEvent('change', {
+                detail: {
+                    value: 3
+                }
+            })
+        );
 
-        // Query lightning-input element
+        // Click reset button
         const lightningButtonEl = element.shadowRoot.querySelector(
             'lightning-button'
         );
         lightningButtonEl.click();
-        // Run all fake timers.
-        jest.runAllTimers();
 
-        const DEFAULT_SEARCH_CRITERIA = {
-            searchKey: '',
-            maxPrice: MAX_PRICE,
-            minBedrooms: 0,
-            minBathrooms: 0
-        };
         return Promise.resolve().then(() => {
-            // Select element for validation
-            const searchKeyEl = element.shadowRoot.querySelector(
-                'lightning-input'
-            );
-            //check for default searchkey value
+            // Check for default searchkey value
+            searchKeyEl = element.shadowRoot.querySelector('lightning-input');
             expect(searchKeyEl.value).toBe(DEFAULT_SEARCH_CRITERIA.searchKey);
 
-            // Select element for validation
-            const maxPriceEl = element.shadowRoot.querySelector(
-                'lightning-slider'
-            );
-            //check for default searchkey value
-            expect(maxPriceEl.value).toBe(DEFAULT_SEARCH_CRITERIA.maxPrice);
-
-            // Select element for validation
-            const minBedroomsEl = element.shadowRoot.querySelectorAll(
-                'lightning-slider'
-            )[1];
-            //check for default searchkey value
-            expect(minBedroomsEl.value).toBe(
+            sliderEls = element.shadowRoot.querySelectorAll('lightning-slider');
+            // Check for default maxPrice value
+            expect(sliderEls[0].value).toBe(DEFAULT_SEARCH_CRITERIA.maxPrice);
+            // Check for default minBedrooms value
+            expect(sliderEls[1].value).toBe(
                 DEFAULT_SEARCH_CRITERIA.minBedrooms
             );
-
-            // Select element for validation
-            const minBathroomsEl = element.shadowRoot.querySelectorAll(
-                'lightning-slider'
-            )[2];
-            //check for default searchkey value
-            expect(minBathroomsEl.value).toBe(
+            // Check for default minBathrooms value
+            expect(sliderEls[2].value).toBe(
                 DEFAULT_SEARCH_CRITERIA.minBathrooms
             );
         });
