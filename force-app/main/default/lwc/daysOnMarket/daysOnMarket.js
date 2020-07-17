@@ -21,6 +21,7 @@ export default class DaysOnMarket extends LightningElement {
     dateListed;
     propertyId;
     status;
+    subscription;
 
     @wire(MessageContext)
     messageContext;
