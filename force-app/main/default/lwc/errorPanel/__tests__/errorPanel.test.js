@@ -43,8 +43,8 @@ describe('c-error-panel', () => {
         });
         document.body.appendChild(element);
 
-        const inputEl = element.shadowRoot.querySelector('lightning-input');
-        expect(inputEl).toBeNull();
+        const anchorEl = element.shadowRoot.querySelector('a');
+        expect(anchorEl).toBeNull();
     });
 
     it('displays error details when errors are passed as parameters', () => {
@@ -58,12 +58,12 @@ describe('c-error-panel', () => {
         const element = createElement('c-error-panel', {
             is: ErrorPanel
         });
+        element.type = 'inlineMessage';
         element.errors = ERROR_MESSAGES_INPUT;
         document.body.appendChild(element);
 
-        const inputEl = element.shadowRoot.querySelector('lightning-input');
-        inputEl.checked = true;
-        inputEl.dispatchEvent(new CustomEvent('change'));
+        // Click link to show details
+        element.shadowRoot.querySelector('a').click();
 
         // Return a promise to wait for any asynchronous DOM updates. Jest
         // will automatically wait for the Promise chain to complete before
