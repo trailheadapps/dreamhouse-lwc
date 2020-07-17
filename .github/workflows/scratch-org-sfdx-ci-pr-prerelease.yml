@@ -33,7 +33,7 @@ jobs:
             # Install npm dependencies for Prettier and Jest
             - name: 'Install npm dependencies'
               if: steps.cache-npm.outputs.cache-hit != 'true'
-              run: npm install
+              run: npm ci
 
             # Prettier formatting
             - name: 'Code formatting verification with Prettier'
@@ -42,6 +42,10 @@ jobs:
             # Lint LWC
             - name: 'Lint Lightning Web Components'
               run: npm run lint:lwc
+
+            # Lint Aura
+            - name: 'Lint Aura components'
+              run: 'npm run lint:aura'
 
             # LWC unit tests
             - name: 'Unit test Lightning Web Components'
@@ -81,10 +85,6 @@ jobs:
             # Authenticate dev hub
             - name: 'Authenticate Dev Hub'
               run: 'sfdx force:auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d'
-
-            # Lint Aura components
-            - name: 'Lint Aura components'
-              run: 'sfdx force:lightning:lint force-app/main/default/aura --exit'
 
             # Create scratch org
             - name: 'Create scratch org'

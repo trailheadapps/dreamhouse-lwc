@@ -60,11 +60,11 @@ export default class DaysOnMarket extends LightningElement {
         return 'badge ' + this.status;
     }
 
-    get chartClass() {
+    get barClass() {
         return 'bar ' + this.status;
     }
 
-    get chartStyle() {
+    get barStyle() {
         const value = (this.daysOnMarket / MAX_DAYS_CHART) * 100;
         return 'width:' + value + '%';
     }
