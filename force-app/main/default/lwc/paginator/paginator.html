@@ -3,17 +3,19 @@
         <lightning-layout-item size="2">
             <template if:false={isFirstPage}>
                 <lightning-button-icon
+                    class="left-button-icon"
                     icon-name="utility:chevronleft"
                     onclick={handlePrevious}
                 ></lightning-button-icon>
             </template>
         </lightning-layout-item>
-        <lightning-layout-item size="8" class="slds-text-align_center">
+        <lightning-layout-item size="8" class="nav-info slds-text-align_center">
             {totalItemCount} items • page {currentPageNumber} of {totalPages}
         </lightning-layout-item>
-        <lightning-layout-item size="2" class="slds-text-align_right">
+        <lightning-layout-item size="2" class="nav-next slds-text-align_right">
             <template if:false={isLastPage}>
                 <lightning-button-icon
+                    class="right-button-icon"
                     icon-name="utility:chevronright"
                     onclick={handleNext}
                 ></lightning-button-icon>

@@ -21,7 +21,15 @@
 
     <aura:handler name="init" value="{!this}" action="{!c.handleInit}" />
 
-    <c:auraPubsub aura:id="pubsub" onready="{!c.handlePubsubReady}" />
+    <lightning:messageChannel
+        type="FiltersChange__c"
+        onMessage="{!c.handleFiltersChange}"
+        aura:id="filtersChangeMessageChannel"
+    />
+    <lightning:messageChannel
+        type="PropertySelected__c"
+        aura:id="propertySelectedMessageChannel"
+    />
 
     <lightning:card>
         <div aura:id="map"></div>

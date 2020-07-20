@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>Property Id</description>
+        <fieldName>propertyId</fieldName>
+    </lightningMessageFields>
+    <masterLabel>Property Selected Message Channel</masterLabel>
+</LightningMessageChannel>

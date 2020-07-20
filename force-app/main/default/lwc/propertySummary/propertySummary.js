@@ -1,8 +1,12 @@
 import { LightningElement, api, wire } from 'lwc';
-import { CurrentPageReference } from 'lightning/navigation';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
-import { registerListener, unregisterAllListeners } from 'c/pubsub';
+import {
+    subscribe,
+    unsubscribe,
+    MessageContext
+} from 'lightning/messageService';
+import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 import NAME_FIELD from '@salesforce/schema/Property__c.Name';
 import BED_FIELD from '@salesforce/schema/Property__c.Beds__c';
 import BATH_FIELD from '@salesforce/schema/Property__c.Baths__c';
@@ -13,8 +17,10 @@ import PICTURE_FIELD from '@salesforce/schema/Property__c.Picture__c';
 export default class PropertySummary extends NavigationMixin(LightningElement) {
     propertyId;
     propertyFields = [BED_FIELD, BATH_FIELD, PRICE_FIELD, BROKER_FIELD];
+    subscription = null;
 
-    @wire(CurrentPageReference) pageRef;
+    @wire(MessageContext)
+    messageContext;
 
     @wire(getRecord, {
         recordId: '$propertyId',
@@ -40,19 +46,22 @@ export default class PropertySummary extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
-        registerListener(
-            'dreamhouse__propertySelected',
-            this.handlePropertySelected,
-            this
+        this.subscription = subscribe(
+            this.messageContext,
+            PROPERTYSELECTEDMC,
+            (message) => {
+                this.handlePropertySelected(message);
+            }
         );
     }
 
     disconnectedCallback() {
-        unregisterAllListeners(this);
+        unsubscribe(this.subscription);
+        this.subscription = null;
     }
 
-    handlePropertySelected(propertyId) {
-        this.propertyId = propertyId;
+    handlePropertySelected(message) {
+        this.propertyId = message.propertyId;
     }
 
     handleNavigateToRecord() {

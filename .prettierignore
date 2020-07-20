@@ -7,3 +7,4 @@
 .sfdx
 .vscode
 jsconfig.json
+coverage/

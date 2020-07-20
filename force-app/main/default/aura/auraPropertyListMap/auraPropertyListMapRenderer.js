@@ -54,12 +54,9 @@
 
             marker.propertyId = property.Id;
             var callback = $A.getCallback(function (event) {
-                var pubsub = component.find('pubsub');
+                var mc = component.find('propertySelectedMessageChannel');
 
-                pubsub.fireEvent(
-                    'dreamhouse__propertySelected',
-                    event.target.propertyId
-                );
+                mc.publish({ propertyId: event.target.propertyId });
             });
 
             marker.on('click', callback);
