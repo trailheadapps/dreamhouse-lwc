@@ -104,6 +104,13 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 
 1. Click the **Settings** tab and click the **Import Data** button in the **Sample Data Import** component.
 
+1. If you're attempting the [Trailhead Quick Start](https://trailhead.salesforce.com/en/content/learn/projects/quick-start-dreamhouse-sample-app), this step is required, but otherwise, skip:
+
+    - Go to **Setup > Users > Permission Sets**.
+    - Click **dreamhouse**.
+    - Click **Manage Assignments**.
+    - Check your user and click **Add Assignments**.
+
 1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
 
 1. In App Launcher, select the **Dreamhouse** app.
