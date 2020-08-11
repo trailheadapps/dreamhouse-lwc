@@ -8,6 +8,14 @@
 
 DreamHouse is a sample application that demonstrates the unique value proposition of the Salesforce platform for building Employee Productivity and Customer Engagement apps.
 
+<div>
+    <img src="https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70,w_50/learn/projects/quick-start-dreamhouse-sample-app/17d9a9454cb84973b3adfe25e9f12b01_badge.png" align="left" alt="Trailhead Badge"/>
+    Learn more about this app by completing the <a href="https://trailhead.salesforce.com/en/content/learn/projects/quick-start-dreamhouse-sample-app">Quick Start: Explore the Dreamhouse Sample App</a> Trailhead project.
+    <br/>
+    <br/>
+    <br/>
+</div>
+
 > This sample application is designed to run on Salesforce Platform. If you want to experience Lightning Web Components on any platform, please visit https://lwc.dev, and try out our Lightning Web Components sample application [LWC Recipes OSS](https://github.com/trailheadapps/lwc-recipes-oss).
 
 ## Table of contents
