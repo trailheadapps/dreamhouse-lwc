@@ -104,7 +104,7 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 
 1. Click the **Settings** tab and click the **Import Data** button in the **Sample Data Import** component.
 
-1. If you're attempting the [Trailhead Quick Start](https://trailhead.salesforce.com/en/content/learn/projects/quick-start-dreamhouse-sample-app), this step is required, but otherwise, skip:
+1. If you're attempting the [Quick Start](https://trailhead.salesforce.com/en/content/learn/projects/quick-start-dreamhouse-sample-app) on Trailhead, this step is required, but otherwise, skip:
 
     - Go to **Setup > Users > Permission Sets**.
     - Click **dreamhouse**.
