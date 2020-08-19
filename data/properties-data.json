@@ -18,6 +18,7 @@
             "Location__Latitude__s": 42.35663,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house01.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house01sq.jpg",
+            "Tags__c": "victorian",
             "Description__c": "Lorem ipsum dolor sit amet",
             "Broker__c": "@CarolineBrookerRef"
         },
@@ -39,6 +40,7 @@
             "Location__Latitude__s": 42.359103,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house02.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house02sq.jpg",
+            "Tags__c": "colonial",
             "Description__c": "Lorem ipsum dolor sit amet",
             "Broker__c": "@MichaelJonesRef"
         },
@@ -60,8 +62,9 @@
             "Location__Latitude__s": 42.335435,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house03.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house03sq.jpg",
+            "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@JenniferWuRef"
+            "Broker__c": "@JonathanBradleyRef"
         },
         {
             "attributes": {
@@ -81,6 +84,7 @@
             "Location__Latitude__s": 42.360642,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house04.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house04sq.jpg",
+            "Tags__c": "colonial",
             "Description__c": "Lorem ipsum dolor sit amet",
             "Broker__c": "@JenniferWuRef"
         },
@@ -98,10 +102,11 @@
             "Title__c": "Waterfront in the City",
             "Beds__c": 3,
             "Baths__c": 2,
-            "Location__Longitude__s": -71.053943,
-            "Location__Latitude__s": 42.372486,
+            "Location__Longitude__s": -71.084454,
+            "Location__Latitude__s": 42.368168,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house05.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house05sq.jpg",
+            "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
             "Broker__c": "@OliviaGreenRef"
         },
@@ -123,6 +128,7 @@
             "Location__Latitude__s": 42.366855,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house06.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house06sq.jpg",
+            "Tags__c": "colonial",
             "Description__c": "Lorem ipsum dolor sit amet",
             "Broker__c": "@MiriamAupontRef"
         },
@@ -144,6 +150,7 @@
             "Location__Latitude__s": 42.365003,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house07.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house07sq.jpg",
+            "Tags__c": "colonial",
             "Description__c": "Lorem ipsum dolor sit amet",
             "Broker__c": "@MichelleLambertRef"
         },
@@ -165,8 +172,9 @@
             "Location__Latitude__s": 42.374117,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house10.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house10sq.jpg",
+            "Tags__c": "victorian",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@SeniorBrokerRef"
+            "Broker__c": "@VictorOchoaRef"
         },
         {
             "attributes": {
@@ -186,6 +194,7 @@
             "Location__Latitude__s": 42.35695,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house09.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house09sq.jpg",
+            "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
             "Broker__c": "@CarolineBrookerRef"
         },
@@ -194,7 +203,7 @@
                 "type": "Property__c",
                 "referenceId": "640HarrisonAveRef"
             },
-            "Name": "City Living",
+            "Name": "Contemporary City Living",
             "Address__c": "640 Harrison Ave",
             "City__c": "Boston",
             "State__c": "MA",
@@ -207,6 +216,7 @@
             "Location__Latitude__s": 42.339892,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house08.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house08sq.jpg",
+            "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
             "Broker__c": "@MichaelJonesRef"
         },
@@ -228,8 +238,9 @@
             "Location__Longitude__s": -71.084407,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house11.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house11sq.jpg",
+            "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@CarolineBrookerRef"
+            "Broker__c": "@JonathanBradleyRef"
         },
         {
             "attributes": {
@@ -249,8 +260,9 @@
             "Location__Longitude__s": -71.075311,
             "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house12.jpg",
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house12sq.jpg",
+            "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@MichaelJonesRef"
+            "Broker__c": "@JenniferWuRef"
         }
     ]
 }
