@@ -1,26 +1,26 @@
 [
     {
-        "Name": "18 Henry st",
+        "Name": "Stunning Victorian",
         "Address__c": "18 Henry st",
         "City__c": "Cambridge",
         "State__c": "MA",
         "Zip__c": "01742",
         "Price__c": 975000,
-        "Title__c": "Stunning Colonial",
+        "Title__c": "Stunning Victorian",
         "Beds__c": 4,
         "Baths__c": 3,
         "Location__Longitude__s": -71.11095,
         "Location__Latitude__s": 42.35663,
         "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house01.jpg",
         "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house01sq.jpg",
-        "Tags__c": "colonial",
+        "Tags__c": "victorian",
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 1
         }
     },
     {
-        "Name": "24 Pearl st",
+        "Name": "Ultimate Sophistication",
         "Address__c": "24 Pearl st",
         "City__c": "Cambridge",
         "State__c": "MA",
@@ -40,8 +40,8 @@
         }
     },
     {
-        "Name": "61 West Cedar st",
-        "Address__c": "61 West Cedar st",
+        "Name": "Modern City Living",
+        "Address__c": "72 Francis st",
         "City__c": "Boston",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -49,8 +49,8 @@
         "Title__c": "Modern City Living",
         "Beds__c": 5,
         "Baths__c": 4,
-        "Location__Longitude__s": -71.070061,
-        "Location__Latitude__s": 42.359986,
+        "Location__Longitude__s": -71.106827,
+        "Location__Latitude__s": 42.335435,
         "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house03.jpg",
         "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house03sq.jpg",
         "Tags__c": "contemporary",
@@ -60,28 +60,28 @@
         }
     },
     {
-        "Name": "32 Prince st",
+        "Name": "Stunning Colonial",
         "Address__c": "32 Prince st",
         "City__c": "Cambridge",
         "State__c": "MA",
         "Zip__c": "02420",
         "Price__c": 930000,
-        "Title__c": "Stunning Victorian",
+        "Title__c": "Stunning Colonial",
         "Beds__c": 5,
         "Baths__c": 4,
         "Location__Longitude__s": -71.110448,
         "Location__Latitude__s": 42.360642,
         "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house04.jpg",
         "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house04sq.jpg",
-        "Tags__c": "victorian",
+        "Tags__c": "colonial",
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 4
         }
     },
     {
-        "Name": "211 Charles Street",
-        "Address__c": "211 Charles Street",
+        "Name": "Waterfront in the city",
+        "Address__c": "110 Baxter Street",
         "City__c": "Boston",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -100,7 +100,7 @@
         }
     },
     {
-        "Name": "448 Hanover st",
+        "Name": "Quiet Retreat",
         "Address__c": "448 Hanover st",
         "City__c": "Boston",
         "State__c": "MA",
@@ -120,8 +120,8 @@
         }
     },
     {
-        "Name": "127 Endicott st",
-        "Address__c": "127 Endicott st",
+        "Name": "City Living",
+        "Address__c": "127 Endicott St",
         "City__c": "Boston",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -140,7 +140,7 @@
         }
     },
     {
-        "Name": "48 Brattle st",
+        "Name": "Heart of Harvard Square",
         "Address__c": "48 Brattle st",
         "City__c": "Cambridge",
         "State__c": "MA",
@@ -160,7 +160,7 @@
         }
     },
     {
-        "Name": "121 Harborwalk",
+        "Name": "Seaport District Retreat",
         "Address__c": "121 Harborwalk",
         "City__c": "Boston",
         "State__c": "MA",
@@ -180,8 +180,8 @@
         }
     },
     {
-        "Name": "503 Park Drive",
-        "Address__c": "503 Park Drive",
+        "Name": "Contemporary City Living",
+        "Address__c": "640 Harrison Ave",
         "City__c": "Boston",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -189,8 +189,8 @@
         "Title__c": "City Living",
         "Beds__c": 2,
         "Baths__c": 2,
-        "Location__Longitude__s": -71.105475,
-        "Location__Latitude__s": 42.347400,
+        "Location__Longitude__s": -71.068781,
+        "Location__Latitude__s": 42.339892,
         "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house08.jpg",
         "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house08sq.jpg",
         "Tags__c": "contemporary",
@@ -200,7 +200,7 @@
         }
     },
     {
-        "Name": "95 Gloucester st",
+        "Name": "Architectural Details",
         "Address__c": "95 Gloucester st",
         "City__c": "Boston",
         "State__c": "MA",
@@ -220,143 +220,23 @@
         }
     },
     {
-        "Name": "145 Commonwealth ave",
+        "Name": "Contemporary Luxury",
         "Address__c": "145 Commonwealth ave",
         "City__c": "Boston",
         "State__c": "MA",
         "Zip__c": "02420",
         "Price__c": 845000,
-        "Title__c": "Luxury Redefined",
+        "Title__c": "Contemporary Luxury",
         "Beds__c": 4,
         "Baths__c": 3,
         "Location__Latitude__s": 42.352466,
         "Location__Longitude__s": -71.075311,
         "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house12.jpg",
         "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house12sq.jpg",
-        "Tags__c": "colonial",
+        "Tags__c": "contemporary",
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 4
-        }
-    },
-    {
-        "Name": "24 Euston St",
-        "Address__c": "24 Euston St",
-        "City__c": "Brookline",
-        "State__c": "MA",
-        "Zip__c": "02446",
-        "Price__c": 690000,
-        "Title__c": "Historical Victorian",
-        "Beds__c": 5,
-        "Baths__c": 3,
-        "Location__Latitude__s": 42.348087,
-        "Location__Longitude__s": -71.109131,
-        "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian01.jpg",
-        "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian01sq.jpg",
-        "Tags__c": "victorian",
-        "Description__c": "Lorem ipsum dolor sit amet",
-        "Broker__r": {
-            "Broker_Id__c": 5
-        }
-    },
-    {
-        "Name": "650 Kendall St",
-        "Address__c": "650 Kendall St",
-        "City__c": "Cambridge",
-        "State__c": "MA",
-        "Zip__c": "02142",
-        "Price__c": 730000,
-        "Title__c": "Unique Victorian",
-        "Beds__c": 6,
-        "Baths__c": 4,
-        "Location__Latitude__s": 42.364772,
-        "Location__Longitude__s": -71.080640,
-        "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian02.jpg",
-        "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian02sq.jpg",
-        "Tags__c": "victorian",
-        "Description__c": "Lorem ipsum dolor sit amet",
-        "Broker__r": {
-            "Broker_Id__c": 6
-        }
-    },
-    {
-        "Name": "252 Charles St",
-        "Address__c": "252 Charles St",
-        "City__c": "Cambridge",
-        "State__c": "MA",
-        "Zip__c": "02141",
-        "Price__c": 790000,
-        "Title__c": "One of a kind",
-        "Beds__c": 7,
-        "Baths__c": 3,
-        "Location__Latitude__s": 42.368269,
-        "Location__Longitude__s": -71.085920,
-        "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian03.jpg",
-        "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian03sq.jpg",
-        "Tags__c": "victorian",
-        "Description__c": "Lorem ipsum dolor sit amet",
-        "Broker__r": {
-            "Broker_Id__c": 7
-        }
-    },
-    {
-        "Name": "105 Brattle St",
-        "Address__c": "105 Brattle St",
-        "City__c": "Cambridge",
-        "State__c": "MA",
-        "Zip__c": "02138",
-        "Price__c": 950000,
-        "Title__c": "Location Location!",
-        "Beds__c": 5,
-        "Baths__c": 5,
-        "Location__Latitude__s": 42.376511,
-        "Location__Longitude__s": -71.126194,
-        "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian06.jpg",
-        "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian06sq.jpg",
-        "Tags__c": "victorian",
-        "Description__c": "Lorem ipsum dolor sit amet",
-        "Broker__r": {
-            "Broker_Id__c": 8
-        }
-    },
-    {
-        "Name": "223 Huron Ave",
-        "Address__c": "223 Huron Ave",
-        "City__c": "Cambridge",
-        "State__c": "MA",
-        "Zip__c": "02138",
-        "Price__c": 850000,
-        "Title__c": "Recently Updated",
-        "Beds__c": 4,
-        "Baths__c": 3,
-        "Location__Latitude__s": 42.381437,
-        "Location__Longitude__s": -71.132681,
-        "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian07.jpg",
-        "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian07sq.jpg",
-        "Tags__c": "victorian",
-        "Description__c": "Lorem ipsum dolor sit amet",
-        "Broker__r": {
-            "Broker_Id__c": 1
-        }
-    },
-    {
-        "Name": "30 Peterborough St",
-        "Address__c": "30 Peterborough St",
-        "City__c": "Boston",
-        "State__c": "MA",
-        "Zip__c": "02215",
-        "Price__c": 650000,
-        "Title__c": "Character and Details",
-        "Beds__c": 5,
-        "Baths__c": 4,
-        "Location__Latitude__s": 42.343890,
-        "Location__Longitude__s": -71.096371,
-        "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian04.jpg",
-        "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/victorian04sq.jpg",
-        "Tags__c": "victorian",
-        "Description__c": "Lorem ipsum dolor sit amet",
-        "Broker__r": {
-            "Broker_Id__c": 2
         }
     }
 ]

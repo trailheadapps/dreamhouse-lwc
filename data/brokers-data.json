@@ -87,7 +87,7 @@
         {
             "attributes": {
                 "type": "Broker__c",
-                "referenceId": "SeniorBrokerRef"
+                "referenceId": "VictorOchoaRef"
             },
             "name": "Victor Ochoa",
             "Title__c": "Senior Broker",
