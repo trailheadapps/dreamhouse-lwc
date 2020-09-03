@@ -75,4 +75,16 @@ describe('c-error-panel', () => {
             expect(messageTexts).toEqual(ERROR_MESSAGES_OUTPUT);
         });
     });
+
+    it('is accessible', () => {
+        const element = createElement('c-error-panel', {
+            is: ErrorPanel
+        });
+
+        document.body.appendChild(element);
+
+        return Promise.resolve().then(() => {
+          expect(element).toBeAccessible();
+        });
+    });
 });

@@ -229,4 +229,16 @@ describe('c-days-on-market', () => {
             });
         });
     });
+
+    it('is accessible', () => {
+        const element = createElement('c-days-on-market', {
+            is: DaysOnMarket
+        });
+
+        document.body.appendChild(element);
+
+        return Promise.resolve().then(() => {
+          expect(element).toBeAccessible();
+        });
+    });
 });
