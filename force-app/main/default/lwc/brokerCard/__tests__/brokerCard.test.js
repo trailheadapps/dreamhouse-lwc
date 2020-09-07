@@ -168,9 +168,7 @@ describe('c-broker-card', () => {
         // Emit data from @wire
         getRecordAdapter.emit(mockGetPropertyRecord);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
 
     it('is accessible when error returned', () => {
@@ -184,8 +182,6 @@ describe('c-broker-card', () => {
 
         getRecordAdapter.error(WIRE_ERROR);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
 });

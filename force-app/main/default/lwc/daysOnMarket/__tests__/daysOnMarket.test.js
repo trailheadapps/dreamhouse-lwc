@@ -241,9 +241,7 @@ describe('c-days-on-market', () => {
         // Emit data from @wire
         getRecordAdapter.emit(mockGetRecord);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
 
     it('is accessible when no property selected', () => {
@@ -251,9 +249,7 @@ describe('c-days-on-market', () => {
             is: DaysOnMarket
         });
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
 
     it('is accessible when error returned', () => {
@@ -271,8 +267,6 @@ describe('c-days-on-market', () => {
         element.recordId = '001';
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
 });

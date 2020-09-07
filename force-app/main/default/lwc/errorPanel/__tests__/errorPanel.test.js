@@ -93,9 +93,7 @@ describe('c-error-panel', () => {
         // Click link to show details
         element.shadowRoot.querySelector('a').click();
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
 
     it('is accessible when no data illustration', () => {
@@ -115,8 +113,6 @@ describe('c-error-panel', () => {
         // Click link to show details
         element.shadowRoot.querySelector('a').click();
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
 });
