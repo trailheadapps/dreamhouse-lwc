@@ -141,7 +141,6 @@ describe('c-broker-card', () => {
             const element = createElement('c-broker-card', {
                 is: BrokerCard
             });
-            element.sobject = 'Property__c';
             document.body.appendChild(element);
 
             getRecordAdapter.error(WIRE_ERROR);
@@ -159,15 +158,34 @@ describe('c-broker-card', () => {
         });
     });
 
-    it('is accessible', () => {
+    it('is accessible when property returned', () => {
         const element = createElement('c-broker-card', {
             is: BrokerCard
         });
 
         document.body.appendChild(element);
 
+        // Emit data from @wire
+        getRecordAdapter.emit(mockGetPropertyRecord);
+
         return Promise.resolve().then(() => {
-          expect(element).toBeAccessible();
+            expect(element).toBeAccessible();
+        });
+    });
+
+    it('is accessible when error returned', () => {
+        const WIRE_ERROR = 'Something bad happened';
+
+        // Create element and attach to virtual DOM
+        const element = createElement('c-broker-card', {
+            is: BrokerCard
+        });
+        document.body.appendChild(element);
+
+        getRecordAdapter.error(WIRE_ERROR);
+
+        return Promise.resolve().then(() => {
+            expect(element).toBeAccessible();
         });
     });
 });
