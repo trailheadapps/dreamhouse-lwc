@@ -49,8 +49,8 @@ describe('c-error-panel', () => {
 
     it('displays error details when errors are passed as parameters', () => {
         const ERROR_MESSAGES_INPUT = [
-            { message: 'First bad error' },
-            { message: 'Second bad error' }
+            { statusText: 'First bad error' },
+            { statusText: 'Second bad error' }
         ];
         const ERROR_MESSAGES_OUTPUT = ['First bad error', 'Second bad error'];
 
@@ -78,8 +78,8 @@ describe('c-error-panel', () => {
 
     it('is accessible when inline message', () => {
         const ERROR_MESSAGES_INPUT = [
-            { message: 'First bad error' },
-            { message: 'Second bad error' }
+            { statusText: 'First bad error' },
+            { statusText: 'Second bad error' }
         ];
 
         const element = createElement('c-error-panel', {
@@ -98,8 +98,8 @@ describe('c-error-panel', () => {
 
     it('is accessible when no data illustration', () => {
         const ERROR_MESSAGES_INPUT = [
-            { message: 'First bad error' },
-            { message: 'Second bad error' }
+            { statusText: 'First bad error' },
+            { statusText: 'Second bad error' }
         ];
 
         const element = createElement('c-error-panel', {
