@@ -275,7 +275,7 @@ describe('c-property-filter', () => {
         document.body.appendChild(element);
 
         return Promise.resolve().then(() => {
-          expect(element).toBeAccessible();
+            expect(element).toBeAccessible();
         });
     });
 });

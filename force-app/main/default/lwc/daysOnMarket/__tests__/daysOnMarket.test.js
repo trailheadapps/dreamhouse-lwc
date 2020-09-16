@@ -248,18 +248,12 @@ describe('c-days-on-market', () => {
         const element = createElement('c-days-on-market', {
             is: DaysOnMarket
         });
+        document.body.appendChild(element);
 
         return Promise.resolve().then(() => expect(element).toBeAccessible());
     });
 
     it('is accessible when error returned', () => {
-        const APEX_ERROR = {
-            body: 'Error retrieving records',
-            ok: false,
-            status: '400',
-            statusText: 'Bad Request'
-        };
-
         // Create initial element
         const element = createElement('c-days-on-market', {
             is: DaysOnMarket
