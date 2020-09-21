@@ -266,4 +266,16 @@ describe('c-property-filter', () => {
             );
         });
     });
+
+    it('is accessible', () => {
+        const element = createElement('c-property-filter', {
+            is: PropertyFilter
+        });
+
+        document.body.appendChild(element);
+
+        return Promise.resolve().then(() => {
+            expect(element).toBeAccessible();
+        });
+    });
 });

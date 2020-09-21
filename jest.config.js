@@ -9,5 +9,6 @@ module.exports = {
             '<rootDir>/force-app/test/jest-mocks/lightning/platformShowToastEvent',
         '^lightning/messageService$':
             '<rootDir>/force-app/test/jest-mocks/lightning/messageService'
-    }
+    },
+    setupFilesAfterEnv: ['<rootDir>/jest-sa11y-setup.js']
 };

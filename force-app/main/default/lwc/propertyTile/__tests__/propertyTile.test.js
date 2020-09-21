@@ -73,4 +73,17 @@ describe('c-property-tile', () => {
             expect(selectEvent.detail).toBe(PROPERTY.Id);
         });
     });
+
+    it('is accessible', () => {
+        const element = createElement('c-property-tile', {
+            is: PropertyTile
+        });
+
+        element.property = PROPERTY;
+        document.body.appendChild(element);
+
+        return Promise.resolve().then(() => {
+            expect(element).toBeAccessible();
+        });
+    });
 });

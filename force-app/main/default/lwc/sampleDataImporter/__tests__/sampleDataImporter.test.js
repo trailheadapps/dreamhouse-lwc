@@ -108,4 +108,16 @@ describe('c-sample-data-importer', () => {
             );
         });
     });
+
+    it('is accessible', () => {
+        const element = createElement('c-sample-data-importer', {
+            is: SampleDataImporter
+        });
+
+        document.body.appendChild(element);
+
+        return Promise.resolve().then(() => {
+            expect(element).toBeAccessible();
+        });
+    });
 });
