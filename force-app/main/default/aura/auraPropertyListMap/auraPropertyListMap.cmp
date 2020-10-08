@@ -10,7 +10,7 @@
     />
 
     <aura:attribute name="searchKey" type="String" default="" />
-    <aura:attribute name="maxPrice" type="integer" default="10000000" />
+    <aura:attribute name="maxPrice" type="integer" default="1200000" />
     <aura:attribute name="minBedrooms" type="integer" default="0" />
     <aura:attribute name="minBathrooms" type="integer" default="0" />
     <aura:attribute name="properties" type="Object[]" default="[]" />
