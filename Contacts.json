@@ -1,0 +1,49 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef1"
+            },
+            "LastName": "Holmes",
+            "FirstName": "Brad",
+            "AccountId": "@AccountRef1"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef2"
+            },
+            "LastName": "Martin",
+            "FirstName": "Leslie",
+            "AccountId": "@AccountRef1"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef3"
+            },
+            "LastName": "Walker",
+            "FirstName": "July",
+            "AccountId": "@AccountRef1"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef4"
+            },
+            "LastName": "Jones",
+            "FirstName": "Anna",
+            "AccountId": "@AccountRef1"
+        },
+        {
+            "attributes": {
+                "type": "Contact",
+                "referenceId": "ContactRef5"
+            },
+            "LastName": "Connor",
+            "FirstName": "John",
+            "AccountId": "@AccountRef1"
+        }
+    ]
+}
