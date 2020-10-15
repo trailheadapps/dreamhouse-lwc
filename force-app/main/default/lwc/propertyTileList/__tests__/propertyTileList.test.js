@@ -1,12 +1,7 @@
 import { createElement } from 'lwc';
 import PropertyTileList from 'c/propertyTileList';
 import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPropertyList';
-import {
-    publish,
-    subscribe,
-    unsubscribe,
-    MessageContext
-} from 'lightning/messageService';
+import { publish, subscribe, MessageContext } from 'lightning/messageService';
 import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
 import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 import {
