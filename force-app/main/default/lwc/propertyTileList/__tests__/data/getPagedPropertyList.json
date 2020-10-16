@@ -1,0 +1,106 @@
+{
+    "pageNumber": 1,
+    "pageSize": 9,
+    "records": [
+        {
+            "Id": "a012F000009ovH1QAI",
+            "Address__c": "127 Endicott St",
+            "City__c": "Boston",
+            "State__c": "MA",
+            "Description__c": "Lorem ipsum dolor sit amet",
+            "Price__c": 450000,
+            "Baths__c": 1,
+            "Beds__c": 3,
+            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house07sq.jpg"
+        },
+        {
+            "Id": "a012F000009ovH2QAI",
+            "Address__c": "48 Brattle st",
+            "City__c": "Cambridge",
+            "State__c": "MA",
+            "Description__c": "Lorem ipsum dolor sit amet",
+            "Price__c": 450000,
+            "Baths__c": 4,
+            "Beds__c": 5,
+            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house10sq.jpg"
+        },
+        {
+            "Id": "a012F000009ovH3QAI",
+            "Address__c": "121 Harborwalk",
+            "City__c": "Boston",
+            "State__c": "MA",
+            "Description__c": "Lorem ipsum dolor sit amet",
+            "Price__c": 450000,
+            "Baths__c": 3,
+            "Beds__c": 3,
+            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house09sq.jpg"
+        },
+        {
+            "Id": "a012F000009ovH4QAI",
+            "Address__c": "640 Harrison Ave",
+            "City__c": "Boston",
+            "State__c": "MA",
+            "Description__c": "Lorem ipsum dolor sit amet",
+            "Price__c": 650000,
+            "Baths__c": 2,
+            "Beds__c": 2,
+            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house08sq.jpg"
+        },
+        {
+            "Id": "a012F000009ovH5QAI",
+            "Address__c": "95 Gloucester St",
+            "City__c": "Boston",
+            "State__c": "MA",
+            "Description__c": "Lorem ipsum dolor sit amet",
+            "Price__c": 690000,
+            "Baths__c": 3,
+            "Beds__c": 3,
+            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house11sq.jpg"
+        },
+        {
+            "Id": "a012F000009ovH0QAI",
+            "Address__c": "448 Hanover St",
+            "City__c": "Boston",
+            "State__c": "MA",
+            "Description__c": "Lorem ipsum dolor sit amet",
+            "Price__c": 725000,
+            "Baths__c": 2,
+            "Beds__c": 4,
+            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house06sq.jpg"
+        },
+        {
+            "Id": "a012F000009ovGxQAI",
+            "Address__c": "72 Francis st",
+            "City__c": "Boston",
+            "State__c": "MA",
+            "Description__c": "Lorem ipsum dolor sit amet",
+            "Price__c": 825000,
+            "Baths__c": 4,
+            "Beds__c": 5,
+            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house03sq.jpg"
+        },
+        {
+            "Id": "a012F000009ovH6QAI",
+            "Address__c": "145 Commonwealth Ave",
+            "City__c": "Boston",
+            "State__c": "MA",
+            "Description__c": "Lorem ipsum dolor sit amet",
+            "Price__c": 845000,
+            "Baths__c": 3,
+            "Beds__c": 4,
+            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house12sq.jpg"
+        },
+        {
+            "Id": "a012F000009ovGzQAI",
+            "Address__c": "110 Baxter Street",
+            "City__c": "Boston",
+            "State__c": "MA",
+            "Description__c": "Lorem ipsum dolor sit amet",
+            "Price__c": 850000,
+            "Baths__c": 2,
+            "Beds__c": 3,
+            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house05sq.jpg"
+        }
+    ],
+    "totalItemCount": 12
+}

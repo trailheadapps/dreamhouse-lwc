@@ -1,0 +1,18 @@
+{
+    "apiName": "Property__c",
+    "childRelationships": {},
+    "eTag": "e724fda6d93b891f98c7e0b6b3d7686c",
+    "fields": {
+        "Broker__c": {
+            "displayValue": null,
+            "value": "a003h000003xlBiAAI"
+        }
+    },
+    "id": "a013h000009HEM7AAO",
+    "lastModifiedById": "0053h0000032Tm3AAE",
+    "lastModifiedDate": "2020-07-15T19:56:23.000Z",
+    "recordTypeId": "012000000000000AAA",
+    "recordTypeInfo": null,
+    "systemModstamp": "2020-07-15T19:56:23.000Z",
+    "weakEtag": 1594842983000
+}
