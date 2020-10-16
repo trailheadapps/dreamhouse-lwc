@@ -51,7 +51,7 @@ describe('c-property-carousel', () => {
                 const carouselImageEls = element.shadowRoot.querySelectorAll(
                     'lightning-carousel-image'
                 );
-                expect(carouselImageEls.length).toBe(2);
+                expect(carouselImageEls.length).toBe(mockGetPictures.length);
             });
         });
 
