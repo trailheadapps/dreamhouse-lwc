@@ -4,15 +4,13 @@
             "path": "force-app",
             "default": true,
             "package": "DreamhouseLWC",
-            "versionName": "Summer '20",
-            "versionNumber": "1.0.0.NEXT"
+            "versionName": "Winter '21",
+            "versionNumber": "50.0.0.NEXT"
         }
     ],
     "namespace": "",
-    "sourceApiVersion": "49.0",
+    "sourceApiVersion": "50.0",
     "packageAliases": {
-        "DreamhouseLWC": "0Ho3h000000PBghCAG",
-        "DreamhouseLWC@1.0.0-1": "04t3h000004sidmAAA",
-        "DreamhouseLWC@1.0.0-2": "04t3h000004sivoAAA"
+        "DreamhouseLWC": "0Ho3h000000PBghCAG"
     }
 }
