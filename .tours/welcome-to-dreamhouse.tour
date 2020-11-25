@@ -30,7 +30,7 @@
       "title": "Property List - Wire",
       "file": "force-app/main/default/lwc/propertyTileList/propertyTileList.js",
       "line": 34,
-      "description": "Properties are loaded with a `@wire` decorator that calls an Apex endpoint with the filter values.\n\nFilter values are passed with a `$` prefix in the wire configuration to make them reactive. Each time one of these values changes, the wire adapter povides new values by either retrieving them from the cache (if present) or calling the Apex endpoint again.\n\nThe wire adapter calls a `getPagedPropertyList` Apex method defined in the `PropertyController` class."
+      "description": "Properties are loaded with a `@wire` decorator that calls an Apex endpoint with the filter values.\n\nFilter values are passed with a `$` prefix in the wire configuration to make them reactive. Each time one of these values changes, the wire adapter provides new values by either retrieving them from the cache (if present) or calling the Apex endpoint again.\n\nThe wire adapter calls a `getPagedPropertyList` Apex method defined in the `PropertyController` class."
     },
     {
       "title": "Property Controller",
