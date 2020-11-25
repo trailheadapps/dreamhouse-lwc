@@ -1,0 +1,43 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "👋 Welcome to Dreamhouse",
+  "steps": [
+    {
+      "title": "Welcome",
+      "file": "force-app/main/default/lwc/propertySummary/propertySummary.html",
+      "line": 22,
+      "description": "Hello! Welcome to Dreamhouse (LWC) sample app. \n\nThis application incorporates Lightning web components and other Lightning Experience features to deliver a rich user experience that helps Dreamhouse, a fictitious real estate company, manage its properties and brokers using the Salesforce Platform.\n\nThis tour will show you around the repo at a high level. \n\nIn this file, you can see a simple `propertySummary` Lightning web component that displays a card with a short summary of a property (e.g. a house). Properties are stored as `Property__c` custom objects. In `propertySummary`, we use a [`lightning-record-form`](https://developer.salesforce.com/docs/component-library/bundle/lightning-record-form/documentation) base component to display the record information."
+    },
+    {
+      "title": "Property Explorer",
+      "file": "force-app/main/default/flexipages/Property_Explorer.flexipage-meta.xml",
+      "line": 20,
+      "description": "Dreamhouse manages a lot of properties so they built a 'Property Explorer' page that provides a custom search experience.\n\nThis page is built with custom Lightning web components.\n\nIt allows brokers to:\n1. filter properties base on certain attribute values (keyword, price, number of bedrooms...)\n1. select properties from a list\n1. explore selected property details."
+    },
+    {
+      "title": "Property Filters",
+      "file": "force-app/main/default/lwc/propertyFilter/propertyFilter.js",
+      "line": 23,
+      "description": "You are looking at the `propertyFilter` component that renders the property filters. Each time a property filter value changes, `propertyFilter` [publishes a Lightning Message](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.use_message_channel).\n\nThis message lets the other components on the page such as the property list refresh accordingly."
+    },
+    {
+      "title": "Property List - Subscribe",
+      "file": "force-app/main/default/lwc/propertyTileList/propertyTileList.js",
+      "line": 43,
+      "description": "The `propertyTileList` component is where the properties are displayed as a paginated list.\n\nWhen the component loads, it subscribes to the Lightning Message that tracks property filters. Incoming messages are handled by a `handleFilterChange` function. The function extracts the new filter values from the message and updates the component's local properties."
+    },
+    {
+      "title": "Property List - Wire",
+      "file": "force-app/main/default/lwc/propertyTileList/propertyTileList.js",
+      "line": 34,
+      "description": "Properties are loaded with a `@wire` decorator that calls an Apex endpoint with the filter values.\n\nFilter values are passed with a `$` prefix in the wire configuration to make them reactive. Each time one of these values changes, the wire adapter provides new values by either retrieving them from the cache (if present) or calling the Apex endpoint again.\n\nThe wire adapter calls a `getPagedPropertyList` Apex method defined in the `PropertyController` class."
+    },
+    {
+      "title": "Property Controller",
+      "file": "force-app/main/default/classes/PropertyController.cls",
+      "line": 45,
+      "description": "The `getPagedPropertyList` method from the `PropertyController` Apex class is where properties are retrieved from the Platform.\n\nThe method builds a SOQL query with the provided filters and returns a paginated list of `Property__c` records wrapped in a `PagedResult` object.\n\n`getPagedPropertyList` is exposed to Lightning Web Components thanks to the `@AuraEnabled` annotation. The `cacheable=true` attribute indicates that the returned data is cached.\n\n---\n\nWhile there is a lot to get to know in Dreamhouse, and a lot of code, we'd like to leave off the code tour at this point and suggest you explore the app further in a couple of other ways. \n- One way you can do this is to use our [Quick Start](https://trailhead.salesforce.com/en/content/learn/projects/quick-start-dreamhouse-sample-app) on Trailhead. This will walk you through deploying the app and getting to know it a bit, as well as explore some of the other code samples. \n- But if you prefer to take yourself through the app, you can skip right to the installation instructions that are available in the git repo's [README](https://github.com/trailheadapps/dreamhouse-lwc). From there you can explore the examples bit by bit. There is also an in-app tour that will familiarize you with the app. \n- Lastly, if notice any issue with the app, please open an [issue](https://github.com/trailheadapps/dreamhouse-lwc/issues/new/choose) and let us know.\n\nThanks! And enjoy the Dreamhouse sample app. "
+    }
+  ],
+  "isPrimary": true
+}
