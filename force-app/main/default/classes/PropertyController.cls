@@ -20,7 +20,7 @@ public with sharing class PropertyController {
                 thumbnail__c,
                 location__latitude__s,
                 location__longitude__s
-            FROM property__c
+            FROM Property__c
             WHERE
                 (title__c LIKE :key
                 OR city__c LIKE :key
@@ -57,7 +57,7 @@ public with sharing class PropertyController {
         result.pageNumber = (Integer) pageNumber;
         result.totalItemCount = [
             SELECT COUNT()
-            FROM property__c
+            FROM Property__c
             WHERE
                 (title__c LIKE :key
                 OR city__c LIKE :key
