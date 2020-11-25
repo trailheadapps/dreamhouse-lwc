@@ -3,7 +3,7 @@
     <masterLabel>Property Finder</masterLabel>
     <promptVersions>
         <body
-        >The &quot;Property Finder&quot; page is also composed in App Builder. This time we use a map to show filtered properties locations. Click on any of the map markers to see a property details.</body>
+        >The &quot;Property Finder&quot; page is also composed in App Builder. This time we use a map to show filtered properties locations. Click on any of the map markers to select a property and see its details.</body>
         <delayDays>1</delayDays>
         <dismissButtonLabel>Close</dismissButtonLabel>
         <displayPosition>BottomLeft</displayPosition>
@@ -26,7 +26,7 @@
     </promptVersions>
     <promptVersions>
         <body
-        >The map component in the center of the screen is built using a 3rd party JavaScript library, provided as &lt;a href=&quot;https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_resources.htm&quot; target=&quot;_blank&quot;&gt;static resource&lt;/a&gt;.</body>
+        >The map component in the center of the screen is built using a third party JavaScript library, provided as &lt;a href=&quot;https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_resources.htm&quot; target=&quot;_blank&quot;&gt;static resource&lt;/a&gt;.</body>
         <dismissButtonLabel>Close</dismissButtonLabel>
         <displayPosition>BottomCenter</displayPosition>
         <displayType>FloatingPanel</displayType>
@@ -38,14 +38,14 @@
         <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
         <targetPageKey1>Property_Finder</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
-        <title>3rd party JavaScript libraries</title>
+        <title>Third party JavaScript libraries</title>
         <userAccess>Everyone</userAccess>
         <userProfileAccess>Everyone</userProfileAccess>
         <versionNumber>1</versionNumber>
     </promptVersions>
     <promptVersions>
         <body
-        >Now, select a property and click on the top right corner icon of its summary card. You'll navigate to the property record page and find the next tour.</body>
+        >Now, select a property. Click on the double arrow icon located next to the property's name in the property summary card. You'll navigate to the property record page and find the next tour.</body>
         <dismissButtonLabel>Close</dismissButtonLabel>
         <displayPosition>BottomRight</displayPosition>
         <displayType>FloatingPanel</displayType>

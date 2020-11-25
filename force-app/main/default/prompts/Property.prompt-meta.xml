@@ -3,7 +3,7 @@
     <masterLabel>Property</masterLabel>
     <promptVersions>
         <body
-        >In the Property record page we have a component that represents visually the number of days a property has been on the market. This is a pretty important detail for out Sales Reps!</body>
+        >On the Property record page, we have a component that displays the number of days a property has been on the market. This is a pretty important detail for sales reps!</body>
         <delayDays>1</delayDays>
         <dismissButtonLabel>Close</dismissButtonLabel>
         <displayPosition>BottomLeft</displayPosition>
@@ -27,7 +27,7 @@
     </promptVersions>
     <promptVersions>
         <body
-        >On the right, we reuse the map component that we have in Property Finder. Reusability is a great benefit of a component based development model.</body>
+        >On the right, we reuse the map component that we have in Property Explorer. Reusability is a great benefit of a component-based development model.</body>
         <dismissButtonLabel>Close</dismissButtonLabel>
         <displayPosition>BottomRight</displayPosition>
         <displayType>FloatingPanel</displayType>
@@ -47,7 +47,7 @@
     </promptVersions>
     <promptVersions>
         <body
-        >Dreamhouse sample app is designed to work nicely in mobile. Consider logging into the Salesforce Mobile app and taking a look at how it looks like!</body>
+        >Dreamhouse sample app is designed to work nicely on mobile. Consider logging into the Salesforce Mobile app and checking it out!</body>
         <dismissButtonLabel>Close</dismissButtonLabel>
         <displayPosition>BottomCenter</displayPosition>
         <displayType>FloatingPanel</displayType>
@@ -70,7 +70,7 @@
         <actionButtonLink
         >https://github.com/trailheadapps/dreamhouse-lwc#code-tours</actionButtonLink>
         <body
-        >You&#39;ve now completed the Dreamhouse sample app tour. &lt;b&gt;We hope you enjoyed the trip! &lt;/b&gt; Take a look at VSCode code tours to learn more about the app code.</body>
+        >You&#39;ve now completed the Dreamhouse sample app tour. &lt;b&gt;We hope that you&#39;ve enjoyed the trip! &lt;/b&gt; Take a look at VS Code's code tours to learn more about the app's code.</body>
         <dismissButtonLabel>Close</dismissButtonLabel>
         <displayPosition>TopCenter</displayPosition>
         <displayType>FloatingPanel</displayType>
