@@ -17,7 +17,7 @@ const fields = [
 export default class PropertyMap extends LightningElement {
     address;
     error;
-    markers = [];
+    markers;
     propertyId;
     subscription = null;
     zoomLevel = 14;

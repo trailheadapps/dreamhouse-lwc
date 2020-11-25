@@ -1,0 +1,22 @@
+{
+    "apiName": "Property__c",
+    "fields": {
+        "Address__c": {
+            "displayValue": null,
+            "value": "127 Endicott St"
+        },
+        "City__c": {
+            "displayValue": null,
+            "value": "Boston"
+        },
+        "Location__Latitude__s": {
+            "displayValue": null,
+            "value": "10"
+        },
+        "Location__Longitude__s": {
+            "displayValue": null,
+            "value": "10"
+        }
+    },
+    "id": "a013h000009HEM7AAO"
+}
