@@ -62,7 +62,7 @@ describe('c-property-map', () => {
         });
 
         document.body.appendChild(element);
-        
+
         // Simulate property selection
         getRecordAdapter.emit(mockPropertyRecord);
 
