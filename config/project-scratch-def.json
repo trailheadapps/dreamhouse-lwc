@@ -1,6 +1,7 @@
 {
     "orgName": "Dreamhouse",
     "edition": "Developer",
+    "features": ["Walkthroughs"],
     "settings": {
         "lightningExperienceSettings": {
             "enableS1DesktopEnabled": true

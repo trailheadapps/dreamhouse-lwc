@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Prompt xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>Property Explorer</masterLabel>
+    <promptVersions>
+        <body
+        >Dreamhouse is a fictitious real estate company that manages its properties and brokers using the Salesforce Platform.</body>
+        <delayDays>1</delayDays>
+        <dismissButtonLabel>Close</dismissButtonLabel>
+        <displayPosition>BottomLeft</displayPosition>
+        <displayType>FloatingPanel</displayType>
+        <isPublished>true</isPublished>
+        <masterLabel>Property Explorer Step 1</masterLabel>
+        <publishedDate>2020-06-29</publishedDate>
+        <shouldDisplayActionButton>false</shouldDisplayActionButton>
+        <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
+        <startDate>2020-06-29</startDate>
+        <stepNumber>1</stepNumber>
+        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <targetPageKey1>Property_Explorer</targetPageKey1>
+        <targetPageType>standard__navItemPage</targetPageType>
+        <timesToDisplay>1</timesToDisplay>
+        <title>Welcome to Dreamhouse Sample App!</title>
+        <userAccess>Everyone</userAccess>
+        <userProfileAccess>Everyone</userProfileAccess>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+    <promptVersions>
+        <body
+        >Sales reps use the &quot;Property Explorer&quot; page to look for properties based on certain filters.&lt;br /&gt;&lt;br /&gt; Change some filters on the left to filter properties. Then, click on any of the properties to see its details.</body>
+        <dismissButtonLabel>Close</dismissButtonLabel>
+        <displayPosition>BottomLeft</displayPosition>
+        <displayType>FloatingPanel</displayType>
+        <isPublished>false</isPublished>
+        <masterLabel>Property Explorer Step 2</masterLabel>
+        <shouldDisplayActionButton>false</shouldDisplayActionButton>
+        <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
+        <stepNumber>2</stepNumber>
+        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <targetPageKey1>Property_Explorer</targetPageKey1>
+        <targetPageType>standard__navItemPage</targetPageType>
+        <title>Property Explorer</title>
+        <userAccess>Everyone</userAccess>
+        <userProfileAccess>Everyone</userProfileAccess>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+    <promptVersions>
+        <body
+        >This page is composed of Lightning web components arranged in App Builder. App Builder lets you easily reorganize components, change the page layout, add visibility filters and more.</body>
+        <dismissButtonLabel>Close</dismissButtonLabel>
+        <displayPosition>BottomLeft</displayPosition>
+        <displayType>FloatingPanel</displayType>
+        <isPublished>false</isPublished>
+        <masterLabel>Property Explorer Step 3</masterLabel>
+        <shouldDisplayActionButton>false</shouldDisplayActionButton>
+        <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
+        <stepNumber>3</stepNumber>
+        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <targetPageKey1>Property_Explorer</targetPageKey1>
+        <targetPageType>standard__navItemPage</targetPageType>
+        <title>App Builder</title>
+        <userAccess>Everyone</userAccess>
+        <userProfileAccess>Everyone</userProfileAccess>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+    <promptVersions>
+        <body
+        >Components communicate using &lt;a href=&quot;https://developer.salesforce.com/docs/component-library/bundle/lightning-message-service&quot; target=&quot;_blank&quot;&gt;Lightning Message Service&lt;/a&gt;. This allows to craft loosely coupled, reusable components.</body>
+        <dismissButtonLabel>Close</dismissButtonLabel>
+        <displayPosition>BottomLeft</displayPosition>
+        <displayType>FloatingPanel</displayType>
+        <isPublished>false</isPublished>
+        <masterLabel>Property Explorer Step 4</masterLabel>
+        <shouldDisplayActionButton>false</shouldDisplayActionButton>
+        <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
+        <stepNumber>4</stepNumber>
+        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <targetPageKey1>Property_Explorer</targetPageKey1>
+        <targetPageType>standard__navItemPage</targetPageType>
+        <title>Lightning Message Service</title>
+        <userAccess>Everyone</userAccess>
+        <userProfileAccess>Everyone</userProfileAccess>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+    <promptVersions>
+        <body
+        >The component in the center of the screen retrieves a paginated and responsive list of properties. Try to resize the browser to verify it!</body>
+        <dismissButtonLabel>Close</dismissButtonLabel>
+        <displayPosition>BottomCenter</displayPosition>
+        <displayType>FloatingPanel</displayType>
+        <isPublished>false</isPublished>
+        <masterLabel>Property Explorer Step 5</masterLabel>
+        <shouldDisplayActionButton>false</shouldDisplayActionButton>
+        <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
+        <stepNumber>5</stepNumber>
+        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <targetPageKey1>Property_Explorer</targetPageKey1>
+        <targetPageType>standard__navItemPage</targetPageType>
+        <title>Property List Component</title>
+        <userAccess>Everyone</userAccess>
+        <userProfileAccess>Everyone</userProfileAccess>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+    <promptVersions>
+        <body
+        >The map on the right is built using the &lt;a href=&quot;https://developer.salesforce.com/docs/component-library/bundle/lightning-map/example&quot; target=&quot;_blank&quot;&gt;lightning-map&lt;/a&gt; base component, a very handy way to show property locations.</body>
+        <dismissButtonLabel>Close</dismissButtonLabel>
+        <displayPosition>BottomRight</displayPosition>
+        <displayType>FloatingPanel</displayType>
+        <isPublished>false</isPublished>
+        <masterLabel>Property Explorer Step 6</masterLabel>
+        <shouldDisplayActionButton>false</shouldDisplayActionButton>
+        <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
+        <stepNumber>6</stepNumber>
+        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <targetPageKey1>Property_Explorer</targetPageKey1>
+        <targetPageType>standard__navItemPage</targetPageType>
+        <title>lightning-map</title>
+        <userAccess>Everyone</userAccess>
+        <userProfileAccess>Everyone</userProfileAccess>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+    <promptVersions>
+        <actionButtonLabel>Next Tour</actionButtonLabel>
+        <actionButtonLink>/lightning/n/Property_Finder</actionButtonLink>
+        <body
+        >Now, go to the Property Finder tab or click Next Tour to navigate to the next tour.</body>
+        <dismissButtonLabel>Close</dismissButtonLabel>
+        <displayPosition>BottomRight</displayPosition>
+        <displayType>FloatingPanel</displayType>
+        <isPublished>false</isPublished>
+        <masterLabel>Property Explorer Step 7</masterLabel>
+        <shouldDisplayActionButton>true</shouldDisplayActionButton>
+        <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
+        <stepNumber>7</stepNumber>
+        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <targetPageKey1>Property_Explorer</targetPageKey1>
+        <targetPageType>standard__navItemPage</targetPageType>
+        <title>Next Tour</title>
+        <userAccess>Everyone</userAccess>
+        <userProfileAccess>Everyone</userProfileAccess>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+</Prompt>
