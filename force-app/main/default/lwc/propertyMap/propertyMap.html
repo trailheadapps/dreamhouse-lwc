@@ -1,13 +1,20 @@
 <template>
     <lightning-card title={address} icon-name="custom:custom106">
-        <lightning-map
-            map-markers={markers}
-            zoom-level={zoomLevel}
-        ></lightning-map>
-        <template if:true={error}>
+        <template if:true={markers}>
+            <lightning-map
+                map-markers={markers}
+                zoom-level={zoomLevel}
+            ></lightning-map>
+            <template if:true={error}>
+                <c-error-panel
+                    friendly-message="Error retrieving map"
+                    errors={error}
+                ></c-error-panel>
+            </template>
+        </template>
+        <template if:false={markers}>
             <c-error-panel
-                friendly-message="Error retrieving map"
-                errors={error}
+                friendly-message="Select a property to see its location"
             ></c-error-panel>
         </template>
     </lightning-card>
