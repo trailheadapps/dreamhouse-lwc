@@ -27,7 +27,7 @@ describe('c-property-map', () => {
         jest.clearAllMocks();
     });
 
-    it('is render an error panel when no property is selected', () => {
+    it('renders an error panel when no property is selected', () => {
         const element = createElement('c-property-map', {
             is: PropertyMap
         });
@@ -40,7 +40,7 @@ describe('c-property-map', () => {
         });
     });
 
-    it('is render a map when a property is selected', () => {
+    it('renders a map when a property is selected', () => {
         const element = createElement('c-property-map', {
             is: PropertyMap
         });
@@ -62,6 +62,9 @@ describe('c-property-map', () => {
         });
 
         document.body.appendChild(element);
+        
+        // Simulate property selection
+        getRecordAdapter.emit(mockPropertyRecord);
 
         return Promise.resolve().then(() => {
             expect(element).toBeAccessible();
