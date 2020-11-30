@@ -104,8 +104,6 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 
 1. Log in to your org
 
-1. If you are setting up a Developer Edition: go to **Setup**, under **My Domain**, [register a My Domain](https://help.salesforce.com/articleView?id=domain_name_setup.htm&type=5).
-
 1. Start an In-App Guidance trial
 
     - In Setup, navigate to **_User Engagement > In-App Guidance_**.
@@ -150,8 +148,6 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
     ```
     sfdx force:auth:web:login -s -a mydevorg
     ```
-
-1. If you are setting up a Developer Edition: go to **Setup**, under **My Domain**, [register a My Domain](https://help.salesforce.com/articleView?id=domain_name_setup.htm&type=5).
 
 1. Start an In-App Guidance trial
 
