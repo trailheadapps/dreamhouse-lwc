@@ -12,3 +12,5 @@ coverage:
                 flags:
                     - Apex
         patch: off
+ignore:
+    - 'force-app/main/default/staticresources/**'
