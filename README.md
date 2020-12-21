@@ -1,4 +1,4 @@
-# Dreamhouse Lightning Web Components Sample Application
+# Dreamhouse Lightning Web Components Sample Application Modified
 
 [![Github Workflow](<https://github.com/trailheadapps/dreamhouse-lwc/workflows/Salesforce%20DX%20(scratch%20org)/badge.svg?branch=master>)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3A%22Salesforce+DX+%28scratch+org%29%22) [![Github Workflow](https://github.com/trailheadapps/dreamhouse-lwc/workflows/Packaging/badge.svg?branch=master)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3A%22Packaging%22) [![codecov](https://codecov.io/gh/trailheadapps/dreamhouse-lwc/branch/master/graph/badge.svg)](https://codecov.io/gh/trailheadapps/dreamhouse-lwc)
 
