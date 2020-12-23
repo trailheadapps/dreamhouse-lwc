@@ -6,6 +6,19 @@
                 <componentName>propertyFilter</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>flowLayout</name>
+                    <value>oneColumn</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>flowName</name>
+                    <value>Create_property</value>
+                </componentInstanceProperties>
+                <componentName>flowruntime:interview</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>left</name>
         <type>Region</type>
     </flexiPageRegions>

@@ -648,11 +648,25 @@
         <itemInstances>
             <componentInstance>
                 <componentName>daysOnMarket</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Days_On_Market__c}</leftValue>
+                        <operator>GT</operator>
+                        <rightValue>0</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>propertyMap</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Location__Latitude__s}</leftValue>
+                        <operator>GT</operator>
+                        <rightValue>0</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

@@ -2,6 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <isExposed>true</isExposed>
+    <masterLabel>Broker Card</masterLabel>
     <targets>
     	<target>lightning__RecordPage</target>
     </targets>
