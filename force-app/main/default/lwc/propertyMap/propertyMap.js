@@ -17,16 +17,10 @@ const fields = [
 export default class PropertyMap extends LightningElement {
     address;
     error;
-    friendlyMessage = 'Select a property to see its location';
     markers;
     propertyId;
     subscription = null;
     zoomLevel = 14;
-
-    // Properties to add a fixed marker for a property that is not store in database yet
-    @api newPropertyLatitude;
-    @api newPropertyLongitude;
-    @api newPropertyName;
 
     @wire(MessageContext)
     messageContext;
@@ -49,7 +43,7 @@ export default class PropertyMap extends LightningElement {
         } else if (error) {
             this.error = error;
             this.address = undefined;
-            this.markers = undefined;
+            this.markers = [];
         }
     }
 
@@ -70,22 +64,6 @@ export default class PropertyMap extends LightningElement {
                 this.handlePropertySelected(message);
             }
         );
-
-        if (this.newPropertyName) {
-            if (this.newPropertyLatitude && this.newPropertyLongitude) {
-                this.markers = [
-                    {
-                        location: {
-                            Latitude: this.newPropertyLatitude,
-                            Longitude: this.newPropertyLongitude
-                        },
-                        title: this.newPropertyName
-                    }
-                ];
-            } else {
-                this.friendlyMessage = 'Property address not found';
-            }
-        }
     }
 
     disconnectedCallback() {

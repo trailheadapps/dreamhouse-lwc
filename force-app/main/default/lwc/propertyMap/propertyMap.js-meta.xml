@@ -6,7 +6,6 @@
     	<target>lightning__AppPage</target>
     	<target>lightning__RecordPage</target>
         <target>lightning__HomePage</target>
-        <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
@@ -18,26 +17,6 @@
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
         </targetConfig>
-        <targetConfig targets="lightning__FlowScreen">
-        <property
-                name="newPropertyName"
-                type="String"
-                label="Name"
-                description="New property name"
-            />
-        <property
-                name="newPropertyLatitude"
-                type="String"
-                label="Latitude"
-                description="New property latitude"
-            />
-        <property
-                name="newPropertyLongitude"
-                type="String"
-                label="Longitude"
-                description="New property longitude"
-            />
-    </targetConfig>
     </targetConfigs>
 
 </LightningComponentBundle>
