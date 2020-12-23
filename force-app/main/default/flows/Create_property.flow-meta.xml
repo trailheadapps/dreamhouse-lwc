@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>geocode_address</name>
@@ -42,15 +42,17 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>51.0</apiVersion>
+    <apiVersion>50.0</apiVersion>
     <formulas>
-        <description>Main picture URL that we&apos;ll use as thumbnail</description>
+        <description
+        >Main picture URL that we&apos;ll use as thumbnail</description>
         <name>main_picture_url</name>
         <dataType>String</dataType>
-        <expression>&quot;/sfc/servlet.shepherd/version/download/&quot; + {!get_main_content_version.Id}</expression>
+        <expression
+        >&quot;/sfc/servlet.shepherd/version/download/&quot; + {!get_main_content_version.Id}</expression>
     </formulas>
-    <interviewLabel>Create_property {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Create_property</label>
+    <interviewLabel>Create Property {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Property</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -181,12 +183,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <description>Retrieve just one of the pictures to be the main one</description>
+        <description
+        >Retrieve just one of the pictures to be the main one</description>
         <name>get_main_content_document</name>
         <label>Get Main Content Document</label>
         <locationX>176</locationX>
         <locationY>998</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>get_main_content_version</targetReference>
         </connector>
@@ -207,7 +211,8 @@
         <label>Get Main Content Version</label>
         <locationX>176</locationX>
         <locationY>1118</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>set_main_picture</targetReference>
         </connector>
@@ -216,7 +221,8 @@
             <field>ContentDocumentId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>get_main_content_document.ContentDocumentId</elementReference>
+                <elementReference
+                >get_main_content_document.ContentDocumentId</elementReference>
             </value>
         </filters>
         <filters>
@@ -327,7 +333,8 @@
         <allowPause>true</allowPause>
         <fields>
             <name>error</name>
-            <fieldText>&lt;p&gt;Error creating records. Try again.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Error creating records. Try again.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
