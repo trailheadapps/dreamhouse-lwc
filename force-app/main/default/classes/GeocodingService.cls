@@ -1,39 +1,39 @@
 public with sharing class GeocodingService {
+    private static final String BASE_URL = 'https://nominatim.openstreetmap.org/search?format=json';
+
     @InvocableMethod(label='Geocode address')
     public static List<Coordinates> geocodeAddresses(
         List<GeocodingAddress> addresses
     ) {
         List<Coordinates> computedCoordinates = new List<Coordinates>();
 
-        String baseUrl = 'https://nominatim.openstreetmap.org/search?format=json';
-
         for (GeocodingAddress address : addresses) {
-            String url = baseUrl;
-            url += (String.isNotBlank(address.street))
+            String geocodingUrl = BASE_URL;
+            geocodingUrl += (String.isNotBlank(address.street))
                 ? '&street=' + address.street
                 : '';
-            url += (String.isNotBlank(address.city))
+            geocodingUrl += (String.isNotBlank(address.city))
                 ? '&city=' + address.city
                 : '';
-            url += (String.isNotBlank(address.state))
+            geocodingUrl += (String.isNotBlank(address.state))
                 ? '&state=' + address.state
                 : '';
-            url += (String.isNotBlank(address.country))
+            geocodingUrl += (String.isNotBlank(address.country))
                 ? '&country=' + address.country
                 : '';
-            url += (String.isNotBlank(address.postalcode))
+            geocodingUrl += (String.isNotBlank(address.postalcode))
                 ? '&postalcode=' + address.postalcode
                 : '';
 
-            Boolean found = false;
-            if (url != baseUrl) {
+            Coordinates coords = new Coordinates();
+            if (geocodingUrl != BASE_URL) {
                 Http http = new Http();
                 HttpRequest request = new HttpRequest();
-                request.setEndpoint(url);
+                request.setEndpoint(geocodingUrl);
                 request.setMethod('GET');
                 request.setHeader(
                     'http-referer',
-                    'https://github.com/trailheadapps/dreamhouse-lwc'
+                    URL.getSalesforceBaseUrl().toExternalForm()
                 );
                 HttpResponse response = http.send(request);
                 if (response.getStatusCode() == 200) {
@@ -41,19 +41,16 @@ public with sharing class GeocodingService {
                         response.getBody(),
                         List<Coordinates>.class
                     );
-                    computedCoordinates.add(deserializedCoords[0]);
-                    found = true;
+                    coords = deserializedCoords[0];
                 }
             }
-            // Add empty coordinates if not found
-            if (!found) {
-                computedCoordinates.add(new Coordinates());
-            }
+
+            computedCoordinates.add(coords);
         }
         return computedCoordinates;
     }
 
-    public with sharing class GeocodingAddress {
+    public class GeocodingAddress {
         @InvocableVariable
         public String street;
         @InvocableVariable
