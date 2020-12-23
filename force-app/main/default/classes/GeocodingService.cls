@@ -9,16 +9,15 @@ public with sharing class GeocodingService {
 
         for (GeocodingAddress address : addresses) {
             String url = baseUrl;
-            url += (address.street != null) ? '&street=' + address.street : '';
-            url += (address.city != null) ? '&city=' + address.city : '';
-            url += (address.state != null) ? '&state=' + address.state : '';
-            url += (address.country != null)
-                ? '&country=' + address.country
-                : '';
-            url += (address.postalcode != null)
+            url += (address.street != '') ? '&street=' + address.street : '';
+            url += (address.city != '') ? '&city=' + address.city : '';
+            url += (address.state != '') ? '&state=' + address.state : '';
+            url += (address.country != '') ? '&country=' + address.country : '';
+            url += (address.postalcode != '')
                 ? '&postalcode=' + address.postalcode
                 : '';
 
+            System.debug(url);
             Boolean found = false;
             if (url != baseUrl) {
                 Http http = new Http();

@@ -3,7 +3,7 @@
     <actionCalls>
         <name>geocode_address</name>
         <label>Geocode Address</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <actionName>GeocodingService</actionName>
         <actionType>apex</actionType>
@@ -43,6 +43,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>50.0</apiVersion>
+    <decisions>
+        <name>if_picture_found</name>
+        <label>If picture found</label>
+        <locationX>182</locationX>
+        <locationY>1118</locationY>
+        <defaultConnector>
+            <targetReference>navigate_to_record_detail</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>picture_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>main_picture_url</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>/sfc/servlet.shepherd/version/download/</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>set_main_picture</targetReference>
+            </connector>
+            <label>Picture Found</label>
+        </rules>
+    </decisions>
     <formulas>
         <description>Main picture URL that we&apos;ll use as thumbnail</description>
         <name>main_picture_url</name>
@@ -73,7 +98,7 @@
     <recordCreates>
         <name>create_property</name>
         <label>Create Property</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>upload_picture</targetReference>
@@ -184,7 +209,7 @@
         <description>Retrieve just one of the pictures to be the main one</description>
         <name>get_main_content_document</name>
         <label>Get Main Content Document</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -205,11 +230,11 @@
     <recordLookups>
         <name>get_main_content_version</name>
         <label>Get Main Content Version</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>set_main_picture</targetReference>
+            <targetReference>if_picture_found</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -233,8 +258,11 @@
     <recordUpdates>
         <name>set_main_picture</name>
         <label>Set Property Main Picture &amp; Thumbnail</label>
-        <locationX>176</locationX>
-        <locationY>1118</locationY>
+        <locationX>50</locationX>
+        <locationY>1238</locationY>
+        <connector>
+            <targetReference>navigate_to_record_detail</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -260,7 +288,7 @@
     <screens>
         <name>address</name>
         <label>Address</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -281,7 +309,7 @@
     <screens>
         <name>error_creating_records</name>
         <label>Error</label>
-        <locationX>440</locationX>
+        <locationX>490</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -295,9 +323,33 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>navigate_to_record_detail</name>
+        <label>Navigate to Record</label>
+        <locationX>182</locationX>
+        <locationY>1454</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>navigate_to_record_lwc</name>
+            <extensionName>c:navigateToRecord</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>create_property</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>new_property</name>
         <label>New Property</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -361,7 +413,7 @@
     <screens>
         <name>property_details</name>
         <label>Property Details</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -404,7 +456,7 @@
     <screens>
         <name>upload_picture</name>
         <label>Upload Picture</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -447,7 +499,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>new_property</targetReference>
