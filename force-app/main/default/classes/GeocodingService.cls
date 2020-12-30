@@ -26,6 +26,7 @@ public with sharing class GeocodingService {
                 : '';
 
             Coordinates coords = new Coordinates();
+            System.debug(geocodingUrl);
             if (geocodingUrl != BASE_URL) {
                 Http http = new Http();
                 HttpRequest request = new HttpRequest();
