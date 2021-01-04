@@ -1,20 +1,22 @@
 ({
     getProperties: function getProperties(component) {
-        var action = component.get('c.getPropertyList');
+        var action = component.get('c.getPagedPropertyList');
 
         action.setParams({
             searchKey: component.get('v.searchKey'),
             maxPrice: component.get('v.maxPrice'),
             minBedrooms: component.get('v.minBedrooms'),
-            minBathrooms: component.get('v.minBathrooms')
+            minBathrooms: component.get('v.minBathrooms'),
+            pageSize: 100,
+            pageNumber: 1
         });
         action.setCallback(this, function (response) {
             var state = response.getState();
 
             if (state === 'SUCCESS') {
-                var properties = response.getReturnValue();
+                var pagedResults = response.getReturnValue();
 
-                component.set('v.properties', properties);
+                component.set('v.properties', pagedResults.records);
             } else {
                 var toastEvent = $A.get('e.force:showToast');
 

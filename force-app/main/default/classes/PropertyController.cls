@@ -1,39 +1,14 @@
 public with sharing class PropertyController {
-    @AuraEnabled(cacheable=true)
-    public static Property__c[] getPropertyList(
-        String searchKey,
-        Decimal maxPrice,
-        Integer minBedrooms,
-        Integer minBathrooms
-    ) {
-        String key = '%' + searchKey + '%';
-        return [
-            SELECT
-                Id,
-                address__c,
-                city__c,
-                state__c,
-                description__c,
-                price__c,
-                baths__c,
-                beds__c,
-                thumbnail__c,
-                location__latitude__s,
-                location__longitude__s
-            FROM Property__c
-            WHERE
-                (title__c LIKE :key
-                OR city__c LIKE :key
-                OR tags__c LIKE :key)
-                AND price__c <= :maxPrice
-                AND beds__c >= :minBedrooms
-                AND baths__c >= :minBathrooms
-            WITH SECURITY_ENFORCED
-            ORDER BY price__c
-            LIMIT 100
-        ];
-    }
-
+    /**
+     * Endpoint that retrieves a paged and filtered list of properties
+     * @param searchKey String used for searching on property title, city and tags
+     * @param maxPrice Maximum price
+     * @param minBedrooms Minimum number of bedrooms
+     * @param minBathrooms Minimum number of bathrooms
+     * @param pageSize Number of properties per page
+     * @param pageNumber Page number
+     * @return PagedResult object holding the paged and filtered list of properties
+     */
     @AuraEnabled(cacheable=true)
     public static PagedResult getPagedPropertyList(
         String searchKey,
@@ -76,7 +51,9 @@ public with sharing class PropertyController {
                 price__c,
                 baths__c,
                 beds__c,
-                thumbnail__c
+                thumbnail__c,
+                location__latitude__s,
+                location__longitude__s
             FROM property__c
             WHERE
                 (title__c LIKE :key
@@ -93,6 +70,11 @@ public with sharing class PropertyController {
         return result;
     }
 
+    /**
+     * Endpoint that retrieves pictures associated with a property
+     * @param propertyId Property Id
+     * @return List of ContentVersion holding the pictures
+     */
     @AuraEnabled(cacheable=true)
     public static List<ContentVersion> getPictures(Id propertyId) {
         List<ContentDocumentLink> links = [
