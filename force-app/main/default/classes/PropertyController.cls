@@ -60,8 +60,8 @@ public with sharing class PropertyController {
                 Baths__c,
                 Beds__c,
                 Thumbnail__c,
-                Location__latitude__s,
-                Location__longitude__s
+                Location__Latitude__s,
+                Location__Longitude__s
             FROM Property__c
             WHERE
                 (Title__c LIKE :searchPattern
