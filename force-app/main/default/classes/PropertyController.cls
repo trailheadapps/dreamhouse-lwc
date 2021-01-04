@@ -1,4 +1,7 @@
 public with sharing class PropertyController {
+    private static final Decimal DEFAULT_MAX_PRICE = 9999999;
+    private static final Integer DEFAULT_PAGE_SIZE = 9;
+
     /**
      * Endpoint that retrieves a paged and filtered list of properties
      * @param searchKey String used for searching on property title, city and tags
@@ -18,53 +21,58 @@ public with sharing class PropertyController {
         Integer pageSize,
         Integer pageNumber
     ) {
-        maxPrice = Decimal.valueOf(maxPrice + '');
-        minBedrooms = Integer.valueOf(minBedrooms + '');
-        minBathrooms = Integer.valueOf(minBathrooms + '');
-        pageSize = Integer.valueOf(pageSize + '');
-        pageNumber = Integer.valueOf(pageNumber + '');
+        // Normalize inputs
+        Decimal safeMaxPrice = (maxPrice == null
+            ? DEFAULT_MAX_PRICE
+            : maxPrice);
+        Integer safeMinBedrooms = (minBedrooms == null ? 0 : minBedrooms);
+        Integer safeMinBathrooms = (minBathrooms == null ? 0 : minBathrooms);
+        Integer safePageSize = (pageSize == null
+            ? DEFAULT_PAGE_SIZE
+            : pageSize);
+        Integer safePageNumber = (pageNumber == null ? 1 : pageNumber);
 
-        Integer pSize = (Integer) pageSize;
-        String key = '%' + searchKey + '%';
-        Integer offset = ((Integer) pageNumber - 1) * pSize;
+        String searchPattern = '%' + searchKey + '%';
+        Integer offset = (safePageNumber - 1) * safePageSize;
+
         PagedResult result = new PagedResult();
-        result.pageSize = pSize;
-        result.pageNumber = (Integer) pageNumber;
+        result.pageSize = safePageSize;
+        result.pageNumber = safePageNumber;
         result.totalItemCount = [
             SELECT COUNT()
             FROM Property__c
             WHERE
-                (title__c LIKE :key
-                OR city__c LIKE :key
-                OR tags__c LIKE :key)
-                AND price__c <= :maxPrice
-                AND beds__c >= :minBedrooms
-                AND baths__c >= :minBathrooms
+                (Title__c LIKE :searchPattern
+                OR City__c LIKE :searchPattern
+                OR Tags__c LIKE :searchPattern)
+                AND Price__c <= :safeMaxPrice
+                AND Beds__c >= :safeMinBedrooms
+                AND Baths__c >= :safeMinBathrooms
         ];
         result.records = [
             SELECT
                 Id,
-                address__c,
-                city__c,
-                state__c,
-                description__c,
-                price__c,
-                baths__c,
-                beds__c,
-                thumbnail__c,
-                location__latitude__s,
-                location__longitude__s
-            FROM property__c
+                Address__c,
+                City__c,
+                State__c,
+                Description__c,
+                Price__c,
+                Baths__c,
+                Beds__c,
+                Thumbnail__c,
+                Location__latitude__s,
+                Location__longitude__s
+            FROM Property__c
             WHERE
-                (title__c LIKE :key
-                OR city__c LIKE :key
-                OR tags__c LIKE :key)
-                AND price__c <= :maxPrice
-                AND beds__c >= :minBedrooms
-                AND baths__c >= :minBathrooms
+                (Title__c LIKE :searchPattern
+                OR City__c LIKE :searchPattern
+                OR Tags__c LIKE :searchPattern)
+                AND Price__c <= :safeMaxPrice
+                AND Beds__c >= :safeMinBedrooms
+                AND Baths__c >= :safeMinBathrooms
             WITH SECURITY_ENFORCED
-            ORDER BY price__c
-            LIMIT :pSize
+            ORDER BY Price__c
+            LIMIT :safePageSize
             OFFSET :offset
         ];
         return result;
