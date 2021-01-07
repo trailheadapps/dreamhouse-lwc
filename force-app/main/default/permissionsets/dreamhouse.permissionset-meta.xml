@@ -122,6 +122,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Property__c.Name</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Property__c.Picture_IMG__c</field>
         <readable>true</readable>
@@ -169,11 +174,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Property__c.Thumbnail__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Property__c.Title__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
