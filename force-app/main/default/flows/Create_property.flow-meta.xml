@@ -42,7 +42,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>50.0</apiVersion>
+    <apiVersion>51.0</apiVersion>
     <decisions>
         <name>if_picture_found</name>
         <label>If picture found</label>
