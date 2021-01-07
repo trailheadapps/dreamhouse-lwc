@@ -31,7 +31,7 @@
         aura:id="propertySelectedMessageChannel"
     />
 
-    <lightning:card>
+    <article class="slds-card">
         <div aura:id="map"></div>
-    </lightning:card>
+    </article>
 </aura:component>
