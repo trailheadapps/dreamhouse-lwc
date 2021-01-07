@@ -194,12 +194,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Title__c</field>
-            <value>
-                <elementReference>property_name</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Zip__c</field>
             <value>
                 <elementReference>property_address.postalCode</elementReference>

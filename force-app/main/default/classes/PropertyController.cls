@@ -42,7 +42,7 @@ public with sharing class PropertyController {
             SELECT COUNT()
             FROM Property__c
             WHERE
-                (Title__c LIKE :searchPattern
+                (Name LIKE :searchPattern
                 OR City__c LIKE :searchPattern
                 OR Tags__c LIKE :searchPattern)
                 AND Price__c <= :safeMaxPrice
@@ -64,7 +64,7 @@ public with sharing class PropertyController {
                 Location__Longitude__s
             FROM Property__c
             WHERE
-                (Title__c LIKE :searchPattern
+                (Name LIKE :searchPattern
                 OR City__c LIKE :searchPattern
                 OR Tags__c LIKE :searchPattern)
                 AND Price__c <= :safeMaxPrice

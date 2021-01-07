@@ -7,7 +7,7 @@ private class TestPropertyController {
         for (Integer i = 0; i < amount; i++) {
             properties.add(
                 new Property__c(
-                    Title__c = 'Name ' + i,
+                    Name = 'Name ' + i,
                     Price__c = 20000,
                     Beds__c = 3,
                     Baths__c = 3
