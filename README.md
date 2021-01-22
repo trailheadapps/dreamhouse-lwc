@@ -44,7 +44,7 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 1. If you haven't already done so, authorize your hub org and provide it with an alias (**myhuborg** in the command below):
 
     ```
-    sfdx force:auth:web:login -d -a myhuborg
+    sfdx auth:web:login -d -a myhuborg
     ```
 
 1. Clone this repository:
@@ -146,7 +146,7 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 1. Authorize your Trailhead Playground or Developer org and provide it with an alias (**mydevorg** in the command below):
 
     ```
-    sfdx force:auth:web:login -s -a mydevorg
+    sfdx auth:web:login -s -a mydevorg
     ```
 
 1. Start an In-App Guidance trial
