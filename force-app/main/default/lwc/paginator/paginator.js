@@ -11,11 +11,11 @@ export default class Paginator extends LightningElement {
     @api totalItemCount;
 
     handlePrevious() {
-        this.dispatchEvent(new Event('previous'));
+        this.dispatchEvent(new CustomEvent('previous'));
     }
 
     handleNext() {
-        this.dispatchEvent(new Event('next'));
+        this.dispatchEvent(new CustomEvent('next'));
     }
 
     get currentPageNumber() {
