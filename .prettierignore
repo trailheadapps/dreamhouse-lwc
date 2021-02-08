@@ -11,3 +11,6 @@ coverage/
 
 # Exclude project config (edited by CI workflow)
 sfdx-project.json
+
+# Added meanwhile prettier-plugin-apex is fixed
+GeocodingService.cls

@@ -1,7 +1,7 @@
 public with sharing class GeocodingService {
     private static final String BASE_URL = 'https://nominatim.openstreetmap.org/search?format=json';
 
-    @InvocableMethod(callout=true,label='Geocode address')
+    @InvocableMethod(label='Geocode address', callout=true)/* prettier-ignore */
     public static List<Coordinates> geocodeAddresses(
         List<GeocodingAddress> addresses
     ) {
