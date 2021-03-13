@@ -12,32 +12,26 @@
                                 description={description}
                             ></lightning-carousel-image>
                         </template>
-                    </lightning-carousel>
-                </template>
-                <template if:false={urls}>
+</lightning-carousel>
+</template>
+<template if:false={urls}>
                     <lightning-icon
                         icon-name="utility:photo"
                         size="medium"
                         class="slds-align_absolute-center"
                     ></lightning-icon>
                     <p class="slds-text-color_weak slds-text-align_center">
-                        There are currently no pictures for this property.
+                        There are currently no pictures for this property Soniya.
                     </p>
                 </template>
-                <lightning-file-upload
-                    label="Add picture"
-                    multiple
-                    accept=".jpg,.png,.gif"
-                    record-id={recordId}
-                    onuploadfinished={handleUploadFinished}
-                ></lightning-file-upload>
-            </div>
-        </template>
-        <template if:true={errors}>
+<lightning-file-upload label="Add picture" multiple accept=".jpg,.png,.gif" record-id={recordId} onuploadfinished={handleUploadFinished}></lightning-file-upload>
+</div>
+</template>
+<template if:true={errors}>
             <c-error-panel
                 friendly-message="Error retrieving pictures"
                 errors={errors}
             ></c-error-panel>
         </template>
-    </lightning-card>
+</lightning-card>
 </template>
