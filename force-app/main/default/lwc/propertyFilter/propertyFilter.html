@@ -1,42 +1,16 @@
 <template>
     <lightning-card title="Filters" icon-name="standard:calibration">
-        <lightning-button
-            slot="actions"
-            label="Reset"
-            onclick={handleReset}
-        ></lightning-button>
+        <lightning-button slot="actions" label="Reset" onclick={handleReset}></lightning-button>
 
         <div class="slds-var-m-around_medium">
-            <lightning-input
-                label="Search Key"
-                type="text"
-                value={searchKey}
-                onchange={handleSearchKeyChange}
-            ></lightning-input>
-            <lightning-slider
-                label="Max Price"
-                step="50000"
-                min="0"
-                max="1200000"
-                value={maxPrice}
-                onchange={handleMaxPriceChange}
-            ></lightning-slider>
-            <lightning-slider
-                label="Bedrooms"
-                step="1"
-                min="0"
-                max="6"
-                value={minBedrooms}
-                onchange={handleMinBedroomsChange}
-            ></lightning-slider>
-            <lightning-slider
-                label="Bathrooms"
-                step="1"
-                min="0"
-                max="6"
-                value={minBathrooms}
-                onchange={handleMinBathroomsChange}
-            ></lightning-slider>
+            <lightning-input label="Search Key" type="text" value={searchKey} onchange={handleSearchKeyChange}>
+            </lightning-input>
+            <lightning-slider label="Maximum Price" step="50000" min="0" max="1200000" value={maxPrice}
+                onchange={handleMaxPriceChange}></lightning-slider>
+            <lightning-slider label="Bedrooms" step="1" min="0" max="6" value={minBedrooms}
+                onchange={handleMinBedroomsChange}></lightning-slider>
+            <lightning-slider label="Bathrooms" step="1" min="0" max="6" value={minBathrooms}
+                onchange={handleMinBathroomsChange}></lightning-slider>
         </div>
     </lightning-card>
 </template>
