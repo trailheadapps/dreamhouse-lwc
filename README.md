@@ -1,6 +1,6 @@
 # Dreamhouse Lightning Web Components Sample Application
 
-[![Github Workflow](<https://github.com/trailheadapps/dreamhouse-lwc/workflows/Salesforce%20DX%20(scratch%20org)/badge.svg?branch=master>)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3A%22Salesforce+DX+%28scratch+org%29%22) [![Github Workflow](https://github.com/trailheadapps/dreamhouse-lwc/workflows/Packaging/badge.svg?branch=master)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3A%22Packaging%22) [![codecov](https://codecov.io/gh/trailheadapps/dreamhouse-lwc/branch/master/graph/badge.svg)](https://codecov.io/gh/trailheadapps/dreamhouse-lwc)
+[![CI Workflow](https://github.com/trailheadapps/dreamhouse-lwc/workflows/CI/badge.svg)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3ACI) [![Packaging Workflow](https://github.com/trailheadapps/dreamhouse-lwc/workflows/Packaging/badge.svg)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3APackaging) [![codecov](https://codecov.io/gh/trailheadapps/dreamhouse-lwc/branch/main/graph/badge.svg)](https://codecov.io/gh/trailheadapps/dreamhouse-lwc)
 
 > IMPORTANT: This is the new Lightning Web Components version of the Dreamhouse sample application. If you are looking for the Aura version, click [here](https://github.com/dreamhouseapp/dreamhouse-sfdx).
 
