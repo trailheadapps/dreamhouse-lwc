@@ -3,13 +3,14 @@
     <actionCalls>
         <name>geocode_address</name>
         <label>Geocode Address</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <actionName>GeocodingService</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>property_details</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>city</name>
             <value>
@@ -46,7 +47,7 @@
     <decisions>
         <name>if_picture_found</name>
         <label>If picture found</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>navigate_to_record_detail</targetReference>
@@ -69,6 +70,8 @@
             <label>Picture Found</label>
         </rules>
     </decisions>
+    <description
+    >This flow helps agents creating new properties in just a few clicks. It calculates the geocoded address calling out to a 3rd party service.</description>
     <formulas>
         <description
         >Main picture URL that we&apos;ll use as thumbnail</description>
@@ -101,7 +104,7 @@
     <recordCreates>
         <name>create_property</name>
         <label>Create Property</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>upload_picture</targetReference>
@@ -207,13 +210,16 @@
         >Retrieve just one of the pictures to be the main one</description>
         <name>get_main_content_document</name>
         <label>Get Main Content Document</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound
         >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>get_main_content_version</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error2</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>LinkedEntityId</field>
@@ -229,13 +235,16 @@
     <recordLookups>
         <name>get_main_content_version</name>
         <label>Get Main Content Version</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound
         >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>if_picture_found</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error3</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>ContentDocumentId</field>
@@ -264,6 +273,9 @@
         <connector>
             <targetReference>navigate_to_record_detail</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error4</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -289,7 +301,7 @@
     <screens>
         <name>address</name>
         <label>Address</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -301,6 +313,8 @@
             <name>property_address</name>
             <extensionName>flowruntime:address</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -308,11 +322,62 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Error2</name>
+        <label>Error</label>
+        <locationX>1018</locationX>
+        <locationY>998</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error2_text</name>
+            <fieldText
+            >&lt;p&gt;Unknown error retrieving uploaded picture.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error3</name>
+        <label>Error</label>
+        <locationX>754</locationX>
+        <locationY>1118</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error3_text</name>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Unknown error retrieving uploaded picture.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error4</name>
+        <label>Error</label>
+        <locationX>314</locationX>
+        <locationY>1358</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error4_text</name>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Unknown error setting picture as Property thumbnail.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>error_creating_records</name>
         <label>Error</label>
-        <locationX>490</locationX>
+        <locationX>1282</locationX>
         <locationY>758</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
@@ -327,9 +392,9 @@
     <screens>
         <name>navigate_to_record_detail</name>
         <label>Navigate to Record</label>
-        <locationX>182</locationX>
-        <locationY>1454</locationY>
-        <allowBack>true</allowBack>
+        <locationX>314</locationX>
+        <locationY>1718</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
@@ -342,6 +407,8 @@
                     <elementReference>create_property</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -351,7 +418,7 @@
     <screens>
         <name>new_property</name>
         <label>New Property</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -395,6 +462,8 @@
                     <stringValue>Property__c</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -415,7 +484,7 @@
     <screens>
         <name>property_details</name>
         <label>Property Details</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -458,9 +527,9 @@
     <screens>
         <name>upload_picture</name>
         <label>Upload Picture</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>758</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
@@ -494,6 +563,8 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -501,7 +572,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>new_property</targetReference>
