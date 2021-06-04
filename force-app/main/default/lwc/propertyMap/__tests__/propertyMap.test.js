@@ -35,20 +35,27 @@ describe('c-property-map', () => {
         jest.clearAllMocks();
     });
 
-    it('renders an error panel when no property is selected', () => {
+    // Helper function to wait until the microtask queue is empty. This is needed for promise
+    // timing when calling imperative Apex.
+    async function flushPromises() {
+        return Promise.resolve();
+    }
+
+    it('renders an error panel when no property is selected', async () => {
         const element = createElement('c-property-map', {
             is: PropertyMap
         });
 
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => {
-            const panelEl = element.shadowRoot.querySelector('c-error-panel');
-            expect(panelEl).not.toBeNull();
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        const panelEl = element.shadowRoot.querySelector('c-error-panel');
+        expect(panelEl).not.toBeNull();
     });
 
-    it('renders a map when a property is selected', () => {
+    it('renders a map when a property is selected', async () => {
         const element = createElement('c-property-map', {
             is: PropertyMap
         });
@@ -57,14 +64,15 @@ describe('c-property-map', () => {
         // Simulate property selection
         getRecordAdapter.emit(mockPropertyRecord);
 
-        return Promise.resolve().then(() => {
-            const mapEl = element.shadowRoot.querySelector('lightning-map');
-            expect(mapEl).not.toBeNull();
-            expect(mapEl.mapMarkers).toStrictEqual(EXPECTED_MAP_MARKERS);
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        const mapEl = element.shadowRoot.querySelector('lightning-map');
+        expect(mapEl).not.toBeNull();
+        expect(mapEl.mapMarkers).toStrictEqual(EXPECTED_MAP_MARKERS);
     });
 
-    it('is accessible when property is selected', () => {
+    it('is accessible when property is selected', async () => {
         const element = createElement('c-property-map', {
             is: PropertyMap
         });
@@ -74,20 +82,16 @@ describe('c-property-map', () => {
         // Simulate property selection
         getRecordAdapter.emit(mockPropertyRecord);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        await expect(element).toBeAccessible();
     });
 
-    it('is accessible when property is not selected', () => {
+    it('is accessible when property is not selected', async () => {
         const element = createElement('c-property-map', {
             is: PropertyMap
         });
 
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        await expect(element).toBeAccessible();
     });
 });

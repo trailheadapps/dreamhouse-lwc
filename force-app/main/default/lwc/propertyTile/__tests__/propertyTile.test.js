@@ -18,6 +18,12 @@ describe('c-property-tile', () => {
         }
     });
 
+    // Helper function to wait until the microtask queue is empty. This is needed for promise
+    // timing when calling imperative Apex.
+    async function flushPromises() {
+        return Promise.resolve();
+    }
+
     it('displays a property in the tile', () => {
         const element = createElement('c-property-tile', {
             is: PropertyTile
@@ -52,7 +58,7 @@ describe('c-property-tile', () => {
         );
     });
 
-    it('fires the property "selected" event on click', () => {
+    it('fires the property "selected" event on click', async () => {
         const element = createElement('c-property-tile', {
             is: PropertyTile
         });
@@ -66,15 +72,16 @@ describe('c-property-tile', () => {
         const anchorEl = element.shadowRoot.querySelector('a');
         anchorEl.click();
 
-        return Promise.resolve().then(() => {
-            // Validate if event got fired
-            expect(handler).toHaveBeenCalled();
-            const selectEvent = handler.mock.calls[0][0];
-            expect(selectEvent.detail).toBe(PROPERTY.Id);
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Validate if event got fired
+        expect(handler).toHaveBeenCalled();
+        const selectEvent = handler.mock.calls[0][0];
+        expect(selectEvent.detail).toBe(PROPERTY.Id);
     });
 
-    it('is accessible', () => {
+    it('is accessible', async () => {
         const element = createElement('c-property-tile', {
             is: PropertyTile
         });
@@ -82,8 +89,6 @@ describe('c-property-tile', () => {
         element.property = PROPERTY;
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        await expect(element).toBeAccessible();
     });
 });
