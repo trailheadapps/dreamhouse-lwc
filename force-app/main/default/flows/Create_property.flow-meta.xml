@@ -10,6 +10,9 @@
         <connector>
             <targetReference>property_details</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error5</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>city</name>
@@ -43,7 +46,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>52.0</apiVersion>
+    <apiVersion>51.0</apiVersion>
     <decisions>
         <name>If_content_document_found</name>
         <label>If Content Document found</label>
@@ -393,6 +396,23 @@
             <name>error4_text</name>
             <fieldText
             >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Unknown error setting picture as Property thumbnail.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error5</name>
+        <label>Error</label>
+        <locationX>1722</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error5_text</name>
+            <fieldText
+            >&lt;p&gt;Error retrieving geocoded address.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
