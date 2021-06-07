@@ -1,6 +1,10 @@
 {
     "apiName": "Property__c",
     "fields": {
+        "Name": {
+            "displayValue": null,
+            "value": "Stunning Colonial"
+        },
         "Address__c": {
             "displayValue": null,
             "value": "127 Endicott St"

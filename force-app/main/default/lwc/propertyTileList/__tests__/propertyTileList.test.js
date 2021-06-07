@@ -13,9 +13,8 @@ import {
 const mockGetPagedProperties = require('./data/getPagedPropertyList.json');
 
 // Register the Apex wire adapter
-const getPagedPropertiesAdapter = registerApexTestWireAdapter(
-    getPagedPropertyList
-);
+const getPagedPropertiesAdapter =
+    registerApexTestWireAdapter(getPagedPropertyList);
 
 // Register as a standard wire adapter because the component under test requires this adapter.
 // We don't exercise this wire adapter in the tests.
@@ -30,8 +29,14 @@ describe('c-property-tile-list', () => {
         jest.clearAllMocks();
     });
 
+    // Helper function to wait until the microtask queue is empty. This is needed for promise
+    // timing when calling imperative Apex.
+    async function flushPromises() {
+        return Promise.resolve();
+    }
+
     describe('@wire data', () => {
-        it('renders properties when data returned', () => {
+        it('renders properties when data returned', async () => {
             const element = createElement('c-property-tile-list', {
                 is: PropertyTileList
             });
@@ -40,18 +45,17 @@ describe('c-property-tile-list', () => {
             // Emit mock properties
             getPagedPropertiesAdapter.emit(mockGetPagedProperties);
 
-            // Return a promise to wait for any asynchronous DOM updates.
-            return Promise.resolve().then(() => {
-                const propertyTileEls = element.shadowRoot.querySelectorAll(
-                    'c-property-tile'
-                );
-                expect(propertyTileEls.length).toBe(
-                    mockGetPagedProperties.records.length
-                );
-            });
+            // Wait for any asynchronous DOM updates
+            await flushPromises();
+
+            const propertyTileEls =
+                element.shadowRoot.querySelectorAll('c-property-tile');
+            expect(propertyTileEls.length).toBe(
+                mockGetPagedProperties.records.length
+            );
         });
 
-        it('renders error panel when error returned', () => {
+        it('renders error panel when error returned', async () => {
             const element = createElement('c-property-tile-list', {
                 is: PropertyTileList
             });
@@ -60,13 +64,12 @@ describe('c-property-tile-list', () => {
             // Emit error
             getPagedPropertiesAdapter.error();
 
-            // Return a promise to wait for any asynchronous DOM updates.
-            return Promise.resolve().then(() => {
-                const errorPanelEl = element.shadowRoot.querySelector(
-                    'c-error-panel'
-                );
-                expect(errorPanelEl).not.toBeNull();
-            });
+            // Wait for any asynchronous DOM updates
+            await flushPromises();
+
+            const errorPanelEl =
+                element.shadowRoot.querySelector('c-error-panel');
+            expect(errorPanelEl).not.toBeNull();
         });
     });
 
@@ -81,7 +84,7 @@ describe('c-property-tile-list', () => {
         expect(subscribe.mock.calls[0][1]).toBe(FILTERSCHANGEMC);
     });
 
-    it('invokes getPagedProperties with the propertyFilters message payload value', () => {
+    it('invokes getPagedProperties with the propertyFilters message payload value', async () => {
         const element = createElement('c-property-tile-list', {
             is: PropertyTileList
         });
@@ -96,39 +99,34 @@ describe('c-property-tile-list', () => {
         };
         publish(messageContextWireAdapter, FILTERSCHANGEMC, messagePayload);
 
-        return Promise.resolve().then(() => {
-            // The component subscription should cause getRecord to be invoked.
-            // Below we test that it is invoked with the messagePayload value
-            // that was published with the simulated publish invocation above.
-            const receivedPayload = getPagedPropertiesAdapter.getLastConfig();
-            expect(receivedPayload.searchKey).toBe(messagePayload.searchKey);
-            expect(receivedPayload.maxPrice).toBe(messagePayload.maxPrice);
-            expect(receivedPayload.minBedrooms).toBe(
-                messagePayload.minBedrooms
-            );
-            expect(receivedPayload.minBathrooms).toBe(
-                messagePayload.minBathrooms
-            );
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // The component subscription should cause getRecord to be invoked.
+        // Below we test that it is invoked with the messagePayload value
+        // that was published with the simulated publish invocation above.
+        const receivedPayload = getPagedPropertiesAdapter.getLastConfig();
+        expect(receivedPayload.searchKey).toBe(messagePayload.searchKey);
+        expect(receivedPayload.maxPrice).toBe(messagePayload.maxPrice);
+        expect(receivedPayload.minBedrooms).toBe(messagePayload.minBedrooms);
+        expect(receivedPayload.minBathrooms).toBe(messagePayload.minBathrooms);
     });
 
-    it('sends propertySelected event when c-property-tile selected', () => {
+    it('sends propertySelected event when c-property-tile selected', async () => {
         const element = createElement('c-property-tile-list', {
             is: PropertyTileList
         });
         document.body.appendChild(element);
         getPagedPropertiesAdapter.emit(mockGetPagedProperties);
 
-        return Promise.resolve().then(() => {
-            const propertyTile = element.shadowRoot.querySelector(
-                'c-property-tile'
-            );
-            propertyTile.dispatchEvent(new CustomEvent('selected'));
-            expect(publish).toHaveBeenCalledWith(
-                undefined,
-                PROPERTYSELECTEDMC,
-                { propertyId: null }
-            );
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        const propertyTile =
+            element.shadowRoot.querySelector('c-property-tile');
+        propertyTile.dispatchEvent(new CustomEvent('selected'));
+        expect(publish).toHaveBeenCalledWith(undefined, PROPERTYSELECTEDMC, {
+            propertyId: null
         });
     });
 });

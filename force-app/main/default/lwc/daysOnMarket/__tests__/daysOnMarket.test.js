@@ -37,6 +37,12 @@ describe('c-days-on-market', () => {
         jest.clearAllMocks();
     });
 
+    // Helper function to wait until the microtask queue is empty. This is needed for promise
+    // timing when calling imperative Apex.
+    async function flushPromises() {
+        return Promise.resolve();
+    }
+
     it('renders error if no property is selected', () => {
         // Create initial element
         const element = createElement('c-days-on-market', {
@@ -44,9 +50,8 @@ describe('c-days-on-market', () => {
         });
         document.body.appendChild(element);
 
-        const errorPanelElement = element.shadowRoot.querySelector(
-            'c-error-panel'
-        );
+        const errorPanelElement =
+            element.shadowRoot.querySelector('c-error-panel');
         expect(errorPanelElement.friendlyMessage).toBe(
             'Select a property to see days on the market'
         );
@@ -76,7 +81,7 @@ describe('c-days-on-market', () => {
         expect(unsubscribe).toHaveBeenCalled();
     });
 
-    it('invokes getRecord with the published message payload value', () => {
+    it('invokes getRecord with the published message payload value', async () => {
         // Create element
         const element = createElement('c-days-on-market', {
             is: DaysOnMarket
@@ -87,14 +92,15 @@ describe('c-days-on-market', () => {
         const messagePayload = { propertyId: '001' };
         publish(messageContextWireAdapter, PROPERTYSELECTEDMC, messagePayload);
 
-        return Promise.resolve().then(() => {
-            // The component subscription should cause getRecord to be invoked.
-            // Below we test that it is invoked with the messagePayload value
-            // that was published with the simulated publish invocation above.
-            const { propertyId, fields } = getRecordAdapter.getLastConfig();
-            expect(propertyId).toEqual(messagePayload.recordId);
-            expect(fields).toEqual([DATE_LISTED_FIELD, DAYS_ON_MARKET_FIELD]);
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // The component subscription should cause getRecord to be invoked.
+        // Below we test that it is invoked with the messagePayload value
+        // that was published with the simulated publish invocation above.
+        const { propertyId, fields } = getRecordAdapter.getLastConfig();
+        expect(propertyId).toEqual(messagePayload.recordId);
+        expect(fields).toEqual([DATE_LISTED_FIELD, DAYS_ON_MARKET_FIELD]);
     });
 
     describe('getRecord @wire data', () => {
@@ -129,7 +135,7 @@ describe('c-days-on-market', () => {
 
         describe('renders days on market', () => {
             // eslint-disable-next-line jest/expect-expect
-            it('in normal case', () => {
+            it('in normal case', async () => {
                 // Create element
                 const element = createElement('c-days-on-market', {
                     is: DaysOnMarket
@@ -140,17 +146,15 @@ describe('c-days-on-market', () => {
                 // Emit data from @wire
                 getRecordAdapter.emit(mockGetRecord);
 
-                // Return a promise to wait for any asynchronous DOM updates. Jest
-                // will automatically wait for the Promise chain to complete before
-                // ending the test and fail the test if the promise rejects.
-                return Promise.resolve().then(() => {
-                    // Select elements for validation
-                    validateHTML(element, 'normal');
-                });
+                // Wait for any asynchronous DOM updates
+                await flushPromises();
+
+                // Select elements for validation
+                validateHTML(element, 'normal');
             });
 
             // eslint-disable-next-line jest/expect-expect
-            it('in warning case', () => {
+            it('in warning case', async () => {
                 // Create element
                 const element = createElement('c-days-on-market', {
                     is: DaysOnMarket
@@ -162,17 +166,15 @@ describe('c-days-on-market', () => {
                 mockGetRecord.fields.Days_On_Market__c.value = 48;
                 getRecordAdapter.emit(mockGetRecord);
 
-                // Return a promise to wait for any asynchronous DOM updates. Jest
-                // will automatically wait for the Promise chain to complete before
-                // ending the test and fail the test if the promise rejects.
-                return Promise.resolve().then(() => {
-                    // Select elements for validation
-                    validateHTML(element, 'warning');
-                });
+                // Wait for any asynchronous DOM updates
+                await flushPromises();
+
+                // Select elements for validation
+                validateHTML(element, 'warning');
             });
 
             // eslint-disable-next-line jest/expect-expect
-            it('in alert case', () => {
+            it('in alert case', async () => {
                 // Create element
                 const element = createElement('c-days-on-market', {
                     is: DaysOnMarket
@@ -184,18 +186,16 @@ describe('c-days-on-market', () => {
                 mockGetRecord.fields.Days_On_Market__c.value = 68;
                 getRecordAdapter.emit(mockGetRecord);
 
-                // Return a promise to wait for any asynchronous DOM updates. Jest
-                // will automatically wait for the Promise chain to complete before
-                // ending the test and fail the test if the promise rejects.
-                return Promise.resolve().then(() => {
-                    // Select elements for validation
-                    validateHTML(element, 'alert');
-                });
+                // Wait for any asynchronous DOM updates
+                await flushPromises();
+
+                // Select elements for validation
+                validateHTML(element, 'alert');
             });
         });
     });
     describe('getRecord @wire error', () => {
-        it('renders an error panel when there is an error', () => {
+        it('renders an error panel when there is an error', async () => {
             const APEX_ERROR = {
                 body: 'Error retrieving records',
                 ok: false,
@@ -217,20 +217,17 @@ describe('c-days-on-market', () => {
                 APEX_ERROR.statusText
             );
 
-            // Return a promise to wait for any asynchronous DOM updates. Jest
-            // will automatically wait for the Promise chain to complete before
-            // ending the test and fail the test if the promise rejects.
-            return Promise.resolve().then(() => {
-                const errorPanelEl = element.shadowRoot.querySelector(
-                    'c-error-panel'
-                );
-                expect(errorPanelEl).not.toBeNull();
-                expect(errorPanelEl.errors).toStrictEqual(APEX_ERROR);
-            });
+            // Wait for any asynchronous DOM updates
+            await flushPromises();
+
+            const errorPanelEl =
+                element.shadowRoot.querySelector('c-error-panel');
+            expect(errorPanelEl).not.toBeNull();
+            expect(errorPanelEl.errors).toStrictEqual(APEX_ERROR);
         });
     });
 
-    it('is accessible when property selected', () => {
+    it('is accessible when property selected', async () => {
         const element = createElement('c-days-on-market', {
             is: DaysOnMarket
         });
@@ -241,19 +238,25 @@ describe('c-days-on-market', () => {
         // Emit data from @wire
         getRecordAdapter.emit(mockGetRecord);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        await expect(element).toBeAccessible();
     });
 
-    it('is accessible when no property selected', () => {
+    it('is accessible when no property selected', async () => {
         const element = createElement('c-days-on-market', {
             is: DaysOnMarket
         });
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        await expect(element).toBeAccessible();
     });
 
-    it('is accessible when error returned', () => {
+    it('is accessible when error returned', async () => {
         // Create initial element
         const element = createElement('c-days-on-market', {
             is: DaysOnMarket
@@ -261,6 +264,9 @@ describe('c-days-on-market', () => {
         element.recordId = '001';
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => expect(element).toBeAccessible());
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        await expect(element).toBeAccessible();
     });
 });
