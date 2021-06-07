@@ -1,7 +1,8 @@
 import { createElement } from 'lwc';
 import PropertyFilter from 'c/propertyFilter';
-import { publish } from 'lightning/messageService';
+import { publish, MessageContext } from 'lightning/messageService';
 import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
+import { registerTestWireAdapter } from '@salesforce/sfdx-lwc-jest';
 
 const MAX_PRICE = 1200000;
 
@@ -11,6 +12,10 @@ const DEFAULT_SEARCH_CRITERIA = {
     minBedrooms: 0,
     minBathrooms: 0
 };
+
+// Register as a standard wire adapter because the component under test requires this adapter.
+// We don't exercise this wire adapter in the tests.
+registerTestWireAdapter(MessageContext);
 
 describe('c-property-filter', () => {
     beforeAll(() => {
@@ -26,7 +31,13 @@ describe('c-property-filter', () => {
         jest.clearAllMocks();
     });
 
-    it('fires the change event on new search input', () => {
+    // Helper function to wait until the microtask queue is empty. This is needed for promise
+    // timing when calling imperative Apex.
+    async function flushPromises() {
+        return Promise.resolve();
+    }
+
+    it('fires the change event on new search input', async () => {
         // Create initial element
         const element = createElement('c-property-filter', {
             is: PropertyFilter
@@ -54,17 +65,19 @@ describe('c-property-filter', () => {
             minBedrooms: 0,
             minBathrooms: 0
         };
-        return Promise.resolve().then(() => {
-            // Was publish called and was it called with the correct params?
-            expect(publish).toHaveBeenCalledWith(
-                undefined,
-                FILTERSCHANGEMC,
-                SEARCH_CRITERIA
-            );
-        });
+
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Was publish called and was it called with the correct params?
+        expect(publish).toHaveBeenCalledWith(
+            undefined,
+            FILTERSCHANGEMC,
+            SEARCH_CRITERIA
+        );
     });
 
-    it('fires the change event on Max Price slider input', () => {
+    it('fires the change event on Max Price slider input', async () => {
         // Create initial element
         const element = createElement('c-property-filter', {
             is: PropertyFilter
@@ -92,17 +105,19 @@ describe('c-property-filter', () => {
             minBedrooms: 0,
             minBathrooms: 0
         };
-        return Promise.resolve().then(() => {
-            // Was publish called and was it called with the correct params?
-            expect(publish).toHaveBeenCalledWith(
-                undefined,
-                FILTERSCHANGEMC,
-                SEARCH_CRITERIA
-            );
-        });
+
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Was publish called and was it called with the correct params?
+        expect(publish).toHaveBeenCalledWith(
+            undefined,
+            FILTERSCHANGEMC,
+            SEARCH_CRITERIA
+        );
     });
 
-    it('fires the change event on Bedrooms slider input', () => {
+    it('fires the change event on Bedrooms slider input', async () => {
         // Create initial element
         const element = createElement('c-property-filter', {
             is: PropertyFilter
@@ -130,17 +145,19 @@ describe('c-property-filter', () => {
             minBedrooms: 2,
             minBathrooms: 0
         };
-        return Promise.resolve().then(() => {
-            // Was publish called and was it called with the correct params?
-            expect(publish).toHaveBeenCalledWith(
-                undefined,
-                FILTERSCHANGEMC,
-                SEARCH_CRITERIA
-            );
-        });
+
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Was publish called and was it called with the correct params?
+        expect(publish).toHaveBeenCalledWith(
+            undefined,
+            FILTERSCHANGEMC,
+            SEARCH_CRITERIA
+        );
     });
 
-    it('fires the change event on Bathrooms slider input', () => {
+    it('fires the change event on Bathrooms slider input', async () => {
         // Create initial element
         const element = createElement('c-property-filter', {
             is: PropertyFilter
@@ -168,17 +185,19 @@ describe('c-property-filter', () => {
             minBedrooms: 0,
             minBathrooms: 2
         };
-        return Promise.resolve().then(() => {
-            // Was publish called and was it called with the correct params?
-            expect(publish).toHaveBeenCalledWith(
-                undefined,
-                FILTERSCHANGEMC,
-                SEARCH_CRITERIA
-            );
-        });
+
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Was publish called and was it called with the correct params?
+        expect(publish).toHaveBeenCalledWith(
+            undefined,
+            FILTERSCHANGEMC,
+            SEARCH_CRITERIA
+        );
     });
 
-    it('fires change event when reset button is clicked', () => {
+    it('fires change event when reset button is clicked', async () => {
         // Create initial element
         const element = createElement('c-property-filter', {
             is: PropertyFilter
@@ -193,17 +212,18 @@ describe('c-property-filter', () => {
         // Run all fake timers.
         jest.runAllTimers();
 
-        return Promise.resolve().then(() => {
-            // Was publish called and was it called with the correct params?
-            expect(publish).toHaveBeenCalledWith(
-                undefined,
-                FILTERSCHANGEMC,
-                DEFAULT_SEARCH_CRITERIA
-            );
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Was publish called and was it called with the correct params?
+        expect(publish).toHaveBeenCalledWith(
+            undefined,
+            FILTERSCHANGEMC,
+            DEFAULT_SEARCH_CRITERIA
+        );
     });
 
-    it('resets to default values when reset button is clicked', () => {
+    it('resets to default values when reset button is clicked', async () => {
         // Create initial element
         const element = createElement('c-property-filter', {
             is: PropertyFilter
@@ -248,34 +268,19 @@ describe('c-property-filter', () => {
         );
         lightningButtonEl.click();
 
-        return Promise.resolve().then(() => {
-            // Check for default searchkey value
-            searchKeyEl = element.shadowRoot.querySelector('lightning-input');
-            expect(searchKeyEl.value).toBe(DEFAULT_SEARCH_CRITERIA.searchKey);
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
 
-            sliderEls = element.shadowRoot.querySelectorAll('lightning-slider');
-            // Check for default maxPrice value
-            expect(sliderEls[0].value).toBe(DEFAULT_SEARCH_CRITERIA.maxPrice);
-            // Check for default minBedrooms value
-            expect(sliderEls[1].value).toBe(
-                DEFAULT_SEARCH_CRITERIA.minBedrooms
-            );
-            // Check for default minBathrooms value
-            expect(sliderEls[2].value).toBe(
-                DEFAULT_SEARCH_CRITERIA.minBathrooms
-            );
-        });
-    });
+        // Check for default searchkey value
+        searchKeyEl = element.shadowRoot.querySelector('lightning-input');
+        expect(searchKeyEl.value).toBe(DEFAULT_SEARCH_CRITERIA.searchKey);
 
-    it('is accessible', () => {
-        const element = createElement('c-property-filter', {
-            is: PropertyFilter
-        });
-
-        document.body.appendChild(element);
-
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        sliderEls = element.shadowRoot.querySelectorAll('lightning-slider');
+        // Check for default maxPrice value
+        expect(sliderEls[0].value).toBe(DEFAULT_SEARCH_CRITERIA.maxPrice);
+        // Check for default minBedrooms value
+        expect(sliderEls[1].value).toBe(DEFAULT_SEARCH_CRITERIA.minBedrooms);
+        // Check for default minBathrooms value
+        expect(sliderEls[2].value).toBe(DEFAULT_SEARCH_CRITERIA.minBathrooms);
     });
 });

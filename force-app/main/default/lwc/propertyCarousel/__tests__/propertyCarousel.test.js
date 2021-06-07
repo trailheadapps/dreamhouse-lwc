@@ -29,8 +29,14 @@ describe('c-property-carousel', () => {
         jest.clearAllMocks();
     });
 
+    // Helper function to wait until the microtask queue is empty. This is needed for promise
+    // timing when calling imperative Apex.
+    async function flushPromises() {
+        return Promise.resolve();
+    }
+
     describe('@wire data', () => {
-        it('renders carousel with pictures when property and pictures returned', () => {
+        it('renders carousel with pictures when property and pictures returned', async () => {
             const element = createElement('c-property-carousel', {
                 is: PropertyCarousel
             });
@@ -42,20 +48,20 @@ describe('c-property-carousel', () => {
             // Emit mock pictures
             getPicturesAdapter.emit(mockGetPictures);
 
-            // Return a promise to wait for any asynchronous DOM updates.
-            return Promise.resolve().then(() => {
-                const carouselEl = element.shadowRoot.querySelector(
-                    'lightning-carousel'
-                );
-                expect(carouselEl).not.toBeNull();
-                const carouselImageEls = element.shadowRoot.querySelectorAll(
-                    'lightning-carousel-image'
-                );
-                expect(carouselImageEls.length).toBe(mockGetPictures.length);
-            });
+            // Wait for any asynchronous DOM updates
+            await flushPromises();
+
+            const carouselEl = element.shadowRoot.querySelector(
+                'lightning-carousel'
+            );
+            expect(carouselEl).not.toBeNull();
+            const carouselImageEls = element.shadowRoot.querySelectorAll(
+                'lightning-carousel-image'
+            );
+            expect(carouselImageEls.length).toBe(mockGetPictures.length);
         });
 
-        it('renders no pictures message when property but no pictures returned', () => {
+        it('renders no pictures message when property but no pictures returned', async () => {
             const element = createElement('c-property-carousel', {
                 is: PropertyCarousel
             });
@@ -67,19 +73,19 @@ describe('c-property-carousel', () => {
             // Emit no pictures
             getPicturesAdapter.emit(null);
 
-            // Return a promise to wait for any asynchronous DOM updates.
-            return Promise.resolve().then(() => {
-                const pEl = element.shadowRoot.querySelector(
-                    'p.slds-text-align_center'
-                );
-                expect(pEl).not.toBeNull();
-                expect(pEl.textContent).toBe(
-                    'There are currently no pictures for this property.'
-                );
-            });
+            // Wait for any asynchronous DOM updates
+            await flushPromises();
+
+            const pEl = element.shadowRoot.querySelector(
+                'p.slds-text-align_center'
+            );
+            expect(pEl).not.toBeNull();
+            expect(pEl.textContent).toBe(
+                'There are currently no pictures for this property.'
+            );
         });
 
-        it('renders error when getProperty returns error', () => {
+        it('renders error when getProperty returns error', async () => {
             const element = createElement('c-property-carousel', {
                 is: PropertyCarousel
             });
@@ -88,16 +94,16 @@ describe('c-property-carousel', () => {
             // Emit error
             getRecordAdapter.error();
 
-            // Return a promise to wait for any asynchronous DOM updates.
-            return Promise.resolve().then(() => {
-                const errorPanelEl = element.shadowRoot.querySelector(
-                    'c-error-panel'
-                );
-                expect(errorPanelEl).not.toBeNull();
-            });
+            // Wait for any asynchronous DOM updates
+            await flushPromises();
+
+            const errorPanelEl = element.shadowRoot.querySelector(
+                'c-error-panel'
+            );
+            expect(errorPanelEl).not.toBeNull();
         });
 
-        it('renders error when getPictures returns error', () => {
+        it('renders error when getPictures returns error', async () => {
             const element = createElement('c-property-carousel', {
                 is: PropertyCarousel
             });
@@ -109,13 +115,13 @@ describe('c-property-carousel', () => {
             // Emit error
             getPicturesAdapter.error();
 
-            // Return a promise to wait for any asynchronous DOM updates.
-            return Promise.resolve().then(() => {
-                const errorPanelEl = element.shadowRoot.querySelector(
-                    'c-error-panel'
-                );
-                expect(errorPanelEl).not.toBeNull();
-            });
+            // Wait for any asynchronous DOM updates
+            await flushPromises();
+
+            const errorPanelEl = element.shadowRoot.querySelector(
+                'c-error-panel'
+            );
+            expect(errorPanelEl).not.toBeNull();
         });
     });
 });

@@ -18,20 +18,27 @@ describe('c-property-summary', () => {
         jest.clearAllMocks();
     });
 
-    it('renders an error panel when no property is selected', () => {
+    // Helper function to wait until the microtask queue is empty. This is needed for promise
+    // timing when calling imperative Apex.
+    async function flushPromises() {
+        return Promise.resolve();
+    }
+
+    it('renders an error panel when no property is selected', async () => {
         const element = createElement('c-property-summary', {
             is: PropertySummary
         });
 
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => {
-            const panelEl = element.shadowRoot.querySelector('c-error-panel');
-            expect(panelEl).not.toBeNull();
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        const panelEl = element.shadowRoot.querySelector('c-error-panel');
+        expect(panelEl).not.toBeNull();
     });
 
-    it('renders an error panel when getRecord returns an error', () => {
+    it('renders an error panel when getRecord returns an error', async () => {
         const element = createElement('c-property-summary', {
             is: PropertySummary
         });
@@ -41,13 +48,14 @@ describe('c-property-summary', () => {
         // Simulate error
         getRecordAdapter.error();
 
-        return Promise.resolve().then(() => {
-            const panelEl = element.shadowRoot.querySelector('c-error-panel');
-            expect(panelEl).not.toBeNull();
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        const panelEl = element.shadowRoot.querySelector('c-error-panel');
+        expect(panelEl).not.toBeNull();
     });
 
-    it('renders a lightning-record-form when a property is selected', () => {
+    it('renders a lightning-record-form when a property is selected', async () => {
         const element = createElement('c-property-summary', {
             is: PropertySummary
         });
@@ -57,16 +65,17 @@ describe('c-property-summary', () => {
         // Simulate property selection
         getRecordAdapter.emit(mockPropertyRecord);
 
-        return Promise.resolve().then(() => {
-            const formEl = element.shadowRoot.querySelector(
-                'lightning-record-form'
-            );
-            expect(formEl).not.toBeNull();
-            expect(formEl.recordId).toStrictEqual(mockPropertyRecord.id);
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        const formEl = element.shadowRoot.querySelector(
+            'lightning-record-form'
+        );
+        expect(formEl).not.toBeNull();
+        expect(formEl.recordId).toStrictEqual(mockPropertyRecord.id);
     });
 
-    it('is accessible when property is selected', () => {
+    it('is accessible when property is selected', async () => {
         const element = createElement('c-property-summary', {
             is: PropertySummary
         });
@@ -76,20 +85,16 @@ describe('c-property-summary', () => {
         // Simulate property selection
         getRecordAdapter.emit(mockPropertyRecord);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        await expect(element).toBeAccessible();
     });
 
-    it('is accessible when property is not selected', () => {
+    it('is accessible when property is not selected', async () => {
         const element = createElement('c-property-summary', {
             is: PropertySummary
         });
 
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        await expect(element).toBeAccessible();
     });
 });
