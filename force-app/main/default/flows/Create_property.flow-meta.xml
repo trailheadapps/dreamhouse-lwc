@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>geocode_address</name>
@@ -57,7 +57,8 @@
             <name>Content_Document_Link_found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>get_main_content_document</leftValueReference>
+                <leftValueReference
+                >get_main_content_document</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -82,7 +83,8 @@
             <name>picture_found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>get_main_content_version</leftValueReference>
+                <leftValueReference
+                >get_main_content_version</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -94,12 +96,15 @@
             <label>Picture Found</label>
         </rules>
     </decisions>
-    <description>This flow helps agents creating new properties in just a few clicks. It calculates the geocoded address calling out to a 3rd party service.</description>
+    <description
+    >This flow helps agents creating new properties in just a few clicks. It calculates the geocoded address calling out to a 3rd party service.</description>
     <formulas>
-        <description>Main picture URL that we&apos;ll use as thumbnail</description>
+        <description
+        >Main picture URL that we&apos;ll use as thumbnail</description>
         <name>main_picture_url</name>
         <dataType>String</dataType>
-        <expression>&quot;/sfc/servlet.shepherd/version/download/&quot; + {!get_main_content_version.Id}</expression>
+        <expression
+        >&quot;/sfc/servlet.shepherd/version/download/&quot; + {!get_main_content_version.Id}</expression>
     </formulas>
     <interviewLabel>Create Property {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create Property</label>
@@ -227,12 +232,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <description>Retrieve just one of the pictures to be the main one</description>
+        <description
+        >Retrieve just one of the pictures to be the main one</description>
         <name>get_main_content_document</name>
         <label>Get Main Content Document</label>
         <locationX>666</locationX>
         <locationY>878</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>If_content_document_found</targetReference>
         </connector>
@@ -256,7 +263,8 @@
         <label>Get Main Content Version</label>
         <locationX>314</locationX>
         <locationY>1118</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>if_content_version_found</targetReference>
         </connector>
@@ -268,7 +276,8 @@
             <field>ContentDocumentId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>get_main_content_document.ContentDocumentId</elementReference>
+                <elementReference
+                >get_main_content_document.ContentDocumentId</elementReference>
             </value>
         </filters>
         <filters>
@@ -330,7 +339,8 @@
             <name>property_address</name>
             <extensionName>flowruntime:address</extensionName>
             <fieldType>ComponentInstance</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -347,7 +357,8 @@
         <allowPause>true</allowPause>
         <fields>
             <name>error2_text</name>
-            <fieldText>&lt;p&gt;Unknown error retrieving uploaded picture.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Unknown error retrieving uploaded picture.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -363,7 +374,8 @@
         <allowPause>true</allowPause>
         <fields>
             <name>error3_text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Unknown error retrieving uploaded picture.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Unknown error retrieving uploaded picture.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -379,7 +391,8 @@
         <allowPause>true</allowPause>
         <fields>
             <name>error4_text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Unknown error setting picture as Property thumbnail.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Unknown error setting picture as Property thumbnail.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -395,7 +408,8 @@
         <allowPause>true</allowPause>
         <fields>
             <name>error</name>
-            <fieldText>&lt;p&gt;Error creating records. Try again.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Error creating records. Try again.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -419,7 +433,8 @@
                     <elementReference>create_property</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -473,7 +488,8 @@
                     <stringValue>Property__c</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -573,7 +589,8 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
