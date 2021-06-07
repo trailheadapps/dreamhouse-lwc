@@ -43,7 +43,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>51.0</apiVersion>
+    <apiVersion>52.0</apiVersion>
     <decisions>
         <name>If_content_document_found</name>
         <label>If Content Document found</label>
