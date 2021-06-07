@@ -13,9 +13,8 @@ import {
 const mockGetPagedProperties = require('./data/getPagedPropertyList.json');
 
 // Register the Apex wire adapter
-const getPagedPropertiesAdapter = registerApexTestWireAdapter(
-    getPagedPropertyList
-);
+const getPagedPropertiesAdapter =
+    registerApexTestWireAdapter(getPagedPropertyList);
 
 // Register as a standard wire adapter because the component under test requires this adapter.
 // We don't exercise this wire adapter in the tests.
@@ -49,9 +48,8 @@ describe('c-property-tile-list', () => {
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
-            const propertyTileEls = element.shadowRoot.querySelectorAll(
-                'c-property-tile'
-            );
+            const propertyTileEls =
+                element.shadowRoot.querySelectorAll('c-property-tile');
             expect(propertyTileEls.length).toBe(
                 mockGetPagedProperties.records.length
             );
@@ -69,9 +67,8 @@ describe('c-property-tile-list', () => {
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
-            const errorPanelEl = element.shadowRoot.querySelector(
-                'c-error-panel'
-            );
+            const errorPanelEl =
+                element.shadowRoot.querySelector('c-error-panel');
             expect(errorPanelEl).not.toBeNull();
         });
     });
@@ -125,9 +122,8 @@ describe('c-property-tile-list', () => {
         // Wait for any asynchronous DOM updates
         await flushPromises();
 
-        const propertyTile = element.shadowRoot.querySelector(
-            'c-property-tile'
-        );
+        const propertyTile =
+            element.shadowRoot.querySelector('c-property-tile');
         propertyTile.dispatchEvent(new CustomEvent('selected'));
         expect(publish).toHaveBeenCalledWith(undefined, PROPERTYSELECTEDMC, {
             propertyId: null

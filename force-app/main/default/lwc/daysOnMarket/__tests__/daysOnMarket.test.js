@@ -50,9 +50,8 @@ describe('c-days-on-market', () => {
         });
         document.body.appendChild(element);
 
-        const errorPanelElement = element.shadowRoot.querySelector(
-            'c-error-panel'
-        );
+        const errorPanelElement =
+            element.shadowRoot.querySelector('c-error-panel');
         expect(errorPanelElement.friendlyMessage).toBe(
             'Select a property to see days on the market'
         );
@@ -221,9 +220,8 @@ describe('c-days-on-market', () => {
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
-            const errorPanelEl = element.shadowRoot.querySelector(
-                'c-error-panel'
-            );
+            const errorPanelEl =
+                element.shadowRoot.querySelector('c-error-panel');
             expect(errorPanelEl).not.toBeNull();
             expect(errorPanelEl.errors).toStrictEqual(APEX_ERROR);
         });

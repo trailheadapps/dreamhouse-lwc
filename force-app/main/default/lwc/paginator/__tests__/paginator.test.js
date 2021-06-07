@@ -29,9 +29,8 @@ describe('c-paginator', () => {
         element.addEventListener('next', handlerNext);
 
         // Click the next(>) button
-        const nextButtonEl = element.shadowRoot.querySelector(
-            '.right-button-icon'
-        );
+        const nextButtonEl =
+            element.shadowRoot.querySelector('.right-button-icon');
         nextButtonEl.click();
 
         // Wait for any asynchronous DOM updates
@@ -55,9 +54,8 @@ describe('c-paginator', () => {
         element.addEventListener('previous', handlerPrevious);
 
         // Click the Previous(<) button
-        const prevButtonEl = element.shadowRoot.querySelector(
-            '.left-button-icon'
-        );
+        const prevButtonEl =
+            element.shadowRoot.querySelector('.left-button-icon');
         prevButtonEl.click();
 
         // Wait for any asynchronous DOM updates
@@ -80,9 +78,8 @@ describe('c-paginator', () => {
         document.body.appendChild(element);
 
         // Query div for validating the display message on component init
-        const lightningLayoutItemEl = element.shadowRoot.querySelector(
-            '.nav-info'
-        );
+        const lightningLayoutItemEl =
+            element.shadowRoot.querySelector('.nav-info');
         //Check for the 0 items message
         expect(lightningLayoutItemEl).not.toBeNull();
         expect(lightningLayoutItemEl.textContent).toBe('0 items • page 0 of 0');
@@ -101,9 +98,8 @@ describe('c-paginator', () => {
         element.totalItemCount = 12;
 
         // Query div for validating the display message on component init
-        const lightningLayoutItemEl = element.shadowRoot.querySelector(
-            '.nav-info'
-        );
+        const lightningLayoutItemEl =
+            element.shadowRoot.querySelector('.nav-info');
 
         // Wait for any asynchronous DOM updates
         await flushPromises();

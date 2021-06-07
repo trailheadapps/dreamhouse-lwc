@@ -45,9 +45,8 @@ describe('c-property-filter', () => {
         document.body.appendChild(element);
 
         // Query lightning-input element
-        const lightningInputEl = element.shadowRoot.querySelector(
-            'lightning-input'
-        );
+        const lightningInputEl =
+            element.shadowRoot.querySelector('lightning-input');
         lightningInputEl.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -85,9 +84,8 @@ describe('c-property-filter', () => {
         document.body.appendChild(element);
 
         // Query lightning-input element
-        const lightningSliderEl = element.shadowRoot.querySelector(
-            'lightning-slider'
-        );
+        const lightningSliderEl =
+            element.shadowRoot.querySelector('lightning-slider');
         lightningSliderEl.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -125,9 +123,8 @@ describe('c-property-filter', () => {
         document.body.appendChild(element);
 
         // Query lightning-input element
-        const lightningSliderEl = element.shadowRoot.querySelectorAll(
-            'lightning-slider'
-        )[1];
+        const lightningSliderEl =
+            element.shadowRoot.querySelectorAll('lightning-slider')[1];
         lightningSliderEl.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -165,9 +162,8 @@ describe('c-property-filter', () => {
         document.body.appendChild(element);
 
         // Query lightning-input element
-        const lightningSliderEl = element.shadowRoot.querySelectorAll(
-            'lightning-slider'
-        )[2];
+        const lightningSliderEl =
+            element.shadowRoot.querySelectorAll('lightning-slider')[2];
         lightningSliderEl.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -205,9 +201,8 @@ describe('c-property-filter', () => {
         document.body.appendChild(element);
 
         // Click reset button
-        const lightningButtonEl = element.shadowRoot.querySelector(
-            'lightning-button'
-        );
+        const lightningButtonEl =
+            element.shadowRoot.querySelector('lightning-button');
         lightningButtonEl.click();
         // Run all fake timers.
         jest.runAllTimers();
@@ -263,9 +258,8 @@ describe('c-property-filter', () => {
         );
 
         // Click reset button
-        const lightningButtonEl = element.shadowRoot.querySelector(
-            'lightning-button'
-        );
+        const lightningButtonEl =
+            element.shadowRoot.querySelector('lightning-button');
         lightningButtonEl.click();
 
         // Wait for any asynchronous DOM updates

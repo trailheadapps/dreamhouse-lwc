@@ -51,9 +51,8 @@ describe('c-property-carousel', () => {
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
-            const carouselEl = element.shadowRoot.querySelector(
-                'lightning-carousel'
-            );
+            const carouselEl =
+                element.shadowRoot.querySelector('lightning-carousel');
             expect(carouselEl).not.toBeNull();
             const carouselImageEls = element.shadowRoot.querySelectorAll(
                 'lightning-carousel-image'
@@ -97,9 +96,8 @@ describe('c-property-carousel', () => {
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
-            const errorPanelEl = element.shadowRoot.querySelector(
-                'c-error-panel'
-            );
+            const errorPanelEl =
+                element.shadowRoot.querySelector('c-error-panel');
             expect(errorPanelEl).not.toBeNull();
         });
 
@@ -118,9 +116,8 @@ describe('c-property-carousel', () => {
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
-            const errorPanelEl = element.shadowRoot.querySelector(
-                'c-error-panel'
-            );
+            const errorPanelEl =
+                element.shadowRoot.querySelector('c-error-panel');
             expect(errorPanelEl).not.toBeNull();
         });
     });

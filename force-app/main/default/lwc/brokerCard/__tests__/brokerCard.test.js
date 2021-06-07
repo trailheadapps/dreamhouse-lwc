@@ -142,9 +142,8 @@ describe('c-broker-card', () => {
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
-            const errorPanelEl = element.shadowRoot.querySelector(
-                'c-error-panel'
-            );
+            const errorPanelEl =
+                element.shadowRoot.querySelector('c-error-panel');
             expect(errorPanelEl).not.toBeNull();
             expect(errorPanelEl.errors.body).toBe(WIRE_ERROR);
             expect(errorPanelEl.friendlyMessage).toBe('Error retrieving data');
