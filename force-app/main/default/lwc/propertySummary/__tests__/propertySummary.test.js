@@ -18,8 +18,8 @@ describe('c-property-summary', () => {
         jest.clearAllMocks();
     });
 
-    // Helper function to wait until the microtask queue is empty. This is needed for promise
-    // timing when calling imperative Apex.
+    // Helper function to wait until the microtask queue is empty.
+    // Used when having to wait for asynchronous DOM updates.
     async function flushPromises() {
         return Promise.resolve();
     }
@@ -84,6 +84,9 @@ describe('c-property-summary', () => {
 
         // Simulate property selection
         getRecordAdapter.emit(mockPropertyRecord);
+
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
 
         await expect(element).toBeAccessible();
     });

@@ -9,8 +9,8 @@ describe('c-error-panel', () => {
         }
     });
 
-    // Helper function to wait until the microtask queue is empty. This is needed for promise
-    // timing when calling imperative Apex.
+    // Helper function to wait until the microtask queue is empty.
+    // Used when having to wait for asynchronous DOM updates.
     async function flushPromises() {
         return Promise.resolve();
     }
@@ -116,9 +116,6 @@ describe('c-error-panel', () => {
         element.type = 'noDataIllustration';
         element.errors = ERROR_MESSAGES_INPUT;
         document.body.appendChild(element);
-
-        // Wait for any asynchronous DOM updates
-        await flushPromises();
 
         await expect(element).toBeAccessible();
     });
