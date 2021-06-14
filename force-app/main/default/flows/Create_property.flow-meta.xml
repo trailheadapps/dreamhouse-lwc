@@ -3,13 +3,17 @@
     <actionCalls>
         <name>geocode_address</name>
         <label>Geocode Address</label>
-        <locationX>182</locationX>
+        <locationX>666</locationX>
         <locationY>398</locationY>
         <actionName>GeocodingService</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>property_details</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error5</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>city</name>
             <value>
@@ -44,10 +48,36 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <decisions>
-        <name>if_picture_found</name>
-        <label>If picture found</label>
-        <locationX>182</locationX>
-        <locationY>1118</locationY>
+        <name>If_content_document_found</name>
+        <label>If Content Document found</label>
+        <locationX>666</locationX>
+        <locationY>998</locationY>
+        <defaultConnector>
+            <targetReference>navigate_to_record_detail</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Content_Document_Link_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+                >get_main_content_document</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>get_main_content_version</targetReference>
+            </connector>
+            <label>Content Document Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>if_content_version_found</name>
+        <label>If Content Version found</label>
+        <locationX>314</locationX>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>navigate_to_record_detail</targetReference>
         </defaultConnector>
@@ -56,11 +86,11 @@
             <name>picture_found</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>main_picture_url</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference
+                >get_main_content_version</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue
-                    >/sfc/servlet.shepherd/version/download/</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -69,6 +99,8 @@
             <label>Picture Found</label>
         </rules>
     </decisions>
+    <description
+    >This flow helps agents creating new properties in just a few clicks. It calculates the geocoded address calling out to a 3rd party service.</description>
     <formulas>
         <description
         >Main picture URL that we&apos;ll use as thumbnail</description>
@@ -101,7 +133,7 @@
     <recordCreates>
         <name>create_property</name>
         <label>Create Property</label>
-        <locationX>182</locationX>
+        <locationX>666</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>upload_picture</targetReference>
@@ -207,13 +239,16 @@
         >Retrieve just one of the pictures to be the main one</description>
         <name>get_main_content_document</name>
         <label>Get Main Content Document</label>
-        <locationX>182</locationX>
+        <locationX>666</locationX>
         <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound
         >false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>get_main_content_version</targetReference>
+            <targetReference>If_content_document_found</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error2</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>LinkedEntityId</field>
@@ -229,13 +264,16 @@
     <recordLookups>
         <name>get_main_content_version</name>
         <label>Get Main Content Version</label>
-        <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationX>314</locationX>
+        <locationY>1118</locationY>
         <assignNullValuesIfNoRecordsFound
         >false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>if_picture_found</targetReference>
+            <targetReference>if_content_version_found</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error3</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>ContentDocumentId</field>
@@ -260,10 +298,13 @@
         <name>set_main_picture</name>
         <label>Set Property Main Picture &amp; Thumbnail</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <connector>
             <targetReference>navigate_to_record_detail</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error4</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -289,7 +330,7 @@
     <screens>
         <name>address</name>
         <label>Address</label>
-        <locationX>182</locationX>
+        <locationX>666</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -301,6 +342,8 @@
             <name>property_address</name>
             <extensionName>flowruntime:address</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -308,11 +351,79 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Error2</name>
+        <label>Error</label>
+        <locationX>1194</locationX>
+        <locationY>998</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error2_text</name>
+            <fieldText
+            >&lt;p&gt;Unknown error retrieving uploaded picture.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error3</name>
+        <label>Error</label>
+        <locationX>754</locationX>
+        <locationY>1238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error3_text</name>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Unknown error retrieving uploaded picture.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error4</name>
+        <label>Error</label>
+        <locationX>314</locationX>
+        <locationY>1478</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error4_text</name>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Unknown error setting picture as Property thumbnail.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error5</name>
+        <label>Error</label>
+        <locationX>1722</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>error5_text</name>
+            <fieldText
+            >&lt;p&gt;Error retrieving geocoded address.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>error_creating_records</name>
         <label>Error</label>
-        <locationX>490</locationX>
+        <locationX>1458</locationX>
         <locationY>758</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
@@ -327,9 +438,9 @@
     <screens>
         <name>navigate_to_record_detail</name>
         <label>Navigate to Record</label>
-        <locationX>182</locationX>
-        <locationY>1454</locationY>
-        <allowBack>true</allowBack>
+        <locationX>666</locationX>
+        <locationY>1934</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
@@ -342,6 +453,8 @@
                     <elementReference>create_property</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -351,7 +464,7 @@
     <screens>
         <name>new_property</name>
         <label>New Property</label>
-        <locationX>182</locationX>
+        <locationX>666</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -395,6 +508,8 @@
                     <stringValue>Property__c</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -415,7 +530,7 @@
     <screens>
         <name>property_details</name>
         <label>Property Details</label>
-        <locationX>182</locationX>
+        <locationX>666</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -458,9 +573,9 @@
     <screens>
         <name>upload_picture</name>
         <label>Upload Picture</label>
-        <locationX>182</locationX>
+        <locationX>666</locationX>
         <locationY>758</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
@@ -494,6 +609,8 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn
+            >UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -501,7 +618,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>540</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>new_property</targetReference>

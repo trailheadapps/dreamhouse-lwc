@@ -12,7 +12,13 @@ describe('c-navigate-to-record', () => {
         jest.clearAllMocks();
     });
 
-    it('navigates to record view', () => {
+    // Helper function to wait until the microtask queue is empty.
+    // Used when having to wait for asynchronous DOM updates.
+    async function flushPromises() {
+        return Promise.resolve();
+    }
+
+    it('navigates to record view', async () => {
         // Nav param values to test later
         const NAV_TYPE = 'standard__recordPage';
         const NAV_ACTION_NAME = 'view';
@@ -26,16 +32,14 @@ describe('c-navigate-to-record', () => {
         element.recordId = NAV_RECORD_ID;
         document.body.appendChild(element);
 
-        // Return a promise to wait for any asynchronous DOM updates. Jest
-        // will automatically wait for the Promise chain to complete before
-        // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            const { pageReference } = getNavigateCalledWith();
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
 
-            // Verify component called with correct event type and params
-            expect(pageReference.type).toBe(NAV_TYPE);
-            expect(pageReference.attributes.actionName).toBe(NAV_ACTION_NAME);
-            expect(pageReference.attributes.recordId).toBe(NAV_RECORD_ID);
-        });
+        const { pageReference } = getNavigateCalledWith();
+
+        // Verify component called with correct event type and params
+        expect(pageReference.type).toBe(NAV_TYPE);
+        expect(pageReference.attributes.actionName).toBe(NAV_ACTION_NAME);
+        expect(pageReference.attributes.recordId).toBe(NAV_RECORD_ID);
     });
 });

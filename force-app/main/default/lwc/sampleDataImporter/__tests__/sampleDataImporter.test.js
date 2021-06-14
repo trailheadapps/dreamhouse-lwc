@@ -33,14 +33,13 @@ describe('c-sample-data-importer', () => {
         jest.clearAllMocks();
     });
 
-    // Helper function to wait until the microtask queue is empty. This is needed for promise
-    // timing when calling imperative Apex.
-    function flushPromises() {
-        // eslint-disable-next-line no-undef
-        return new Promise((resolve) => setImmediate(resolve));
+    // Helper function to wait until the microtask queue is empty.
+    // Used when having to wait for asynchronous DOM updates.
+    async function flushPromises() {
+        return Promise.resolve();
     }
 
-    it('fires success event when importSampleData runs successfully', () => {
+    it('fires success event when importSampleData runs successfully', async () => {
         // Assign mock value for resolved Apex promise
         importSampleData.mockResolvedValue(APEX_OPERATION_SUCCESS);
 
@@ -59,21 +58,19 @@ describe('c-sample-data-importer', () => {
         const buttonEl = element.shadowRoot.querySelector('lightning-button');
         buttonEl.click();
 
-        // Return a promise to wait for any asynchronous DOM updates. Jest
-        // will automatically wait for the Promise chain to complete before
-        // ending the test and fail the test if the promise rejects.
-        return Promise.resolve().then(() => {
-            // Check if toast event has been fired
-            expect(handler).toHaveBeenCalled();
-            expect(handler.mock.calls[0][0].detail.variant).toBe('success');
-            expect(handler.mock.calls[0][0].detail.title).toBe('Success');
-            expect(handler.mock.calls[0][0].detail.message).toBe(
-                'Sample data successfully imported'
-            );
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Check if toast event has been fired
+        expect(handler).toHaveBeenCalled();
+        expect(handler.mock.calls[0][0].detail.variant).toBe('success');
+        expect(handler.mock.calls[0][0].detail.title).toBe('Success');
+        expect(handler.mock.calls[0][0].detail.message).toBe(
+            'Sample data successfully imported'
+        );
     });
 
-    it('fires error event when importSampleData runs with error', () => {
+    it('fires error event when importSampleData runs with error', async () => {
         // Assign mock value for resolved Apex promise
         importSampleData.mockRejectedValue(APEX_OPERATION_ERROR);
 
@@ -92,32 +89,27 @@ describe('c-sample-data-importer', () => {
         const buttonEl = element.shadowRoot.querySelector('lightning-button');
         buttonEl.click();
 
-        // Return an immediate flushed promise (after the Apex call) to then
-        // wait for any asynchronous DOM updates. Jest will automatically wait
-        // for the Promise chain to complete before ending the test and fail
-        // the test if the promise ends in the rejected state.
-        return flushPromises().then(() => {
-            // Check if toast event has been fired
-            expect(handler).toHaveBeenCalled();
-            expect(handler.mock.calls[0][0].detail.variant).toBe('error');
-            expect(handler.mock.calls[0][0].detail.title).toBe(
-                'Error while importing data'
-            );
-            expect(handler.mock.calls[0][0].detail.message).toBe(
-                APEX_OPERATION_ERROR.message
-            );
-        });
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Check if toast event has been fired
+        expect(handler).toHaveBeenCalled();
+        expect(handler.mock.calls[0][0].detail.variant).toBe('error');
+        expect(handler.mock.calls[0][0].detail.title).toBe(
+            'Error while importing data'
+        );
+        expect(handler.mock.calls[0][0].detail.message).toBe(
+            APEX_OPERATION_ERROR.message
+        );
     });
 
-    it('is accessible', () => {
+    it('is accessible', async () => {
         const element = createElement('c-sample-data-importer', {
             is: SampleDataImporter
         });
 
         document.body.appendChild(element);
 
-        return Promise.resolve().then(() => {
-            expect(element).toBeAccessible();
-        });
+        await expect(element).toBeAccessible();
     });
 });
