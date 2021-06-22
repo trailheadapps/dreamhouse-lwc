@@ -1,13 +1,9 @@
 import { createElement } from 'lwc';
 import PropertySummary from 'c/propertySummary';
 import { getRecord } from 'lightning/uiRecordApi';
-import { registerLdsTestWireAdapter } from '@salesforce/sfdx-lwc-jest';
 
 // Realistic property record
 const mockPropertyRecord = require('./data/getRecord.json');
-
-// Register the test wire adapter
-const getRecordAdapter = registerLdsTestWireAdapter(getRecord);
 
 describe('c-property-summary', () => {
     afterEach(() => {
@@ -46,7 +42,7 @@ describe('c-property-summary', () => {
         document.body.appendChild(element);
 
         // Simulate error
-        getRecordAdapter.error();
+        getRecord.error();
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -63,7 +59,7 @@ describe('c-property-summary', () => {
         document.body.appendChild(element);
 
         // Simulate property selection
-        getRecordAdapter.emit(mockPropertyRecord);
+        getRecord.emit(mockPropertyRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -83,7 +79,7 @@ describe('c-property-summary', () => {
         document.body.appendChild(element);
 
         // Simulate property selection
-        getRecordAdapter.emit(mockPropertyRecord);
+        getRecord.emit(mockPropertyRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();

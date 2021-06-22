@@ -2,10 +2,6 @@ import { createElement } from 'lwc';
 import DaysOnMarket from 'c/daysOnMarket';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import {
-    registerLdsTestWireAdapter,
-    registerTestWireAdapter
-} from '@salesforce/sfdx-lwc-jest';
-import {
     subscribe,
     MessageContext,
     publish,
@@ -18,13 +14,6 @@ import DAYS_ON_MARKET_FIELD from '@salesforce/schema/Property__c.Days_On_Market_
 const MAX_DAYS_CHART = 90;
 
 const mockGetRecord = require('./data/getRecord.json');
-
-// Register as a LDS wire adapter. Some tests verify the provisioned values trigger desired behavior.
-const getRecordAdapter = registerLdsTestWireAdapter(getRecord);
-
-// Register as a standard wire adapter because the component under test requires this adapter.
-// We don't exercise this wire adapter in the tests.
-const messageContextWireAdapter = registerTestWireAdapter(MessageContext);
 
 describe('c-days-on-market', () => {
     afterEach(() => {
@@ -90,7 +79,7 @@ describe('c-days-on-market', () => {
 
         // Simulate pulishing a message using RECORD_SELECTED_CHANNEL message channel
         const messagePayload = { propertyId: '001' };
-        publish(messageContextWireAdapter, PROPERTYSELECTEDMC, messagePayload);
+        publish(MessageContext, PROPERTYSELECTEDMC, messagePayload);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -98,7 +87,7 @@ describe('c-days-on-market', () => {
         // The component subscription should cause getRecord to be invoked.
         // Below we test that it is invoked with the messagePayload value
         // that was published with the simulated publish invocation above.
-        const { propertyId, fields } = getRecordAdapter.getLastConfig();
+        const { propertyId, fields } = getRecord.getLastConfig();
         expect(propertyId).toEqual(messagePayload.recordId);
         expect(fields).toEqual([DATE_LISTED_FIELD, DAYS_ON_MARKET_FIELD]);
     });
@@ -144,7 +133,7 @@ describe('c-days-on-market', () => {
                 document.body.appendChild(element);
 
                 // Emit data from @wire
-                getRecordAdapter.emit(mockGetRecord);
+                getRecord.emit(mockGetRecord);
 
                 // Wait for any asynchronous DOM updates
                 await flushPromises();
@@ -164,7 +153,7 @@ describe('c-days-on-market', () => {
 
                 // Emit data from @wire
                 mockGetRecord.fields.Days_On_Market__c.value = 48;
-                getRecordAdapter.emit(mockGetRecord);
+                getRecord.emit(mockGetRecord);
 
                 // Wait for any asynchronous DOM updates
                 await flushPromises();
@@ -184,7 +173,7 @@ describe('c-days-on-market', () => {
 
                 // Emit data from @wire
                 mockGetRecord.fields.Days_On_Market__c.value = 68;
-                getRecordAdapter.emit(mockGetRecord);
+                getRecord.emit(mockGetRecord);
 
                 // Wait for any asynchronous DOM updates
                 await flushPromises();
@@ -211,7 +200,7 @@ describe('c-days-on-market', () => {
             document.body.appendChild(element);
 
             // Emit error from @wire
-            getRecordAdapter.error(
+            getRecord.error(
                 APEX_ERROR.body,
                 APEX_ERROR.status,
                 APEX_ERROR.statusText
@@ -236,7 +225,7 @@ describe('c-days-on-market', () => {
         document.body.appendChild(element);
 
         // Emit data from @wire
-        getRecordAdapter.emit(mockGetRecord);
+        getRecord.emit(mockGetRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();

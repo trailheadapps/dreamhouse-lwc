@@ -1,7 +1,6 @@
 import { createElement } from 'lwc';
 import PropertyMap from 'c/propertyMap';
 import { getRecord } from 'lightning/uiRecordApi';
-import { registerApexTestWireAdapter } from '@salesforce/sfdx-lwc-jest';
 
 // Realistic property record
 const mockPropertyRecord = require('./data/propertyRecord.json');
@@ -22,9 +21,6 @@ const EXPECTED_MAP_MARKERS = [
         }
     }
 ];
-
-// Register the test wire adapter
-const getRecordAdapter = registerApexTestWireAdapter(getRecord);
 
 describe('c-property-map', () => {
     afterEach(() => {
@@ -62,7 +58,7 @@ describe('c-property-map', () => {
         document.body.appendChild(element);
 
         // Simulate property selection
-        getRecordAdapter.emit(mockPropertyRecord);
+        getRecord.emit(mockPropertyRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -80,7 +76,7 @@ describe('c-property-map', () => {
         document.body.appendChild(element);
 
         // Simulate property selection
-        getRecordAdapter.emit(mockPropertyRecord);
+        getRecord.emit(mockPropertyRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();

@@ -3,22 +3,11 @@ import PropertyCarousel from 'c/propertyCarousel';
 import { getRecord } from 'lightning/uiRecordApi';
 import getPictures from '@salesforce/apex/PropertyController.getPictures';
 
-import {
-    registerApexTestWireAdapter,
-    registerLdsTestWireAdapter
-} from '@salesforce/sfdx-lwc-jest';
-
 // Realistic data with multiple records
 const mockGetPictures = require('./data/getPictures.json');
 
 // Mock realistic data
 const mockGetPropertyRecord = require('./data/getPropertyRecord.json');
-
-// Register the Apex wire adapter
-const getPicturesAdapter = registerApexTestWireAdapter(getPictures);
-
-// Register the LDS wire adapter
-const getRecordAdapter = registerLdsTestWireAdapter(getRecord);
 
 describe('c-property-carousel', () => {
     afterEach(() => {
@@ -43,10 +32,10 @@ describe('c-property-carousel', () => {
             document.body.appendChild(element);
 
             // Emit mock property
-            getRecordAdapter.emit(mockGetPropertyRecord);
+            getRecord.emit(mockGetPropertyRecord);
 
             // Emit mock pictures
-            getPicturesAdapter.emit(mockGetPictures);
+            getPictures.emit(mockGetPictures);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -67,10 +56,10 @@ describe('c-property-carousel', () => {
             document.body.appendChild(element);
 
             // Emit mock property
-            getRecordAdapter.emit(mockGetPropertyRecord);
+            getRecord.emit(mockGetPropertyRecord);
 
             // Emit no pictures
-            getPicturesAdapter.emit(null);
+            getPictures.emit(null);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -91,7 +80,7 @@ describe('c-property-carousel', () => {
             document.body.appendChild(element);
 
             // Emit error
-            getRecordAdapter.error();
+            getRecord.error();
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -108,10 +97,10 @@ describe('c-property-carousel', () => {
             document.body.appendChild(element);
 
             // Emit mock property
-            getRecordAdapter.emit(mockGetPropertyRecord);
+            getRecord.emit(mockGetPropertyRecord);
 
             // Emit error
-            getPicturesAdapter.error();
+            getPictures.error();
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
