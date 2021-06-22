@@ -110,7 +110,7 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
     - Click on the **_Start Walkthrough Trial_**.
     - Click on **_Submit_**.
 
-1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3h0000043sPPAAY) to install the Dreamhouse unlocked package in your org.
+1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3h0000043sQIAAY) to install the Dreamhouse unlocked package in your org.
 
 1. Select **Install for All Users**
 
