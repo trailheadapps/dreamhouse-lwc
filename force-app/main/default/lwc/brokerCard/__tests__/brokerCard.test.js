@@ -2,13 +2,9 @@ import { createElement } from 'lwc';
 import BrokerCard from 'c/brokerCard';
 import { getNavigateCalledWith } from 'lightning/navigation';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import { registerLdsTestWireAdapter } from '@salesforce/sfdx-lwc-jest';
 
 // Mock realistic data
 const mockGetPropertyRecord = require('./data/getPropertyRecord.json');
-
-// Register as an LDS wire adapter. Some tests verify the provisioned values trigger desired behavior.
-const getRecordAdapter = registerLdsTestWireAdapter(getRecord);
 
 const BROKER_ID = 'a003h000003xlBiAAI';
 
@@ -57,7 +53,7 @@ describe('c-broker-card', () => {
             document.body.appendChild(element);
 
             // Emit data from @wire
-            getRecordAdapter.emit(mockGetPropertyRecord);
+            getRecord.emit(mockGetPropertyRecord);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -77,7 +73,7 @@ describe('c-broker-card', () => {
             document.body.appendChild(element);
 
             // Emit data from @wire
-            getRecordAdapter.emit(mockGetPropertyRecord);
+            getRecord.emit(mockGetPropertyRecord);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -105,7 +101,7 @@ describe('c-broker-card', () => {
             document.body.appendChild(element);
 
             // Simulate the data sent over wire adapter to hydrate the wired property
-            getRecordAdapter.emit(mockGetPropertyRecord);
+            getRecord.emit(mockGetPropertyRecord);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -137,7 +133,7 @@ describe('c-broker-card', () => {
             });
             document.body.appendChild(element);
 
-            getRecordAdapter.error(WIRE_ERROR);
+            getRecord.error(WIRE_ERROR);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -158,7 +154,7 @@ describe('c-broker-card', () => {
         document.body.appendChild(element);
 
         // Emit data from @wire
-        getRecordAdapter.emit(mockGetPropertyRecord);
+        getRecord.emit(mockGetPropertyRecord);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -175,7 +171,7 @@ describe('c-broker-card', () => {
         });
         document.body.appendChild(element);
 
-        getRecordAdapter.error(WIRE_ERROR);
+        getRecord.error(WIRE_ERROR);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();

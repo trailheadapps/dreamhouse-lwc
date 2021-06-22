@@ -1,8 +1,7 @@
 import { createElement } from 'lwc';
 import PropertyFilter from 'c/propertyFilter';
-import { publish, MessageContext } from 'lightning/messageService';
+import { publish } from 'lightning/messageService';
 import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
-import { registerTestWireAdapter } from '@salesforce/sfdx-lwc-jest';
 
 const MAX_PRICE = 1200000;
 
@@ -12,10 +11,6 @@ const DEFAULT_SEARCH_CRITERIA = {
     minBedrooms: 0,
     minBathrooms: 0
 };
-
-// Register as a standard wire adapter because the component under test requires this adapter.
-// We don't exercise this wire adapter in the tests.
-registerTestWireAdapter(MessageContext);
 
 describe('c-property-filter', () => {
     beforeAll(() => {

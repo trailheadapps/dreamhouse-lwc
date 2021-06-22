@@ -4,21 +4,9 @@ import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPr
 import { publish, subscribe, MessageContext } from 'lightning/messageService';
 import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
 import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
-import {
-    registerTestWireAdapter,
-    registerApexTestWireAdapter
-} from '@salesforce/sfdx-lwc-jest';
 
 // Realistic data with multiple records
-const mockGetPagedProperties = require('./data/getPagedPropertyList.json');
-
-// Register the Apex wire adapter
-const getPagedPropertiesAdapter =
-    registerApexTestWireAdapter(getPagedPropertyList);
-
-// Register as a standard wire adapter because the component under test requires this adapter.
-// We don't exercise this wire adapter in the tests.
-const messageContextWireAdapter = registerTestWireAdapter(MessageContext);
+const mockgetPagedPropertyList = require('./data/getPagedPropertyList.json');
 
 describe('c-property-tile-list', () => {
     afterEach(() => {
@@ -43,7 +31,7 @@ describe('c-property-tile-list', () => {
             document.body.appendChild(element);
 
             // Emit mock properties
-            getPagedPropertiesAdapter.emit(mockGetPagedProperties);
+            getPagedPropertyList.emit(mockgetPagedPropertyList);
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -51,7 +39,7 @@ describe('c-property-tile-list', () => {
             const propertyTileEls =
                 element.shadowRoot.querySelectorAll('c-property-tile');
             expect(propertyTileEls.length).toBe(
-                mockGetPagedProperties.records.length
+                mockgetPagedPropertyList.records.length
             );
         });
 
@@ -62,7 +50,7 @@ describe('c-property-tile-list', () => {
             document.body.appendChild(element);
 
             // Emit error
-            getPagedPropertiesAdapter.error();
+            getPagedPropertyList.error();
 
             // Wait for any asynchronous DOM updates
             await flushPromises();
@@ -84,7 +72,7 @@ describe('c-property-tile-list', () => {
         expect(subscribe.mock.calls[0][1]).toBe(FILTERSCHANGEMC);
     });
 
-    it('invokes getPagedProperties with the propertyFilters message payload value', async () => {
+    it('invokes getPagedPropertyList with the propertyFilters message payload value', async () => {
         const element = createElement('c-property-tile-list', {
             is: PropertyTileList
         });
@@ -97,7 +85,7 @@ describe('c-property-tile-list', () => {
             minBedrooms: 4,
             minBathrooms: 2
         };
-        publish(messageContextWireAdapter, FILTERSCHANGEMC, messagePayload);
+        publish(MessageContext, FILTERSCHANGEMC, messagePayload);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
@@ -105,7 +93,7 @@ describe('c-property-tile-list', () => {
         // The component subscription should cause getRecord to be invoked.
         // Below we test that it is invoked with the messagePayload value
         // that was published with the simulated publish invocation above.
-        const receivedPayload = getPagedPropertiesAdapter.getLastConfig();
+        const receivedPayload = getPagedPropertyList.getLastConfig();
         expect(receivedPayload.searchKey).toBe(messagePayload.searchKey);
         expect(receivedPayload.maxPrice).toBe(messagePayload.maxPrice);
         expect(receivedPayload.minBedrooms).toBe(messagePayload.minBedrooms);
@@ -117,7 +105,7 @@ describe('c-property-tile-list', () => {
             is: PropertyTileList
         });
         document.body.appendChild(element);
-        getPagedPropertiesAdapter.emit(mockGetPagedProperties);
+        getPagedPropertyList.emit(mockgetPagedPropertyList);
 
         // Wait for any asynchronous DOM updates
         await flushPromises();
