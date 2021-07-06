@@ -8,6 +8,20 @@ import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 // Realistic data with multiple records
 const mockgetPagedPropertyList = require('./data/getPagedPropertyList.json');
 
+// Mock getPagedPropertyList Apex wire adapter
+jest.mock(
+    '@salesforce/apex/PropertyController.getPagedPropertyList',
+    () => {
+        const {
+            createApexTestWireAdapter
+        } = require('@salesforce/sfdx-lwc-jest');
+        return {
+            default: createApexTestWireAdapter(jest.fn())
+        };
+    },
+    { virtual: true }
+);
+
 describe('c-property-tile-list', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
