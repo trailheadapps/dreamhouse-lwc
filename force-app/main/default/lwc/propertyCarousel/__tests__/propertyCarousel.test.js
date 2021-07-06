@@ -9,6 +9,20 @@ const mockGetPictures = require('./data/getPictures.json');
 // Mock realistic data
 const mockGetPropertyRecord = require('./data/getPropertyRecord.json');
 
+// Mock getPictures Apex wire adapter
+jest.mock(
+    '@salesforce/apex/PropertyController.getPictures',
+    () => {
+        const {
+            createApexTestWireAdapter
+        } = require('@salesforce/sfdx-lwc-jest');
+        return {
+            default: createApexTestWireAdapter(jest.fn())
+        };
+    },
+    { virtual: true }
+);
+
 describe('c-property-carousel', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
