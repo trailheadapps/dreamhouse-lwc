@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BirthdaysThisMonth</fullName>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CONTACT.BIRTHDATE</field>
+        <operation>equals</operation>
+        <value>THIS_MONTH</value>
+    </filters>
+    <label>Birthdays This Month</label>
+</ListView>

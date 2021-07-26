@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LeadConfigSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesEnableLeadConvertDefaultSubjectBlankTaskCreation>false</doesEnableLeadConvertDefaultSubjectBlankTaskCreation>
+    <doesHideOpportunityInConvertLeadWindow>false</doesHideOpportunityInConvertLeadWindow>
+    <doesPreserveLeadStatus>true</doesPreserveLeadStatus>
+    <doesSelectNoOpportunityOnConvertLead>false</doesSelectNoOpportunityOnConvertLead>
+    <doesTrackHistory>false</doesTrackHistory>
+    <enableConversionsOnMobile>false</enableConversionsOnMobile>
+    <enableOrgWideMergeAndDelete>true</enableOrgWideMergeAndDelete>
+    <shouldLeadConvertRequireValidation>true</shouldLeadConvertRequireValidation>
+</LeadConfigSettings>

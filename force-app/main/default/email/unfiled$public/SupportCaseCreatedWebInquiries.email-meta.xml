@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification to customer about case created online</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Support: Case Created (Web Inquiries)</name>
+    <style>none</style>
+    <subject>{!Organization.Name} Case {!Case.CaseNumber}: {!Case.Subject}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

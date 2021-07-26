@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IdeasSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableChatterProfile>true</enableChatterProfile>
+    <enableHtmlIdea>true</enableHtmlIdea>
+    <enableIdeaMultipleCategory>true</enableIdeaMultipleCategory>
+    <enableIdeaThemes>false</enableIdeaThemes>
+    <enableIdeas>true</enableIdeas>
+    <enableIdeasControllerExtensions>false</enableIdeasControllerExtensions>
+    <enableIdeasReputation>false</enableIdeasReputation>
+    <halfLife>2.0</halfLife>
+</IdeasSettings>

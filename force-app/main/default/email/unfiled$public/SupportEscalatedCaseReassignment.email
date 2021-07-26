@@ -1,0 +1,7 @@
+The following case has been escalated to you since it is nearing its SLA time limit and is still open.
+
+Company: {!Account.Name}
+Service Level: {!Account_Service_Level}
+Product: {!Case.Product__c}
+Case #: {!Case.CaseNumber}
+Case Subject: {!Case.Subject}

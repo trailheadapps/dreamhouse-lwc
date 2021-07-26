@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataDotComSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableAccountExportButtonOff>false</enableAccountExportButtonOff>
+    <enableAccountImportButtonOff>false</enableAccountImportButtonOff>
+    <enableAllowDupeContactFromLead>false</enableAllowDupeContactFromLead>
+    <enableAllowDupeLeadFromContact>false</enableAllowDupeLeadFromContact>
+    <enableContactExportButtonOff>false</enableContactExportButtonOff>
+    <enableContactImportButtonOff>false</enableContactImportButtonOff>
+    <enableDDCSocialKeyEnabled>false</enableDDCSocialKeyEnabled>
+    <enableDataDotComCleanEnabled>true</enableDataDotComCleanEnabled>
+    <enableDataDotComOptOutsEnabled>false</enableDataDotComOptOutsEnabled>
+    <enableDatacloudAPIEnabled>true</enableDatacloudAPIEnabled>
+</DataDotComSettings>

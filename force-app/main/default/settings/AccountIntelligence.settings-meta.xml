@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AccountIntelligenceSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableAccountLogos>false</enableAccountLogos>
+    <enableAutomatedAccountFields>false</enableAutomatedAccountFields>
+    <enableNewsStories>false</enableNewsStories>
+</AccountIntelligenceSettings>

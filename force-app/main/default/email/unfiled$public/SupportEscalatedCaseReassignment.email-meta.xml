@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Case reassignment email to new case owner on escalation</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Support: Escalated Case Reassignment</name>
+    <style>none</style>
+    <subject>ESCALATED CASE {!Case.CaseNumber}</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

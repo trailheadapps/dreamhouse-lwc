@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProductInterest__c</fullName>
+    <externalId>false</externalId>
+    <label>Product Interest</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>GC1000 series</fullName>
+                <default>false</default>
+                <label>GC1000 series</label>
+            </value>
+            <value>
+                <fullName>GC5000 series</fullName>
+                <default>false</default>
+                <label>GC5000 series</label>
+            </value>
+            <value>
+                <fullName>GC3000 series</fullName>
+                <default>false</default>
+                <label>GC3000 series</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

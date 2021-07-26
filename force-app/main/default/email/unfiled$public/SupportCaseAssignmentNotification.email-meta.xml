@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification to rep when case is auto-assigned</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Support: Case Assignment Notification</name>
+    <style>none</style>
+    <subject>Case {!Case.CaseNumber}:&quot;{!Case.Subject}&quot; auto-assigned to you</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

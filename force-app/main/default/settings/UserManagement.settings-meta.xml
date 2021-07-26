@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UserManagementSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableCanAnswerContainUsername>true</enableCanAnswerContainUsername>
+    <enableConcealPersonalInfo>true</enableConcealPersonalInfo>
+    <enableContactlessExternalIdentityUsers>false</enableContactlessExternalIdentityUsers>
+    <enableEnhancedPermsetMgmt>false</enableEnhancedPermsetMgmt>
+    <enableEnhancedProfileMgmt>true</enableEnhancedProfileMgmt>
+    <enableNewProfileUI>false</enableNewProfileUI>
+    <enableProfileFiltering>false</enableProfileFiltering>
+    <enableScrambleUserData>false</enableScrambleUserData>
+    <enableUserSelfDeactivate>false</enableUserSelfDeactivate>
+    <restrictedProfileCloning>false</restrictedProfileCloning>
+</UserManagementSettings>

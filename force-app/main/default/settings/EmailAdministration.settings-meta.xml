@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailAdministrationSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableComplianceBcc>false</enableComplianceBcc>
+    <enableEmailConsentManagement>false</enableEmailConsentManagement>
+    <enableEmailSenderIdCompliance>false</enableEmailSenderIdCompliance>
+    <enableEmailSpfCompliance>true</enableEmailSpfCompliance>
+    <enableEmailToSalesforce>false</enableEmailToSalesforce>
+    <enableEmailWorkflowApproval>false</enableEmailWorkflowApproval>
+    <enableEnhancedEmailEnabled>true</enableEnhancedEmailEnabled>
+    <enableHandleBouncedEmails>true</enableHandleBouncedEmails>
+    <enableHtmlEmail>false</enableHtmlEmail>
+    <enableInternationalEmailAddresses>false</enableInternationalEmailAddresses>
+    <enableListEmailLogActivities>true</enableListEmailLogActivities>
+    <enableResendBouncedEmails>false</enableResendBouncedEmails>
+    <enableRestrictTlsToDomains>false</enableRestrictTlsToDomains>
+    <enableSendViaExchangePref>false</enableSendViaExchangePref>
+    <enableSendViaGmailPref>false</enableSendViaGmailPref>
+    <enableUseOrgFootersForExtTrans>false</enableUseOrgFootersForExtTrans>
+    <sendEmailsEvenWhenAutomationUpdatesSameRecord>false</sendEmailsEvenWhenAutomationUpdatesSameRecord>
+    <sendMassEmailNotification>true</sendMassEmailNotification>
+    <sendTextOnlySystemEmails>false</sendTextOnlySystemEmails>
+</EmailAdministrationSettings>

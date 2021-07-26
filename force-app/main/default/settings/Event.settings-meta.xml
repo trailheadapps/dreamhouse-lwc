@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableDeleteMonitoringData>false</enableDeleteMonitoringData>
+    <enableDynamicStreamingChannel>false</enableDynamicStreamingChannel>
+    <enableLoginForensics>false</enableLoginForensics>
+    <enableStreamingApi>true</enableStreamingApi>
+    <enableTerminateOldestSession>false</enableTerminateOldestSession>
+    <enableTransactionSecurityPolicies>false</enableTransactionSecurityPolicies>
+</EventSettings>

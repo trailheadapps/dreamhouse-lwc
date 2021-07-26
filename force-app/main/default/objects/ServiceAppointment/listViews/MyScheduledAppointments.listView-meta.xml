@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MyScheduledAppointments</fullName>
+    <columns>Name</columns>
+    <columns>SchedStartTime</columns>
+    <columns>SchedEndTime</columns>
+    <columns>ServiceTerritory</columns>
+    <columns>Status</columns>
+    <columns>WorkTypeName</columns>
+    <columns>WorkType</columns>
+    <columns>AdditionalInformation</columns>
+    <columns>Account</columns>
+    <columns>ParentRecord</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>SchedStartTime</field>
+        <operation>greaterOrEqual</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>StatusCategory</field>
+        <operation>notEqual</operation>
+        <value>6,4,5</value>
+    </filters>
+    <label>My Scheduled Service Appointments</label>
+</ListView>

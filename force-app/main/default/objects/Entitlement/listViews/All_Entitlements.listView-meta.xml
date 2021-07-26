@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Entitlements</fullName>
+    <columns>ENTITLEMENT.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ENTITLEMENT.STARTDATE</columns>
+    <columns>ENTITLEMENT.ENDDATE</columns>
+    <columns>ENTITLEMENT.STATUS</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Entitlements</label>
+</ListView>

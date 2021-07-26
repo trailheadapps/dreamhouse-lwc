@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickTextSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hideQuickTextUiInLtng>false</hideQuickTextUiInLtng>
+    <lightningQuickTextEnabled>true</lightningQuickTextEnabled>
+    <quickTextsInFolders>false</quickTextsInFolders>
+</QuickTextSettings>

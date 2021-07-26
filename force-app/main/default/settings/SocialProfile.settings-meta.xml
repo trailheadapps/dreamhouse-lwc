@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SocialProfileSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableSocialProfiles>true</enableSocialProfiles>
+    <isFacebookSocialProfilesDisabled>false</isFacebookSocialProfilesDisabled>
+    <isLinkedInSocialProfilesDisabled>false</isLinkedInSocialProfilesDisabled>
+    <isTwitterSocialProfilesDisabled>false</isTwitterSocialProfilesDisabled>
+    <isYouTubeSocialProfilesDisabled>false</isYouTubeSocialProfilesDisabled>
+</SocialProfileSettings>

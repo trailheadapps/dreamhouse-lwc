@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MobileSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <dashboardMobile>
+        <enableDashboardIPadApp>true</enableDashboardIPadApp>
+    </dashboardMobile>
+    <enableImportContactFromDevice>true</enableImportContactFromDevice>
+    <enableNewSalesforceMobileAppForTablet>true</enableNewSalesforceMobileAppForTablet>
+    <enableOfflineDraftsEnabled>true</enableOfflineDraftsEnabled>
+    <enablePopulateNameManuallyInToday>false</enablePopulateNameManuallyInToday>
+    <enableS1EncryptedStoragePref2>true</enableS1EncryptedStoragePref2>
+    <enableS1OfflinePref>true</enableS1OfflinePref>
+</MobileSettings>

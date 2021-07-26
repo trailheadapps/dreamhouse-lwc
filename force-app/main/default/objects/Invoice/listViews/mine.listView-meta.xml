@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>mine</fullName>
+    <columns>Name</columns>
+    <columns>BillingAccount</columns>
+    <columns>Status</columns>
+    <columns>TotalAmount</columns>
+    <columns>TotalChargeAmount</columns>
+    <columns>TotalAdjustmentAmount</columns>
+    <columns>TotalTaxAmount</columns>
+    <columns>InvoiceDate</columns>
+    <columns>DueDate</columns>
+    <filterScope>Mine</filterScope>
+    <label>My Invoices</label>
+</ListView>

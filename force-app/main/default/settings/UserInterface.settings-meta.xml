@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UserInterfaceSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alternateAlohaListView>true</alternateAlohaListView>
+    <enableAsyncRelatedLists>false</enableAsyncRelatedLists>
+    <enableClickjackUserPageHeaderless>false</enableClickjackUserPageHeaderless>
+    <enableCollapsibleSections>true</enableCollapsibleSections>
+    <enableCollapsibleSideBar>false</enableCollapsibleSideBar>
+    <enableCustomObjectTruncate>false</enableCustomObjectTruncate>
+    <enableCustomeSideBarOnAllPages>false</enableCustomeSideBarOnAllPages>
+    <enableDeleteFieldHistory>false</enableDeleteFieldHistory>
+    <enableExternalObjectAsyncRelatedLists>true</enableExternalObjectAsyncRelatedLists>
+    <enableHoverDetails>true</enableHoverDetails>
+    <enableInlineEdit>true</enableInlineEdit>
+    <enableNewPageLayoutEditor>true</enableNewPageLayoutEditor>
+    <enablePersonalCanvas>true</enablePersonalCanvas>
+    <enablePrintableListViews>true</enablePrintableListViews>
+    <enableProfileCustomTabsets>true</enableProfileCustomTabsets>
+    <enableQuickCreate>true</enableQuickCreate>
+    <enableRelatedListHovers>true</enableRelatedListHovers>
+    <enableTabOrganizer>true</enableTabOrganizer>
+</UserInterfaceSettings>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Standard email response to website product inquiries</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Marketing: Product Inquiry Response</name>
+    <style>none</style>
+    <subject>GenWatt: Thanks for your inquiry</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
