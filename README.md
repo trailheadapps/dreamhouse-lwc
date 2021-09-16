@@ -104,12 +104,6 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 
 1. Log in to your org
 
-1. Start an In-App Guidance trial
-
-    - In Setup, navigate to **_User Engagement > In-App Guidance_**.
-    - Click on the **_Start Walkthrough Trial_**.
-    - Click on **_Submit_**.
-
 1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3h0000043scGAAQ) to install the Dreamhouse unlocked package in your org.
 
 1. Select **Install for All Users**
@@ -148,12 +142,6 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
     ```
     sfdx auth:web:login -s -a mydevorg
     ```
-
-1. Start an In-App Guidance trial
-
-    - In Setup, navigate to **_User Engagement > In-App Guidance_**.
-    - Click on the **_Start Walkthrough Trial_**.
-    - Click on **_Submit_**.
 
 1. Run this command in a terminal to deploy the app.
 
