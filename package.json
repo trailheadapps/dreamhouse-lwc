@@ -34,7 +34,7 @@
         "url": "git+https://github.com/forcedotcom/dreamhouse-lwc"
     },
     "devDependencies": {
-        "@lwc/eslint-plugin-lwc": "^1.0.1",
+        "@lwc/eslint-plugin-lwc": "^1.1.0",
         "@prettier/plugin-xml": "^0.13.1",
         "@sa11y/jest": "^1.0.0",
         "@salesforce/eslint-config-lwc": "^2.0.0",
