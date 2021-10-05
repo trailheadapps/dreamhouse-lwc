@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>propertyFilter</componentName>
+                <identifier>propertyFilter</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -17,6 +18,7 @@
                     <value>Create_property</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview</identifier>
             </componentInstance>
         </itemInstances>
         <name>left</name>
@@ -26,6 +28,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>propertyTileList</componentName>
+                <identifier>propertyTileList</identifier>
             </componentInstance>
         </itemInstances>
         <name>center</name>
@@ -35,11 +38,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>propertySummary</componentName>
+                <identifier>propertySummary</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>propertyMap</componentName>
+                <identifier>propertyMap</identifier>
             </componentInstance>
         </itemInstances>
         <name>right</name>

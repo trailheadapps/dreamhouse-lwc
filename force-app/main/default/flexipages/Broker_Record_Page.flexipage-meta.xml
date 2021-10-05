@@ -20,6 +20,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -42,6 +43,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -56,6 +58,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Picture_IMG__c</fieldItem>
+                <identifier>RecordPicture_IMG__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -65,6 +68,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Picture__c</fieldItem>
+                <identifier>RecordPicture__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1bc3dd0f-6743-478f-8d51-2bb48e689fb5</name>
@@ -78,6 +82,7 @@
                     <value>Facet-1bc3dd0f-6743-478f-8d51-2bb48e689fb5</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-410fbc19-10c0-4677-8608-2cb7d8d102b3</name>
@@ -91,6 +96,7 @@
                     <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Name</fieldItem>
+                <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -100,6 +106,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Title__c</fieldItem>
+                <identifier>RecordTitle__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -109,6 +116,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Email__c</fieldItem>
+                <identifier>RecordEmail__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4885c180-b6bf-40af-bc91-3d83e2f7627b</name>
@@ -122,6 +130,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Phone__c</fieldItem>
+                <identifier>RecordPhone__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -131,6 +140,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Mobile_Phone__c</fieldItem>
+                <identifier>RecordMobile_Phone__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -140,6 +150,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
+                <identifier>RecordOwnerIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1fcbd98c-c9c7-4a47-ad59-f4bfcd05d5a2</name>
@@ -153,6 +164,7 @@
                     <value>Facet-4885c180-b6bf-40af-bc91-3d83e2f7627b</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -162,6 +174,7 @@
                     <value>Facet-1fcbd98c-c9c7-4a47-ad59-f4bfcd05d5a2</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column3</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-7da398a8-59d5-4a99-a9ea-dfac94d7055f</name>
@@ -175,6 +188,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreatedById</fieldItem>
+                <identifier>RecordCreatedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-9e941d2d-a3ed-4186-99e4-40cfe151b0fa</name>
@@ -188,6 +202,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastModifiedById</fieldItem>
+                <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f7173fe8-e18a-4fbd-8898-53927906768d</name>
@@ -201,6 +216,7 @@
                     <value>Facet-9e941d2d-a3ed-4186-99e4-40cfe151b0fa</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -210,6 +226,7 @@
                     <value>Facet-f7173fe8-e18a-4fbd-8898-53927906768d</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column5</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-4fdd7013-0316-404e-a707-2618d3582ae5</name>
@@ -227,6 +244,7 @@
                     <value>Picture</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -240,6 +258,7 @@
                     <value>Information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -253,11 +272,13 @@
                     <value>System Information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>force:recordDetailPanelMobile</componentName>
+                <identifier>force_recordDetailPanelMobile</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -276,6 +297,7 @@
                     <value>Standard.Tab.relatedLists</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>relatedListsTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -293,6 +315,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -307,6 +330,7 @@
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -337,6 +361,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
