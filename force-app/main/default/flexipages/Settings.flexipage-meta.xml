@@ -5,6 +5,7 @@
             <componentInstance>
                 <identifier>sampleDataImporter</identifier>
                 <componentName>sampleDataImporter</componentName>
+                <identifier>sampleDataImporter</identifier>
             </componentInstance>
         </itemInstances>
         <name>region1</name>
