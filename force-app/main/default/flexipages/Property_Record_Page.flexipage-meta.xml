@@ -633,12 +633,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                                <componentName>brokerCard</componentName>
+                 <componentName>brokerCard</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                                <componentName>daysOnMarket</componentName>
+                <componentName>daysOnMarket</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Days_On_Market__c}</leftValue>
