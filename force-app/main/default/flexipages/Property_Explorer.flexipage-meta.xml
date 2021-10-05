@@ -9,6 +9,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <identifier>interview</identifier>
                 <componentInstanceProperties>
                     <name>flowLayout</name>
                     <value>oneColumn</value>
