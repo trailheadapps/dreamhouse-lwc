@@ -3,8 +3,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>highlightsPanel</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -30,8 +29,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>relatedListContainer</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
                     <value>NONE</value>
                 </componentInstanceProperties>
@@ -179,8 +177,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>column</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-eb9c4d7e-6868-43e8-9851-85aacdd3a54d</value>
                 </componentInstanceProperties>
@@ -189,8 +186,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>column2</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-41d5d7e8-b344-4110-9175-150a259f72a8</value>
                 </componentInstanceProperties>
@@ -216,8 +212,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>column3</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-3d2d92e6-96c0-4649-a0b0-d02f5a08f655</value>
                 </componentInstanceProperties>
@@ -256,8 +251,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>column4</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-89988119-afc3-4937-8a69-76d39cb3a74a</value>
                 </componentInstanceProperties>
@@ -266,8 +260,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>column5</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-2d0a01d5-75cd-48da-b598-1e36cc2fa406</value>
                 </componentInstanceProperties>
@@ -280,8 +273,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>fieldSection</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-66400b5a-c4b2-472c-af56-e7f4f40b3969</value>
                 </componentInstanceProperties>
@@ -294,8 +286,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>fieldSection2</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-7e923dfb-c368-4633-ae9c-3eb3f51a73bb</value>
                 </componentInstanceProperties>
@@ -308,8 +299,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>fieldSection3</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-00b780e0-4e42-4a35-854d-bec7c63f2545</value>
                 </componentInstanceProperties>
@@ -322,7 +312,6 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>recordDetailPanelMobile</identifier>
                 <componentName>force:recordDetailPanelMobile</componentName>
             </componentInstance>
         </itemInstances>
@@ -386,8 +375,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>column6</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-c5e2ef33-3e0f-472c-a3bb-22376d3962e9</value>
                 </componentInstanceProperties>
@@ -396,8 +384,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>column7</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-1ca35247-9088-453b-a163-ef03309a958c</value>
                 </componentInstanceProperties>
@@ -410,8 +397,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>fieldSection4</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-ad40adb5-82bf-4e08-836c-f48698589d81</value>
                 </componentInstanceProperties>
@@ -472,8 +458,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>column8</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-49282f7c-7af1-496b-9ce7-6765e98ce385</value>
                 </componentInstanceProperties>
@@ -482,8 +467,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>column9</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-b732eb07-d990-4e80-bd0b-97906c9f8f04</value>
                 </componentInstanceProperties>
@@ -496,14 +480,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>propertyCarousel</identifier>
-                <componentName>propertyCarousel</componentName>
+                                <componentName>propertyCarousel</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>fieldSection5</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-bd12f580-5e5e-4d1f-9bc3-239e8e59b173</value>
                 </componentInstanceProperties>
@@ -520,8 +502,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>tab</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>relatedTabContent</value>
                 </componentInstanceProperties>
@@ -534,8 +515,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>tab2</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -552,8 +532,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>tab3</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-1e191467-3189-4ef6-9dfa-5dd515d8a8f0</value>
                 </componentInstanceProperties>
@@ -566,8 +545,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>tab4</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-pdusjw23xph</value>
                 </componentInstanceProperties>
@@ -585,8 +563,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>tabset</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>
                 </componentInstanceProperties>
@@ -600,8 +577,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>activityPanel</identifier>
-                <componentName
+                                <componentName
                 >runtime_sales_activities:activityPanel</componentName>
             </componentInstance>
         </itemInstances>
@@ -612,7 +588,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>recordFeedContainer</identifier>
                 <componentName>forceChatter:recordFeedContainer</componentName>
             </componentInstance>
         </itemInstances>
@@ -623,8 +598,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>tab5</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -641,8 +615,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>tab6</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>body</name>
                     <value>feedTabContent</value>
                 </componentInstanceProperties>
@@ -660,14 +633,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>brokerCard</identifier>
-                <componentName>brokerCard</componentName>
+                                <componentName>brokerCard</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>daysOnMarket</identifier>
-                <componentName>daysOnMarket</componentName>
+                                <componentName>daysOnMarket</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Days_On_Market__c}</leftValue>
@@ -679,8 +650,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>propertyMap</identifier>
-                <componentName>propertyMap</componentName>
+                                <componentName>propertyMap</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Location__Latitude__s}</leftValue>
@@ -692,8 +662,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>tabset2</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>
                 </componentInstanceProperties>

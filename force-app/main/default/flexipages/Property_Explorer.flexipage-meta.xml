@@ -3,14 +3,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>propertyFilter</identifier>
-                <componentName>propertyFilter</componentName>
+                                <componentName>propertyFilter</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>interview</identifier>
-                <componentInstanceProperties>
+               <componentInstanceProperties>
                     <name>flowLayout</name>
                     <value>oneColumn</value>
                 </componentInstanceProperties>
@@ -27,8 +25,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>propertyTileList</identifier>
-                <componentName>propertyTileList</componentName>
+                                <componentName>propertyTileList</componentName>
             </componentInstance>
         </itemInstances>
         <name>center</name>
@@ -37,14 +34,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>propertySummary</identifier>
-                <componentName>propertySummary</componentName>
+                                <componentName>propertySummary</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <identifier>propertyMap</identifier>
-                <componentName>propertyMap</componentName>
+                                <componentName>propertyMap</componentName>
             </componentInstance>
         </itemInstances>
         <name>right</name>
