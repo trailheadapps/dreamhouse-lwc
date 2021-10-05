@@ -9,7 +9,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-               <componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>flowLayout</name>
                     <value>oneColumn</value>
                 </componentInstanceProperties>
