@@ -3,6 +3,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>propertyFilter</identifier>
                 <componentName>propertyFilter</componentName>
             </componentInstance>
         </itemInstances>
@@ -25,6 +26,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>propertyTileList</identifier>
                 <componentName>propertyTileList</componentName>
             </componentInstance>
         </itemInstances>
@@ -34,11 +36,13 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>propertySummary</identifier>
                 <componentName>propertySummary</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <identifier>propertyMap</identifier>
                 <componentName>propertyMap</componentName>
             </componentInstance>
         </itemInstances>

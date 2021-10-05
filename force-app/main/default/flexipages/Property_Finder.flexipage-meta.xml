@@ -3,6 +3,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>propertyFilter</identifier>
                 <componentName>propertyFilter</componentName>
             </componentInstance>
         </itemInstances>
@@ -12,6 +13,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>auraPropertyListMap</identifier>
                 <componentName>auraPropertyListMap</componentName>
             </componentInstance>
         </itemInstances>
@@ -21,11 +23,13 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>propertySummary</identifier>
                 <componentName>propertySummary</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <identifier>daysOnMarket</identifier>
                 <componentName>daysOnMarket</componentName>
             </componentInstance>
         </itemInstances>

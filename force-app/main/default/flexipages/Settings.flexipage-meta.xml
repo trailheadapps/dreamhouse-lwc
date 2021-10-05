@@ -3,6 +3,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>sampleDataImporter</identifier>
                 <componentName>sampleDataImporter</componentName>
             </componentInstance>
         </itemInstances>

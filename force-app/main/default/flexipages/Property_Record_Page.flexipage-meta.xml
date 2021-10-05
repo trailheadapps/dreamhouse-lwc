@@ -480,6 +480,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>propertyCarousel</identifier>
                 <componentName>propertyCarousel</componentName>
             </componentInstance>
         </itemInstances>
@@ -633,11 +634,13 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>brokerCard</identifier>
                 <componentName>brokerCard</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <identifier>daysOnMarket</identifier>
                 <componentName>daysOnMarket</componentName>
                 <visibilityRule>
                     <criteria>
@@ -650,6 +653,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <identifier>propertyMap</identifier>
                 <componentName>propertyMap</componentName>
                 <visibilityRule>
                     <criteria>
