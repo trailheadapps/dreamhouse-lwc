@@ -2,7 +2,6 @@ import { LightningElement, api } from 'lwc';
 
 export default class Paginator extends LightningElement {
     /** The current page number. */
-
     @api pageNumber;
 
     /** The number of items on a page. */
