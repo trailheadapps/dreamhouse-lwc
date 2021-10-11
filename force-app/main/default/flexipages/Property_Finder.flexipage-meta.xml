@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>propertyFilter</componentName>
+                <identifier>propertyFilter</identifier>
             </componentInstance>
         </itemInstances>
         <name>left</name>
@@ -13,6 +14,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>auraPropertyListMap</componentName>
+                <identifier>auraPropertyListMap</identifier>
             </componentInstance>
         </itemInstances>
         <name>center</name>
@@ -22,11 +24,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>propertySummary</componentName>
+                <identifier>propertySummary</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>daysOnMarket</componentName>
+                <identifier>daysOnMarket</identifier>
             </componentInstance>
         </itemInstances>
         <name>right</name>

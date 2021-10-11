@@ -5,11 +5,11 @@
             "default": true,
             "package": "DreamhouseLWC",
             "versionName": "Summer '21",
-            "versionNumber": "52.0.0.NEXT"
+            "versionNumber": "53.0.0.NEXT"
         }
     ],
     "namespace": "",
-    "sourceApiVersion": "52.0",
+    "sourceApiVersion": "53.0",
     "packageAliases": {
         "DreamhouseLWC": "0Ho3h000000PBghCAG",
         "DreamhouseLWC@50.0.0-1": "04t3h000004skyPAAQ",
@@ -21,8 +21,8 @@
         "DreamhouseLWC@50.0.0-26": "04t3h000004sm67AAA",
         "DreamhouseLWC@50.0.0-28": "04t3h000004smaYAAQ",
         "DreamhouseLWC@51.0.0-1": "04t3h000004smn8AAA",
-        "DreamhouseLWC@52.0.0-1": "04t3h0000043sPPAAY",
-        "DreamhouseLWC@52.0.0-3": "04t3h0000043sQIAAY",
-        "DreamhouseLWC@52.0.0-5": "04t3h0000043scGAAQ"
+        "DreamhouseLWC@53.0.0-1": "04t3h0000043sPPAAY",
+        "DreamhouseLWC@53.0.0-3": "04t3h0000043sQIAAY",
+        "DreamhouseLWC@53.0.0-5": "04t3h0000043scGAAQ"
     }
 }
