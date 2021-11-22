@@ -21,6 +21,12 @@
                 <identifier>flowruntime_interview</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>propertySummary</componentName>
+                <identifier>propertySummary</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>left</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -35,12 +41,6 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentName>propertySummary</componentName>
-                <identifier>propertySummary</identifier>
-            </componentInstance>
-        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>propertyMap</componentName>
