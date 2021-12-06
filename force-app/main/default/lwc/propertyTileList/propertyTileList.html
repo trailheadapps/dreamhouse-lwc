@@ -2,7 +2,10 @@
     <div class="slds-card slds-var-p-around_small">
         <template if:true={properties.data}>
             <div class="slds-grid slds-wrap">
-                <template for:each="for:item" ="property">
+                <template
+                    for:each={properties.data.records}
+                    for:item="property"
+                >
                     <c-property-tile
                         property={property}
                         key={property.Id}
