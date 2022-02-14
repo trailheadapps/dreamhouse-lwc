@@ -12,6 +12,7 @@
     "sourceApiVersion": "54.0",
     "packageAliases": {
         "DreamhouseLWC": "0Ho3h000000PBghCAG",
-        "DreamhouseLWC@53.0.0-7": "04t3h0000045tsgAAA"
+        "DreamhouseLWC@53.0.0-7": "04t3h0000045tsgAAA",
+        "DreamhouseLWC@54.0.0-1": "04t3h000004jtSuAAI"
     }
 }
