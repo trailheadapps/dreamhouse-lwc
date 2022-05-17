@@ -16,8 +16,10 @@ private class TestPropertyController {
         }
         insert properties;
     }
-    static testMethod void testGetPagedPropertyList() {
-        final Profile p = [
+
+    @isTest
+    static void testGetPagedPropertyList() {
+        Profile standardUserProfile = [
             SELECT Name, Id
             FROM Profile
             WHERE
@@ -27,33 +29,36 @@ private class TestPropertyController {
                 AND PermissionsMassInlineEdit = TRUE
             LIMIT 1
         ];
-        final User u = new User(
+        User testUser = new User(
             Alias = 'standt',
             Email = 'standarduser@testorg.com',
             EmailEncodingKey = 'UTF-8',
             LastName = 'Testing',
             LanguageLocaleKey = 'en_US',
             LocaleSidKey = 'en_US',
-            ProfileId = p.Id,
+            ProfileId = standardUserProfile.Id,
             TimeZoneSidKey = 'America/Los_Angeles',
             UserName = 'standarduser@dreamhouse-testorg.com'
         );
-        insert u;
-        final PermissionSet ps = [
+        insert testUser;
+        PermissionSet ps = [
             SELECT Id
             FROM PermissionSet
             WHERE Name = 'dreamhouse'
         ];
         insert new PermissionSetAssignment(
-            AssigneeId = u.Id,
+            AssigneeId = testUser.Id,
             PermissionSetId = ps.Id
         );
 
-        TestPropertyController.createProperties(5);
-        PagedResult result;
-        System.runAs(u) {
+        // Insert test properties as admin
+        System.runAs(new User(Id = UserInfo.getUserId())) {
+            TestPropertyController.createProperties(5);
+        }
+        // Read properties as test user
+        System.runAs(testUser) {
             Test.startTest();
-            result = PropertyController.getPagedPropertyList(
+            PagedResult result = PropertyController.getPagedPropertyList(
                 '',
                 999999,
                 0,
@@ -66,7 +71,8 @@ private class TestPropertyController {
         }
     }
 
-    static testMethod void testGetPicturesNoResults() {
+    @isTest
+    static void testGetPicturesNoResults() {
         Property__c property = new Property__c(Name = 'Name');
         insert property;
 
@@ -79,7 +85,8 @@ private class TestPropertyController {
         System.assertEquals(null, items);
     }
 
-    static testMethod void testGetPicturesWithResults() {
+    @isTest
+    static void testGetPicturesWithResults() {
         Property__c property = new Property__c(Name = 'Name');
         insert property;
 
