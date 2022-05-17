@@ -17,18 +17,49 @@ private class TestPropertyController {
         insert properties;
     }
     static testMethod void testGetPagedPropertyList() {
-        TestPropertyController.createProperties(5);
-        Test.startTest();
-        PagedResult result = PropertyController.getPagedPropertyList(
-            '',
-            999999,
-            0,
-            0,
-            10,
-            1
+        final Profile p = [
+            SELECT Id
+            FROM Profile
+            WHERE Name = 'Standard User'
+            LIMIT 1
+        ];
+        final User u = new User(
+            Alias = 'standt',
+            Email = 'standarduser@testorg.com',
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'Testing',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            ProfileId = p.Id,
+            TimeZoneSidKey = 'America/Los_Angeles',
+            UserName = 'standarduser@dreamhouse-testorg.com'
         );
-        Test.stopTest();
-        System.assertEquals(5, result.records.size());
+        insert u;
+        final PermissionSet ps = [
+            SELECT Id
+            FROM PermissionSet
+            WHERE Name = 'dreamhouse'
+        ];
+        insert new PermissionSetAssignment(
+            AssigneeId = u.Id,
+            PermissionSetId = ps.Id
+        );
+
+        TestPropertyController.createProperties(5);
+        PagedResult result;
+        System.runAs(u) {
+            Test.startTest();
+            result = PropertyController.getPagedPropertyList(
+                '',
+                999999,
+                0,
+                0,
+                10,
+                1
+            );
+            Test.stopTest();
+            System.assertEquals(5, result.records.size());
+        }
     }
 
     static testMethod void testGetPicturesNoResults() {

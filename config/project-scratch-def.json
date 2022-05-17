@@ -1,5 +1,6 @@
 {
     "orgName": "Dreamhouse",
+    "language": "en_US",
     "edition": "Developer",
     "features": ["Walkthroughs", "EnableSetPasswordInApi"],
     "settings": {
