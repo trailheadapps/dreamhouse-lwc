@@ -3,16 +3,17 @@
         title="Distance to the Property"
         icon-name="standard:location"
     >
-        <template if:true={distance}>
-            <div class="slds-var-m-around_medium location">
-                <div class="slds-text-heading_small">
-                    Current latitude: <b>{myLocation.latitude}</b>
-                </div>
-                <div class="slds-text-heading_small">
-                    Current longitude: <b>{myLocation.longitude}</b>
-                </div>
-                <!-- prettier-ignore -->
-                <div class="slds-text-heading_small">
+        <template if:false={error}>
+            <template if:true={distance}>
+                <div class="slds-var-m-around_medium location">
+                    <div class="slds-text-heading_small">
+                        Current latitude: <b>{myLocation.latitude}</b>
+                    </div>
+                    <div class="slds-text-heading_small">
+                        Current longitude: <b>{myLocation.longitude}</b>
+                    </div>
+                    <!-- prettier-ignore -->
+                    <div class="slds-text-heading_small">
                     Distance to property: <b>
                         <lightning-formatted-number
                             value={distance}
@@ -20,11 +21,12 @@
                         ></lightning-formatted-number> miles
                     </b>
                 </div>
-            </div>
-        </template>
-        <template if:false={distance}>
-            <lightning-spinner alternative-text="Loading..." size="small">
-            </lightning-spinner>
+                </div>
+            </template>
+            <template if:false={distance}>
+                <lightning-spinner alternative-text="Loading..." size="small">
+                </lightning-spinner>
+            </template>
         </template>
         <template if:true={error}>
             <c-error-panel
