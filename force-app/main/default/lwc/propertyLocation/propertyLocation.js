@@ -25,36 +25,34 @@ export default class PropertyLocation extends LightningElement {
         }
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         this.myDeviceLocationService = getLocationService();
         if (this.myDeviceLocationService.isAvailable()) {
             // Running on the Salesforce mobile app on a device
-            this.getLocationFromMobileDevice();
+            await this.calculateLocationFromMobileDevice();
         } else if (navigator.geolocation) {
             // Running on a browser
-            this.getLocationFromBrowser();
+            this.calculateLocationFromBrowser();
         } else {
             this.error = 'No location services available';
         }
     }
 
-    getLocationFromMobileDevice() {
-        this.myDeviceLocationService
-            .getCurrentPosition()
-            .then((result) => {
-                this.myLocation = result.coords;
-                this.calculateDistance();
-            })
-            .catch((error) => {
-                this.error = error;
-            });
+    async calculateLocationFromMobileDevice() {
+        try {
+            //this.myLocation =
+            const result =
+                await this.myDeviceLocationService.getCurrentPosition();
+            this.myLocation = result.coords;
+        } catch (error) {
+            this.error = error;
+        }
     }
 
-    getLocationFromBrowser() {
+    calculateLocationFromBrowser() {
         navigator.geolocation.getCurrentPosition(
             (result) => {
                 this.myLocation = result.coords;
-                this.calculateDistance();
             },
             (error) => {
                 this.error = error;
