@@ -34,16 +34,14 @@ export default class PropertyLocation extends LightningElement {
             // Running on a browser
             this.calculateLocationFromBrowser();
         } else {
-            this.error = 'No location services available';
+            this.error = { message: 'No location services available' };
         }
     }
 
     async calculateLocationFromMobileDevice() {
         try {
-            //this.myLocation =
-            const result =
+            this.myLocation =
                 await this.myDeviceLocationService.getCurrentPosition();
-            this.myLocation = result.coords;
         } catch (error) {
             this.error = error;
         }
