@@ -1,0 +1,39 @@
+<template>
+    <lightning-card title="Contacts" icon-name="standard:location">
+        <template if:false={error}>
+            <template if:true={deviceContacts}>
+                <div class="slds-var-m-around_medium">
+                    <ul class="slds-var-m-around_medium">
+                        <template
+                            for:each={deviceContacts}
+                            for:item="deviceContact"
+                        >
+                            <li key={deviceContact.Id}>
+                                {deviceContact.name.givenName}
+                                {deviceContact.name.familyName}
+                                <ul class="slds-var-m-around_medium">
+                                    <template
+                                        for:each={deviceContact.phoneNumbers}
+                                        for:item="phoneNumber"
+                                    >
+                                        <li key={phoneNumber.value}>
+                                            {phoneNumber.value}
+                                            ({phoneNumber.label})
+                                        </li>
+                                    </template>
+                                </ul>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+            <template if:false={deviceContacts}>
+                <lightning-spinner alternative-text="Loading..." size="small">
+                </lightning-spinner>
+            </template>
+        </template>
+        <template if:true={error}>
+            <c-error-panel friendly-message={error}></c-error-panel>
+        </template>
+    </lightning-card>
+</template>
