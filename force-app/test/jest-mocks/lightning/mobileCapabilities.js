@@ -1,16 +1,21 @@
 // To activate this mocked device location, add to your test:
 //
-// getLocationService().isAvailable.mockReturnValue(true);
+// import { setAvailable } from 'lightning/mobileCapabilities';
+// setDeviceLocationServiceAvailable(true);
+var _available = false;
+
 export const getLocationService = jest.fn().mockImplementation(() => {
     return {
-        isAvailable: jest.fn().mockReturnValue(false),
+        isAvailable: jest.fn().mockReturnValue(_available),
         getCurrentPosition: jest.fn().mockImplementation(() =>
             Promise.resolve({
-                coords: {
-                    latitude: 42.361145,
-                    longitude: -71.057083
-                }
+                latitude: 42.361145,
+                longitude: -71.057083
             })
         )
     };
 });
+
+export const setDeviceLocationServiceAvailable = (value) => {
+    _available = value;
+};
