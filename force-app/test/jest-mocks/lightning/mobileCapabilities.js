@@ -1,6 +1,6 @@
 // To activate this mocked device location, add to your test:
 //
-// import { setAvailable } from 'lightning/mobileCapabilities';
+// import { setDeviceLocationServiceAvailable } from 'lightning/mobileCapabilities';
 // setDeviceLocationServiceAvailable(true);
 var _available = false;
 

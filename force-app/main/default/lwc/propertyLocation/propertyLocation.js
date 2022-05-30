@@ -11,6 +11,7 @@ const fields = [LATITUDE_FIELD, LONGITUDE_FIELD];
 export default class PropertyLocation extends LightningElement {
     error;
     deviceLocationService;
+    distance;
     location;
     @api recordId;
 
@@ -19,6 +20,7 @@ export default class PropertyLocation extends LightningElement {
         if (data) {
             this.property = data;
             this.error = undefined;
+            this.calculateDistance();
         } else if (error) {
             this.error = error;
             this.property = undefined;
@@ -42,6 +44,7 @@ export default class PropertyLocation extends LightningElement {
         try {
             this.location =
                 await this.deviceLocationService.getCurrentPosition();
+            this.calculateDistance();
         } catch (error) {
             this.error = error;
         }
@@ -51,6 +54,7 @@ export default class PropertyLocation extends LightningElement {
         navigator.geolocation.getCurrentPosition(
             (result) => {
                 this.location = result.coords;
+                this.calculateDistance();
             },
             (error) => {
                 this.error = error;
@@ -58,36 +62,27 @@ export default class PropertyLocation extends LightningElement {
         );
     }
 
-    get distance() {
+    calculateDistance() {
         if (this.location && this.property) {
             const latitude1 = this.location.latitude;
             const latitude2 = getFieldValue(this.property, LATITUDE_FIELD);
             const longitude1 = this.location.longitude;
             const longitude2 = getFieldValue(this.property, LONGITUDE_FIELD);
-            return this.calculateDistance(
-                latitude1,
-                latitude2,
-                longitude1,
-                longitude2
-            );
-        }
-        return false;
-    }
 
-    calculateDistance(latitude1, latitude2, longitude1, longitude2) {
-        // Haversine formula
-        const deg2rad = (deg) => (deg * Math.PI) / 180.0;
-        const earthRadius = 6371; // Radius of the earth in km
-        const dLat = deg2rad(latitude2 - latitude1); // deg2rad below
-        const dLon = deg2rad(longitude2 - longitude1);
-        const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(deg2rad(latitude1)) *
-                Math.cos(deg2rad(latitude2)) *
-                Math.sin(dLon / 2) *
-                Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const d = earthRadius * c;
-        return d / 1.609344;
+            // Haversine formula
+            const deg2rad = (deg) => (deg * Math.PI) / 180.0;
+            const earthRadius = 6371; // Radius of the earth in km
+            const dLat = deg2rad(latitude2 - latitude1); // deg2rad below
+            const dLon = deg2rad(longitude2 - longitude1);
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(deg2rad(latitude1)) *
+                    Math.cos(deg2rad(latitude2)) *
+                    Math.sin(dLon / 2) *
+                    Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const d = earthRadius * c;
+            this.distance = d / 1.609344;
+        }
     }
 }

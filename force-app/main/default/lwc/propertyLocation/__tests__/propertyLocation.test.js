@@ -77,7 +77,7 @@ describe('c-property-location', () => {
     // eslint-disable-next-line jest/expect-expect
     it('renders coordinates and distance when browser location is available', async () => {
         // Simulate browser location
-        navigator.geolocation = mockGeolocation;
+        global.navigator.geolocation = mockGeolocation;
 
         const element = createElement('c-property-location', {
             is: PropertyLocation
@@ -91,7 +91,7 @@ describe('c-property-location', () => {
         // Wait for any asynchronous DOM updates
         await flushPromises();
 
-        // checkDistanceCalculation(element);
+        checkDistanceCalculation(element);
     });
 
     // eslint-disable-next-line jest/expect-expect
