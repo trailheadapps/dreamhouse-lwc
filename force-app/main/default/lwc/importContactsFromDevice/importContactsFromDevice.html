@@ -33,7 +33,10 @@
             </template>
         </template>
         <template if:true={error}>
-            <c-error-panel friendly-message={error}></c-error-panel>
+            <c-error-panel
+                friendly-message="Error accessing device contacts"
+                errors={error}
+            ></c-error-panel>
         </template>
     </lightning-card>
 </template>

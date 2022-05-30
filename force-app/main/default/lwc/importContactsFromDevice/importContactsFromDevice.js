@@ -7,7 +7,7 @@ export default class ImportContactsFromDevice extends LightningElement {
         if (myContactsService.isAvailable()) {
             await this.retrieveDeviceContacts();
         } else {
-            this.error = 'Contact service not available';
+            this.error = { message: 'Contact service not available' };
         }
     }
 
