@@ -10,8 +10,8 @@ const fields = [LATITUDE_FIELD, LONGITUDE_FIELD];
 
 export default class PropertyLocation extends LightningElement {
     error;
-    myDeviceLocationService;
-    myLocation;
+    deviceLocationService;
+    location;
     @api recordId;
 
     @wire(getRecord, { recordId: '$recordId', fields })
@@ -26,8 +26,8 @@ export default class PropertyLocation extends LightningElement {
     }
 
     async connectedCallback() {
-        this.myDeviceLocationService = getLocationService();
-        if (this.myDeviceLocationService.isAvailable()) {
+        this.deviceLocationService = getLocationService();
+        if (this.deviceLocationService.isAvailable()) {
             // Running on the Salesforce mobile app on a device
             await this.calculateLocationFromMobileDevice();
         } else if (navigator.geolocation) {
@@ -40,8 +40,8 @@ export default class PropertyLocation extends LightningElement {
 
     async calculateLocationFromMobileDevice() {
         try {
-            this.myLocation =
-                await this.myDeviceLocationService.getCurrentPosition();
+            this.location =
+                await this.deviceLocationService.getCurrentPosition();
         } catch (error) {
             this.error = error;
         }
@@ -50,7 +50,7 @@ export default class PropertyLocation extends LightningElement {
     calculateLocationFromBrowser() {
         navigator.geolocation.getCurrentPosition(
             (result) => {
-                this.myLocation = result.coords;
+                this.location = result.coords;
             },
             (error) => {
                 this.error = error;
@@ -59,10 +59,10 @@ export default class PropertyLocation extends LightningElement {
     }
 
     get distance() {
-        if (this.myLocation && this.property) {
-            const latitude1 = this.myLocation.latitude;
+        if (this.location && this.property) {
+            const latitude1 = this.location.latitude;
             const latitude2 = getFieldValue(this.property, LATITUDE_FIELD);
-            const longitude1 = this.myLocation.longitude;
+            const longitude1 = this.location.longitude;
             const longitude2 = getFieldValue(this.property, LONGITUDE_FIELD);
             return this.calculateDistance(
                 latitude1,
