@@ -1,0 +1,20 @@
+{
+    "apiName": "Property__c",
+    "childRelationships": {},
+    "id": "a015I000002taYUQAY",
+    "lastModifiedById": "0055I000001RjtIQAS",
+    "lastModifiedDate": "2020-06-09T07:48:54.000Z",
+    "recordTypeId": "012000000000000AAA",
+    "recordTypeInfo": null,
+    "systemModstamp": "2020-06-09T07:48:54.000Z",
+    "fields": {
+        "Location__Latitude__s": {
+            "displayValue": "37.751",
+            "value": "37.751"
+        },
+        "Location__Longitude__s": {
+            "displayValue": "-97.822",
+            "value": "-97.822"
+        }
+    }
+}
