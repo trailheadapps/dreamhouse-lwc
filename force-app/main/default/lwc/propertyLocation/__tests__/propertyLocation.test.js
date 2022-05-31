@@ -22,8 +22,8 @@ const checkDistanceCalculation = (element) => {
     expect(formattedNumberEl).not.toBe(null);
 
     // Compare with coordinates in mobileCapabilities.js mock
-    expect(latitudeEl.textContent).toBe('42.361145');
-    expect(longitudeEl.textContent).toBe('-71.057083');
+    expect(latitudeEl.textContent.trim()).toBe('42.361145');
+    expect(longitudeEl.textContent.trim()).toBe('-71.057083');
     // Distance between mocked property and mocked location
     expect(formattedNumberEl.value).toBe(1444.43371701009);
 };
