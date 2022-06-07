@@ -1,21 +1,11 @@
 {
-    "packageDirectories": [
-        {
-            "path": "force-app",
-            "default": true,
-            "package": "DreamhouseLWC",
-            "versionName": "Spring '21",
-            "versionNumber": "54.0.0.NEXT"
-        }
-    ],
-    "namespace": "",
-    "sourceApiVersion": "54.0",
-    "packageAliases": {
-        "DreamhouseLWC": "0Ho3h000000PBghCAG",
-        "DreamhouseLWC@53.0.0-7": "04t3h0000045tsgAAA",
-        "DreamhouseLWC@54.0.0-1": "04t3h000004jtSuAAI",
-        "DreamhouseLWC@54.0.0-2": "04t3h000004spREAAY",
-        "DreamhouseLWC@54.0.0-3": "04t3h000004spRdAAI",
-        "DreamhouseLWC@54.0.0-4": "04t3h000004spmHAAQ"
-    }
+   "packageDirectories": [
+      {
+         "path": "force-app",
+         "default": true
+      }
+   ],
+   "namespace": "",
+   "sfdcLoginUrl": "https://login.salesforce.com",
+   "sourceApiVersion": "54.0"
 }
