@@ -19,3 +19,17 @@ export const getLocationService = jest.fn().mockImplementation(() => {
 export const setDeviceLocationServiceAvailable = (value) => {
     _available = value;
 };
+
+// TODO: Explain comments
+export const getBarcodeScanner = jest.fn().mockImplementation(() => {
+    return {
+        isAvailable: jest.fn().mockReturnValue(true),
+        barcodeTypes: jest.fn().mockReturnValue({ QR: true }),
+        beginCapture: jest
+            .fn()
+            .mockImplementation(() =>
+                Promise.resolve({ value: '0031700000pJRRWAA4' })
+            ),
+        endCapture: jest.fn().mockReturnValue(true)
+    };
+});
