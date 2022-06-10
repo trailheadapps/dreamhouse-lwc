@@ -20,16 +20,25 @@ export const setDeviceLocationServiceAvailable = (value) => {
     _available = value;
 };
 
-// TODO: Explain comments
+// TODO: @Alba, should this use the same variable and method as above or no?
+// If yes, should we rename the variable and method?
+// If no, should we rename _available?
+let _barcodeScannerAvailable = false;
+export const setBarcodeScannerAvailable = (value) =>
+    (_barcodeScannerAvailable = true);
+
+// TODO: Explain in comments
 export const getBarcodeScanner = jest.fn().mockImplementation(() => {
     return {
-        isAvailable: jest.fn().mockReturnValue(true),
-        barcodeTypes: jest.fn().mockReturnValue({ QR: true }),
+        isAvailable: jest.fn().mockReturnValue(_barcodeScannerAvailable),
+        barcodeTypes: jest
+            .fn()
+            .mockReturnValue({ QR: _barcodeScannerAvailable }),
         beginCapture: jest
             .fn()
             .mockImplementation(() =>
                 Promise.resolve({ value: '0031700000pJRRWAA4' })
             ),
-        endCapture: jest.fn().mockReturnValue(true)
+        endCapture: jest.fn().mockReturnValue(_barcodeScannerAvailable)
     };
 });
