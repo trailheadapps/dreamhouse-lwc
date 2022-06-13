@@ -686,6 +686,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>propertyLocation</componentName>
+                <identifier>c_propertyLocation</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>brokerCard</componentName>
                 <identifier>brokerCard</identifier>
             </componentInstance>

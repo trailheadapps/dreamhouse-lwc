@@ -12,7 +12,9 @@ module.exports = {
         '^lightning/platformShowToastEvent$':
             '<rootDir>/force-app/test/jest-mocks/lightning/platformShowToastEvent',
         '^lightning/messageService$':
-            '<rootDir>/force-app/test/jest-mocks/lightning/messageService'
+            '<rootDir>/force-app/test/jest-mocks/lightning/messageService',
+        '^lightning/mobileCapabilities$':
+            '<rootDir>/force-app/test/jest-mocks/lightning/mobileCapabilities'
     },
     setupFilesAfterEnv
 };
