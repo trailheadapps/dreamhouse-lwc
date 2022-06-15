@@ -1,4 +1,3 @@
-<!-- barcodeScannerExample.html -->
 <template>
     <lightning-card title="Property QR Code Scanner" icon-name="utility:scan">
         <template if:false={scanButtonDisabled}>
@@ -27,7 +26,7 @@
             </div>
 
             <!-- The click-to-scan button; Disabled if BarcodeScanner isn't available -->
-            <div class="slds-align_absolute-center slds-m-vertical_large">
+            <div class="slds-align_absolute-center slds-var-m-vertical_large">
                 <lightning-button
                     variant="brand"
                     class="slds-var-m-left_x-small"
@@ -43,8 +42,8 @@
 
         <template if:true={scanButtonDisabled}>
             <div
-                id="scanner-directions"
-                class="slds-text-align_center slds-text-color_weak slds-m-vertical_large slds-p-horizontal_small"
+                data-test="scanner-directions"
+                class="scanner-directions slds-text-align_center slds-text-color_weak slds-var-m-vertical_large slds-var-p-horizontal_small"
             >
                 Open Dreamhouse on a mobile device to scan property QR codes.
             </div>

@@ -36,8 +36,13 @@ describe('c-barcode-scanner-example', () => {
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScannerDirections =
             elementBarcodeScannerExample.shadowRoot.querySelector(
-                '#scanner-directions'
+                // elementBarcodeScannerExample.template.querySelector(  // TODO: This was in the linked example but doesn't work?
+                //    await elementBarcodeScannerExample.shadowRoot.querySelector( // TODO: Neither of these work
+                // '[data-test="scanner-directions"]' // TODO: Neither of these either?
+                '.scanner-directions'
             ); // TODO: Why is this always null?
+
+        // await flushPromises();
 
         console.log({ elementBarcodeScannerExample, elementScannerDirections });
         // expect(elementScannerDirections.innerText).toBe('Click <strong>Scan QR Code</strong> to open a QR Code scanner camera view. Position a QR Code in the scanner view to scan it.');
