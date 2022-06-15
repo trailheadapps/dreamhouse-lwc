@@ -2,11 +2,11 @@
 //
 // import { setDeviceLocationServiceAvailable } from 'lightning/mobileCapabilities';
 // setDeviceLocationServiceAvailable(true);
-var _available = false;
+var _deviceLocationServiceAvailable = false;
 
 export const getLocationService = jest.fn().mockImplementation(() => {
     return {
-        isAvailable: jest.fn().mockReturnValue(_available),
+        isAvailable: jest.fn().mockReturnValue(_deviceLocationServiceAvailable),
         getCurrentPosition: jest.fn().mockImplementation(() =>
             Promise.resolve({
                 latitude: 42.361145,
@@ -17,17 +17,16 @@ export const getLocationService = jest.fn().mockImplementation(() => {
 });
 
 export const setDeviceLocationServiceAvailable = (value) => {
-    _available = value;
+    _deviceLocationServiceAvailable = value;
 };
 
-// TODO: @Alba, should this use the same variable and method as above or no?
-// If yes, should we rename the variable and method?
-// If no, should we rename _available?
 let _barcodeScannerAvailable = false;
+
+// Allows us to set the above mock variable to true within the component tests
 export const setBarcodeScannerAvailable = (value) =>
     (_barcodeScannerAvailable = true);
 
-// TODO: Explain in comments
+// Jest mock getBarcodeScanner that returns expected values/"functionality" for all methods and properties accessed in barcodeScannerExample.js
 export const getBarcodeScanner = jest.fn().mockImplementation(() => {
     return {
         isAvailable: jest.fn().mockReturnValue(_barcodeScannerAvailable),
