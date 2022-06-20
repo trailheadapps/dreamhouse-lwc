@@ -7,6 +7,12 @@
                 <identifier>propertyFilter</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>barcodeScannerExample</componentName>
+                <identifier>c_barcodeScannerExample</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>left</name>
         <type>Region</type>
     </flexiPageRegions>
