@@ -1,7 +1,13 @@
-// To activate this mocked device location, add to your test:
+// To activate a mocked device location, add to your test:
 //
 // import { setDeviceLocationServiceAvailable } from 'lightning/mobileCapabilities';
 // setDeviceLocationServiceAvailable(true);
+//
+// To activate a mocked barcode scan, add to your test:
+//
+// import { setBarcodeScannerAvailable } from 'lightning/mobileCapabilities';
+// setBarcodeScannerAvailable(true);
+
 var _deviceLocationServiceAvailable = false;
 
 export const getLocationService = jest.fn().mockImplementation(() => {
@@ -23,8 +29,9 @@ export const setDeviceLocationServiceAvailable = (value) => {
 let _barcodeScannerAvailable = false;
 
 // Allows us to set the above mock variable to true within the component tests
-export const setBarcodeScannerAvailable = (value) =>
-    (_barcodeScannerAvailable = true);
+export const setBarcodeScannerAvailable = (value) => {
+    _barcodeScannerAvailable = value;
+};
 
 // Jest mock getBarcodeScanner that returns expected values/"functionality" for all methods and properties accessed in barcodeScannerExample.js
 export const getBarcodeScanner = jest.fn().mockImplementation(() => {
