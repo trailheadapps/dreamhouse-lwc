@@ -1,6 +1,6 @@
 import { createElement } from 'lwc';
 import { getNavigateCalledWith } from 'lightning/navigation';
-import BarcodeScannerExample from 'c/barcodeScannerExample';
+import BarcodeScanner from 'c/barcodeScanner';
 
 // Mock various barcode functionality from mobileCapabilites.js
 import {
@@ -38,16 +38,16 @@ describe('c-barcode-scanner-example', () => {
     }
 
     it('directs the user to the mobile app when Barcode Scanner is unavailable', async () => {
-        // Create initial BarcodeScannerExample element and attach to virtual DOM
-        const elementBarcodeScannerExample = createElement(
+        // Create initial BarcodeScanner element and attach to virtual DOM
+        const elementBarcodeScanner = createElement(
             'c-barcode-scanner-example',
-            { is: BarcodeScannerExample }
+            { is: BarcodeScanner }
         );
-        document.body.appendChild(elementBarcodeScannerExample);
+        document.body.appendChild(elementBarcodeScanner);
 
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScannerDirections =
-            elementBarcodeScannerExample.shadowRoot.querySelector(
+            elementBarcodeScanner.shadowRoot.querySelector(
                 '[data-test="scanner-directions"]'
             );
 
@@ -55,21 +55,19 @@ describe('c-barcode-scanner-example', () => {
     });
 
     it('shows the `Scan QR Code` button when BarcodeScanner is available', async () => {
-        // Create initial BarcodeScannerExample element and attach to virtual DOM
-        const elementBarcodeScannerExample = createElement(
+        // Create initial BarcodeScanner element and attach to virtual DOM
+        const elementBarcodeScanner = createElement(
             'c-barcode-scanner-example',
-            { is: BarcodeScannerExample }
+            { is: BarcodeScanner }
         );
         // Stub barcodeScanner as available
         setBarcodeScannerAvailable();
 
-        document.body.appendChild(elementBarcodeScannerExample);
+        document.body.appendChild(elementBarcodeScanner);
 
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScanQRCodeButton =
-            elementBarcodeScannerExample.shadowRoot.querySelector(
-                'lightning-button'
-            );
+            elementBarcodeScanner.shadowRoot.querySelector('lightning-button');
 
         expect(elementScanQRCodeButton).not.toBeNull();
     });
@@ -83,18 +81,16 @@ describe('c-barcode-scanner-example', () => {
         // Stub barcodeScanner availability to true
         setBarcodeScannerAvailable();
 
-        // Create initial BarcodeScannerExample element and attach to virtual DOM
-        const elementBarcodeScannerExample = createElement(
+        // Create initial BarcodeScanner element and attach to virtual DOM
+        const elementBarcodeScanner = createElement(
             'c-barcode-scanner-example',
-            { is: BarcodeScannerExample }
+            { is: BarcodeScanner }
         );
-        document.body.appendChild(elementBarcodeScannerExample);
+        document.body.appendChild(elementBarcodeScanner);
 
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScanQRCodeButton =
-            elementBarcodeScannerExample.shadowRoot.querySelector(
-                'lightning-button'
-            );
+            elementBarcodeScanner.shadowRoot.querySelector('lightning-button');
         elementScanQRCodeButton.click();
 
         // Wait for async scan function to settle
@@ -116,24 +112,22 @@ describe('c-barcode-scanner-example', () => {
         // Mock user canceling the scan
         setUserCanceledScan();
 
-        // Create initial BarcodeScannerExample element and attach to virtual DOM
-        const elementBarcodeScannerExample = createElement(
+        // Create initial BarcodeScanner element and attach to virtual DOM
+        const elementBarcodeScanner = createElement(
             'c-barcode-scanner-example',
-            { is: BarcodeScannerExample }
+            { is: BarcodeScanner }
         );
-        document.body.appendChild(elementBarcodeScannerExample);
+        document.body.appendChild(elementBarcodeScanner);
 
-        // Create initial BarcodeScannerExample element and attach to virtual DOM
+        // Create initial BarcodeScanner element and attach to virtual DOM
         const element = createElement('c-barcode-scanner-example', {
-            is: BarcodeScannerExample
+            is: BarcodeScanner
         });
         document.body.appendChild(element);
 
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScanQRCodeButton =
-            elementBarcodeScannerExample.shadowRoot.querySelector(
-                'lightning-button'
-            );
+            elementBarcodeScanner.shadowRoot.querySelector('lightning-button');
         elementScanQRCodeButton.click();
 
         // Wait for element to mount
@@ -151,26 +145,24 @@ describe('c-barcode-scanner-example', () => {
         // Mock scan erroring out
         setBarcodeScanError();
 
-        // Create initial BarcodeScannerExample element and attach to virtual DOM
-        const elementBarcodeScannerExample = createElement(
+        // Create initial BarcodeScanner element and attach to virtual DOM
+        const elementBarcodeScanner = createElement(
             'c-barcode-scanner-example',
             {
-                is: BarcodeScannerExample
+                is: BarcodeScanner
             }
         );
-        document.body.appendChild(elementBarcodeScannerExample);
+        document.body.appendChild(elementBarcodeScanner);
 
-        // Create initial BarcodeScannerExample element and attach to virtual DOM
+        // Create initial BarcodeScanner element and attach to virtual DOM
         const element = createElement('c-barcode-scanner-example', {
-            is: BarcodeScannerExample
+            is: BarcodeScanner
         });
         document.body.appendChild(element);
 
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScanQRCodeButton =
-            elementBarcodeScannerExample.shadowRoot.querySelector(
-                'lightning-button'
-            );
+            elementBarcodeScanner.shadowRoot.querySelector('lightning-button');
         elementScanQRCodeButton.click();
 
         // Wait for element to mount

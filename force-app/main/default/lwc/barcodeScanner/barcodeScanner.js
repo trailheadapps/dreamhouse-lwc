@@ -3,9 +3,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getBarcodeScanner } from 'lightning/mobileCapabilities';
 
-export default class BarcodeScannerExample extends NavigationMixin(
-    LightningElement
-) {
+export default class BarcodeScanner extends NavigationMixin(LightningElement) {
     myScanner;
     scanButtonDisabled = true;
     scannedQrCode = '';

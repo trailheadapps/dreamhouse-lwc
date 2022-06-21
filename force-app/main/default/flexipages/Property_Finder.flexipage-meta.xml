@@ -9,8 +9,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>barcodeScannerExample</componentName>
-                <identifier>c_barcodeScannerExample</identifier>
+                <componentName>barcodeScanner</componentName>
+                <identifier>c_barcodeScanner</identifier>
             </componentInstance>
         </itemInstances>
         <name>left</name>

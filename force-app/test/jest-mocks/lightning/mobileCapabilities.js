@@ -55,7 +55,7 @@ export const setBarcodeScanError = (value = true) => {
     _scanThrewAnError = value;
 };
 
-// Jest mock getBarcodeScanner that returns expected values/"functionality" for all methods and properties accessed in barcodeScannerExample.js
+// Jest mock getBarcodeScanner that returns expected values/"functionality" for all methods and properties accessed in barcodeScanner.js
 export const getBarcodeScanner = jest.fn().mockImplementation(() => {
     return {
         isAvailable: jest.fn().mockReturnValue(_barcodeScannerAvailable),
