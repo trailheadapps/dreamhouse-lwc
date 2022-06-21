@@ -18,7 +18,7 @@ import {
 
 describe('c-barcode-scanner-example', () => {
     afterEach(() => {
-        // Reset the jsdom instance shared across test cases in a single file
+        // Reset the JSDOM instance shared across test cases in a single file
         while (document.body.firstChild) {
             document.body.removeChild(document.body.firstChild);
         }
@@ -32,7 +32,7 @@ describe('c-barcode-scanner-example', () => {
     });
 
     // Helper function to wait until the microtask queue is empty.
-    // Used when having to wait for asynchronous DOM updates.
+    // Used when having to wait for asynchronous/DOM updates.
     async function flushPromises() {
         return Promise.resolve();
     }
