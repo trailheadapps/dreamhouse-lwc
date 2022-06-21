@@ -10,7 +10,7 @@ export default class BarcodeScannerExample extends NavigationMixin(
     scanButtonDisabled = true;
     scannedQrCode = '';
 
-    // When component is initialized, detect whether to enable Scan button
+    // When the component is initialized, determine whether to enable the Scan button
     connectedCallback() {
         this.myScanner = getBarcodeScanner();
         if (this.myScanner && this.myScanner.isAvailable()) {
@@ -19,11 +19,11 @@ export default class BarcodeScannerExample extends NavigationMixin(
     }
 
     async handleBeginScanClick() {
-        // Reset scannedQrCode to empty string before starting new scan
+        // Reset scannedQrCode to empty string before starting a new scan
         this.scannedQrCode = '';
 
         // Make sure BarcodeScanner is available before trying to use it
-        // Note: We _also_ disable the Scan button if there's no BarcodeScanner
+        // Note: We also disable the Scan button when there's no BarcodeScanner
         if (this.myScanner && this.myScanner.isAvailable()) {
             const scanningOptions = {
                 barcodeTypes: [this.myScanner.barcodeTypes.QR],
@@ -31,6 +31,7 @@ export default class BarcodeScannerExample extends NavigationMixin(
                 successText: 'Scanning complete.'
             };
 
+            // Try starting the scanning process, then using the result to navigate to a property record
             try {
                 const captureResult = await this.myScanner.beginCapture(
                     scanningOptions
@@ -49,16 +50,20 @@ export default class BarcodeScannerExample extends NavigationMixin(
                     }
                 });
             } catch (error) {
+                // There was an error while scanning
+                // The user canceled the scan
                 if (error.code === 'userDismissedScanner') {
-                    // User clicked Cancel
                     this.dispatchEvent(
                         new ShowToastEvent({
-                            title: 'Scanning Cancelled',
-                            message: 'You cancelled the scanning session.',
+                            title: 'Scanning Canceled',
+                            message: 'Scanning session canceled.',
                             mode: 'sticky'
                         })
                     );
-                } else {
+                }
+
+                // There was some other kind of error
+                else {
                     // Inform the user we ran into something unexpected
                     this.dispatchEvent(
                         new ShowToastEvent({
@@ -72,8 +77,7 @@ export default class BarcodeScannerExample extends NavigationMixin(
                     );
                 }
             } finally {
-                // Clean up by ending capture,
-                // whether we completed successfully or had an error
+                // Close capture process regardless of whether we completed successfully or had an error
                 this.myScanner.endCapture();
             }
         }

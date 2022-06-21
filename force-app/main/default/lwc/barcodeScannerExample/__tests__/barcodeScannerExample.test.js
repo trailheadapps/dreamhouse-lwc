@@ -2,8 +2,19 @@ import { createElement } from 'lwc';
 import { getNavigateCalledWith } from 'lightning/navigation';
 import BarcodeScannerExample from 'c/barcodeScannerExample';
 
-// Our fake smartphone camera checking function from mobileCapabilites.js
-import { setBarcodeScannerAvailable } from 'lightning/mobileCapabilities';
+// Mock various barcode functionality from mobileCapabilites.js
+import {
+    resetBarcodeScannerStubs,
+    setBarcodeScannerAvailable,
+    setUserCanceledScan,
+    setBarcodeScanError
+} from 'lightning/mobileCapabilities';
+
+// Mock various barcode functionality from platformShowToastEvent.js
+import {
+    resetAllShowToastEventStubs,
+    showToastEventCalledWith
+} from 'lightning/platformShowToastEvent';
 
 describe('c-barcode-scanner-example', () => {
     afterEach(() => {
@@ -14,6 +25,10 @@ describe('c-barcode-scanner-example', () => {
 
         // Prevent data saved on mocks from leaking between tests
         jest.clearAllMocks();
+
+        // Reset stubs
+        resetBarcodeScannerStubs();
+        resetAllShowToastEventStubs();
     });
 
     // Helper function to wait until the microtask queue is empty.
@@ -26,31 +41,27 @@ describe('c-barcode-scanner-example', () => {
         // Create initial BarcodeScannerExample element and attach to virtual DOM
         const elementBarcodeScannerExample = createElement(
             'c-barcode-scanner-example',
-            {
-                is: BarcodeScannerExample
-            }
+            { is: BarcodeScannerExample }
         );
         document.body.appendChild(elementBarcodeScannerExample);
 
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScannerDirections =
             elementBarcodeScannerExample.shadowRoot.querySelector(
-                '.scanner-directions'
+                '[data-test="scanner-directions"]'
             );
 
         expect(elementScannerDirections).not.toBeNull();
     });
 
-    it('Shows the QR scan button when Barcode Scanner is available', async () => {
+    it('shows the `Scan QR Code` button when BarcodeScanner is available', async () => {
         // Create initial BarcodeScannerExample element and attach to virtual DOM
         const elementBarcodeScannerExample = createElement(
             'c-barcode-scanner-example',
-            {
-                is: BarcodeScannerExample
-            }
+            { is: BarcodeScannerExample }
         );
-        // Mock barcodeScanner availability to true
-        setBarcodeScannerAvailable(true);
+        // Stub barcodeScanner as available
+        setBarcodeScannerAvailable();
 
         document.body.appendChild(elementBarcodeScannerExample);
 
@@ -63,14 +74,14 @@ describe('c-barcode-scanner-example', () => {
         expect(elementScanQRCodeButton).not.toBeNull();
     });
 
-    it('navigates to record view when a QR code is correctly scanned', async () => {
+    it('navigates to the expected record view when a QR code is correctly scanned', async () => {
         // Property record values to compare component output against
         const NAV_TYPE = 'standard__recordPage';
         const NAV_ACTION_NAME = 'view';
         const NAV_RECORD_ID = '0031700000pJRRWAA4';
 
-        // Mock barcodeScanner availability to true
-        setBarcodeScannerAvailable(true);
+        // Stub barcodeScanner availability to true
+        setBarcodeScannerAvailable();
 
         // Create initial BarcodeScannerExample element and attach to virtual DOM
         const elementBarcodeScannerExample = createElement(
@@ -86,9 +97,10 @@ describe('c-barcode-scanner-example', () => {
             );
         elementScanQRCodeButton.click();
 
-        // Wait for element to mount
+        // Wait for async scan function to settle
         await flushPromises();
 
+        // Get data the NavigationMixin was called with
         const { pageReference } = getNavigateCalledWith();
 
         // Confirm redirection to expected property record
@@ -97,16 +109,17 @@ describe('c-barcode-scanner-example', () => {
         expect(pageReference.attributes.recordId).toBe(NAV_RECORD_ID);
     });
 
-    it('shows an error toast when the user cancels the scan', async () => {
-        // Mock barcodeScanner availability to true
-        setBarcodeScannerAvailable(true);
+    it('triggers an error toast notification when the user cancels the scan', async () => {
+        // Stub barcodeScanner as available
+        setBarcodeScannerAvailable();
+
+        // Mock user canceling the scan
+        setUserCanceledScan();
 
         // Create initial BarcodeScannerExample element and attach to virtual DOM
         const elementBarcodeScannerExample = createElement(
             'c-barcode-scanner-example',
-            {
-                is: BarcodeScannerExample
-            }
+            { is: BarcodeScannerExample }
         );
         document.body.appendChild(elementBarcodeScannerExample);
 
@@ -123,18 +136,20 @@ describe('c-barcode-scanner-example', () => {
             );
         elementScanQRCodeButton.click();
 
-        // TODO: emulate that the user cancels the scan
-
         // Wait for element to mount
         await flushPromises();
 
-        // TODO: check that the toast was fired
-        expect(true).toBe(true);
+        // Check that cancelation toast was triggered
+        const { title } = showToastEventCalledWith();
+        expect(title).toBe('Scanning Canceled');
     });
 
     it('shows an error toast when there was a problem with the scan', async () => {
-        // Mock barcodeScanner availability to true
-        setBarcodeScannerAvailable(true);
+        // Stub barcodeScanner as available
+        setBarcodeScannerAvailable();
+
+        // Mock scan erroring out
+        setBarcodeScanError();
 
         // Create initial BarcodeScannerExample element and attach to virtual DOM
         const elementBarcodeScannerExample = createElement(
@@ -158,12 +173,11 @@ describe('c-barcode-scanner-example', () => {
             );
         elementScanQRCodeButton.click();
 
-        // TODO: emulate that there was a problem with the scan
-
         // Wait for element to mount
         await flushPromises();
 
-        // TODO: check that the toast was fired
-        expect(true).toBe(true);
+        // Check that generic BarcodeScanner toast was triggered
+        const { title } = showToastEventCalledWith();
+        expect(title).toBe('Barcode Scanner Error');
     });
 });

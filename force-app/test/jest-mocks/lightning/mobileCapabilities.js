@@ -1,14 +1,10 @@
-// To activate a mocked device location, add to your test:
-//
+// ~~~~~ MOCK getLocationService ~~~~~
+
+// To stub getLocationService.isAvailable(), add the following to your test:
 // import { setDeviceLocationServiceAvailable } from 'lightning/mobileCapabilities';
 // setDeviceLocationServiceAvailable(true);
-//
-// To activate a mocked barcode scan, add to your test:
-//
-// import { setBarcodeScannerAvailable } from 'lightning/mobileCapabilities';
-// setBarcodeScannerAvailable(true);
 
-var _deviceLocationServiceAvailable = false;
+let _deviceLocationServiceAvailable = false;
 
 export const getLocationService = jest.fn().mockImplementation(() => {
     return {
@@ -22,15 +18,40 @@ export const getLocationService = jest.fn().mockImplementation(() => {
     };
 });
 
-export const setDeviceLocationServiceAvailable = (value) => {
+export const setDeviceLocationServiceAvailable = (value = true) => {
     _deviceLocationServiceAvailable = value;
 };
 
-let _barcodeScannerAvailable = false;
+// ~~~~~ MOCK getBarcodeScanner ~~~~~
 
-// Allows us to set the above mock variable to true within the component tests
-export const setBarcodeScannerAvailable = (value) => {
+// To stub getBarcodeScanner.isAvailable(), add the following to your test:
+// import { setBarcodeScannerAvailable } from 'lightning/mobileCapabilities';
+// setBarcodeScannerAvailable(true);
+
+let _barcodeScannerAvailable = false;
+let _userCanceledScan = false;
+let _scanThrewAnError = false;
+
+// Reset all BarcodeScanner stubs to false
+export const resetBarcodeScannerStubs = () => {
+    _barcodeScannerAvailable = false;
+    _userCanceledScan = false;
+    _scanThrewAnError = false;
+};
+
+// Enables us to stub getBarcodeScanner.isAvailable() to a desired value (or true) from within the component test
+export const setBarcodeScannerAvailable = (value = true) => {
     _barcodeScannerAvailable = value;
+};
+
+// Enables us to mock user canceling (or not canceling) a scan from within the component test
+export const setUserCanceledScan = (value = true) => {
+    _userCanceledScan = value;
+};
+
+// Enables us to mock there being an error (or not) from within the component test
+export const setBarcodeScanError = (value = true) => {
+    _scanThrewAnError = value;
 };
 
 // Jest mock getBarcodeScanner that returns expected values/"functionality" for all methods and properties accessed in barcodeScannerExample.js
@@ -40,11 +61,28 @@ export const getBarcodeScanner = jest.fn().mockImplementation(() => {
         barcodeTypes: jest
             .fn()
             .mockReturnValue({ QR: _barcodeScannerAvailable }),
-        beginCapture: jest
-            .fn()
-            .mockImplementation(() =>
-                Promise.resolve({ value: '0031700000pJRRWAA4' })
-            ),
+        beginCapture: jest.fn().mockImplementation(() => {
+            // NB: Simultaneously initialising & throwing an Error (e.g. `throw new Error`) will exclude options
+            // See https://rollbar.com/guides/javascript/how-to-throw-exceptions-in-javascript
+
+            let error;
+
+            if (_userCanceledScan) {
+                error = new Error('User canceled scan');
+                error.code = 'userDismissedScanner';
+            }
+
+            // ELSE if instead of plain IF to ensure only one error type is assigned
+            else if (_scanThrewAnError) {
+                error = new Error('There was a problem scanning the code');
+                error.code = 'unknownReason';
+            }
+
+            if (error) throw error;
+
+            // Return scan result
+            return Promise.resolve({ value: '0031700000pJRRWAA4' });
+        }),
         endCapture: jest.fn().mockReturnValue(_barcodeScannerAvailable)
     };
 });

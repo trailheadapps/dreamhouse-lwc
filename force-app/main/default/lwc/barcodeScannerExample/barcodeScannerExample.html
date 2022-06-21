@@ -36,7 +36,8 @@
 
         <template if:true={scanButtonDisabled}>
             <div
-                class="scanner-directions slds-text-align_center slds-text-color_weak slds-var-m-vertical_large slds-var-p-horizontal_small"
+                data-test="scanner-directions"
+                class="slds-text-align_center slds-text-color_weak slds-var-m-vertical_large slds-var-p-horizontal_small"
             >
                 QR code scanner is only available on mobile devices with a
                 camera.
