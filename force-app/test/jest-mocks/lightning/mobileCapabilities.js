@@ -28,6 +28,7 @@ export const setDeviceLocationServiceAvailable = (value = true) => {
 // import { setBarcodeScannerAvailable } from 'lightning/mobileCapabilities';
 // setBarcodeScannerAvailable(true);
 
+// Mock getBarcodeScanner stubs that can be altered from within test files
 let _barcodeScannerAvailable = false;
 let _userCanceledScan = false;
 let _scanThrewAnError = false;

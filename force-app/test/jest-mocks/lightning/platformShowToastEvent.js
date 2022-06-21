@@ -4,11 +4,12 @@
  * https://github.com/salesforce/sfdx-lwc-jest/blob/master/src/lightning-stubs/platformShowToastEvent/platformShowToastEvent.js
  */
 
-// ~~~~~ MOCK ShowToastEvent ~~~~~
+// Mock ShowToastEvent stubs that can be altered from within test files
 let _title;
 let _message;
 let _mode;
 
+// Reset all ShowToastEvent stubs to false
 export const resetAllShowToastEventStubs = () => {
     // Usually prefer `null` to `undefined` but since this is a "reset"...
     _title = undefined;
