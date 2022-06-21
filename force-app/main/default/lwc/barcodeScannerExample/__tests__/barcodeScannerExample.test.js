@@ -32,33 +32,45 @@ describe('c-barcode-scanner-example', () => {
         );
         document.body.appendChild(elementBarcodeScannerExample);
 
-        // Wait for element to mount
-        await flushPromises();
-
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScannerDirections =
             elementBarcodeScannerExample.shadowRoot.querySelector(
-                // elementBarcodeScannerExample.template.querySelector(  // TODO: This was in the linked example but doesn't work?
-                //    await elementBarcodeScannerExample.shadowRoot.querySelector( // TODO: Neither of these work
-                // '[data-test="scanner-directions"]' // TODO: Neither of these either?
                 '.scanner-directions'
-            ); // TODO: Why is this always null?
+            );
 
-        // await flushPromises();
-
-        console.log({ elementBarcodeScannerExample, elementScannerDirections });
-        // expect(elementScannerDirections.innerText).toBe('Click <strong>Scan QR Code</strong> to open a QR Code scanner camera view. Position a QR Code in the scanner view to scan it.');
-        expect(true).toBe(true);
+        expect(elementScannerDirections).not.toBeNull();
     });
 
-    it('navigates to record view when barcode scanner is available', async () => {
+    it('Shows the QR scan button when Barcode Scanner is available', async () => {
+        // Create initial BarcodeScannerExample element and attach to virtual DOM
+        const elementBarcodeScannerExample = createElement(
+            'c-barcode-scanner-example',
+            {
+                is: BarcodeScannerExample
+            }
+        );
+        // Mock barcodeScanner availability to true
+        setBarcodeScannerAvailable(true);
+
+        document.body.appendChild(elementBarcodeScannerExample);
+
+        // Mount `Scan QR Code` button and trigger scan of property record ID
+        const elementScanQRCodeButton =
+            elementBarcodeScannerExample.shadowRoot.querySelector(
+                'lightning-button'
+            );
+
+        expect(elementScanQRCodeButton).not.toBeNull();
+    });
+
+    it('navigates to record view when a QR code is correctly scanned', async () => {
         // Property record values to compare component output against
         const NAV_TYPE = 'standard__recordPage';
         const NAV_ACTION_NAME = 'view';
         const NAV_RECORD_ID = '0031700000pJRRWAA4';
 
         // Mock barcodeScanner availability to true
-        setBarcodeScannerAvailable();
+        setBarcodeScannerAvailable(true);
 
         // Create initial BarcodeScannerExample element and attach to virtual DOM
         const elementBarcodeScannerExample = createElement(
@@ -67,8 +79,42 @@ describe('c-barcode-scanner-example', () => {
         );
         document.body.appendChild(elementBarcodeScannerExample);
 
+        // Mount `Scan QR Code` button and trigger scan of property record ID
+        const elementScanQRCodeButton =
+            elementBarcodeScannerExample.shadowRoot.querySelector(
+                'lightning-button'
+            );
+        elementScanQRCodeButton.click();
+
         // Wait for element to mount
         await flushPromises();
+
+        const { pageReference } = getNavigateCalledWith();
+
+        // Confirm redirection to expected property record
+        expect(pageReference.type).toBe(NAV_TYPE);
+        expect(pageReference.attributes.actionName).toBe(NAV_ACTION_NAME);
+        expect(pageReference.attributes.recordId).toBe(NAV_RECORD_ID);
+    });
+
+    it('shows an error toast when the user cancels the scan', async () => {
+        // Mock barcodeScanner availability to true
+        setBarcodeScannerAvailable(true);
+
+        // Create initial BarcodeScannerExample element and attach to virtual DOM
+        const elementBarcodeScannerExample = createElement(
+            'c-barcode-scanner-example',
+            {
+                is: BarcodeScannerExample
+            }
+        );
+        document.body.appendChild(elementBarcodeScannerExample);
+
+        // Create initial BarcodeScannerExample element and attach to virtual DOM
+        const element = createElement('c-barcode-scanner-example', {
+            is: BarcodeScannerExample
+        });
+        document.body.appendChild(element);
 
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScanQRCodeButton =
@@ -77,13 +123,47 @@ describe('c-barcode-scanner-example', () => {
             );
         elementScanQRCodeButton.click();
 
-        // Wait for redirect to scanned property record
-        await flushPromises();
-        const { pageReference } = getNavigateCalledWith();
+        // TODO: emulate that the user cancels the scan
 
-        // Confirm redirection to expected property record
-        expect(pageReference.type).toBe(NAV_TYPE);
-        expect(pageReference.attributes.actionName).toBe(NAV_ACTION_NAME);
-        expect(pageReference.attributes.recordId).toBe(NAV_RECORD_ID);
+        // Wait for element to mount
+        await flushPromises();
+
+        // TODO: check that the toast was fired
+        expect(true).toBe(true);
+    });
+
+    it('shows an error toast when there was a problem with the scan', async () => {
+        // Mock barcodeScanner availability to true
+        setBarcodeScannerAvailable(true);
+
+        // Create initial BarcodeScannerExample element and attach to virtual DOM
+        const elementBarcodeScannerExample = createElement(
+            'c-barcode-scanner-example',
+            {
+                is: BarcodeScannerExample
+            }
+        );
+        document.body.appendChild(elementBarcodeScannerExample);
+
+        // Create initial BarcodeScannerExample element and attach to virtual DOM
+        const element = createElement('c-barcode-scanner-example', {
+            is: BarcodeScannerExample
+        });
+        document.body.appendChild(element);
+
+        // Mount `Scan QR Code` button and trigger scan of property record ID
+        const elementScanQRCodeButton =
+            elementBarcodeScannerExample.shadowRoot.querySelector(
+                'lightning-button'
+            );
+        elementScanQRCodeButton.click();
+
+        // TODO: emulate that there was a problem with the scan
+
+        // Wait for element to mount
+        await flushPromises();
+
+        // TODO: check that the toast was fired
+        expect(true).toBe(true);
     });
 });

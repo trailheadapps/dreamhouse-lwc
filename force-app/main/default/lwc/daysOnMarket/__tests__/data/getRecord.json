@@ -2,11 +2,11 @@
     "apiName": "Property__c",
     "childRelationships": {},
     "id": "a015I000002taYUQAY",
-    "lastModifiedById": "0055I000001RjtIQAS",
-    "lastModifiedDate": "2020-06-09T07:48:55.000Z",
+    "lastModifiedById": "0054I000001RjtIQAS",
+    "lastModifiedDate": "2020-06-09T07:48:54.000Z",
     "recordTypeId": "012000000000000AAA",
     "recordTypeInfo": null,
-    "systemModstamp": "2020-06-09T07:48:55.000Z",
+    "systemModstamp": "2020-06-09T07:48:54.000Z",
     "fields": {
         "Date_Listed__c": {
             "displayValue": "30/5/2020",
