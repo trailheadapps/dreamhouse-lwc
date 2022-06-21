@@ -1,11 +1,13 @@
 import { createElement } from 'lwc';
 import { getNavigateCalledWith } from 'lightning/navigation';
 import BarcodeScannerExample from 'c/barcodeScannerExample';
+
+// Our fake smartphone camera checking function from mobileCapabilites.js
 import { setBarcodeScannerAvailable } from 'lightning/mobileCapabilities';
 
 describe('c-barcode-scanner-example', () => {
     afterEach(() => {
-        // The jsdom instance is shared across test cases in a single file so reset the DOM
+        // Reset the jsdom instance shared across test cases in a single file
         while (document.body.firstChild) {
             document.body.removeChild(document.body.firstChild);
         }
@@ -61,17 +63,9 @@ describe('c-barcode-scanner-example', () => {
         // Create initial BarcodeScannerExample element and attach to virtual DOM
         const elementBarcodeScannerExample = createElement(
             'c-barcode-scanner-example',
-            {
-                is: BarcodeScannerExample
-            }
+            { is: BarcodeScannerExample }
         );
         document.body.appendChild(elementBarcodeScannerExample);
-
-        // Create initial BarcodeScannerExample element and attach to virtual DOM
-        const element = createElement('c-barcode-scanner-example', {
-            is: BarcodeScannerExample
-        });
-        document.body.appendChild(element);
 
         // Wait for element to mount
         await flushPromises();
