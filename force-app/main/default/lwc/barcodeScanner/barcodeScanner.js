@@ -21,7 +21,7 @@ export default class BarcodeScanner extends NavigationMixin(LightningElement) {
         this.scannedQrCode = '';
 
         // Make sure BarcodeScanner is available before trying to use it
-        // Note: We also disable the Scan button when there's no BarcodeScanner
+        // Scan QR Code button also disabled when scanner unavailable
         if (this.myScanner && this.myScanner.isAvailable()) {
             const scanningOptions = {
                 barcodeTypes: [this.myScanner.barcodeTypes.QR],
@@ -35,7 +35,7 @@ export default class BarcodeScanner extends NavigationMixin(LightningElement) {
                     scanningOptions
                 );
 
-                // Extract QR Code data
+                // Extract QR code data
                 this.scannedQrCode = captureResult.value;
 
                 // Navigate to the records page of the property with extracted ID
@@ -49,6 +49,7 @@ export default class BarcodeScanner extends NavigationMixin(LightningElement) {
                 });
             } catch (error) {
                 // There was an error while scanning
+                // We chose to handle errors with toasts to stay in line with the mobile experience
                 // The user canceled the scan
                 if (error.code === 'userDismissedScanner') {
                     this.dispatchEvent(
