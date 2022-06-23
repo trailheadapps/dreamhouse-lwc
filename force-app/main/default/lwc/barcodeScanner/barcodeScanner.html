@@ -1,16 +1,6 @@
 <template>
     <lightning-card title="Property QR Code Scanner" icon-name="utility:scan">
         <template if:false={scanButtonDisabled}>
-            <!-- After a QR Code is successfully scanned, its value is displayed here: -->
-            <template if:true={scannedQrCode}>
-                <div
-                    class="slds-var-m-vertical_large slds-var-p-vertical_medium slds-text-align_center slds-border_top slds-border_bottom slds-p-horizontal_small"
-                >
-                    Scanned property ID:&nbsp;
-                    <span class="slds-text-heading_small">{scannedQrCode}</span>
-                </div>
-            </template>
-
             <!-- Static help text -->
             <div
                 class="slds-text-align_center slds-text-color_weak slds-m-vertical_large slds-p-horizontal_small"
