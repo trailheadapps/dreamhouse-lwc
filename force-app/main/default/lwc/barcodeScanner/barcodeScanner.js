@@ -11,7 +11,7 @@ export default class BarcodeScanner extends NavigationMixin(LightningElement) {
     // When the component is initialized, determine whether to enable the Scan button
     connectedCallback() {
         this.myScanner = getBarcodeScanner();
-        if (this.myScanner && this.myScanner.isAvailable()) {
+        if (this.myScanner?.isAvailable()) {
             this.scanButtonDisabled = false;
         }
     }
@@ -22,7 +22,7 @@ export default class BarcodeScanner extends NavigationMixin(LightningElement) {
 
         // Make sure BarcodeScanner is available before trying to use it
         // Scan QR Code button also disabled when scanner unavailable
-        if (this.myScanner && this.myScanner.isAvailable()) {
+        if (this.myScanner?.isAvailable()) {
             const scanningOptions = {
                 barcodeTypes: [this.myScanner.barcodeTypes.QR],
                 instructionText: 'Scan a QR Code',
