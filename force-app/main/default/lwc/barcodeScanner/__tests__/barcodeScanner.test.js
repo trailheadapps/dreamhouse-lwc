@@ -10,11 +10,8 @@ import {
     setBarcodeScanError
 } from 'lightning/mobileCapabilities';
 
-// Mock various barcode functionality from platformShowToastEvent.js
-import {
-    resetAllShowToastEventStubs,
-    showToastEventCalledWith
-} from 'lightning/platformShowToastEvent';
+// Enable spying on toast event data
+import { ShowToastEventName } from 'lightning/platformShowToastEvent';
 
 describe('c-barcode-scanner-example', () => {
     afterEach(() => {
@@ -28,7 +25,6 @@ describe('c-barcode-scanner-example', () => {
 
         // Reset stubs
         resetBarcodeScannerStubs();
-        resetAllShowToastEventStubs();
     });
 
     // Helper function to wait until the microtask queue is empty.
@@ -112,6 +108,9 @@ describe('c-barcode-scanner-example', () => {
         // Mock user canceling the scan
         setUserCanceledScan();
 
+        // Mock handler for toast event
+        const toastEventSpy = jest.fn();
+
         // Create initial BarcodeScanner element and attach to virtual DOM
         const elementBarcodeScanner = createElement(
             'c-barcode-scanner-example',
@@ -119,11 +118,11 @@ describe('c-barcode-scanner-example', () => {
         );
         document.body.appendChild(elementBarcodeScanner);
 
-        // Create initial BarcodeScanner element and attach to virtual DOM
-        const element = createElement('c-barcode-scanner-example', {
-            is: BarcodeScanner
-        });
-        document.body.appendChild(element);
+        // Add toast event listener to component
+        elementBarcodeScanner.addEventListener(
+            ShowToastEventName,
+            toastEventSpy
+        );
 
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScanQRCodeButton =
@@ -134,8 +133,12 @@ describe('c-barcode-scanner-example', () => {
         await flushPromises();
 
         // Check that cancelation toast was triggered
-        const { title } = showToastEventCalledWith();
-        expect(title).toBe('Scanning Canceled');
+
+        // Check if toast event has been fired
+        expect(toastEventSpy).toHaveBeenCalled();
+        expect(toastEventSpy.mock.calls[0][0].detail.title).toBe(
+            'Scanning Canceled'
+        );
     });
 
     it('shows an error toast when there was a problem with the scan', async () => {
@@ -144,6 +147,9 @@ describe('c-barcode-scanner-example', () => {
 
         // Mock scan erroring out
         setBarcodeScanError();
+
+        // Mock handler for toast event
+        const toastEventSpy = jest.fn();
 
         // Create initial BarcodeScanner element and attach to virtual DOM
         const elementBarcodeScanner = createElement(
@@ -154,11 +160,11 @@ describe('c-barcode-scanner-example', () => {
         );
         document.body.appendChild(elementBarcodeScanner);
 
-        // Create initial BarcodeScanner element and attach to virtual DOM
-        const element = createElement('c-barcode-scanner-example', {
-            is: BarcodeScanner
-        });
-        document.body.appendChild(element);
+        // Add toast event listener to component
+        elementBarcodeScanner.addEventListener(
+            ShowToastEventName,
+            toastEventSpy
+        );
 
         // Mount `Scan QR Code` button and trigger scan of property record ID
         const elementScanQRCodeButton =
@@ -169,7 +175,9 @@ describe('c-barcode-scanner-example', () => {
         await flushPromises();
 
         // Check that generic BarcodeScanner toast was triggered
-        const { title } = showToastEventCalledWith();
-        expect(title).toBe('Barcode Scanner Error');
+        expect(toastEventSpy).toHaveBeenCalled();
+        expect(toastEventSpy.mock.calls[0][0].detail.title).toBe(
+            'Barcode Scanner Error'
+        );
     });
 });
