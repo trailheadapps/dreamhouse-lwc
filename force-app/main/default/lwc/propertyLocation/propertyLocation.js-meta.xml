@@ -4,7 +4,7 @@
     <isExposed>true</isExposed>
     <masterLabel>Property Location</masterLabel>
     <targets>
-    	<target>lightning__RecordPage</target>
+        <target>lightning__RecordPage</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
