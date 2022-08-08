@@ -8,21 +8,27 @@
 
 .lower-third {
     position: absolute;
-    bottom: var(--lwc-spacingNone, 0);
-    left: var(--lwc-spacingNone, 0);
-    right: var(--lwc-spacingNone, 0);
+    /* @sldsValidatorIgnore */
+    bottom: 0;
+    /* @sldsValidatorIgnore */
+    left: 0;
+    /* @sldsValidatorIgnore */
+    right: 0;
     color: #fff;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 6px var(--lwc-varSpacingXSmall, 0.5rem);
 }
 
 .lower-third > p {
-    padding: var(--lwc-spacingNone, 0);
-    margin: var(--lwc-spacingNone, 0);
+    /* @sldsValidatorIgnore */
+    padding: 0;
+    /* @sldsValidatorIgnore */
+    margin: 0;
 }
 
 .lower-third h1 {
-    font-size: var(--lwc-fontSize5, 1rem) !important;
+    /* @sldsValidatorIgnore */
+    font-size: 1rem !important;
 }
 
 .truncate {

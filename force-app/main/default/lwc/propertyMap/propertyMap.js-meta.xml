@@ -14,8 +14,6 @@
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
         </targetConfig>
-    </targetConfigs>
-    <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <objects>
                 <object>Property__c</object>

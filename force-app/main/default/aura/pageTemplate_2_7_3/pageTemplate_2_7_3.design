@@ -2,7 +2,7 @@
     <flexipage:template>
         <flexipage:region name="left" defaultWidth="Small" />
         <flexipage:region name="center" defaultWidth="Large">
-            <flexipage:formfactor type="Small" width="Small" />
+            <flexipage:formfactor type="Medium" width="Small" />
         </flexipage:region>
         <flexipage:region name="right" defaultWidth="Small" />
     </flexipage:template>
