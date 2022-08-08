@@ -8,25 +8,27 @@
 
 .lower-third {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: var(--lwc-spacingNone, 0);
+    left: var(--lwc-spacingNone, 0);
+    right: var(--lwc-spacingNone, 0);
     color: #fff;
     background-color: rgba(0, 0, 0, 0.3);
-    padding: 6px 8px;
+    padding: 6px var(--lwc-varSpacingXSmall, 0.5rem);
 }
 
 .lower-third > p {
-    padding: 0;
-    margin: 0;
+    padding: var(--lwc-spacingNone, 0);
+    margin: var(--lwc-spacingNone, 0);
 }
 
 .lower-third h1 {
-    font-size: 16px !important;
+    font-size: var(--lwc-fontSize5, 1rem) !important;
 }
 
 .truncate {
+    /* @sldsValidatorIgnore */
     white-space: nowrap;
     overflow: hidden;
+    /* @sldsValidatorIgnore */
     text-overflow: ellipsis;
 }
