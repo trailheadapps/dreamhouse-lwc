@@ -6,13 +6,9 @@
 }
 
 .badge.alert {
-    background-color: rgb(
-        194,
-        57,
-        52
-    ); /* Using RGB as var(--lwc-colorBackgroundDestructive); is internal */
+    background-color: rgb(194, 57, 52);
     color: var(--lwc-colorTextInverse, #ffffff);
-    border: solid 1px rgb(194, 57, 52); /* Using RGB as var(--lwc-colorBorderDestructive); is internal */
+    border: solid var(--lwc-borderWidthThin, 1px) rgb(194, 57, 52);
 }
 
 .badge.normal {
@@ -28,9 +24,11 @@
 }
 
 .days {
+    /* @sldsValidatorIgnore */
     font-size: 28px; /* Using RGB as var(--lwc-varFontSize9); is internal */
     line-height: 28px;
-    font-weight: var(--lwc-fontWeightLight, 300);
+    /* @sldsValidatorIgnore */
+    font-weight: 300; /* Using fixed value as var(--lwc-fontWeightLight); is internal */
 }
 
 .bar {
@@ -51,11 +49,7 @@
 }
 
 .bar.alert {
-    background-color: rgb(
-        194,
-        57,
-        52
-    ); /* Using RGB as var(--lwc-colorBackgroundDestructive); is internal */
+    background-color: rgb(194, 57, 52);
 }
 
 .axis {
@@ -69,5 +63,5 @@
 }
 
 .axis .legend {
-    margin-top: 36px;
+    margin-top: var(--lwc-squareIconMediumBoundaryAlt, 2.25rem);
 }
