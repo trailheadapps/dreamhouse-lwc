@@ -1,7 +1,9 @@
-<design:component label="Three columns layout: 2 7 3 (Just 1 on phone)">
+<design:component label="Three columns layout: 2 7 3 (Just one on mobile)">
     <flexipage:template>
         <flexipage:region name="left" defaultWidth="Small" />
-        <flexipage:region name="center" defaultWidth="Large" />
+        <flexipage:region name="center" defaultWidth="Large">
+            <flexipage:formfactor type="Medium" width="Small" />
+        </flexipage:region>
         <flexipage:region name="right" defaultWidth="Small" />
     </flexipage:template>
 </design:component>
