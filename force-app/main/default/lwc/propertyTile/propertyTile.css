@@ -14,21 +14,7 @@
     left: 0;
     /* @sldsValidatorIgnore */
     right: 0;
-    color: #fff;
     background-color: rgba(0, 0, 0, 0.3);
-    padding: 6px var(--lwc-varSpacingXSmall, 0.5rem);
-}
-
-.lower-third > p {
-    /* @sldsValidatorIgnore */
-    padding: 0;
-    /* @sldsValidatorIgnore */
-    margin: 0;
-}
-
-.lower-third h1 {
-    /* @sldsValidatorIgnore */
-    font-size: 16px !important;
 }
 
 .truncate {
