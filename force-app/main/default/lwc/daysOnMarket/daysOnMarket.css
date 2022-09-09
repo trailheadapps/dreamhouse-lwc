@@ -2,39 +2,29 @@
     text-align: center;
     margin-right: var(--lwc-varSpacingXxSmall, 4px);
     padding: var(--lwc-varSpacingXSmall, 8px) var(--lwc-varSpacingSmall, 12px);
-    border-radius: var(--lwc-borderRadiusMedium, 0.25rem);
+    border-radius: var(--lwc-borderRadiusMedium, 4px);
+    color: var(--lwc-colorTextInverse, #ffffff);
 }
 
 .badge.alert {
-    background-color: rgb(194, 57, 52);
-    color: var(--lwc-colorTextInverse, #ffffff);
-    border: solid var(--lwc-borderWidthThin, 1px) rgb(194, 57, 52);
+    background-color: #c23934;
+    border: solid var(--lwc-borderWidthThin, 1px) #c23934;
 }
 
 .badge.normal {
     background-color: #00716b;
-    color: var(--lwc-colorTextInverse, #ffffff);
     border: solid var(--lwc-borderWidthThin, 1px) #00716b;
 }
 
 .badge.warning {
     background-color: #f28c00;
-    color: var(--lwc-colorTextInverse, #ffffff);
     border: solid var(--lwc-borderWidthThin, 1px) #f28c00;
-}
-
-.days {
-    /* @sldsValidatorIgnore */
-    font-size: 28px; /* Using RGB as var(--lwc-varFontSize9); is internal */
-    line-height: 28px;
-    /* @sldsValidatorIgnore */
-    font-weight: 300; /* Using fixed value as var(--lwc-fontWeightLight); is internal */
 }
 
 .bar {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    height: var(--lwc-squareIconLargeContent, 32px);
+    height: 58px;
     transition: all 0.5s ease-in-out;
     position: absolute;
     left: var(--lwc-spacingXxxSmall, 2px);
@@ -49,7 +39,7 @@
 }
 
 .bar.alert {
-    background-color: rgb(194, 57, 52);
+    background-color: #c23934;
 }
 
 .axis {
@@ -57,11 +47,11 @@
 }
 
 .axis > div {
-    height: 34px;
+    height: 60px;
     border-bottom: solid var(--lwc-borderWidthThin, 1px) rgb(216, 221, 230);
     border-left: solid var(--lwc-borderWidthThin, 1px) rgb(216, 221, 230);
 }
 
 .axis .legend {
-    margin-top: var(--lwc-squareIconMediumBoundaryAlt, 2.25rem);
+    margin-top: 60px;
 }
