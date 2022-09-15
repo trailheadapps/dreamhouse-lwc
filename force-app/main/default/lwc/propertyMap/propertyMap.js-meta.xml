@@ -6,9 +6,14 @@
     <targets>
     	<target>lightning__AppPage</target>
     	<target>lightning__RecordPage</target>
-        <target>lightning__HomePage</target>
     </targets>
     <targetConfigs>
+        <targetConfig targets="lightning__AppPage">
+            <supportedFormFactors>
+                <supportedFormFactor type="Large" />
+                <supportedFormFactor type="Small" />
+            </supportedFormFactors>
+        </targetConfig>
         <targetConfig targets="lightning__RecordPage">
             <objects>
                 <object>Property__c</object>
@@ -19,5 +24,4 @@
             </supportedFormFactors>
         </targetConfig>
     </targetConfigs>
-
 </LightningComponentBundle>

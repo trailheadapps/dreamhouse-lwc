@@ -1,0 +1,37 @@
+<template>
+    <lightning-card title="Property QR Code Scanner" icon-name="utility:scan">
+        <template if:false={scanButtonDisabled}>
+            <!-- Static help text -->
+            <div
+                class="slds-text-align_center slds-text-color_weak slds-var-m-vertical_large slds-var-p-horizontal_small"
+            >
+                Click <strong>Scan QR Code</strong> to open a QR Code scanner
+                camera view. Position a QR Code in the scanner view to scan it.
+            </div>
+
+            <!-- The click-to-scan button; Disabled if BarcodeScanner isn't available -->
+            <div class="slds-align_absolute-center slds-var-m-vertical_large">
+                <lightning-button
+                    variant="brand"
+                    class="slds-var-m-left_x-small"
+                    disabled={scanButtonDisabled}
+                    icon-name="utility:scan"
+                    label="Scan QR Code"
+                    title="Open a camera view and look for a barcode to scan"
+                    onclick={handleBeginScanClick}
+                >
+                </lightning-button>
+            </div>
+        </template>
+
+        <template if:true={scanButtonDisabled}>
+            <div
+                data-test="scanner-directions"
+                class="slds-text-align_center slds-text-color_weak slds-var-m-vertical_large slds-var-p-horizontal_small"
+            >
+                To use the QR Code Scanner, open Dreamhouse on a camera-equipped
+                smartphone.
+            </div>
+        </template>
+    </lightning-card>
+</template>

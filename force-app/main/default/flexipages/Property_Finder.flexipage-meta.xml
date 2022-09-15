@@ -3,6 +3,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>barcodeScanner</componentName>
+                <identifier>c_barcodeScanner</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>propertyFilter</componentName>
                 <identifier>propertyFilter</identifier>
             </componentInstance>

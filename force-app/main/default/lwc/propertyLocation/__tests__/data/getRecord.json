@@ -6,15 +6,15 @@
     "lastModifiedDate": "2020-06-09T07:48:54.000Z",
     "recordTypeId": "012000000000000AAA",
     "recordTypeInfo": null,
-    "systemModstamp": "2020-06-09T07:48:55.000Z",
+    "systemModstamp": "2020-06-09T07:48:54.000Z",
     "fields": {
-        "Date_Listed__c": {
-            "displayValue": "30/5/2020",
-            "value": "2020-05-30"
+        "Location__Latitude__s": {
+            "displayValue": "37.751",
+            "value": "37.751"
         },
-        "Days_On_Market__c": {
-            "displayValue": null,
-            "value": 18
+        "Location__Longitude__s": {
+            "displayValue": "-97.822",
+            "value": "-97.822"
         }
     }
 }

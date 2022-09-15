@@ -1,8 +1,12 @@
 <template>
     <a onclick={handlePropertySelected}>
         <div class="tile" style={backgroundImageStyle}>
-            <div class="lower-third">
-                <h1 class="truncate">{property.City__c}</h1>
+            <div
+                class="lower-third slds-var-p-horizontal_x-small slds-var-p-vertical_xx-small slds-text-color_inverse"
+            >
+                <h1 class="truncate slds-text-heading_small">
+                    {property.City__c}
+                </h1>
                 <p>Beds: {property.Beds__c} - Baths: {property.Baths__c}</p>
                 <p>
                     <lightning-formatted-number

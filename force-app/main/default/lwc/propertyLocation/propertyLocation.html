@@ -1,0 +1,40 @@
+<template>
+    <lightning-card
+        title="Distance to the Property"
+        icon-name="standard:location"
+    >
+        <template if:false={error}>
+            <template if:true={distance}>
+                <div class="slds-var-m-around_medium location">
+                    <div class="slds-text-heading_small">
+                        Current latitude:
+                        <b class="latitude">&nbsp;{location.latitude}</b>
+                    </div>
+                    <div class="slds-text-heading_small">
+                        Current longitude:
+                        <b class="longitude">&nbsp;{location.longitude}</b>
+                    </div>
+                    <div class="slds-text-heading_small">
+                        Distance to property:&nbsp;<b>
+                            <lightning-formatted-number
+                                value={distance}
+                                maximum-fraction-digits="2"
+                            ></lightning-formatted-number>
+                            miles
+                        </b>
+                    </div>
+                </div>
+            </template>
+            <template if:false={distance}>
+                <lightning-spinner alternative-text="Loading..." size="small">
+                </lightning-spinner>
+            </template>
+        </template>
+        <template if:true={error}>
+            <c-error-panel
+                friendly-message="Error computing location."
+                errors={error}
+            ></c-error-panel>
+        </template>
+    </lightning-card>
+</template>
