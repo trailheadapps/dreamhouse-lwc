@@ -104,7 +104,7 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 
 1. Log in to your org
 
-1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3h000004mAlZAAU) to install the Dreamhouse unlocked package in your org.
+1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3h000004mB2TAAU) to install the Dreamhouse unlocked package in your org.
 
 1. Select **Install for All Users**
 
