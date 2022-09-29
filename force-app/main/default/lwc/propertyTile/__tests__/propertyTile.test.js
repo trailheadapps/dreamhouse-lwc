@@ -1,5 +1,7 @@
 import { createElement } from 'lwc';
 import PropertyTile from 'c/propertyTile';
+import FORM_FACTOR from '@salesforce/client/formFactor';
+import { getNavigateCalledWith } from 'lightning/navigation';
 
 const PROPERTY = {
     City__c: 'Some City',
@@ -58,7 +60,7 @@ describe('c-property-tile', () => {
         );
     });
 
-    it('fires the property "selected" event on click', async () => {
+    it('Fires the property selected event on click for non Small formFactors', async () => {
         const element = createElement('c-property-tile', {
             is: PropertyTile
         });
@@ -79,6 +81,42 @@ describe('c-property-tile', () => {
         expect(handler).toHaveBeenCalled();
         const selectEvent = handler.mock.calls[0][0];
         expect(selectEvent.detail).toBe(PROPERTY.Id);
+    });
+
+    it('Navigates to property record page on click for Small formFactor', async () => {
+        const NAV_TYPE = 'standard__recordPage';
+        const NAV_ACTION_NAME = 'view';
+        const NAV_OBJECT_API_NAME = 'Property__c';
+
+        const element = createElement('c-property-tile', {
+            is: PropertyTile
+        });
+        element.property = PROPERTY;
+        document.body.appendChild(element);
+
+        // Mock handler for child event
+        const handler = jest.fn();
+        element.addEventListener('selected', handler);
+
+        // Mock formFactor
+        FORM_FACTOR = 'Small';
+
+        const anchorEl = element.shadowRoot.querySelector('a');
+        anchorEl.click();
+
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Get data the NavigationMixin was called with
+        const { pageReference } = getNavigateCalledWith();
+
+        // Confirm redirection to expected property record
+        expect(pageReference.type).toBe(NAV_TYPE);
+        expect(pageReference.attributes.actionName).toBe(NAV_ACTION_NAME);
+        expect(pageReference.attributes.objectApiName).toBe(
+            NAV_OBJECT_API_NAME
+        );
+        expect(pageReference.attributes.recordId).toBe(PROPERTY.Id);
     });
 
     it('is accessible', async () => {

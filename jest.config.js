@@ -6,7 +6,8 @@ setupFilesAfterEnv.push('<rootDir>/jest-sa11y-setup.js');
 module.exports = {
     ...jestConfig,
     moduleNameMapper: {
-        '^@salesforce/schema$': '<rootDir>/force-app/test/jest-mocks/schema',
+        '^@salesforce/client/formFactor$':
+            '<rootDir>/force-app/test/jest-mocks/@salesforce/client/formFactor',
         '^lightning/navigation$':
             '<rootDir>/force-app/test/jest-mocks/lightning/navigation',
         '^lightning/platformShowToastEvent$':
