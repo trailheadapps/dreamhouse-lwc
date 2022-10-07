@@ -46,10 +46,6 @@ describe('c-property-tile', () => {
         element.property = PROPERTY;
         document.body.appendChild(element);
 
-        // Mock handler for child event
-        const handler = jest.fn();
-        element.addEventListener('selected', handler);
-
         const anchorEl = element.shadowRoot.querySelector('a');
         anchorEl.click();
 
