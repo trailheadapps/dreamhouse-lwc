@@ -29,7 +29,7 @@
     "license": "CC0-1.0",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/forcedotcom/dreamhouse-lwc"
+        "url": "git+https://github.com/trailheadapps/dreamhouse-lwc"
     },
     "devDependencies": {
         "@lwc/eslint-plugin-lwc": "^1.5.0",

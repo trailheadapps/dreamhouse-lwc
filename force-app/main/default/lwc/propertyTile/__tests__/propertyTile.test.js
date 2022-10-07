@@ -58,7 +58,7 @@ describe('c-property-tile', () => {
         );
     });
 
-    it('fires the property "selected" event on click', async () => {
+    it('Fires the property selected event on click for non Small formFactors', async () => {
         const element = createElement('c-property-tile', {
             is: PropertyTile
         });
