@@ -36,7 +36,7 @@ jobs:
         steps:
             - name: 'Fetch Dependabot metadata'
               id: dependabot
-              uses: dependabot/fetch-metadata@v1.3.1
+              uses: dependabot/fetch-metadata@v1
 
             - name: 'Check auto merge conditions'
               id: auto-merge
@@ -66,16 +66,16 @@ jobs:
         steps:
             # Checkout the source code
             - name: 'Checkout source code'
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             # Install Volta to enforce proper node and package manager versions
             - name: 'Install Volta'
-              uses: volta-cli/action@v1
+              uses: volta-cli/action@v4
 
             # Cache node_modules to speed up the process
             - name: 'Restore node_modules cache'
               id: cache-npm
-              uses: actions/cache@v1
+              uses: actions/cache@v3
               with:
                   path: node_modules
                   key: npm-${{ hashFiles('**/package-lock.json') }}
@@ -102,7 +102,7 @@ jobs:
 
             # Upload code coverage data
             - name: 'Upload code coverage for LWC to Codecov.io'
-              uses: codecov/codecov-action@v2.0.2
+              uses: codecov/codecov-action@v3
               with:
                   flags: LWC
 
@@ -197,7 +197,7 @@ jobs:
 
             # Trigger packaging PR workflow
             - name: 'Trigger packaging PR workflow if needed'
-              uses: peter-evans/repository-dispatch@v1.1.0
+              uses: peter-evans/repository-dispatch@v2
               if: ${{ steps.checkForChanges.outputs.hasChanges == 'true' }}
               with:
                   token: ${{ secrets.BOT_ACCESS_TOKEN }}
