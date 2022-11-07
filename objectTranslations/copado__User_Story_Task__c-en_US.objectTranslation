@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Comments --></label>
+        <name>copado__Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hours Remaining --></label>
+        <name>copado__Hours_Remaining__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deferred</masterLabel>
+            <translation><!-- Deferred --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Waiting on someone else</masterLabel>
+            <translation><!-- Waiting on someone else --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>copado__Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>copado__User_Story__c</name>
+        <relationshipLabel><!-- User Story Tasks --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Active --></label>
+        <name>copado__Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- Description of the Notification --></help>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Subject of the notiication --></help>
+        <label><!-- Subject --></label>
+        <name>copado__Subject__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the body template of the notification --></help>
+        <label><!-- Template --></label>
+        <name>copado__Template__c</name>
+    </fields>
+</CustomObjectTranslation>

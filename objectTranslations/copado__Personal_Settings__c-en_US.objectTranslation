@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- API Key --></label>
+        <name>copado__API_Key__c</name>
+    </fields>
+    <fields>
+        <help><!-- Options are either &quot;dropdown&quot; or &quot;images&quot; --></help>
+        <label><!-- AccessStatusColumn --></label>
+        <name>copado__AccessStatusColumn__c</name>
+    </fields>
+    <fields>
+        <help><!-- This value determines the number of build task rows that should be displayed when viewing a Continuous Integration. --></help>
+        <label><!-- Build Task Rows --></label>
+        <name>copado__Build_Task_Rows__c</name>
+    </fields>
+    <fields>
+        <label><!-- DeployConnectionBox height --></label>
+        <name>copado__DeployConnectionBox_height__c</name>
+    </fields>
+    <fields>
+        <label><!-- DeployConnectionBox width --></label>
+        <name>copado__DeployConnectionBox_width__c</name>
+    </fields>
+    <fields>
+        <help><!-- Disables Auto-Resolve from Online Conflict Resolution --></help>
+        <label><!-- Disable Auto-Resolve --></label>
+        <name>copado__Disable_Auto_Resolve__c</name>
+    </fields>
+    <fields>
+        <label><!-- Disable Re-Create Feature Branch in US --></label>
+        <name>copado__Disable_Re_Create_Feature_Branch_in_US__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mask API Key --></label>
+        <name>copado__MaskApiKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Logging Level --></label>
+        <name>copado__Minimum_Logging_Level__c</name>
+    </fields>
+</CustomObjectTranslation>

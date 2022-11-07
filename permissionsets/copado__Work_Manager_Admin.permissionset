@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>copado__Copado_Plan</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>copado__Copado_Plan_Lightning</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <classAccesses>
+        <apexClass>copado__WorkManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Work Manager Tab View</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.copado__Work_Manager_Panels__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Work Manager (Admin)</label>
+    <pageAccesses>
+        <apexPage>copado__WorkManager</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <tabSettings>
+        <tab>copado__Work_Manager</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

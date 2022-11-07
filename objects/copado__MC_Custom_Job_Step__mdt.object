@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This is the configuration of the Custom Job Step.</description>
+    <fields>
+        <fullName>copado__CustomType__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Type of Custom job step</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Type of Custom job step</inlineHelpText>
+        <label>Custom Type</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__LWC_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of LWC/Aura component to render while configuring the Custom Job step</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Name of LWC/Aura component to render while configuring the Custom Job step</inlineHelpText>
+        <label>LWC Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Platform__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Platform Name</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Platform Name</inlineHelpText>
+        <label>Platform</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>MC Custom Job Step</label>
+    <pluralLabel>MC Custom Job Steps</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- AttachmentId --></label>
+        <name>copado__AttachmentId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Matching Key --></label>
+        <name>copado__Matching_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Message --></label>
+        <name>copado__Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent2Id --></label>
+        <name>copado__Parent2Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- ParentId --></label>
+        <name>copado__ParentId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Finished --></label>
+        <name>copado__isFinished__c</name>
+    </fields>
+    <fields>
+        <label><!-- Success --></label>
+        <name>copado__isSuccess__c</name>
+    </fields>
+    <fields>
+        <label><!-- status --></label>
+        <name>copado__status__c</name>
+    </fields>
+</CustomObjectTranslation>

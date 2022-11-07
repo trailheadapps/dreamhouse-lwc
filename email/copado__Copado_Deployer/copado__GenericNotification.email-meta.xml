@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <available>true</available>
+    <description>Notification to send mail with customisable title and body</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Generic Notification</name>
+    <style>none</style>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

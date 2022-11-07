@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Apex Test with Validation</fullName>
+        <default>false</default>
+        <label>Apex Test with Validation</label>
+    </customValue>
+    <customValue>
+        <fullName>Automation</fullName>
+        <default>true</default>
+        <label>Automation</label>
+    </customValue>
+    <customValue>
+        <fullName>Compliance Check</fullName>
+        <default>false</default>
+        <label>Compliance Check</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual Approval</fullName>
+        <default>false</default>
+        <label>Manual Approval</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual Test</fullName>
+        <default>false</default>
+        <label>Manual Test</label>
+    </customValue>
+    <customValue>
+        <fullName>Pull Request</fullName>
+        <default>false</default>
+        <label>Pull Request</label>
+    </customValue>
+    <customValue>
+        <fullName>Selenium Test</fullName>
+        <default>false</default>
+        <label>Selenium Test</label>
+    </customValue>
+    <customValue>
+        <fullName>Static Code Analysis</fullName>
+        <default>false</default>
+        <label>Static Code Analysis</label>
+    </customValue>
+    <customValue>
+        <fullName>Test</fullName>
+        <default>false</default>
+        <label>Test</label>
+    </customValue>
+    <customValue>
+        <fullName>URL Callout</fullName>
+        <default>false</default>
+        <label>URL Callout</label>
+    </customValue>
+    <customValue>
+        <fullName>Validation</fullName>
+        <default>false</default>
+        <label>Validation</label>
+    </customValue>
+    <customValue>
+        <fullName>Compliance</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Compliance</label>
+    </customValue>
+    <customValue>
+        <fullName>Static Analysis</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Static Analysis</label>
+    </customValue>
+    <customValue>
+        <fullName>Automation Template</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Automation Template</label>
+    </customValue>
+    <masterLabel>Quality Gate Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

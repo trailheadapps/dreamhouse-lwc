@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- External ID --></label>
+        <name>copado__External_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- This value is user defined. When setting a Locator ID then this can be use on Selenium Test Cases scripts as {!Locator.ID} e.g.: {!Locator.ACCOUNT_SAVE_BUTTON} --></help>
+        <label><!-- Locator ID --></label>
+        <name>copado__Locator_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Selenium locator that identifies the element on the page. --></help>
+        <label><!-- Locator --></label>
+        <name>copado__Locator__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used to give context for the locator. It can be any text.
+Copado Recorder will automatically set the page title when recording. --></help>
+        <label><!-- Page --></label>
+        <name>copado__Page__c</name>
+    </fields>
+</CustomObjectTranslation>

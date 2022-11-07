@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Action --></label>
+        <name>copado__Action__c</name>
+    </fields>
+    <fields>
+        <help><!-- This checkbox lets you know if this pipeline action is used as default across all the environments in the pipeline. --></help>
+        <label><!-- Default --></label>
+        <name>copado__Default__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select the environment where you want to override the default job template defined in the pipeline. --></help>
+        <label><!-- Environment --></label>
+        <name>copado__Environment__c</name>
+        <relationshipLabel><!-- Pipeline Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field defines the job template corresponding to the action being configured. If you want to select a different job template for this action in a particular environment, you will override the template set in the pipeline. --></help>
+        <label><!-- Job Template --></label>
+        <name>copado__Job_Template__c</name>
+        <relationshipLabel><!-- Pipeline Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field is automatically populated when you create a Pipeline Action record that is not the default one. --></help>
+        <label><!-- Overrides Pipeline Action --></label>
+        <name>copado__Overrides_Pipeline_Action__c</name>
+        <relationshipLabel><!-- Overrides --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Select the pipeline where this action will be applied. --></help>
+        <label><!-- Pipeline --></label>
+        <name>copado__Pipeline__c</name>
+        <relationshipLabel><!-- Pipeline Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field is auto-populated based on the platform selected in the pipeline linked to this action. --></help>
+        <label><!-- Platform --></label>
+        <name>copado__Platform__c</name>
+    </fields>
+</CustomObjectTranslation>

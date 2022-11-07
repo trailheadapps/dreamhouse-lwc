@@ -1,0 +1,101 @@
+<apex:page id="QueryEditor" standardController="copado__Kanban_Board__c" extensions="copado.KanbanBoardEditController" standardStylesheets="false" showHeader="true" sideBar="false" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true" cache="false">
+    <apex:slds />
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>Query Editor</title>
+
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.KanbanBoard,'css/font-awesome.css')}"/>
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.KanbanBoard,'css/font-awesome.min.css')}"/>
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.KanbanBoard,'css/toastr-min.css')}"/>
+
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.DataTables10,'DataTables10/datatables.min.css')}"/>
+        <c:IncludeStaticsResourceComponent addJQuery="true" addUIcss="true"/>
+        <apex:includeScript value="{!URLFOR($Resource.copado__KanbanBoard,'js/toastr-min.js')}"/>
+        <!-- DataTable -->
+        <apex:includeScript value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.js')}"/>
+
+        <apex:outputPanel layout="block" rendered="{!!showLicenseError}">
+            <style>
+                .msgIcon {
+                    display: none!important
+                }
+                .customMessage * {
+                    color: #fff!important
+                }
+                .customMessage {
+                    margin: 0!important;
+                    opacity: 1!important;
+                    width: 100%;
+                    font-size: 12px;
+                    border: 0px;
+                    padding-left: 10px;
+                }
+                .message {
+                    opacity: 1.1;
+                }
+            </style>
+            <script type="text/javascript">
+                $copado(document).ready(function(){
+                    overridePageMessages();
+                });
+
+                function overridePageMessages(){
+                    $copado('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage ');
+                    $copado('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage ');
+                    $copado('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage ');
+                    $copado('.infoM3').addClass('slds-notify slds-notify--toast customMessage ');
+
+                    $copado('.errorM3').removeClass('errorM3');
+                    $copado('.confirmM3').removeClass('confirmM3');
+                    $copado('.infoM3').removeClass('infoM3');
+                }
+            </script>
+        </apex:outputPanel>
+    </head>
+    <body class="{!IF(!showLicenseError,'slds-scope','')}" style="{!IF(!showLicenseError,'margin: 10px 40px 10px 40px;','')}">
+        <apex:outputPanel layout="block" rendered="{!showLicenseError}" style="{!IF($User.UIThemeDisplayed == 'Theme4d','padding: .75rem .75rem 0;','')}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!showLicenseError}">
+            <apex:form >
+                <c:ScreenLocker msg="{!$Label.copado__LOADING}"/>
+
+                <apex:outputPanel layout="block" id="queryPanel">
+                    <apex:outputPanel layout="none" rendered="{!OR(qEditor.queryWrapper.sobjectTypeName == null,AND(qEditor.queryWrapper.sobjectTypeName != null,qEditor.queryWrapper.sobjectTypeName == '--None--'))}">
+                        <fieldset class="slds-box slds-theme--default slds-container--fluid">
+                            <legend class="slds-text-heading--medium slds-p-vertical--medium">
+                                <b>{!$Label.copado__Select_Object_Kanban}</b>
+                            </legend>
+                            <apex:pageMessages id="pageActionMessages" />
+                            * {!$Label.copado__Enter_Object_API_or_Name}
+                            <apex:input styleClass="slds-input" value="{!qEditor.queryWrapper.sobjectTypeName}" type="text" html-placeholder="E.g. copado__User_Story__c or User Story" onKeyDown="if(event.keyCode==13){return false;}" />
+                            <center>
+                                <a href="#" id="addLogic" onclick="lockScreen();loadView();" style="margin-top: 10px;" class="slds-button slds-button_neutral">
+                                    {!$Label.NEXT}
+                                </a>
+                            </center>
+                        </fieldset>
+                        <apex:actionFunction name="loadView" action="{!objectNameValidation}" onComplete="unlockScreen()" reRender="queryPanel,pageActionMessages" />
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="none" rendered="{!AND(qEditor.queryWrapper.sobjectTypeName != null,qEditor.queryWrapper.sobjectTypeName != '--None--')}">
+                        <c:QueryEditor dynamicSOQL="{!qEditor}" componentMode="NewView"/>
+
+                        <fieldset class="slds-box slds-theme--default slds-container--fluid">
+                            <legend class="slds-text-heading--medium slds-p-vertical--medium"></legend>
+                            <apex:pageMessages id="pageMessages" />
+                            <center>
+                                <apex:commandButton styleClass="slds-button slds-button_brand" action="{!createKanban}" value="{!$Label.copado__Create_Kanban}" onClick="lockScreen();" onComplete="overridePageMessages();unlockScreen();" reRender="pageMessages"/>
+                            </center>
+                        </fieldset>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:form>
+        </apex:outputPanel>
+    </body>
+    </html>
+</apex:page>

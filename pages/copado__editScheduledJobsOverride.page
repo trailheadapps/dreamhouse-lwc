@@ -1,0 +1,142 @@
+<apex:page id="thePage" standardController="copado__Scheduled_Job__c" extensions="copado.ScheduledJobExtension" showHeader="{!$User.UIThemeDisplayed=='Theme3'}"
+  standardStylesheets="true" sidebar="{!$User.UIThemeDisplayed=='Theme3'}" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}"
+  applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+  <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+
+  <head>
+    <TITLE>Edit Scheduled Job {!copado__Scheduled_Job__c.Name} | Copado</TITLE>
+    <style>
+      .longerField {
+        width: 60%;
+      }
+    </style>
+    <c:GAnalytics />
+    <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+  </head>
+
+  <body>
+    <div class="copado-lightning-VF">
+      <apex:sectionHeader title="Copado" subtitle="{!$Label.copado__SCHEDULED_JOB}" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+      <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+
+      <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+        <div class="slds-page-header">
+          <apex:outputPanel layout="block" id="pageMessages">
+            <apex:pagemessages id="msg" />
+          </apex:outputPanel>
+          <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+              <div class="slds-media">
+                <div class="slds-media__figure">
+                  <span class="slds-icon_container slds-icon-custom-custom95" title="Description of icon when needed">
+                    <svg class="slds-icon" aria-hidden="true">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom95')}"></use>
+                    </svg>
+                  </span>
+                </div>
+                <div class="slds-media__body">
+                  <p class="slds-text-heading--label slds-line-height--reset">Copado</p>
+                  <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$Label.copado__SCHEDULED_JOB}">{!$Label.copado__SCHEDULED_JOB}</h1>
+                </div>
+              </div>
+            </div>
+            <!-- ACTION BUTTONS -->
+            <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+              <div class="slds-button-group" role="group">
+
+              </div>
+            </div>
+            <!-- / ACTION BUTTONS -->
+          </div>
+          <div style="background: white; height: 25px;">
+            <!-- Header details buffer-->
+          </div>
+        </div>
+      </apex:outputPanel>
+
+      <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+
+        <apex:form id="theForm" styleClass="copado-lightning-container" style="padding-top:12px;">
+          <apex:pageBlock id="pb" mode="edit" rendered="{!AND(showOptions,!showError)}">
+            <apex:pageBlockButtons id="pbbs" location="bottom">
+              <apex:commandButton id="btnSave" action="{!save}" title="{!$Label.copado__Save}" value="{!$Label.copado__Save}" />
+              <apex:commandButton id="btnCancel" action="{!cancel}" title="{!$Label.copado__Cancel}" value="{!$Label.copado__Cancel}" immediate="true"
+                html-formnovalidate="formnovalidate" />
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection id="pbs1" columns="1">
+              <apex:inputField id="if_Name" value="{!copado__Scheduled_Job__c.Name}" styleClass="longerField" required="true" />
+              <apex:pageBlockSectionItem id="pbsi1">
+                <apex:outputLabel id="lbljsWebhookLookup" for="jsWebhookLookup">
+                  <img height="20" width="20" src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" alt="{!$Label.LOOK_UP_COPADO_WEBHOOK}"
+                  />
+                </apex:outputLabel>
+                <apex:outputPanel >
+                  <c:webhookLookup ></c:webhookLookup>
+                  <script>
+                    webhookLookup.config.URL_ELEMENT_ID = 'if_webhookUrl';
+                    webhookLookup.config.ADD_API_KEY_TO_URL = false;
+                    webhookLookup.onSuccessCB = function () { };
+                    webhookLookup.copadoLabels = {
+                      'VIEW_DOCUMENTATION': '{!JSENCODE($Label.View_Documentation)}',
+                      'Run all Org’s Apex Test Description': '{!JSENCODE($Label.Run_all_Orgs_Apex_Test_Description)}',
+                      'Run all Org’s Apex Test': '{!JSENCODE($Label.Run_all_Orgs_Apex_Test)}',
+                      'Run Continuous Integration Description': '{!JSENCODE($Label.Run_Continuous_Integration_Description)}',
+                      'Run Continuous Integration': '{!JSENCODE($Label.Run_Continuous_Integration)}',
+                      'Run Selenium Test': '{!JSENCODE($Label.Run_Selenium_Test)}',
+                      'Run Selenium Test Description': '{!JSENCODE($Label.Run_Selenium_Test_Description)}',
+                      'Run Selenium Group': '{!JSENCODE($Label.Run_Selenium_Group)}',
+                      'Run Selenium Group Description': '{!JSENCODE($Label.Run_Selenium_Group_Description)}',
+                      'Take a Git Snapshot': '{!JSENCODE($Label.Take_a_Git_Snapshot)}',
+                      'Take a Git Snapshot Description': '{!JSENCODE($Label.Take_a_Git_Snapshot_Description)}',
+                      'Calculate Org Differences': '{!JSENCODE($Label.Calculate_Org_Differences)}',
+                      'Calculate Org Differences Description': '{!JSENCODE($Label.Calculate_Org_Differences_Description)}',
+                      'Execute a Deployment': '{!JSENCODE($Label.Execute_a_Deployment)}',
+                      'Execute a Deployment Description': '{!JSENCODE($Label.Execute_a_Deployment_Description)}',
+                      'Calculate and deploy an Org Difference': '{!JSENCODE($Label.Calculate_and_deploy_an_Org_Difference)}',
+                      'Calculate and deploy an Org Difference Description': '{!JSENCODE($Label.Calculate_and_deploy_an_Org_Difference_Description)}',
+                      'Calculate Snapshot Differences': '{!JSENCODE($Label.Calculate_Snapshot_Differences)}',
+                      'Calculate Snapshot Differences Description': '{!JSENCODE($Label.Calculate_Snapshot_Differences_Description)}',
+                      'Calculate and deploy a Snapshot Difference': '{!JSENCODE($Label.Calculate_and_deploy_a_Snapshot_Difference)}',
+                      'Calculate and deploy a Snapshot Difference Description': '{!JSENCODE($Label.Calculate_and_deploy_a_Snapshot_Difference_Description)}',
+                      'Refresh Org’s metadata cache': '{!JSENCODE($Label.Refresh_Orgs_metadata_cache)}',
+                      'Refresh Org’s metadata cache Description': '{!JSENCODE($Label.Refresh_Orgs_metadata_cache_Description)}',
+                      'Retrieve Commits': '{!JSENCODE($Label.Retrieve_Commits)}',
+                      'Retrieve Commits Description': '{!JSENCODE($Label.Retrieve_Commits_Description)}',
+                      'Recalculate Pipeline Branch Statuses': '{!JSENCODE($Label.Recalculate_Pipeline_Branch_Statuses)}',
+                      'Recalculate Pipeline Branch Statuses Description': '{!JSENCODE($Label.Recalculate_Pipeline_Branch_Statuses_Description)}',
+                      'Run Compliance Scan on Org Credential': '{!JSENCODE($Label.Run_Compliance_Scan_on_Org_Credential)}',
+                      'Run Compliance Scan on Org Credential Description': '{!JSENCODE($Label.Run_Compliance_Scan_on_Org_Credential_Description)}',
+                      'Run Compliance Scan on Git Snapshot': '{!JSENCODE($Label.Run_Compliance_Scan_on_Git_Snapshot)}',
+                      'Run Compliance Scan on Git Snapshot Description': '{!JSENCODE($Label.Run_Compliance_Scan_on_Git_Snapshot_Description)}',
+                      'Deploy a Promotion': '{!JSENCODE($Label.Deploy_a_Promotion)}',
+                      'Deploy a Promotion Description': '{!JSENCODE($Label.Deploy_a_Promotion_Description)}',
+                      'Static Code Analysis on Org Credential': '{!JSENCODE($Label.Static_Code_Analysis_on_Org_Credential)}',
+                      'Static Code Analysis on Org Credential Description': '{!JSENCODE($Label.Static_Code_Analysis_on_Org_Credential_Description)}',
+                      'Static Code Analysis on User Story': '{!JSENCODE($Label.Static_Code_Analysis_on_User_Story)}',
+                      'Static Code Analysis on User Story Description': '{!JSENCODE($Label.Static_Code_Analysis_on_User_Story_Description)}',
+                      'Install Package Version': '{!JSENCODE($Label.Install_Package_Version)}',
+                      'Install Package Version Description': '{!JSENCODE($Label.Install_Package_Version_Description)}'
+                    };
+                  </script>
+                  <button class="{!IF($User.UIThemeDisplayed=='Theme3','','copado-lightning')}" id="btnWebhookLookup" onclick="webhookLookup.show();return false;"
+                    value="{!$Label.LOOK_UP_COPADO_WEBHOOK}">{!$Label.LOOK_UP_COPADO_WEBHOOK}</button>
+                </apex:outputPanel>
+              </apex:pageBlockSectionItem>
+              <apex:inputField id="if_webhookUrl" value="{!copado__Scheduled_Job__c.copado__Webhook_URL__c}" styleClass="longerField" required="true" />
+              <apex:inputField id="if_RunAsUser" value="{!copado__Scheduled_Job__c.copado__Run_as_User__c}" styleClass="longerField" required="true" />
+              <apex:inputField id="if_DeletedRunAfterDays" value="{!copado__Scheduled_Job__c.copado__Delete_Runs_after_days__c}" styleClass="longerField"
+                required="true" />
+            </apex:pageBlockSection>
+          </apex:pageBlock>
+        </apex:form>
+        <script>
+          ga('send', 'pageview', {
+            'page': '/EditScheduledJobsOverride',
+            'title': 'Edit Scheduled Jobs Override'
+          });
+        </script>
+      </apex:outputPanel>
+    </div>
+  </body>
+</apex:page>

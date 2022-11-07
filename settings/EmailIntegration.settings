@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailIntegrationSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesEmailLogAsEmailMessageInOutlook>true</doesEmailLogAsEmailMessageInOutlook>
+    <doesGmailStayConnectedToSalesforce>true</doesGmailStayConnectedToSalesforce>
+    <enableContactAndEventSync>false</enableContactAndEventSync>
+    <enableEngageForOutlook>false</enableEngageForOutlook>
+    <enableGmailIntegration>true</enableGmailIntegration>
+    <enableOutlookIntegration>false</enableOutlookIntegration>
+    <isLayoutCustomizationAllowed>false</isLayoutCustomizationAllowed>
+    <orgIsSyncingEventsOutbound>false</orgIsSyncingEventsOutbound>
+    <shouldUseTrustedDomainsList>true</shouldUseTrustedDomainsList>
+</EmailIntegrationSettings>

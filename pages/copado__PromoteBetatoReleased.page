@@ -1,0 +1,55 @@
+<!--
+ - Created by umitcanuckan on 30/08/2018.
+ -->
+
+<apex:page id="PromoteBetatoReleased" extensions="copado.DXPackageAsyncJobHandler" standardController="copado__Artifact_Version__c" lightningStylesheets="true" docType="html-5.0">
+    <c:GAnalytics />
+    <c:IncludeStaticsResourceComponent addJQuery="true" />
+    <apex:slds />
+    <apex:form styleClass="slds-scope">
+        <apex:pageMessages id="packageMsg" />
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}" useJobsManager="true" possibleRunningJobs=",DXCreatePackage,,true;,DXCreatePackageVersion,,true;,DXPackageStatusTracking,,true;,DXPackageUpdate,,true;,DXPackageVersionUpdate,,true;,DXPromoteBetaReleased,,true;"/>
+        <script>
+            window.addEventListener('copadoJobsManagerFinished', function (evt) {
+                for(var i=0 ; i < evt.detail.length ; i++ ) {
+                    var jobFinished = evt.detail[i].isFinished;
+                    var jobSuccess = evt.detail[i].isSuccess;
+                    var jobMessage = evt.detail[i].message;
+                    var jobType = evt.detail[i].type;
+                    console.debug("Job Success: ", jobSuccess);
+                    console.debug("Job Finished: ", jobFinished);
+                    console.debug("Job Message: ", jobMessage);
+                    console.debug("Job Type: ", jobType);
+                    jobstatus(jobFinished,jobSuccess,jobMessage,jobType);
+                    if(jobFinished){
+                        setLockScreenMessage('{!JSENCODE($Label.copado__LOADING)}');
+                    }
+                }
+            }, false);
+        </script>
+        <body class="slds-scope">
+            <apex:actionFunction name="jobstatus" action="{!jobStatusNotification}" reRender="packageMsg">
+                <apex:param value="" name="jobFinished"/>
+                <apex:param value="" name="jobSuccess"/>
+                <apex:param value="" name="jobMessage"/>
+                <apex:param value="" name="jobType"/>
+            </apex:actionFunction>
+            <apex:outputPanel layout="none" rendered="{!AND(NOT(ISBLANK(copado__Artifact_Version__c.copado__Subscriber_Version_Id__c)),copado__Artifact_Version__c.copado__Is_released__c == FALSE)}">
+                <input type="hidden" value="{!copado__Artifact_Version__c.copado__Subscriber_Version_Id__c}"/>
+                <input type="hidden" value="{!copado__Artifact_Version__c.copado__Artifact__c}"/>
+                <input type="hidden" value="{!copado__Artifact_Version__c.Artifact__r.copado__Target_Dev_Hub_Org__c}"/>
+                <input type="hidden" value="{!copado__Artifact_Version__c.copado__Package_Version_Id__c}"/>
+                <input type="hidden" value="{!copado__Artifact_Version__c.copado__Version_Description__c}"/>
+                <input type="hidden" value="{!copado__Artifact_Version__c.copado__Version_number__c}"/>
+                <input type="hidden" value="{!copado__Artifact_Version__c.Name}"/>
+                <c:PromoteBetatoReleased artifactVersionRecord="{!copado__Artifact_Version__c}"/>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!AND(ISBLANK(copado__Artifact_Version__c.copado__Subscriber_Version_Id__c),copado__Artifact_Version__c.copado__Is_released__c == FALSE)}">
+                <apex:pageMessage severity="warning" summary="This version has no subscriber package Id. Package version should be created in associated dev hub in order to be released." strength="3" title="Warning"/>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!AND(NOT(ISBLANK(copado__Artifact_Version__c.copado__Subscriber_Version_Id__c)),copado__Artifact_Version__c.copado__Is_released__c == TRUE)}">
+                <apex:pageMessage severity="info" summary="This version has been released before." strength="3" title="Info" detail="You can release a version only once."/>
+            </apex:outputPanel>
+        </body>
+    </apex:form>
+</apex:page>

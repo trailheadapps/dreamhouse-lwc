@@ -1,0 +1,3 @@
+<apex:page cache="true" controller="QCloudsSaaS.CsvDownloadController" contentType="application/octet-stream#{!fileName}.csv" showHeader="false" sidebar="false" standardStylesheets="false">
+     <apex:outputText value="{!input}" escape="true"/>
+</apex:page>

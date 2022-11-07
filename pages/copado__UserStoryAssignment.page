@@ -1,0 +1,33 @@
+<apex:page standardController="copado__User_Story__c" recordSetVar="records" extensions="copado.UserStoryAssignmentSetController" id="thePage" lightningStylesheets="true">
+	<head>
+		<c:GAnalytics />
+		<apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+	</head>
+	<body>
+		<apex:outputPanel layout="block" rendered="{!showLicenseError}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!showLicenseError}">
+			<apex:sectionHeader id="sectionHeader" title="{!$Label.copado__COPADO_CHANGE_MANAGEMENT}" subtitle="{!$Label.copado__USER_STORY_ASSIGN_RELEASE}" />
+			<apex:pageMessages id="theMessages" />
+			
+			<apex:form id="theForm" styleClass="copado-lightning-container" html-novalidate="true">
+				<apex:pageBlock id="pb" mode="edit">
+					<apex:pageBlockButtons id="pbButtons" location="bottom">
+						<apex:commandButton id="btnCancel" value="Cancel" action="{!cancel}" />
+						<apex:commandButton id="btnAssign" value="Assign" action="{!assign}" />
+					</apex:pageBlockButtons>
+					<apex:pageBlockSection id="pbs">
+						<apex:inputField id="if_Release" value="{!dummy.copado__Release__c}" />
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:form>
+		</apex:outputPanel>
+	    <script>
+	        ga('send', 'pageview', {
+	          'page': '/UserStoryAssignment',
+	          'title': 'User Story Assignment'
+	        });
+	    </script>
+	</body>
+</apex:page>

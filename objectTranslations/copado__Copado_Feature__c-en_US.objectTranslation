@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Application --></label>
+        <name>copado__Application__c</name>
+        <relationshipLabel><!-- Features --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Architect --></label>
+        <name>copado__Architect__c</name>
+        <relationshipLabel><!-- Features (deprecated) (Architect) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Complexity --></label>
+        <name>copado__Complexity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Epic --></label>
+        <name>copado__Epic__c</name>
+        <relationshipLabel><!-- Features --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Estimated Value --></label>
+        <name>copado__Estimated_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Feature Title --></label>
+        <name>copado__Feature_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>copado__Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Owner --></label>
+        <name>copado__Product_Owner__c</name>
+        <relationshipLabel><!-- Features (deprecated) (Product Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Accepted</masterLabel>
+            <translation><!-- Accepted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coming Soon</masterLabel>
+            <translation><!-- Coming Soon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivered</masterLabel>
+            <translation><!-- Delivered --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Refinement</masterLabel>
+            <translation><!-- Refinement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Requested</masterLabel>
+            <translation><!-- Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Under Review</masterLabel>
+            <translation><!-- Under Review --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Technical Assumptions --></label>
+        <name>copado__Technical_Assumptions__c</name>
+    </fields>
+    <fields>
+        <label><!-- # Users --></label>
+        <name>copado__Users__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value Type --></label>
+        <name>copado__Value_Type__c</name>
+        <picklistValues>
+            <masterLabel>New Revenue</masterLabel>
+            <translation><!-- New Revenue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Time Savings</masterLabel>
+            <translation><!-- Time Savings --></translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

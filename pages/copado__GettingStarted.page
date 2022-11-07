@@ -1,0 +1,910 @@
+<apex:page title="Copado Getting Started" controller="copado.CopadoSetupController" showHeader="{!$User.UIThemeDisplayed=='Theme3'}"
+    sidebar="false" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+        <title>Getting Started</title>
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <c:WizardUtils id="cmpWizardUtilities" />
+        <style>
+            .noSidebarCell {
+                padding: 0px !important;
+            }
+
+            .outerNoSidebar {
+                padding: 0px !important;
+            }
+
+            .slds-scope *+.lookupInput {
+                margin-left: 0;
+            }
+
+            .lookup-icon {
+                height: 20px !important;
+                margin-bottom: 5px;
+                margin-left: 5px;
+            }
+            .general-col {
+                width: 50%;
+            }
+        </style>
+        <c:IncludeStaticsResourceComponent addJQuery="true" />
+        <c:IncludeConnectionJsComponent />
+    </head>
+
+    <body class="slds-scope" style="height:100%;">
+        <div class="copado-lightning-VF" style="height:88%;">
+            <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+                <div class="slds-page-header">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container" style="background-color: #fff" title="Description of icon when needed">
+                                <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                    aria-hidden="true" />
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$Label.GETTING_STARTED}">{!$Label.GETTING_STARTED}</h1>
+                            <p class="slds-text-body_small slds-line-height_reset">{!$Label.GETTING_STARTED_DESCRIPTION_SHORT}</p>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+
+            <!-- Content -->
+            <apex:outputPanel layout="block" styleClass="copado-lightning-radius" style="margin:0 12px 0 12px !important; height: 100%">
+                <apex:outputPanel layout="block" style="min-height: 550px; height: 100%;background-color:#FFF; background: url({!URLFOR($Resource.copado__Statics,'img/backgrounds/Copado-Getting-Started.jpg')}) center bottom/100% no-repeat">
+
+                    <apex:form >
+                        <div class="slds-scope" style="padding:12px">
+                            <c:ScreenLocker msg="{!$Label.copado__LOADING}" />
+
+                            <div class="slds-tabs--scoped">
+                                <apex:pageMessages id="errorMessages" />
+                                <ul class="slds-tabs--scoped__nav" role="tablist">
+                                    <li class="slds-tabs--scoped__item slds-text-heading--label slds-active" title="{!$Label.GENERAL}" role="presentation">
+                                        <a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1"
+                                            id="tab-scoped-1__item">{!$Label.GENERAL}</a>
+                                    </li>
+                                    <li class="slds-tabs--scoped__item slds-text-heading--label" title="{!$Label.ORG_CREDENTIALS}" role="presentation">
+                                        <a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2"
+                                            id="tab-scoped-2__item">{!$Label.ORG_CREDENTIALS}</a>
+                                    </li>
+                                    <li class="slds-tabs--scoped__item slds-text-heading--label" title="{!$Label.ACCOUNT_SUMMARY}" role="presentation">
+                                        <a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3"
+                                            id="tab-scoped-3__item">{!$Label.ACCOUNT_SUMMARY}</a>
+                                    </li>
+                                    <li class="slds-tabs--scoped__item slds-text-heading--label" title="{!$Label.GIT}" role="presentation">
+                                        <a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-4"
+                                            id="tab-scoped-4__item">{!$Label.GIT}</a>
+                                    </li>
+                                    <li class="slds-tabs--scoped__item slds-text-heading--label" title="{!$Label.DEPLOYMENT_FLOW}" role="presentation">
+                                        <a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-5"
+                                            id="tab-scoped-5__item">{!$Label.DEPLOYMENT_FLOW}</a>
+                                    </li>
+                                </ul>
+
+
+                                <!-- TAB: GENERAL -->
+                                <div id="tab-scoped-1" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-p-around_medium general-col">
+                                            <article class="slds-card" style="background-color: #fff;">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__figure">
+                                                            <span class="slds-icon_container slds-icon-standard-article" title="Documentation icon">
+                                                                <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                                    <use xlink:href="{!URLFOR($Resource.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#article')}" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="slds-media__body">
+                                                            <h2>
+                                                                <span class="slds-text-heading_small">{!$Label.Documentation}</span>
+                                                            </h2>
+                                                        </div>
+                                                    </header>
+                                                    <div class="slds-no-flex">
+                                                        <a href="https://docs.copado.com/" target="_blank" class="slds-card__header-link slds-truncate">
+                                                            <button class="slds-button slds-button_neutral" type="button">{!$Label.LEARN} </button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner">{!$Label.LEARN_DESCRIPTION_SHORT}</div>
+                                            </article>
+                                        </div>
+
+                                        <div class="slds-col slds-p-around_medium general-col">
+                                            <article class="slds-card" style="background-color: #fff;">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__figure">
+                                                            <span class="slds-icon_container slds-icon-custom-custom53" title="Documentation icon">
+                                                                <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                                    <use xlink:href="{!URLFOR($Resource.SLDS, '/assets/icons/custom-sprite/svg/symbols.svg#custom53')}" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="slds-media__body">
+                                                            <h2>
+                                                                <span class="slds-text-heading_small">{!$Label.NotificationsCenter}</span>
+                                                            </h2>
+                                                        </div>
+                                                    </header>
+                                                    <div class="slds-no-flex">
+                                                        <a onclick="navigateTo('/lightning/n/{!JSINHTMLENCODE(namespace)}Notifications_Center');" target="_blank" class="slds-card__header-link slds-truncate">
+                                                            <button class="slds-button slds-button_neutral" type="button">{!$Label.Configure}</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner">{!$Label.NotificationsCenterGettingStarted}</div>
+                                            </article>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-p-around_medium general-col">
+                                            <article class="slds-card" style="background-color: #fff;">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__figure">
+                                                            <span class="slds-icon_container slds-icon-standard-custom-notification" title="Support Icon">
+                                                                <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                                    <use xlink:href="{!URLFOR($Resource.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#custom_notification')}" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="slds-media__body">
+                                                            <h2>
+                                                                <span class="slds-text-heading_small">{!$Label.SUPPORT}</span>
+                                                            </h2>
+                                                        </div>
+                                                    </header>
+                                                    <div class="slds-no-flex">
+                                                        <a href="https://www.copado.com/support" target="_blank" class="slds-card__header-link slds-truncate">
+                                                            <button class="slds-button slds-button_neutral" type="button">{!$Label.HELP_GET}</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner">{!$Label.HELP_GET_DESCRIPTION_SHORT}</div>
+                                            </article>
+                                        </div>
+
+                                        <div class="slds-col slds-p-around_medium general-col">
+                                            <article class="slds-card" style="background-color: #fff;">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__figure">
+                                                            <span class="slds-icon_container slds-icon-standard-news" title="Blog Icon">
+                                                                <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                                    <use xlink:href="{!URLFOR($Resource.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#news')}" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="slds-media__body">
+                                                            <h2>
+                                                                <span class="slds-text-heading_small">{!$Label.BLOG}</span>
+                                                            </h2>
+                                                        </div>
+                                                    </header>
+                                                    <div class="slds-no-flex">
+                                                        <a href="https://www.copado.com/blog" target="_blank" class="slds-card__header-link slds-truncate">
+                                                            <button class="slds-button slds-button_neutral" type="button">{!$Label.VISIT}</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner">{!$Label.BLOG_DESCRIPTION_SHORT}</div>
+                                            </article>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- / TAB: GENERAL -->
+
+
+                                <!-- TAB: ORGS -->
+                                <div id="tab-scoped-2" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-2__item">
+                                    <c:CopadoHelp sectionText="{!$Label.copado__ORG_CREDENTIAL_HELP}" sectionLink="https://docs.copado.com/org-credentials/how-to-create-an-org-credential"
+                                    />
+                                    <apex:outputPanel layout="block" id="orgcredentialForm">
+                                        <article class="slds-card">
+                                            <header class="slds-card__header slds-grid">
+                                                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                    <div class="slds-media__figure">
+                                                        <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                            aria-hidden="true" />
+                                                    </div>
+                                                    <div class="slds-media__body slds-truncate">
+                                                        <h2>
+                                                            <span class="slds-text-heading--small">{!$Label.ORG_CREDENTIALS}</span>
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-no-flex"></div>
+                                            </header>
+                                            <div class="slds-card__body slds-card__body_inner">
+                                                <div class="slds-form slds-form_horizontal">
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label" for="input-id-01">{!$ObjectType.Org__c.fields.Name.Label}</label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputField id="input-id-01" styleClass="slds-input2" value="{!orgCredentials.Name}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label" for="input-id-02">{!$ObjectType.copado__Org__c.fields.copado__Org_Type__c.Label}</label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputField id="input-id-02" styleClass="slds-input2" value="{!orgCredentials.copado__Org_Type__c}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label" for="input-id-03">{!$ObjectType.copado__Org__c.fields.copado__Test_Frequency__c.Label}</label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputField id="input-id-03" styleClass="slds-input2" value="{!orgCredentials.copado__Test_Frequency__c}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element">
+                                                        <center>
+                                                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!createOrgCredentials}" value="{!$Label.copado__CREATE}"
+                                                                reRender="orgcredentialForm,errorMessages" onClick="lockScreen();"
+                                                                onComplete="unlockScreen();" />
+                                                        </center>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </article>
+
+                                        <apex:outputPanel layout="none" rendered="{!NOT(existingOrgCredentials)}">
+                                            <article class="slds-card">
+                                                <header class="slds-card__header slds-grid">
+                                                    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                        <div class="slds-media__figure">
+                                                            <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                                aria-hidden="true" />
+                                                        </div>
+                                                        <div class="slds-media__body slds-truncate">
+                                                            <h2>
+                                                                <span class="slds-text-heading--small">{!$Label.EXISTING_ORG_CREDENTIALS}</span>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-no-flex">
+                                                        <apex:commandLink action="{!refreshOrgCredentialList}" reRender="orgcredentialForm" value="{!$Label.copado__REFRESH}" onClick="lockScreen();"
+                                                            onComplete="unlockScreen();" />
+                                                    </div>
+                                                </header>
+                                                <div class="slds-card__body slds-card__body_inner">
+                                                    <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal">
+                                                        <thead>
+                                                            <tr class="slds-text-title_caps">
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">{!$ObjectType.copado__Org__c.fields.Name.Label}</div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">{!$ObjectType.copado__Org__c.fields.copado__Org_Type__c.Label}</div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">{!$ObjectType.copado__Org__c.fields.copado__Username__c.Label}</div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">{!$ObjectType.copado__Org__c.fields.copado__Environment__c.Label}</div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">{!$ObjectType.copado__Org__c.fields.copado__Platform__c.Label}</div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">{!$Label.copado__ACTION_COLUMN_HEADER}</div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:repeat value="{!orgCredentialMap}" var="ocl">
+                                                                <apex:outputPanel layout="none" rendered="{!orgCredentialMap[ocl].Username__c == null}">
+                                                                    <tr class="slds-hint-parent">
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink value="{!URLFOR($Action.copado__Org__c.View,orgCredentialMap[ocl].Id)}" target="_blank"> {!orgCredentialMap[ocl].Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!orgCredentialMap[ocl].Org_Type__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!orgCredentialMap[ocl].Username__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink rendered="{!orgCredentialMap[ocl].Environment__r != null}" value="{!URLFOR($Action.copado__Environment__c.View,orgCredentialMap[ocl].Environment__c)}"
+                                                                                    target="_blank"> {!orgCredentialMap[ocl].Environment__r.Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!orgCredentialMap[ocl].Platform__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <apex:commandLink styleClass="slds-button slds-button--neutral" value="{!$Label.copado__Set_Oauth_Authentication}" action="{!doOauth}"
+                                                                                target="_blank" rendered="{!OR(orgCredentialMap[ocl].Platform__c == null,orgCredentialMap[ocl].Platform__c == 'Salesforce')}">
+                                                                                <apex:param name="setOauth" value="{!orgCredentialMap[ocl].Id}" />
+                                                                            </apex:commandLink>
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:outputPanel>
+                                                            </apex:repeat>
+                                                            <apex:repeat value="{!orgCredentialMap}" var="ocl">
+                                                                <apex:outputPanel layout="none" rendered="{!orgCredentialMap[ocl].Username__c != null}">
+                                                                    <tr class="slds-hint-parent">
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink value="{!URLFOR($Action.copado__Org__c.View,orgCredentialMap[ocl].Id)}" target="_blank"> {!orgCredentialMap[ocl].Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!orgCredentialMap[ocl].Org_Type__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!orgCredentialMap[ocl].Username__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink rendered="{!orgCredentialMap[ocl].Environment__r != null}" value="{!URLFOR($Action.copado__Environment__c.View,orgCredentialMap[ocl].Environment__c)}"
+                                                                                    target="_blank"> {!orgCredentialMap[ocl].Environment__r.Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!orgCredentialMap[ocl].Platform__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <apex:outputLink styleClass="slds-button slds-button--neutral" target="_blank" value="{!URLFOR($Page.copado__ScratchOrgOpen,null,[id=orgCredentialMap[ocl].Id])}"
+                                                                                rendered="{!OR(orgCredentialMap[ocl].Platform__c == null,orgCredentialMap[ocl].Platform__c == 'Salesforce')}">
+                                                                                {!$Label.copado__Open_Org}
+                                                                            </apex:outputLink>
+                                                                            <apex:outputLink styleClass="slds-button slds-button--neutral" target="_blank" value="{!URLFOR($Page.copado__DXOperation,null,[id=orgCredentialMap[ocl].Id])}"
+                                                                                rendered="{!OR(orgCredentialMap[ocl].Org_Type__c == 'Scratch Org',orgCredentialMap[ocl].Org_Type__c == 'Scratch Org - Test Only',AND(orgCredentialMap[ocl].Org_Type__c == 'Production/Developer',orgCredentialMap[ocl].is_Developer_Hub_Org__c))}">
+                                                                                {!$Label.copado__Copado_DX}
+                                                                            </apex:outputLink>
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:outputPanel>
+                                                            </apex:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </article>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                </div>
+                                <!-- / TAB: ORGS -->
+
+
+                                <!-- TAB: ACCOUNT SUMMARY -->
+                                <div id="tab-scoped-3" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-3__item">
+                                    <c:CopadoHelp sectionText="{!$Label.copado__ACCOUNT_SUMMARY_HELP}" sectionLink="https://docs.copado.com/copado-core/copado-license-manager"
+                                    />
+                                    <article class="slds-card">
+                                        <apex:outputPanel layout="block" id="licenseManagerCard">
+                                            <header class="slds-card__header slds-grid">
+                                                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                    <div class="slds-media__figure">
+                                                        <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                            aria-hidden="true" />
+                                                    </div>
+                                                    <div class="slds-media__body slds-truncate">
+                                                        <h2>
+                                                            <span class="slds-text-heading--small">{!$Label.LICENSE_MANAGER}</span>
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-no-flex">
+                                                    <a onclick="navigateTo('/lightning/n/{!JSINHTMLENCODE(namespace)}License_Manager');" Class="slds-button slds-button--neutral slds-col--bump-left">
+                                                        {!$Label.ASSIGN_LICENSES}
+                                                    </a>
+                                                </div>
+                                            </header>
+                                            <div class="slds-card__body slds-card__body_inner">
+                                                <apex:outputPanel layout="none" rendered="{!OR(copadoLicense.copado__Enable_Copado__c,copadoLicense.copado__Enable_CCM__c,copadoLicense.copado__Enable_CAD__c,copadoLicense.copado__Enable_CST__c,copadoLicense.copado__Enable_CCH__c)}">
+                                                    {!$Label.copado__YOUR_USER_HAS_FOLLOWING_LICENSES_ASSIGNED}
+                                                    <br/>
+                                                    <apex:outputPanel layout="none" rendered="{!copadoLicense.copado__Enable_Copado__c}">
+                                                        {!$Label.copado__Copado_Admin}
+                                                        <br/>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!copadoLicense.copado__Enable_CCM__c}">
+                                                        {!$Label.copado__Copado_User}
+                                                        <br/>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!copadoLicense.copado__Enable_CAD__c}">
+                                                        {!$Label.copado__Guest}
+                                                        <br/>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!copadoLicense.copado__Enable_CST__c}">
+                                                        {!$Label.copado__Selenium_Testing}
+                                                        <br/>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!copadoLicense.copado__Enable_CCH__c}">
+                                                        {!$Label.copado__Compliance_Hub}
+                                                        <br/>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!copadoLicense.copado__Enable_ADD__c}">
+                                                        {!$Label.copado__Copado_Data_Deploy}
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!AND(!copadoLicense.copado__Enable_Copado__c,!copadoLicense.copado__Enable_CCM__c,!copadoLicense.copado__Enable_CAD__c,!copadoLicense.copado__Enable_CST__c,!copadoLicense.copado__Enable_CCH__c)}">
+                                                    {!$Label.copado__ASSIGN_LICENSES_TO_YOUR_USER}
+                                                </apex:outputPanel>
+                                            </div>
+                                            <div class="slds-card__footer">
+                                                <apex:commandLink action="{!retrieveCopadoLicenses}" reRender="licenseManagerCard" value="{!$Label.copado__REFRESH}" onClick="lockScreen();"
+                                                    onComplete="unlockScreen();" />
+                                            </div>
+                                        </apex:outputPanel>
+                                    </article>
+
+                                    <article class="slds-card">
+                                        <apex:outputPanel layout="block" id="accountSummaryCard">
+                                            <header class="slds-card__header slds-grid">
+                                                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                    <div class="slds-media__figure">
+                                                        <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                            aria-hidden="true" />
+                                                    </div>
+                                                    <div class="slds-media__body slds-truncate">
+                                                        <h2>
+                                                            <span class="slds-text-heading--small">{!$Label.ACCOUNT_SUMMARY}</span>
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-no-flex">
+                                                    <a onclick="navigateTo('/apex/{!JSINHTMLENCODE(namespace)}appHome');" Class="slds-button slds-button--neutral slds-col--bump-left">
+                                                        {!$Label.CREATE_OR_RESET}
+                                                    </a>
+                                                </div>
+                                            </header>
+                                            <div class="slds-card__body slds-card__body_inner">
+                                                {!$Label.PESONAL_API_KEY} {!$User.FirstName} {!$User.LastName}
+                                                <br/>
+                                                <apex:outputPanel layout="none" rendered="{!APIKey != null}">
+                                                    API key: {!APIKey}
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!APIKey == null}">
+                                                    {!$Label.copado__YOUR_USER_DOES_NOT_HAVE_API_KEY}
+                                                </apex:outputPanel>
+                                            </div>
+                                            <div class="slds-card__footer">
+                                                <apex:commandLink reRender="accountSummaryCard" value="{!$Label.copado__REFRESH}" onClick="lockScreen();" onComplete="unlockScreen();"
+                                                />
+                                            </div>
+                                        </apex:outputPanel>
+                                    </article>
+                                </div>
+                                <!-- / TAB: ACCOUNT SUMMARY -->
+
+
+                                <!-- TAB: GIT -->
+                                <div id="tab-scoped-4" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-4__item">
+                                    <c:CopadoHelp sectionText="{!$Label.copado__GIT_REPOSITORY_HELP}" sectionLink="https://docs.copado.com/git-repository/git-repository-overview"
+                                    />
+                                    <apex:outputPanel layout="block" id="gitRepoForm">
+                                        <article class="slds-card">
+                                            <header class="slds-card__header slds-grid">
+                                                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                    <div class="slds-media__figure">
+                                                        <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                            aria-hidden="true" />
+                                                    </div>
+                                                    <div class="slds-media__body slds-truncate">
+                                                        <h2>
+                                                            <span class="slds-text-heading--small">{!$Label.GIT_REPOSITORIES}</span>
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-no-flex">
+                                                    <apex:outputLink value="{!URLFOR($Action.copado__Git_Repository__c.New)}" target="_blank" styleClass="slds-button slds-button--neutral slds-col--bump-left">
+                                                        {!$Label.copado__NEW_GIT_REPOSITORY}
+                                                    </apex:outputLink>
+                                                </div>
+                                            </header>
+
+                                            <div class="slds-card__body slds-card__body_inner">
+                                                <div class="slds-form slds-form_horizontal">
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label" for="input-id-04">{!$Label.copado__SELECT_GIT_REPOSITORY}</label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList id="input-id-04" styleClass="slds-input2" value="{!selectedGitRepositories}" multiselect="false" size="1">
+                                                                <apex:actionSupport event="onchange" action="{!getsGitSnapshots}" reRender="gitRepoForm,errorMessages" onSubmit="lockScreen();"
+                                                                    onComplete="unlockScreen();" />
+                                                                <apex:selectOptions value="{!GitRepos}" />
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="slds-card__footer">
+                                                <apex:commandLink reRender="gitRepoForm" value="{!$Label.copado__REFRESH}" onClick="lockScreen();" onComplete="unlockScreen();" />
+                                            </div>
+                                        </article>
+
+                                        <apex:outputPanel layout="none" rendered="{!AND(selectedGitRepositories != 'none',selectedGitRepositories != '')}">
+                                            <article class="slds-card">
+                                                <header class="slds-card__header slds-grid">
+                                                    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                        <div class="slds-media__figure">
+                                                            <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                                aria-hidden="true" />
+                                                        </div>
+                                                        <div class="slds-media__body slds-truncate">
+                                                            <h2>
+                                                                <span class="slds-text-heading--small">{!$Label.GIT_SNAPSHOT}</span>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-no-flex">
+                                                        <apex:outputPanel layout="none" rendered="{!!enableGitSnapshotForm}">
+                                                            <apex:commandButton styleClass="slds-button slds-button--neutral slds-col--bump-left" action="{!openGitSnapshotForm}" value="{!$Label.copado__NEW_GIT_SNAPSHOT}"
+                                                                reRender="gitRepoForm" onClick="lockScreen();" onComplete="unlockScreen();"
+                                                            />
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </header>
+                                                <div class="slds-card__body slds-card__body_inner">
+                                                    <apex:outputPanel layout="none" rendered="{!enableGitSnapshotForm}">
+                                                        <div class="slds-form slds-form_horizontal">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element">
+                                                                    <label class="slds-form-element__label" for="gits-id-01">{!$ObjectType.copado__Git_Backup__c.fields.Name.Label}</label>
+                                                                    <div class="slds-form-element__control">
+                                                                        <apex:inputField id="gits-id-01" styleClass="slds.input2" value="{!gitSnapshot.Name}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <label class="slds-form-element__label" for="gits-id-03">{!$ObjectType.copado__Git_Backup__c.fields.copado__Branch__c.Label}</label>
+                                                                    <div class="slds-form-element__control">
+                                                                        <apex:inputField id="gits-id-03" styleClass="slds.input2" value="{!gitSnapshot.copado__Branch__c}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <label class="slds-form-element__label" for="gits-id-04">{!$ObjectType.copado__Git_Backup__c.fields.copado__Git_Snapshot_Permissions__c.Label}</label>
+                                                                    <div class="slds-form-element__control">
+                                                                        <apex:inputField id="gits-id-04" styleClass="slds.input2" value="{!gitSnapshot.copado__Git_Snapshot_Permissions__c}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <label class="slds-form-element__label" for="gits-id-05">{!$ObjectType.copado__Git_Backup__c.fields.copado__Frequency__c.Label}</label>
+                                                                    <div class="slds-form-element__control">
+                                                                        <apex:inputField id="gits-id-05" styleClass="slds.input2" value="{!gitSnapshot.copado__Frequency__c}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <label class="slds-form-element__label" for="gits-id-06">{!$ObjectType.copado__Git_Backup__c.fields.copado__Org__c.Label}</label>
+                                                                    <div class="slds-form-element__control">
+                                                                        <apex:inputField required="false" id="gits-id-06" styleClass="slds.input2" value="{!gitSnapshot.copado__Org__c}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <center>
+                                                                        <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!closeGitSnapshotForm}" value="{!$Label.copado__CLOSE}"
+                                                                            reRender="gitRepoForm,errorMessages" onClick="lockScreen();"
+                                                                            onComplete="unlockScreen();" />
+                                                                        <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!createGitSnapshot}" value="{!$Label.copado__CREATE}"
+                                                                            reRender="gitRepoForm,errorMessages" onClick="lockScreen();"
+                                                                            onComplete="unlockScreen();" />
+                                                                    </center>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!AND(gitSnapshotList.size>0,!enableGitSnapshotForm)}">
+                                                        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal">
+                                                            <thead>
+                                                                <tr class="slds-text-title_caps">
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Git_Backup__c.fields.Name.Label}</div>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Git_Backup__c.fields.copado__Git_Repository__c.Label}</div>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Git_Backup__c.fields.copado__Branch__c.Label}</div>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Git_Backup__c.fields.copado__Git_Snapshot_Permissions__c.Label}</div>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Git_Backup__c.fields.copado__Frequency__c.Label}</div>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Git_Backup__c.fields.copado__Org__c.Label}</div>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <apex:repeat value="{!gitSnapshotList}" var="grl">
+                                                                    <tr class="slds-hint-parent">
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink value="{!URLFOR($Page.copado__ViewGitBackup,null,[id=grl.Id])}" target="_blank"> {!grl.Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink value="{!URLFOR($Page.copado__viewGit,null,[id=grl.copado__Git_Repository__c])}" target="_blank"> {!grl.Git_Repository__r.Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!grl.copado__Branch__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!grl.copado__Git_Snapshot_Permissions__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!grl.copado__Frequency__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink value="{!URLFOR($Action.copado__Org__c.View,grl.copado__Org__c)}" target="_blank"> {!grl.Org__r.Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </tbody>
+                                                        </table>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </article>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                </div>
+                                <!-- / TAB: GIT -->
+
+
+                                <!-- TAB: DEPLOYMENT FLOWS -->
+                                <div id="tab-scoped-5" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-5__item">
+                                    <c:CopadoHelp sectionText="{!$Label.copado__DEPLOYMENT_FLOW_HELP}" sectionLink="https://docs.copado.com/branch-management-application/branch-management-application-overview"
+                                    />
+                                    <apex:outputPanel layout="block" id="deploymentFlowForm">
+                                        <article class="slds-card">
+                                            <header class="slds-card__header slds-grid">
+                                                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                    <div class="slds-media__figure">
+                                                        <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                            aria-hidden="true" />
+                                                    </div>
+                                                    <div class="slds-media__body slds-truncate">
+                                                        <h2>
+                                                            <span class="slds-text-heading--small">{!$Label.DEPLOYMENT_FLOW}</span>
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-no-flex">
+                                                    <apex:outputPanel layout="none" rendered="{!AND(selectedDeploymentFlow != 'none',selectedDeploymentFlow != '')}">
+                                                        <apex:commandLink action="{!manageReleases}" onClick="lockScreen();" onComplete="unlockScreen();" styleClass="slds-button slds-button--neutral slds-col--bump-left">{!$Label.copado__MANAGE_BRANCHES}</apex:commandLink>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!!enableDeploymentFlowForm}">
+                                                        <apex:commandLink action="{!openDeploymentFlowForm}" onClick="lockScreen();" onComplete="unlockScreen();" styleClass="slds-button slds-button--neutral slds-col--bump-left"
+                                                            reRender="deploymentFlowForm">{!$Label.copado__NEW_DEPLOYMENT_FLOW}</apex:commandLink>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </header>
+                                            <div class="slds-card__body slds-card__body_inner">
+                                                <div class="slds-form slds-form_horizontal">
+                                                    <apex:outputPanel layout="none" rendered="{!!enableDeploymentFlowForm}">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="input-id-5">{!$Label.copado__SELECT_DEPLOYMENT_FLOW}</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:selectList id="input-id-05" styleClass="slds-input2" value="{!selectedDeploymentFlow}" multiselect="false" size="1">
+                                                                    <apex:actionSupport event="onchange" action="{!getsDeploymentFlowSteps}" reRender="deploymentFlowForm" onSubmit="lockScreen();"
+                                                                        onComplete="unlockScreen();" />
+                                                                    <apex:selectOptions value="{!DeploymentFlows}" />
+                                                                </apex:selectList>
+                                                                <apex:outputPanel layout="none" rendered="{!AND(selectedDeploymentFlow != '', selectedDeploymentFlow != 'none')}">
+                                                                    <apex:commandLink action="{!openPipelineDetail}" target="_blank">
+                                                                        <apex:image value="{!URLFOR($Resource.copado__DTS_images,'lookup.png')}" styleClass="lookup-icon" />
+                                                                        <apex:param name="pipelineId" value="{!selectedDeploymentFlow}" />
+                                                                    </apex:commandLink>
+                                                                </apex:outputPanel>
+                                                            </div>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!enableDeploymentFlowForm}">
+                                                        <div class="slds-form-element">
+                                                            <div class="slds-form-element">
+                                                                <label class="slds-form-element__label" for="flow-id-01">{!$ObjectType.copado__Deployment_Flow__c.fields.Name.Label}</label>
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:inputField id="flow-id-01" styleClass="slds-input2" value="{!deploymentFlow.Name}" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element">
+                                                                <label class="slds-form-element__label" for="flow-id-05">{!$ObjectType.copado__Deployment_Flow__c.fields.copado__Platform__c.Label}</label>
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:inputField id="flow-id-05" styleClass="slds-input2" value="{!deploymentFlow.copado__Platform__c}" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element">
+                                                                <label class="slds-form-element__label" for="flow-id-03">{!$ObjectType.copado__Deployment_Flow__c.fields.copado__Git_Repository__c.Label}</label>
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:inputField id="flow-id-03" styleClass="slds-input2" value="{!deploymentFlow.copado__Git_Repository__c}" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element">
+                                                                <label class="slds-form-element__label" for="flow-id-04">{!$ObjectType.copado__Deployment_Flow__c.fields.copado__Main_Branch__c.Label}</label>
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:inputField id="flow-id-04" styleClass="slds-input2" value="{!deploymentFlow.copado__Main_Branch__c}" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element">
+                                                                <label class="slds-form-element__label" for="flow-id-02">{!$ObjectType.copado__Deployment_Flow__c.fields.copado__Active__c.Label}</label>
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:inputField id="flow-id-02" styleClass="slds-input2" value="{!deploymentFlow.copado__Active__c}" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-form-element">
+                                                                <center>
+                                                                    <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!closeDeploymentFlowForm}" value="{!$Label.copado__CLOSE}"
+                                                                        reRender="deploymentFlowForm,errorMessages" onClick="lockScreen();"
+                                                                        onComplete="unlockScreen();" />
+                                                                    <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!createDeploymentFlow}" value="{!$Label.copado__CREATE}"
+                                                                        reRender="deploymentFlowForm,errorMessages" onClick="lockScreen();"
+                                                                        onComplete="unlockScreen();" />
+                                                                </center>
+                                                            </div>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </div>
+                                        </article>
+
+                                        <apex:outputPanel layout="none" rendered="{!AND(selectedDeploymentFlow != 'none',selectedDeploymentFlow != '')}">
+                                            <article class="slds-card">
+                                                <header class="slds-card__header slds-grid">
+                                                    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                        <div class="slds-media__figure">
+                                                            <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                                aria-hidden="true" />
+                                                        </div>
+                                                        <div class="slds-media__body slds-truncate">
+                                                            <h2>
+                                                                <span class="slds-text-heading--small">{!$Label.DEPLOYMENT_FLOW_STEPS}</span>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-no-flex">
+                                                        <apex:outputPanel layout="none" rendered="{!!enableDeploymentFlowStepForm}">
+                                                            <apex:commandButton styleClass="slds-button slds-button--neutral slds-col--bump-left" action="{!openDeploymentFlowStepForm}"
+                                                                value="{!$Label.copado__NEW_DEPLOYMENT_FLOW_STEP}" reRender="deploymentFlowForm"
+                                                                onClick="lockScreen();" onComplete="unlockScreen();" />
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </header>
+                                                <div class="slds-card__body slds-card__body_inner">
+                                                    <apex:outputPanel layout="none" rendered="{!enableDeploymentFlowStepForm}">
+                                                        <div class="slds-form slds-form_horizontal">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element">
+                                                                    <label class="slds-form-element__label" for="flows-id-03">{!$ObjectType.copado__Deployment_Flow_Step__c.fields.copado__Source_Environment__c.Label}</label>
+                                                                    <div class="slds-form-element__control">
+                                                                        <apex:inputField id="flows-id-03" styleClass="slds.input2" value="{!deploymentFlowStep.copado__Source_Environment__c}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <label class="slds-form-element__label" for="flows-id-04">{!$ObjectType.copado__Deployment_Flow_Step__c.fields.copado__Destination_Environment__c.Label}</label>
+                                                                    <div class="slds-form-element__control">
+                                                                        <apex:inputField id="flows-id-04" styleClass="slds.input2" value="{!deploymentFlowStep.copado__Destination_Environment__c}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <label class="slds-form-element__label" for="flows-id-05">{!$ObjectType.copado__Deployment_Flow_Step__c.fields.copado__Branch__c.Label}</label>
+                                                                    <div class="slds-form-element__control">
+                                                                        <apex:inputField id="flows-id-05" styleClass="slds.input2" value="{!deploymentFlowStep.copado__Branch__c}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-form-element">
+                                                                    <center>
+                                                                        <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!closeDeploymentFlowStepsForm}" value="{!$Label.copado__CLOSE}"
+                                                                            reRender="deploymentFlowForm,errorMessages" onClick="lockScreen();"
+                                                                            onComplete="unlockScreen();" />
+                                                                        <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!createDeploymentFlowSteps}" value="{!$Label.copado__CREATE}"
+                                                                            reRender="deploymentFlowForm,errorMessages" onClick="lockScreen();"
+                                                                            onComplete="unlockScreen();" />
+                                                                    </center>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!AND(deploymentFlowStepList.size>0,!enableDeploymentFlowStepForm)}">
+                                                        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal">
+                                                            <thead>
+                                                                <tr class="slds-text-title_caps">
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Deployment_Flow_Step__c.fields.Name.Label}</div>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Deployment_Flow_Step__c.fields.copado__Source_Environment__c.Label}</div>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Deployment_Flow_Step__c.fields.copado__Destination_Environment__c.Label}</div>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <div class="slds-truncate">{!$ObjectType.copado__Deployment_Flow_Step__c.fields.copado__Branch__c.Label}</div>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <apex:repeat value="{!deploymentFlowStepList}" var="grl">
+                                                                    <tr class="slds-hint-parent">
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink value="{!URLFOR($Action.copado__Deployment_Flow_Step__c.View,grl.Id)}" target="_blank"> {!grl.Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink value="{!URLFOR($Action.copado__Environment__c.View,grl.copado__Source_Environment__c)}" target="_blank" rendered="{!grl.copado__Source_Environment__c != null}">
+                                                                                    {!grl.Source_Environment__r.Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <apex:outputLink value="{!URLFOR($Action.copado__Environment__c.View,grl.copado__Destination_Environment__c)}" target="_blank" rendered="{!grl.copado__Destination_Environment__c != null}">
+                                                                                    {!grl.Destination_Environment__r.Name}
+                                                                                </apex:outputLink>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{!grl.copado__Branch__c}</div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </tbody>
+                                                        </table>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </article>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            $copado('.slds-tabs--scoped__item').on('click', function () {
+                                $copado(this).addClass('slds-active');
+                                $copado(this).addClass('slds-has-focus');
+                                $copado(this).find('a').attr('aria-selected', true);
+                                var $copadocontentToShow = $copado('#' + $copado(this).find('a').attr('aria-controls'));
+                                $copadocontentToShow.removeClass('slds-hide');
+                                $copadocontentToShow.addClass('slds-show');
+
+                                $copado(this).siblings().removeClass('slds-active');
+                                $copado(this).siblings().removeClass('slds-has-focus');
+                                $copado(this).siblings().find('a').attr('aria-selected', false);
+                                $copadocontentToShow.siblings('.slds-tabs--scoped__content').removeClass('slds-show');
+                                $copadocontentToShow.siblings('.slds-tabs--scoped__content').addClass('slds-hide');
+                            });
+
+                            function navigateTo(redirectUrl) {
+                                redirectUrl = encodeURI(redirectUrl);
+                                if ((typeof sforce != 'undefined') && sforce && (!!sforce.one)) {
+                                    sforce.one.navigateToURL(redirectUrl);
+                                } else {
+                                    window.location.href = redirectUrl;
+                                }
+                            }
+                        </script>
+                    </apex:form>
+
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </div>
+    </body>
+
+    </html>
+</apex:page>

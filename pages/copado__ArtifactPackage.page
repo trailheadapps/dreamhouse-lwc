@@ -1,0 +1,241 @@
+<apex:page id="ArtifactPackage" standardController="copado__Artifact__c" lightningStylesheets="true" extensions="copado.ArtifactPackageController"
+    sideBar="false">
+    <title>{!copado__Artifact__c.Name} Source Package Management</title>
+    <c:WizardUtils id="cmpWizardUtilities" />
+    <c:IncludeStaticsResourceComponent addJquery="true" />
+    <c:IncludeConnectionJsComponent />
+    <apex:includeScript value="{!URLFOR($Resource.copado__JsRemoting)}" />
+    <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true" addjqxEBcss="true" />
+    <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    <style>
+        .jqx-grid-cell-selected,
+        .jqx-grid-cell-selected-base {
+            background-color: #009ae2 !important;
+            color: white !important;
+        }
+    </style>
+    <apex:form >
+        <apex:pageMessages id="message" />
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}" useJobsManager="true" possibleRunningJobs=",DxListOrgPackagesJob,,true;" />
+        <script>
+            window.addEventListener('copadoJobsManagerFinished', function (evt) {
+                for (var i = 0; i < evt.detail.length; i++) {
+                    var jobFinished = evt.detail[i].isFinished;
+                    var jobSuccess = evt.detail[i].isSuccess;
+                    var jobMessage = evt.detail[i].message;
+                    var jobType = evt.detail[i].type;
+                    jobstatus(jobFinished, jobSuccess, jobMessage, jobType);
+                }
+            }, false);
+        </script>
+        <apex:actionFunction name="jobstatus" action="{!jobStatusNotification}" reRender="message,pb" onComplete="prepareGrid();">
+            <apex:param value="" name="jobFinished" />
+            <apex:param value="" name="jobSuccess" />
+            <apex:param value="" name="jobMessage" />
+            <apex:param value="" name="jobType" />
+        </apex:actionFunction>
+        <apex:pageBlock id="pb" title="{!copado__Artifact__c.Name}">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton id="btnSave" value="{!$Label.site.save}" title="Save selections" onclick="lockScreen();processPW($copado('#packageKey').val());return false;"
+                    reRender="xx" />
+                <apex:commandButton id="btnRefresh" value="Refresh List of Packages" title="Refresh List of Packages" onclick="lockScreen();"
+                    action="{!refreshPackageList}" onComplete="" />
+                <apex:commandButton id="btnClose" value="{!$Label.site.cancel}" title="{!$Label.site.cancel}" onclick="lockScreen();" action="{!cancel}"
+                />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2" showHeader="false">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Package Key" for="packagePw" />
+                    <input type="password" autocomplete="off" id="packageKey" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Source Org" for="source" />
+                    <apex:outputField value="{!copado__Artifact__c.copado__Org_Credential__c}" id="source" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" showHeader="true" title="List of packages" collapsible="false">
+                <div id="jqxgrid" style="width:99%;"></div>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:actionFunction name="processPW" action="{!encryptPassword}" reRender="hid" onComplete="saveSelection();">
+            <apex:param value="" name="pass" />
+        </apex:actionFunction>
+        <apex:inputHidden value="{!pw}" id="hid" />
+    </apex:form>
+
+
+    <script type="text/javascript">
+
+
+        $copado(document).ready(function () {
+            prepareGrid();
+        });
+        var artifactPackageGrid;
+        var metadataRecords;
+        var selectedPackageIndex;
+
+        var loadingHTML = '<center><img src="/img/loading.gif" /> <i>{!$Label.copado__LOADING}<span id="retry-label"></span></i></center>';
+        $copado('#jqxgrid').html(loadingHTML);
+        var saveSelection = function () {
+            setTimeout(function () {
+                setLockScreenMessage("saving...");
+                var json = {};
+                if (metadataRecords) {
+                    var selectedPackage = metadataRecords[selectedPackageIndex];
+                    if (selectedPackage) {
+                        json.versionId = selectedPackage.MetadataPackageVersionId;
+                        json.packageId = selectedPackage.MetadataPackageId;
+                        json.key = $copado('[Id$=hid]').val();
+                        json.packageInfo = selectedPackage;
+                        dw.u.upsertAttach('{!JSENCODE(copado__Artifact__c.Id)}', 'PackageInfo', JSON.stringify(json), false);
+                        setTimeout(function () { cancelOperation() }, 250);
+                    } else {
+                        alert('Please Select a Package');
+                        unlockScreen();
+                    }
+                } else {
+                    alert('No Package Selected, Please Refresh List of Packages');
+                    unlockScreen();
+                }
+            }, 100);
+        }
+        var cancelOperation = function () {
+            location.href = '/{!copado__Artifact__c.Id}';
+        }
+
+        var prepareGrid = function () {
+            var att = dw.u.getDecodedAttach("{!JSENCODE(copado__Artifact__c.copado__Org_Credential__c)}", "Packages");
+            if (att) {
+                var body = att.Body;
+                try {
+                    metadataRecords = JSON.parse(body);
+                    startGrid(metadataRecords);
+                    setSelected(metadataRecords);
+                } catch (e) {
+                    console.error(e);
+                    var noDataHtml = '<center>{!JSENCODE($Label.copado__NODATATODISPLAY)}</center>';
+                    $copado('#jqxgrid').html(noDataHtml);
+                }
+            } else {
+                var noDataHtml = '<center>{!JSENCODE($Label.copado__NODATATODISPLAY)}</center>';
+                $copado('#jqxgrid').html(noDataHtml);
+            }
+
+            $copado("#jqxgrid").bind('rowselect', function (event) {
+                selectedPackageIndex = event.args.rowindex;
+            });
+        }
+
+        var setSelected = function (metadataRecords) {
+            var att = dw.u.getDecodedAttach("{!JSENCODE(copado__Artifact__c.Id)}", "PackageInfo");
+            var preSelection;
+            if (att) {
+                var body = att.Body;
+                preSelection = JSON.parse(body);
+                $copado('#packageKey').val(preSelection.key)
+            } else {
+                return;
+            }
+            var filter = preSelection.versionId;
+            if (!filter) return;
+            var item = $copado.grep(metadataRecords, function (n, i) {
+                return n['MetadataPackageVersionId'] == filter;
+            });
+            if (item.length > 1) return;
+            var selectionIndex = metadataRecords.indexOf(item[0]);
+            $copado('#jqxgrid').jqxGrid('selectrow', selectionIndex);
+        };
+
+        var startGrid = function (data) {
+            //normalize data
+            var len = data.length;
+
+            var _datafields = [
+                { name: 'MetadataPackageVersionId', type: 'string' },
+                { name: 'MetadataPackageId', type: 'string' },
+                { name: 'Name', type: 'string' },
+                { name: 'ReleaseState', type: 'string' },
+                { name: 'Version', type: 'string' },
+                { name: 'BuildNumber', type: 'string' }
+            ];
+            console.log('_datafields', _datafields);
+            var theme = 'base';
+            var source = {
+                localdata: data,
+                datafields: _datafields,
+                datatype: "array"
+            };
+
+            //adapter wrapper
+            var dataAdapter = new $copado.jqx.dataAdapter(source);
+
+            artifactPackageGrid = $copado("#jqxgrid");
+
+            artifactPackageGrid.jqxGrid({
+                width: '100%',
+                source: dataAdapter,
+                showfilterrow: true,
+                filterable: true,
+                theme: theme,
+                editable: false,
+                selectionmode: 'singlerow',
+                enablebrowserselection: true,
+                pageable: true,
+                pagesizeoptions: ['10', '20', '50', '100', '500'],
+                pagesize: 20,
+                sortable: true,
+                columnsresize: true,
+                localization: localizationobj,
+                columns: [
+                    {
+                        text: 'MetadataPackageVersionId',
+                        filtertype: 'textbox',
+                        filtercondition: 'contains',
+                        editable: false,
+                        datafield: 'MetadataPackageVersionId',
+                        width: '20%'
+                    },
+                    {
+                        text: 'MetadataPackageId',
+                        datafield: 'MetadataPackageId',
+                        filterable: true,
+                        editable: false,
+                        columntype: 'textbox',
+                        width: '20%'
+                    },
+                    {
+                        text: 'Name',
+                        datafield: 'Name',
+                        filterable: true,
+                        filtertype: 'checkedlist',
+                        editable: false,
+                        columntype: 'textbox',
+                        width: '30%'
+                    },
+                    {
+                        text: 'ReleaseState',
+                        filtertype: 'checkedlist',
+                        editable: false,
+                        datafield: 'ReleaseState',
+                        width: '10%'
+                    },
+                    {
+                        text: 'Version',
+                        filtertype: 'textbox',
+                        editable: false,
+                        datafield: 'Version',
+                        width: '10%'
+                    },
+                    {
+                        text: 'BuildNumber',
+                        filtertype: 'checkedlist',
+                        editable: false,
+                        datafield: 'BuildNumber',
+                        width: '10%'
+                    }
+                ]
+            });
+        };
+    </script>
+</apex:page>

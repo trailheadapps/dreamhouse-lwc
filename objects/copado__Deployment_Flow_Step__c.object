@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>copado__Automatically_Merge_and_Deploy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Automatically Merge and Deploy</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Branch__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Git branch linked to the source environment.</inlineHelpText>
+        <label>Branch</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Commits_Ahead__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Commits Ahead</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Commits_Behind__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Commits Behind</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Connection_Behavior_Override__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>This field manages override of Connection Behavior on Pipeline Connection basis</description>
+        <externalId>false</externalId>
+        <label>Connection Behavior Override</label>
+        <referenceTo>copado__Connection_Behavior__c</referenceTo>
+        <relationshipLabel>Pipeline Connections</relationshipLabel>
+        <relationshipName>Pipeline_Connections</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Connection_Behavior__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>If( NOT(ISBLANK( copado__Connection_Behavior_Override__c )), copado__Connection_Behavior_Override__c,  copado__Destination_Environment__r.copado__Connection_Behavior__c  )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Connection Behavior</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Deployment_Flow__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Pipeline</label>
+        <referenceTo>copado__Deployment_Flow__c</referenceTo>
+        <relationshipLabel>Pipeline Connections</relationshipLabel>
+        <relationshipName>Deployment_Flow_Steps</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>copado__Destination_Branch__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Value updated automatically by Copado. This is defined in the Deployment Flow Step of the Destination Environment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Value updated automatically by Copado. This is defined in the Deployment Flow Step of the Destination Environment.</inlineHelpText>
+        <label>Destination Branch</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Destination_Environment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Destination Environment</label>
+        <referenceTo>copado__Environment__c</referenceTo>
+        <relationshipName>Deployment_Flow_Steps1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Enable_as_Scratch_Org_Destination__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Enable as Scratch Org Target</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Default DX Target</fullName>
+                    <default>false</default>
+                    <label>Default DX Target</label>
+                </value>
+                <value>
+                    <fullName>DX Target</fullName>
+                    <default>false</default>
+                    <label>DX Target</label>
+                </value>
+                <value>
+                    <fullName>DX Patch Target</fullName>
+                    <default>false</default>
+                    <label>DX Patch Target</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Last_Merge_Base__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Last date and time when the source and target branch were in Sync (no commits ahead or behind).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Last date and time when the source and target branch were in Sync (no commits ahead or behind).</inlineHelpText>
+        <label>Last Merge Base</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>copado__Last_Merge_CBM_Sync__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Last date and time when the CBM Sync button was clicked to merge and deploy changes to the destination environment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Last date and time when the CBM Sync button was clicked to merge and deploy changes to the destination environment.</inlineHelpText>
+        <label>Last Merge CBM Sync</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>copado__Last_Pull_CBM_Sync__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Last date and time when the CBM Sync button was clicked to merge and deploy changes to the source environment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Last date and time when the CBM Sync button was clicked to merge and deploy changes to the source environment.</inlineHelpText>
+        <label>Last Pull CBM Sync</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>copado__Merge_Auto_Resolved_Files__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List of conflicted files auto resolved by Copado when merging the source branch into the destination branch.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>List of conflicted files auto resolved by Copado when merging the source branch into the destination branch.</inlineHelpText>
+        <label>Merge Auto Resolved Files</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>copado__Next_Stage__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>copado__Stage_Connection__r.copado__Next_Stage__c</formula>
+        <label>Next Stage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Pull_Auto_Resolved_Files__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List of conflicted files auto resolved by Copado when merging the destination branch into the source branch.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>List of conflicted files auto resolved by Copado when merging the destination branch into the source branch.</inlineHelpText>
+        <label>Pull Auto Resolved Files</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>copado__Source_Environment__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Source Environment</label>
+        <referenceTo>copado__Environment__c</referenceTo>
+        <relationshipName>Deployment_Flow_Steps</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Stage_Connection__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Stage Connection where the source environment belongs to.</inlineHelpText>
+        <label>Stage Connection</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>You can only select Stage Connections that belong to the same Pipeline.</errorMessage>
+            <filterItems>
+                <field>copado__Stage_Connection__c.copado__Pipeline__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.copado__Deployment_Flow__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>copado__Stage_Connection__c</referenceTo>
+        <relationshipLabel>Stage Connections</relationshipLabel>
+        <relationshipName>Stage_Connections</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Stage__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;/&quot; &amp; copado__Stage_Connection__r.copado__Stage__c, copado__Stage_Connection__r.copado__Stage__r.copado__Display_Name__c, &quot;_self&quot;)</formula>
+        <inlineHelpText>Stage to which the source environment belongs.</inlineHelpText>
+        <label>Stage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Sync_Merge_State__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sync Merge State</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Needs recalculating</fullName>
+                    <default>true</default>
+                    <label>Needs recalculating</label>
+                </value>
+                <value>
+                    <fullName>Recalculating</fullName>
+                    <default>false</default>
+                    <label>Recalculating</label>
+                </value>
+                <value>
+                    <fullName>In sync</fullName>
+                    <default>false</default>
+                    <label>In sync</label>
+                </value>
+                <value>
+                    <fullName>Validated</fullName>
+                    <default>false</default>
+                    <label>Validated</label>
+                </value>
+                <value>
+                    <fullName>Validation errors</fullName>
+                    <default>false</default>
+                    <label>Validation errors</label>
+                </value>
+                <value>
+                    <fullName>Syncing</fullName>
+                    <default>false</default>
+                    <label>Syncing</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Sync_Pull_State__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sync Pull State</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Needs recalculating</fullName>
+                    <default>true</default>
+                    <label>Needs recalculating</label>
+                </value>
+                <value>
+                    <fullName>Recalculating</fullName>
+                    <default>false</default>
+                    <label>Recalculating</label>
+                </value>
+                <value>
+                    <fullName>In sync</fullName>
+                    <default>false</default>
+                    <label>In sync</label>
+                </value>
+                <value>
+                    <fullName>Validated</fullName>
+                    <default>false</default>
+                    <label>Validated</label>
+                </value>
+                <value>
+                    <fullName>Validation errors</fullName>
+                    <default>false</default>
+                    <label>Validation errors</label>
+                </value>
+                <value>
+                    <fullName>Syncing</fullName>
+                    <default>false</default>
+                    <label>Syncing</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Test_Level__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Recommended Test Level: &quot;Run Local Tests&quot;</inlineHelpText>
+        <label>Test Level</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No Test Run</fullName>
+                    <default>true</default>
+                    <label>No Test Run</label>
+                </value>
+                <value>
+                    <fullName>Run Specified Tests</fullName>
+                    <default>false</default>
+                    <label>Run Specified Tests</label>
+                </value>
+                <value>
+                    <fullName>Run Local Tests</fullName>
+                    <default>false</default>
+                    <label>Run Local Tests</label>
+                </value>
+                <value>
+                    <fullName>Run All Tests In Org</fullName>
+                    <default>false</default>
+                    <label>Run All Tests In Org</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Pipeline Connection</label>
+    <nameField>
+        <displayFormat>DFS-{000000}</displayFormat>
+        <label>Pipeline Connection Reference</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Pipeline Connections</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>copado__EnvironmentAndPipelinePlatformMustBeSame</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR( 
+    BLANKVALUE(TEXT(copado__Destination_Environment__r.copado__Platform__c), &apos;Salesforce&apos;) &lt;&gt; BLANKVALUE(TEXT(copado__Deployment_Flow__r.copado__Platform__c), &apos;Salesforce&apos;), 
+    BLANKVALUE(TEXT(copado__Source_Environment__r.copado__Platform__c), &apos;Salesforce&apos;) &lt;&gt; BLANKVALUE(TEXT(copado__Deployment_Flow__r.copado__Platform__c), &apos;Salesforce&apos;)
+)</errorConditionFormula>
+        <errorMessage>Platform for pipeline and Environment must match</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>copado__Select_Branch</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Select Branch</masterLabel>
+        <openType>sidebar</openType>
+        <page>copado__DeploymentFlowStepBranchSelection</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

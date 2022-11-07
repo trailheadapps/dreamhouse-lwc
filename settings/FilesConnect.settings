@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FilesConnectSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableContentHubAllowed>true</enableContentHubAllowed>
+    <enableContentHubCvtLinksAllowed>true</enableContentHubCvtLinksAllowed>
+    <enableContentHubEOSearchLayout>false</enableContentHubEOSearchLayout>
+</FilesConnectSettings>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Promotion</fullName>
+        <default>false</default>
+        <label>Promotion</label>
+    </customValue>
+    <customValue>
+        <fullName>PromotionDeployment</fullName>
+        <default>false</default>
+        <label>Promotion Deployment</label>
+    </customValue>
+    <customValue>
+        <fullName>Commit</fullName>
+        <default>false</default>
+        <label>Commit</label>
+    </customValue>
+    <customValue>
+        <fullName>CreatePackage</fullName>
+        <default>false</default>
+        <label>Create Package</label>
+    </customValue>
+    <customValue>
+        <fullName>CreatePackageVersion</fullName>
+        <default>false</default>
+        <label>Create Package Version</label>
+    </customValue>
+    <customValue>
+        <fullName>PublishPackageVersion</fullName>
+        <default>false</default>
+        <label>Publish Package Version</label>
+    </customValue>
+    <customValue>
+        <fullName>ImportPackage</fullName>
+        <default>false</default>
+        <label>Import Package</label>
+    </customValue>
+    <customValue>
+        <fullName>PackageCreation</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>PackageCreation</label>
+    </customValue>
+    <customValue>
+        <fullName>PackageDistribution</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>PackageDistribution</label>
+    </customValue>
+    <masterLabel>Copado Actions</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

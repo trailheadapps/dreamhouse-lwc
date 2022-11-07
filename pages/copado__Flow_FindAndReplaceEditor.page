@@ -1,0 +1,11 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" extensions="copado.Settings" standardController="copado__Deployment_Flow__c" applyHtmlTag="false" applyBodyTag="false">
+	<html>
+	<head>
+		<title>Copado Global Find &amp; Replace Rules Editor</title>
+	</head>
+	<body style="padding: 15px;padding-top: 0;" class="slds-scope">
+		<c:GlobalFindAndReplaceEditorComponent object="{!copado__Deployment_Flow__c}" platform="{!copado__Deployment_Flow__c.copado__Platform__c}" objectName="{!namespace}Deployment_Flow__c" />
+	</body>
+	</html>
+	
+</apex:page>

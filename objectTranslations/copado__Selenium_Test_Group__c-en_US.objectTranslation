@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Selenium_Results_Tab --></label>
+        <name>copado__Selenium_Results_Tab</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Environment --></label>
+        <name>copado__Environment__c</name>
+        <relationshipLabel><!-- Selenium Test Groups --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>copado__External_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- When this option is unchecked, Copado will automatically create/update/remove Test Runs for each Suite/ Credential.
+
+Check it to manage the Test Runs in this group manually, then go to a Test Run list view, and use the &quot;Add to Test Group&quot; option. --></help>
+        <label><!-- Manage Test Runs manually --></label>
+        <name>copado__Manage_Test_Runs_manually__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked, tests runs will be executed in sequence, one after another, instead of doing it in parallel --></help>
+        <label><!-- Run Sequentially --></label>
+        <name>copado__Run_Sequentially__c</name>
+    </fields>
+    <fields>
+        <help><!-- All tests runs belonging to this Test Group will use these Selenium Settings. --></help>
+        <label><!-- Selenium Settings --></label>
+        <name>copado__Selenium_Settings__c</name>
+        <relationshipLabel><!-- Selenium Test Groups --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status Date --></label>
+        <name>copado__Status_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Icon --></label>
+        <name>copado__Status_Icon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed Successfully</masterLabel>
+            <translation><!-- Completed Successfully --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed with Errors</masterLabel>
+            <translation><!-- Completed with Errors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Queued</masterLabel>
+            <translation><!-- Queued --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If “Regression Test” or “User Story Test” is selected, then all Credentials associated to that Test Group must be linked to the same environment. --></help>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+        <picklistValues>
+            <masterLabel>Default</masterLabel>
+            <translation><!-- Default --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regression Test</masterLabel>
+            <translation><!-- Regression Test --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Story Test</masterLabel>
+            <translation><!-- User Story Test --></translation>
+        </picklistValues>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- The Environment field is required if the Type is &quot;User Story Test&quot; or &quot;Regression Test&quot;. --></errorMessage>
+        <name>copado__Environment_Required</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Refresh_Results --></label>
+        <name>copado__Refresh_Results</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Run_Group --></label>
+        <name>copado__Run_Group</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Show_Hook_URL --></label>
+        <name>copado__Show_Hook_URL</name>
+    </webLinks>
+</CustomObjectTranslation>

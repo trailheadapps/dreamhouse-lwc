@@ -1,0 +1,14 @@
+<!--
+ - Created by mertyalti on 22/08/2018.
+ -->
+
+<apex:page id="PackageArtifactOrgDefinition" standardController="copado__Artifact__c" docType="html-5.0" extensions="copado.PackageArtifactOrgDefinitionController,copado.Settings,copado.JsRemotingController" standardStyleSheets="true" lightningStylesheets="true">
+    <!--<c:GAnalytics />
+    <c:IncludeStaticsResourceComponent addJQuery="true" />
+    <apex:slds />
+    <apex:form >
+        <apex:outputPanel id="packageType" layout="none" rendered="{!OR(Artifact__c.Package_Type__c == 'Unlocked', Artifact__c.Package_Type__c == 'Second-Generation Package')}">
+            <c:ScratchOrgTemplate mode="packageDependency" parentPageController="{!this}" showActionButtons="false" showAllTemplateButtons="false" showMessages="true"/>
+        </apex:outputPanel>
+    </apex:form>-->
+</apex:page>

@@ -1,0 +1,439 @@
+<apex:page standardController="copado__Continuous_Integration__c" extensions="copado.ContinuousIntegrationExtension,copado.Settings,copado.JsRemotingController" id="thePage" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" sidebar="{!$User.UIThemeDisplayed=='Theme3'}" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+
+	<c:WizardUtils id="cmpWizardUtilities" />
+	<head>
+		<title>Continuous Integration {!copado__Continuous_Integration__c.Name} | Copado</title>
+		<c:IncludeStaticsResourceComponent addJquery="true" addCometdjs="true" addJcometdjs="true" addJSON2js="true"/>
+		<script type="text/javascript">
+            var Copado_Licenses = {!CurrentUserLicenses};
+        </script>
+        <c:IncludeConnectionJsComponent />
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+        <c:ShowWebhook url="webhook/ci" recordId="{!copado__Continuous_Integration__c.Id}" />
+	    <apex:includeScript value="{!URLFOR($Resource.copadoStreamingService) }" />
+	    <apex:includeScript value="{!URLFOR($Resource.statusManager) }" />
+	    <apex:includeScript value="{!URLFOR($Resource.utils) }" />
+	    <apex:includeScript value="{!URLFOR($Resource.JsRemoting) }"/>
+	</head>
+
+	<body>
+
+		<div class="copado-lightning-VF">
+			<apex:sectionHeader title="Copado Continuous Integration" subtitle="{!copado__Continuous_Integration__c.Name}"  rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+            <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+
+            <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                <div class="slds-page-header">
+				  <apex:outputPanel id="msg" styleClass="fixedMsg">
+				    <apex:pageMessages id="theMessages" />
+				  </apex:outputPanel>
+                  <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                      <div class="slds-media">
+                          <div class="slds-media__figure">
+                              <span class="slds-icon_container slds-icon-custom-custom73" title="Description of icon when needed">
+                                <svg class="slds-icon" aria-hidden="true">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom73')}"></use>
+                                </svg>
+                              </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <p class="slds-text-heading--label slds-line-height--reset">Copado Continuous Integration</p>
+                              <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Copado Continuous Integration"><apex:outputField value="{!copado__Continuous_Integration__c.Name}"/></h1>
+                          </div>
+                      </div>
+                    </div>
+                    <!-- ACTION BUTTONS -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                      <div class="slds-button-group" role="group">
+                        
+                      </div>
+                    </div>
+                    <!-- / ACTION BUTTONS -->
+                  </div>
+                  <div style="background: white; height: 25px;">
+                    <!-- Header details buffer-->
+                  </div>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+			    <c:IframeLocker url="" />
+			    <div style="display:none;">
+			        <apex:pageMessage title="{!$Label.copado__WARNING}" summary="__MSG__" severity="warning" strength="3" id="js-msg-WARNING" />
+			        <apex:pageMessage title="{!$Label.copado__SUCCESS}" summary="__MSG__" severity="confirm" strength="3" id="js-msg-CONFIRM" />
+			        <apex:pageMessage title="{!$Label.copado__ERROR}" summary="__MSG__" severity="error" strength="3" id="js-msg-ERROR" />
+			    </div>
+				
+				<script type="text/javascript">
+					var ci = {
+						ns: '{!namespace}',
+						isCheckOnly: false,
+						buildTasks: [],
+						buildTaskIds: [],
+						inProgressIds: [],
+						ciId:'',
+						CopadoNotifications: null,
+			            fileName: 'PROGRESS_STATUS_COPADO',
+			            limitBuildTaskRows: 1,
+			            imgUrlSuccess: '',
+			            imgUrlError: '',
+
+			            convert18to15: function(value){
+			            	if(value.length==18)return value.substring(0,15);
+			            	return value;
+			            },
+						setIframeLocker: function(url){
+							$copado('#copadoIframe').attr('data-src', url);
+						},
+						openDeploymentStatus: function(deploymentId){
+							ci.setIframeLocker('/apex/{!JSENCODE(namespace)}deploymentStatus?id='+deploymentId);
+							openIframeBox();
+						},
+						setStatusMessage: function(buildTaskId, value){
+							console.info('Setting status message: ', buildTaskId, value);
+							$copado('#'+buildTaskId+'_statusMessage').text(value);
+						},	
+						setStatusImg: function(value){
+							var imgUrl;
+							switch(value){
+								case 'Pending':
+									imgUrl = '<img src="/img/loading.gif" />';
+									break;
+								case 'In Progress':
+									imgUrl = '<img src="/img/loading.gif" />';
+									break;
+								case 'Failed':
+									imgUrl = '<img src="'+ci.imgUrlError+'" />';
+									break;
+								case 'Success':
+									imgUrl = '<img src="'+ci.imgUrlSuccess+'" />';
+									break;
+							}
+							return imgUrl;
+						},
+						setStatus: function(buildTaskId, value){
+							var img = ci.setStatusImg(value);
+							$copado('#'+buildTaskId+'_status').html(img+'&nbsp;&nbsp;&nbsp;'+value);
+						},
+						drawBuildTask: function(buildTaskId, message){
+							console.info('Drawing build task.');
+							var buildTask = ci.queryBuildTask(buildTaskId);
+							if(buildTask==null){
+								console.error('No build task was found for Id', buildTaskId);
+								return null;
+							}
+							ci.setStatus(buildTaskId, buildTask[ci.ns+'Status__c']);
+							ci.setStatusMessage(buildTaskId, (message==null)?'':message);
+						},
+						queryBuildTask: function(id){
+							console.info('Querying build task...');
+							var result = sforce.connection.query("Select Id, Name, "+ci.ns+"Type__c, "+ci.ns+"Deployment__c, "+ci.ns+"Deployment__r.Name, "+ci.ns+"Continuous_Integration__c, "+ci.ns+"Status__c from "+ci.ns+"Build_Task__c where Id='"+id+"' limit 1");
+			                records = result.getArray("records");
+			                if(records.length>0)return records[0];
+			                return null;
+						},
+						drawBuildTable: function(){
+							ci.buildTasks = [];
+							ci.inProgressIds = [];
+							ci.buildTasks = ci.getBuildTasks();
+							$copado('#buildTable tbody').removeData();
+							var rows = '';
+							for(var i=0; i<ci.buildTasks.length; i++) {
+								if(ci.buildTasks[i][ci.ns+'Status__c']=='In Progress'){
+									ci.inProgressIds.push(ci.buildTasks[i].Id);
+								}
+								
+								var actionMsg = (ci.isCheckOnly)?'Validation in progress':'Deployment in progress';
+								var buildTaskInfoMsg = (ci.buildTasks[i][ci.ns+'Status__c']=='In Progress' && ci.buildTasks[i][ci.ns+'Deployment__c']!=null)?actionMsg:'';
+
+								var buttonVisibility = (ci.buildTasks[i][ci.ns+'Deployment__c']==null)?'display:none;':'display:block;';
+								var deploymentId = (ci.buildTasks[i][ci.ns+'Deployment__c']!=null)?ci.buildTasks[i][ci.ns+'Deployment__c']:'';
+								var deploymentName = (ci.buildTasks[i][ci.ns+'Deployment__r']!=null)?ci.buildTasks[i][ci.ns+'Deployment__r'].Name:'';
+								var img = (ci.buildTasks[i][ci.ns+'Status__c']!=null)?ci.setStatusImg(ci.buildTasks[i][ci.ns+'Status__c']):'';
+			                    if(!img)img = '';
+								var buildTaskType = (ci.buildTasks[i][ci.ns+'Type__c']!=null)?ci.buildTasks[i][ci.ns+'Type__c']:'';
+								var buildTaskStatus = (ci.buildTasks[i][ci.ns+'Status__c']!=null)?ci.buildTasks[i][ci.ns+'Status__c']:'';
+								var row = '<tr>'+
+									'<td style="max-width:130px;"><a href="/'+ci.buildTasks[i].Id+'">'+ci.buildTasks[i].Name+'</a></td>'+
+									'<td><a href="/'+ci.buildTasks[i][ci.ns+'Deployment__c']+'">'+deploymentName+'</a></td>'+
+									'<td style="max-width:160px;">'+buildTaskType+'</td>'+
+									'<td style="max-width:160px;"><div id="'+ci.buildTasks[i].Id+'_status">'+img+'&nbsp;&nbsp;&nbsp;'+buildTaskStatus+'</div></td>'+
+									'<td style="min-width:200px;"><div id="'+ci.buildTasks[i].Id+'_statusMessage">'+buildTaskInfoMsg+'</div></td>'+
+									'<td style="max-width:160px;"><input type="button" class="btn" style="'+buttonVisibility+'" onclick="ci.openDeploymentStatus(\''+deploymentId+'\')" value="Deployment Status" /></td>'+
+								'</tr>';
+								rows = rows+row;
+							}
+							$copado("#buildTable tbody").html(rows);
+							$copado('#buildTable').show();
+							$copado('#tableLoader').hide();
+							console.info('ci.inProgressIds = ',ci.inProgressIds);
+							if(ci.inProgressIds.length>0){
+								for(var i=0; i<ci.inProgressIds.length; i++){
+									console.info('--> Iterating in progress Ids = ',ci.inProgressIds[i]);
+									var att = streamingService.getAttachment(ci.inProgressIds[i], ci.fileName);
+									if(att!=null){
+										var obj = JSON.parse(att.Body);
+				                    	console.info('--> att found = ',att, obj);
+				                    	ci.setStatusMessage(ci.inProgressIds[i], obj.status);
+									}
+								}
+							}
+						},
+						getBuildTasks: function(){
+			                try{
+			                    var result = sforce.connection.query("Select Id, Name, "+ci.ns+"Type__c, "+ci.ns+"Deployment__c, "+ci.ns+"Deployment__r.Name, "+ci.ns+"Continuous_Integration__c, "+ci.ns+"Status__c from "+ci.ns+"Build_Task__c where "+ci.ns+"Continuous_Integration__c='"+ci.ciId+"' order by Name DESC limit "+ci.limitBuildTaskRows+"");
+			                    records = result.getArray("records");
+			                    ci.buildTaskIds = [];
+			                    for(var i=0; i<records.length; i++){
+			                    	ci.buildTaskIds.push(records[i].Id);
+			                    }
+			                    return records;
+			                }
+			                catch(error){
+			                    console.error('Error getting attachment by name and parentId: '+error);
+			                    copadoApp.showMessage('ERROR', 'Error retrieving Build Task. The record may have been deleted whilst after this page was loaded.');
+			                    return;
+			                }
+			            }
+					};
+					var streamingService = {
+						streamingAPI_clientId: '',
+
+						readStatusFromAttachment: function(att){
+			                console.log('Reading status from attachment...');
+			                var me = streamingService;
+			                var obj = JSON.parse(att.Body);
+			                if(att.Name=='PROGRESS_STATUS_COPADO'){
+			                	ci.drawBuildTable();
+			                	getCI();
+			                	//ci.setStatusMessage(att.ParentId, obj.status);
+			                }
+			            },
+			            getAttachment: function(parentId, name){
+			                var att = dw.u.getDecodedAttach(parentId, name);
+			                return att;
+			            },
+			            readStream: function(message){
+			                var me = streamingService;
+			                me.streamingAPI_clientId = message.clientId;
+			                console.log('Stream received:',message);
+			                if(message.channel=='/topic/CopadoNotifications'){
+			                	console.log('FileName', message.data.sobject.Name==ci.fileName);
+			                	console.log('isInArray',$copado.inArray(message.data.sobject[ci.ns+'ParentId__c'], ci.buildTaskIds)>=0);
+			                	
+			                	var validParentId = (message.data.sobject[ci.ns+'Parent2Id__c']!=null)?((message.data.sobject[ci.ns+'Parent2Id__c']==ci.ciId)?true:false):false;
+			                	validParentId = (validParentId==false && message.data.sobject[ci.ns+'ParentId__c']==ci.ciId)?true:false;
+			                	console.log('ParentId compare', validParentId, message.data.sobject[ci.ns+'ParentId__c'], message.data.sobject[ci.ns+'Parent2Id__c']);
+			                    if(message.data.sobject.Name==ci.fileName){
+			                    	console.log('--> inside fileName if function');
+			                    	var parentId = message.data.sobject[ci.ns+'ParentId__c'];
+			                        var parent2Id = message.data.sobject[ci.ns+'Parent2Id__c'];
+			                        var continueParsing = false;
+			                        
+			                        if($copado.inArray(parentId, ci.buildTaskIds)>=0){
+			                        	console.log('--> item in array');
+			                        	att.ParentId = parentId;
+			                        	continueParsing = true;
+			                        }
+			                        if(parent2Id===ci.ciId){
+			                        	console.log('--> parent2Id == ci.Id');
+			                        	continueParsing = true;
+			                        }
+			                        if(continueParsing==false)return;
+
+			                        console.log('--> Now create attachment');
+			                        var msg = message.data.sobject[ci.ns+'Message__c'];
+			                        var name = message.data.sobject.Name;
+			                        var att = null;
+			                        var att = new sforce.SObject("Attachment");
+			                        	att.ParentId = parentId;
+			                        if(msg != null){
+			                        	att.Name = ci.fileName;
+			                        	att.Body = msg;
+			                        }
+			                        else{
+			                        	att = me.getAttachment(parentId, name);
+			                        }
+			                        console.log('--> Move to read status from attachment');
+			                        me.readStatusFromAttachment(att);
+			                    }
+			                }
+			            }
+					};
+				</script>
+				<script type="text/javascript">
+					var copadoApp = {
+						ns: '{!namespace}',
+
+						init: function(){
+							ci.ciId='{!ci.Id}';
+							ci.isCheckOnly = {!ci.copado__Check_Only__c};
+							ci.limitBuildTaskRows = {!mySettings.Build_Task_Rows__c};
+							ci.imgUrlSuccess = '/img/msg_icons/confirm16.png';
+							ci.imgUrlError = '/img/msg_icons/error16.png';
+							
+							ci.drawBuildTable();
+							getCI();
+
+							setInterval(function(){
+								ci.drawBuildTable();
+								getCI();
+							},10000);
+						},
+						//methods
+			            /**
+			             * [showMessage description]
+			             * @param  {[type]} type CONFIRM, WARNING, ERROR
+			             * @param  {[type]} msg  [description]
+			             * @return {[type]}      [description]
+			             */
+			            showMessage: function(type, msg){
+			                $copado('.fixedMsg')
+			                    .html($copado('[id$=js-msg-'+type+']').html().replace('__MSG__',msg))
+			                    .fadeIn('slow');
+
+			                //showMessage(type,msg);
+			                setTimeout(function(){$copado('.fixedMsg').fadeOut('slow');},7000);
+			            }
+					};
+				</script>
+				<script>
+			        $copado( document ).ready(function() {
+			        	copadoStreamingService.ns = copadoApp.ns;
+			            copadoStreamingService.init();
+			            $copado.cometd.subscribe('/topic/CopadoNotifications', function(message) {
+			                console.info('Push message: ', message);
+			                streamingService.readStream(message);
+			            });
+			            window.onbeforeunload = copadoStreamingService.disconnect;
+			            copadoApp.init();
+			        });
+			    </script>
+
+				<apex:form id="theForm" styleClass="copado-lightning-container" style="padding-top:12px;">
+			    	<apex:actionFunction name="getCI" action="{!getCI}" reRender="theForm"/>
+					<apex:pageBlock id="pb" title="">
+						<apex:pageBlockButtons id="pbbs" location="top" rendered="{!isCIenabled}">
+							<apex:commandButton id="btnEdit" value="{!$Label.copado__EDIT}" action="{!edit}" />
+							<apex:commandButton id="btnDelete" value="{!$Label.copado__DELETE}" action="{!URLFOR($Action.Continuous_Integration__c.Delete, Continuous_Integration__c.Id)}" onclick="if(!confirm('{!$Label.copado__ARE_YOU_SURE}')){return false;};"/>
+							<apex:commandButton id="btnRun" value="Run Continuous Integration" action="{!executeCI}" disabled="{!!ci.copado__Active__c}" />
+							<apex:commandButton id="btnShowHookUrl" value="Show Hook URL" onclick="showWebhook(); return false;"/>
+						</apex:pageBlockButtons>
+						<apex:pageBlockSection columns="1" collapsible="false" title="Continuous Integration URL" rendered="{!showHookURl}">
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel >Hook URL</apex:outputLabel>
+								<div style="300px">{!hookUrl}</div>
+							</apex:pageBlockSectionItem>
+							<apex:pageBlockSectionItem >
+								<apex:outputPanel ></apex:outputPanel>
+								<apex:commandButton value="Hide Hook URL" action="{!hideHookUrl}" reRender="theForm" />
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+						<apex:pageBlockSection columns="2" title="{!IF(showHookUrl==true,'Continuous Integration Information','')}">
+							<apex:outputField value="{!ci.Name}" />
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel value="{!$ObjectType.copado__Continuous_Integration__c.Fields.OwnerId.Label}" />
+								<apex:outputPanel >
+									<apex:outputField value="{!ci.OwnerId}" />
+									&nbsp;&nbsp;<apex:outputLink value="/{!ci.Id}/a?retURL=%2F{!ci.Id}">[Change Owner]</apex:outputLink>
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+							<apex:outputField value="{!ci.copado__Git_Repository__c}"/>
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel value="{!$ObjectType.copado__Continuous_Integration__c.Fields.copado__Status__c.Label}" />
+								<apex:outputPanel >
+									<apex:outputField value="{!ci.copado__Status__c}" />
+									&nbsp;&nbsp;<img src="{!URLFOR($Resource.Statics, ciStatusImgUrl)}" style="width:16px; height:16px;" />
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+							<apex:outputField value="{!ci.copado__Branch__c}" />
+							<apex:outputField value="{!ci.copado__Active__c}" />
+							<apex:outputField value="{!ci.copado__Files_to_be_deployed__c}" />
+							<apex:outputField value="{!ci.copado__Check_Only__c}" />				
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel value="{!$ObjectType.copado__Continuous_Integration__c.Fields.copado__Destination_Org_Credential__c.Label}" />
+								<apex:outputPanel >
+									<apex:outputField value="{!ci.copado__Destination_Org_Credential__c}" />
+									&nbsp;&nbsp;<img src="{!URLFOR($Resource.Statics, destOrgValidationStatus)}" style="width:16px; height:16px;"/>
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+			                <apex:outputField value="{!ci.copado__Run_All_Tests__c}" />
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel value="{!$ObjectType.copado__Continuous_Integration__c.fields.copado__Last_Build_Task_Duration__c.Label}"/>
+								<apex:outputPanel >
+									<div id="ci_duration"> 
+									</div>
+									<script type="text/javascript">
+										var dura_secs = {!if(not(IsBlank(ci.Last_Build_Task_Duration__c)),ci.Last_Build_Task_Duration__c,0)} * 1000;
+										var h_dura = reformatMilliseconds(dura_secs);
+										$copado('#ci_duration').text(h_dura);
+									</script>
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+
+						</apex:pageBlockSection>
+			            <apex:pageBlockSection columns="2" title="{!$Label.copado__PRE_POST_BUILD_AUTOMATION}">
+			                <apex:outputField value="{!ci.copado__Pre_Deployment_Options__c}" />
+			                <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+			                <apex:outputField value="{!ci.copado__Pre_Deployment_Jobs__c}" />
+			                <apex:pageBlockSectionItem >
+								<apex:outputLabel value="{!$ObjectType.copado__Continuous_Integration__c.Fields.copado__Status__c.Label}" />
+								<apex:outputPanel rendered="{!ci.Pre_Deployment_Jobs__r.copado__Status__c!='Draft'}">
+									<apex:outputField value="{!ci.Pre_Deployment_Jobs__r.copado__Status__c}" />
+									&nbsp;&nbsp;<img src="{!URLFOR($Resource.Statics, preCiStatusImgUrl)}" style="width:16px; height:16px;" />
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+			                
+			                <apex:outputField value="{!ci.copado__Post_Success_Deployment_Jobs__c}" />
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel value="{!$ObjectType.copado__Continuous_Integration__c.Fields.copado__Status__c.Label}" />
+								<apex:outputPanel rendered="{!ci.Post_Success_Deployment_Jobs__r.copado__Status__c!='Draft'}">
+									<apex:outputField value="{!ci.Post_Success_Deployment_Jobs__r.copado__Status__c}" />
+									&nbsp;&nbsp;<img src="{!URLFOR($Resource.Statics, postSuccessImgUrl)}" style="width:16px; height:16px;" />
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+			                
+			                <apex:outputField value="{!ci.copado__Post_Failed_Deployment_Jobs__c}" />
+			                <apex:pageBlockSectionItem >
+								<apex:outputLabel value="{!$ObjectType.copado__Continuous_Integration__c.Fields.copado__Status__c.Label}" />
+								<apex:outputPanel rendered="{!ci.Post_Failed_Deployment_Jobs__r.copado__Status__c!='Draft'}">
+									<apex:outputField value="{!ci.Post_Failed_Deployment_Jobs__r.copado__Status__c}" />
+									&nbsp;&nbsp;<img src="{!URLFOR($Resource.Statics, postFailureImgUrl)}" style="width:16px; height:16px;" />
+								</apex:outputPanel>
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+						
+			            <apex:pageBlockSection columns="2" title="{!$Label.copado__OTHER_INFORMATION}" rendered="{!showOtherInformation}">
+							<apex:repeat value="{!$ObjectType.copado__Continuous_Integration__c.FieldSets.copado__CustomFields}" var="f"> 
+								<apex:outputField value="{!copado__Continuous_Integration__c[f]}" />
+							</apex:repeat>
+						</apex:pageBlockSection>
+					</apex:pageBlock>
+				</apex:form>
+
+				<apex:outputPanel layout="block" styleClass="copado-lightning-container">
+					<apex:pageBlock title="{!$ObjectType.copado__Build_Task__c.LabelPlural}">
+						<div id="tableLoader" style="text-align:center;"><img src="/img/loading.gif"/>&nbsp;&nbsp;{!$Label.Loading}</div>
+						<table id="buildTable" class="list" border="0" cellpadding="0" cellspacing="0" style="display:none;">
+							<thead>
+								<tr class="headerRow">
+									<th>{!$ObjectType.Build_Task__c.Fields.Name.Label}</th>
+									<th>{!$ObjectType.Deployment__c.Label}</th>
+									<th>{!$ObjectType.Build_Task__c.Fields.Type__c.Label}</th>
+									<th>{!$ObjectType.Build_Task__c.Fields.Status__c.Label}</th>
+									<th>{!$Label.INFORMATION}</th>
+									<th>{!$Label.DEPLOYMENT_STATUS}</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</apex:pageBlock>
+					<apex:relatedList list="Continuous_Integration_Permissions__r" title="{!$ObjectType.copado__Continuous_Integration_Permission__c.LabelPlural} and Notifications"/>
+				</apex:outputPanel>
+			</apex:outputPanel>
+		</div>
+	</body>
+</apex:page>

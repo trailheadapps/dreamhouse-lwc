@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Kanban Board --></label>
+        <name>copado__Kanban_Board__c</name>
+        <relationshipLabel><!-- Kanban Board Views --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SOQL Json --></label>
+        <name>copado__SOQL_Json__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,30 @@
+<apex:page id="thePage" showHeader="true" sidebar="false" standardController="copado__User_Story__c" extensions="copado.UserStoryApexTestResultsExtension,copado.Settings" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <c:WizardUtils />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    </head>
+    <body>
+        <apex:form id="theForm" styleClass="copado-lightning-container">
+            <apex:actionFunction name="goToWaitingForPage" action="{!goToWaitingForPage}" reRender="xxx">
+                <apex:param name="testClassList" value="" />
+                <apex:param name="testClassNamespace" value="" />
+            </apex:actionFunction>
+            <c:SObjectSummaryComponent userStory="{!copado__User_Story__c}" columnsHeader="2" />
+            <c:ApexTestResult id="ApexTestResults" attachmentId="{!attId}" orgId="{!copado__User_Story__c.copado__Org_Credential__c}" userStoryId="{!copado__User_Story__c.Id}" minCodeCoverage="{!copado__User_Story__c.copado__Minimum_Apex_Code_Coverage__c}" userStory="{!copado__User_Story__c}"/>
+        </apex:form>
+        <script>
+            ga('send', 'pageview', {
+              'page': '/UserStoryApexTestResults',
+              'title': 'User Story Apex Test Results'
+            });
+            var Copado_Licenses = {!CurrentUserLicenses};
+
+            function redirectToWaitingForPage(testClassList, uniqueNS) {
+                console.log('testclasslist : ',testClassList);
+                console.log('ns : ',uniqueNS);
+                goToWaitingForPage(testClassList, uniqueNS);
+            }
+        </script>
+    </body>
+</apex:page>

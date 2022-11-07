@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <description>Publish an event whenever the progress status of the result is changed. So live message component can listen it.</description>
+    <label>Result Monitor Result Progress Status Change</label>
+    <processType>AutoLaunchedFlow</processType>
+</Flow>

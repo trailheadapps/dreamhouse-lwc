@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Owner --></label>
+        <name>copado__Owner__c</name>
+        <relationshipLabel><!-- Filters --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Parameters --></label>
+        <name>copado__Parameters__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pipeline --></label>
+        <name>copado__Pipeline__c</name>
+        <relationshipLabel><!-- Filters --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Share With --></label>
+        <name>copado__Share_With__c</name>
+        <picklistValues>
+            <masterLabel>All</masterLabel>
+            <translation><!-- All --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Me</masterLabel>
+            <translation><!-- Me --></translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

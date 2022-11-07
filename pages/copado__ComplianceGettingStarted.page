@@ -1,0 +1,130 @@
+<apex:page id="complianceGettingStarted" title="Compliance Hub Getting Started" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" sidebar="false" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <title>Compliance Hub | Copado</title>
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <style>
+            .noSidebarCell {
+                padding: 0px !important;
+            }
+            .outerNoSidebar {
+                padding: 0px !important;
+            }
+        </style>
+    </head>
+    <body class="slds-scope" style="height:100%;">
+    <div class="copado-lightning-VF" style="height:88%;">
+        <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+            <div class="slds-page-header">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container" style="background-color: #fff" title="Description of icon when needed">
+                            <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;" aria-hidden="true" />
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Getting Started">{!$Label.GETTING_STARTED}</h1>
+                        <p class="slds-text-body_small slds-line-height_reset">{!$Label.GETTING_STARTED_DESCRIPTION_SHORT}</p>
+                    </div>
+                </div>
+            </div>
+        </apex:outputPanel>
+
+        <!-- Content -->
+        <apex:outputPanel layout="block" styleClass="copado-lightning-radius" style="margin:0 12px 0 12px !important; height: 100%">
+            <apex:outputPanel layout="block" style="min-height: 550px; height: 100%;background-color:#FFF; background: url({!URLFOR($Resource.copado__Statics,'img/backgrounds/Copado-Getting-Started.jpg')}) center bottom/100% no-repeat">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-p-around_medium">
+                        <article class="slds-card" style="background-color: #fff;">
+                            <div class="slds-card__header slds-grid">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-standard-article" title="Documentation icon">
+                                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                <use xlink:href="{!URLFOR($Resource.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#article')}" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <h2>
+                                            <a href="https://docs.copado.com/compliance-hub" target="{!IF($User.UIThemeDisplayed=='Theme3','_blank','')}" class="slds-card__header-link slds-truncate" title="{!$Label.Documentation}">
+                                                <span class="slds-text-heading_small">{!$Label.Documentation}</span>
+                                            </a>
+                                        </h2>
+                                    </div>
+                                </header>
+                                <div class="slds-no-flex">
+                                    <a href="https://docs.copado.com/compliance-hub" target="{!IF($User.UIThemeDisplayed=='Theme3','_blank','')}">
+                                        <button class="slds-button slds-button_neutral">{!$Label.LEARN}</button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="slds-card__body slds-card__body_inner">{!$Label.LEARN_DESCRIPTION_SHORT}</div>
+                        </article>
+                    </div>
+
+                    <div class="slds-col slds-p-around_medium">
+                        <article class="slds-card" style="background-color: #fff;">
+                            <div class="slds-card__header slds-grid">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-standard-custom-notification" title="Support Icon">
+                                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                <use xlink:href="{!URLFOR($Resource.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#custom_notification')}" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <h2>
+                                            <a href="https://www.copado.com/support" target="{!IF($User.UIThemeDisplayed=='Theme3','_blank','')}" class="slds-card__header-link slds-truncate" title="{!$Label.SUPPORT}">
+                                                <span class="slds-text-heading_small">{!$Label.SUPPORT}</span>
+                                            </a>
+                                        </h2>
+                                    </div>
+                                </header>
+                                <div class="slds-no-flex">
+                                    <a href="https://www.copado.com/support" target="{!IF($User.UIThemeDisplayed=='Theme3','_blank','')}">
+                                        <button class="slds-button slds-button_neutral">{!$Label.HELP_GET}</button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="slds-card__body slds-card__body_inner">{!$Label.HELP_GET_DESCRIPTION_SHORT}</div>
+                        </article>
+                    </div>
+
+                    <div class="slds-col slds-p-around_medium">
+                        <article class="slds-card" style="background-color: #fff;">
+                            <div class="slds-card__header slds-grid">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container slds-icon-standard-news" title="Blog Icon">
+                                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                <use xlink:href="{!URLFOR($Resource.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#news')}" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <h2>
+                                            <a href="https://www.copado.com/blog" target="{!IF($User.UIThemeDisplayed=='Theme3','_blank','')}" class="slds-card__header-link slds-truncate" title="{!$Label.BLOG}">
+                                                <span class="slds-text-heading_small">{!$Label.BLOG}</span>
+                                            </a>
+                                        </h2>
+                                    </div>
+                                </header>
+                                <div class="slds-no-flex">
+                                    <a href="https://www.copado.com/blog" target="{!IF($User.UIThemeDisplayed=='Theme3','_blank','')}">
+                                        <button class="slds-button slds-button_neutral">{!$Label.VISIT}</button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="slds-card__body slds-card__body_inner">{!$Label.BLOG_DESCRIPTION_SHORT}</div>
+                        </article>
+                    </div>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </div>
+    </body>
+    </html>
+</apex:page>

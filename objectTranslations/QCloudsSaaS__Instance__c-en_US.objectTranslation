@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Org description - Set on the Quality Clouds scan site when the instance was registered --></help>
+        <label><!-- Description --></label>
+        <name>QCloudsSaaS__Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Org environment type - Set on the Quality Clouds scan site when the instance was registered --></help>
+        <label><!-- Environment Type --></label>
+        <name>QCloudsSaaS__Environment_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Instance id from QualityClouds --></help>
+        <label><!-- ID --></label>
+        <name>QCloudsSaaS__ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Id of the org that is connected to current instance --></help>
+        <label><!-- Instance Org Id --></label>
+        <name>QCloudsSaaS__Inst_Org_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- SaaS Platform type --></help>
+        <label><!-- Instance Type --></label>
+        <name>QCloudsSaaS__Instance_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is Featured Banch --></help>
+        <label><!-- Is Featured Banch --></label>
+        <name>QCloudsSaaS__Is_Featured_Banch__c</name>
+    </fields>
+    <fields>
+        <help><!-- Org URL - Detected automatically during scan. Not available for feature branch scans --></help>
+        <label><!-- URL --></label>
+        <name>QCloudsSaaS__url__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quality Gates --></label>
+        <name>Quality_Gates__c</name>
+    </fields>
+</CustomObjectTranslation>

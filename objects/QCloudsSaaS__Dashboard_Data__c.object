@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>QCloudsSaaS__Code_Changes_Issues_Ratio__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Code Changes Issues Ratio</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Code Changes Issues Ratio</inlineHelpText>
+        <label>Code Changes Issues Ratio</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Customization_Ratio__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Customization Ratio</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Customization Ratio</inlineHelpText>
+        <label>Customization Ratio</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Environment__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Environment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Environment</inlineHelpText>
+        <label>Environment</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Instance_Description__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Instance Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Instance Description</inlineHelpText>
+        <label>Instance Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Org_Edition__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Org Edition</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Org Edition</inlineHelpText>
+        <label>Org Edition</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Org_Id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Org Id</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Org Id</inlineHelpText>
+        <label>Org Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Org_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Org URL</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Org URL</inlineHelpText>
+        <label>Org URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__QoC_Variation__c</fullName>
+        <deprecated>false</deprecated>
+        <description>QoC Variation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>QoC Variation</inlineHelpText>
+        <label>QoC Variation</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__QoC__c</fullName>
+        <deprecated>false</deprecated>
+        <description>QoC</description>
+        <externalId>false</externalId>
+        <inlineHelpText>QoC</inlineHelpText>
+        <label>QoC</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Scan_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Scan Date</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Scan Date</inlineHelpText>
+        <label>Scan Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Scan_ID_External__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Scan ID External</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Scan ID External</inlineHelpText>
+        <label>Scan ID External</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Technical_Debt_Variation__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Technical Debt Variation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Technical Debt Variation</inlineHelpText>
+        <label>Technical Debt Variation</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Technical_Debt__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Technical Debt</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Technical Debt</inlineHelpText>
+        <label>Technical Debt</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Total_Issues_Variation__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Total Issues Variation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total Issues Variation</inlineHelpText>
+        <label>Total Issues Variation</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Total_Issues__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Total Issues</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total Issues</inlineHelpText>
+        <label>Total Issues</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Dashboard Data</label>
+    <nameField>
+        <label>Dashboard Data Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Dashboard Data</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

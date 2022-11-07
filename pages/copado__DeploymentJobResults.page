@@ -1,0 +1,84 @@
+<apex:page id="thePage" tabStyle="copado__Deployment__c" showHeader="false" sidebar="false" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <c:WizardUtils id="wizardUtils"></c:WizardUtils>
+        <c:IncludeConnectionJsComponent />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <c:IncludeStaticsResourceComponent addJQuery="true" addSLcss="true"/>
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+        <apex:includeScript value="{!URLFOR($Resource.utilsV2) }"/>
+        <apex:includeScript value="{!URLFOR($Resource.JsRemoting) }" />
+        <apex:includeScript value="{!URLFOR($Resource.deploymentJobResults) }" />
+        <style>
+            /*for Grid, go to page sections height issue on lightning design - UCU*/
+            .jqx-grid-pager-input-base{
+                height:18px !important;
+            }
+            /*show error messages on multiple rows fix - UCU*/
+            .jqx-grid-cell-wrap,.jqx-grid-cell-wrap>pre {
+                white-space: normal !important;
+            }
+            /*prevents unneeded empty space on the top of message box*/
+            .jqx-grid-cell-wrap>pre{
+                margin-top : 0px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        
+        <div class="fixedMsg" tyle="display:none;" id="msg"> </div>
+        
+        <div style="display:none;">
+            <apex:pageMessage title="{!$Label.copado__WARNING}" summary="__MSG__" severity="warning" strength="3" id="js-msg-WARNING" />
+            <apex:pageMessage title="{!$Label.copado__SUCCESS}" summary="__MSG__" severity="confirm" strength="3" id="js-msg-CONFIRM" />
+            <apex:pageMessage title="{!$Label.copado__ERROR}" summary="__MSG__" severity="error" strength="3" id="js-msg-ERROR" />
+            <apex:pageMessage title="{!$Label.copado__INFO}" summary="__MSG__" severity="info" strength="3" id="js-msg-INFO" />
+        </div>
+        <apex:form styleClass="copado-lightning-container">
+            <c:ScreenLocker id="screenLocker" msg="{!$Label.copado__LOADING}"></c:ScreenLocker>
+
+            <apex:sectionHeader id="theHeader" title="Copado" subtitle="{!$Label.copado__DEPLOYMENT_JOB_ERRORS}" />
+        
+            <apex:pageBlock id="bp">
+                <apex:pageBlockSection id="pbs">
+                    <apex:pageBlockSectionItem id="pbsi_stepName">
+                        <apex:outputLabel >{!$ObjectType.copado__Step__c.Fields.Name.Label}</apex:outputLabel>
+                        <div id="stepName"></div>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem id="pbsi_orgName">
+                        <apex:outputLabel >{!$ObjectType.copado__Org__c.Fields.Name.Label}</apex:outputLabel>
+                        <div id="orgName"></div>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="1" >
+                    <div id="stepResult">
+                        <div id="jqxgrid">
+                            <div id="loading">
+                                <center>
+                                    <img src="/img/loading.gif" /> <i>{!$Label.copado__LOADING}<span id="retry-label"></span></i>
+                                </center>
+                            </div>
+                        </div>   
+                    </div>             
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+
+        <script type="text/Javascript">
+            var jobId = utilsV2.getUrlParameter('jobId');
+            var deploymentId = utilsV2.getUrlParameter('deploymentId');
+            var stepName = utilsV2.getUrlParameter('stepName');
+            var orgName = utilsV2.getUrlParameter('orgName');
+        
+            deploymentJobResults.labels.SELECTED = copadoLabels.selected;
+            deploymentJobResults.labels.LEVEL = copadoLabels.level;
+            deploymentJobResults.labels.MESSAGE = copadoLabels.MESSAGE;
+            deploymentJobResults.labels.COPADOTIP = copadoLabels.COPADO_TIP;
+            deploymentJobResults.labels.NO_STEP_RESULTS_FOUND = 'No results found.  Please note that this page does not support Manual Task results.';
+            deploymentJobResults.labels.MISSING_PARAMS = 'The deploymentId or jobId parameters were not found.';
+
+            deploymentJobResults.init(deploymentId, jobId, stepName, orgName);
+        </script>
+    </body>
+</apex:page>

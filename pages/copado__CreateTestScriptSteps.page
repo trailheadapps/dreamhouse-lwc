@@ -1,0 +1,130 @@
+<apex:page id="thePage" controller="copado.CreateTestScriptStepsController" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <c:IncludeStaticsResourceComponent addJquery="true" addUIjs="true" addUIcss="true" />
+        <c:IncludeConnectionJsComponent />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <style>
+            .ui-state-highlight{ background-color: red !important;}
+            td.actionColumn:before { display:none; } /*lightningStylesheets displays hidden inputs, they are hidden again*/
+        </style>
+    </head>
+    <body>
+        <apex:outputPanel layout="block" rendered="{!showLicenseError}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!showLicenseError}">
+            <apex:form id="theFrom" styleClass="copado-lightning-container">
+                <apex:sectionHeader id="sectionHeader" title="{!$Label.copado__COPADO_CHANGE_MANAGEMENT}" subtitle="Create Test Script Steps" description="This page is designed to facilitate the creation of Test Script Steps.  Use this page to add the Test Script Steps and reorder these as necessary." />
+                <apex:pageMessages id="pageMessages" />
+                
+                <apex:pageBlock id="pb" mode="edit">
+                    <apex:pageBlockButtons id="pbButtons" location="bottom">
+                        <apex:commandButton id="btnDone" value="I'm done" action="{!returnToTestScript}" />
+                    </apex:pageBlockButtons>
+
+                    <table id="tbl_TestScriptSteps" boder="0" cellspacing="0" cellpadding="0" style="width:100%;" class="list">
+                        <thead>
+                            <tr class="headerRow" scope="col">
+                                <th></th>
+                                <th>{!$ObjectType.Test_Script_Step__c.Fields.Action_Description__c.Label}</th>
+                                <th>{!$ObjectType.Test_Script_Step__c.Fields.Expected_Result__c.Label}</th>
+                                <th>{!$ObjectType.Test_Script_Step__c.Fields.Guidance_notes__c.Label}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat id="rptSteps" value="{!scriptSteps}" var="row">
+                                <apex:outputPanel layout="none" id="pnl">
+                                    <tr class="dataRow">
+                                        <td style="padding-left:1px; padding-right:1px;" class="actionColumn">
+                                            <span class="ui-icon ui-icon-arrowthick-2-n-s" style="cursor:move;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <input type="hidden" name="hiddenStepId" value="{!row.step.Id}" />
+                                            <input type="hidden" name="hiddenStepOrder" value="{!row.step.Order__c}" />
+                                        </td>
+                                        <td style="min-width:30%; margin-left:1px; margin-right:1px;" class="dataCell">
+                                            <apex:inputField id="ifAction" value="{!row.step.copado__Action_Description__c}" style="width:99%;height:100%;" />
+                                        </td>
+                                        <td style="min-width:30%; margin-left:1px; margin-right:1px;" class="dataCell">
+                                            <apex:inputField id="ifExpectedResult" value="{!row.step.copado__Expected_Result__c}" style="width:99%;height:100%;" />
+                                        </td>
+                                        <td style="min-width:30%; margin-left:1px; margin-right:1px;" class="dataCell">
+                                            <apex:inputField id="ifGuidanceNotes" value="{!row.step.copado__Guidance_notes__c}" style="width:99%;height:100%;" />
+                                        </td>
+                                        <td style="width:100px;" class="dataCell">
+                                            <apex:actionStatus id="saveStatus">
+                                                <apex:facet name="start">
+                                                    <img src="/img/loading.gif" />
+                                                </apex:facet>
+                                                <apex:facet name="stop">
+                                                    <apex:commandButton id="update" value="{!$Label.copado__UPDATE_SAVE}" action="{!row.saveStep}" rerender="pb" status="saveStatus" onComplete="init();"/>
+                                                </apex:facet>
+                                            </apex:actionStatus>
+                                        </td>
+                                    </tr>
+                                </apex:outputPanel>
+                            </apex:repeat>
+                        </tbody>
+                        <tfoot>
+                            <tr class="dataRow">
+                                <td class="actionColumn"></td>
+                                <td class="dataCell">
+                                    <apex:inputField id="addAction" taborderhint="1" value="{!dummyStep.copado__Action_Description__c}" style="width:99%;" />
+                                </td>
+                                <td class="dataCell">
+                                    <apex:inputField id="addExpectedResult" taborderhint="2" value="{!dummyStep.copado__Expected_Result__c}" style="width:99%;" />
+                                </td>
+                                <td class="dataCell">
+                                    <apex:inputField id="addGuidanceNotes" taborderhint="3" value="{!dummyStep.copado__Guidance_notes__c}" style="width:99%;" />
+                                </td>
+                                <td class="dataCell">
+                                    <apex:actionStatus id="addStatus">
+                                        <apex:facet name="start">
+                                            <img src="/img/loading.gif" />
+                                        </apex:facet>
+                                        <apex:facet name="stop">
+                                            <apex:commandButton id="btnSave" value="{!$Label.copado__ADD_ROW}" action="{!addRow}" rerender="pb" status="addStatus" oncomplete="resetFocus()"/>
+                                        </apex:facet>
+                                    </apex:actionStatus>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>            
+                </apex:pageBlock>
+            </apex:form>
+            <script id="scriptMain" type="text/javascript" src="{!URLFOR($Resource.CreateTestScriptSteps) }"></script>
+            <script id="focusAddBoxScript">
+                function init(){
+                    $copado(function() {
+                        $copado( "#tbl_TestScriptSteps tbody" ).sortable({
+                            placeholder: "ui-state-highlight",
+                            update: function( event, ui ) {
+                                ctss.recalculateOrder('#tbl_TestScriptSteps tbody');
+                            }
+                        });
+                        $copado( "#tbl_TestScriptSteps" ).disableSelection();
+                    });
+                }
+                function resetFocus(){
+                    $copado('[id="{!$Component.theFrom.pb.addAction}"]').focus();
+                    init();
+                }
+            </script>
+
+            <script type="text/javascript">
+                var copadoApp = {
+                    ns: '{!settings.namespace}'
+                }
+                ctss.ns = copadoApp.ns;
+                init();
+            </script>
+
+            <script>
+                ga('send', 'pageview', {
+                'page': '/CreateTestScriptSteps',
+                'title': 'Create Test Script Steps'
+                });
+            </script>
+        </apex:outputPanel>
+    </body>
+</apex:page>

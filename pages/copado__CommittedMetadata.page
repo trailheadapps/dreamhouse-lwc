@@ -1,0 +1,132 @@
+<apex:page id="CommittedMetadata" standardController="copado__Git_Org_Commit__c" showHeader="false" sidebar="false" cache="false">
+
+        <c:WizardUtils id="cmpWizardUtilities" />
+        <c:IncludeStaticsResourceComponent addJQuery="true" />
+        <c:IncludeConnectionJsComponent />
+        <apex:includeScript value="{!URLFOR($Resource.copado__JsRemoting)}" />
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+
+        <div id="jqxgrid" style="width:99%;"><center><img src="/img/loading.gif" /> <i>{!$Label.LOADING}<span id="retry-label"></span></i></center></div>
+
+
+        <script type="text/javascript">
+
+        var prepareGrid = function() {
+            var noDataHtml = '<center>{!JSENCODE($Label.NODATATODISPLAY)}</center>';
+            var att = dw.u.getDecodedAttach("{!JSENCODE(Git_Org_Commit__c.Id)}","MetaData");
+
+            if(att) {
+                var body = att.Body;
+                try{
+                    var metadataRecords = JSON.parse(body);
+                    startGrid(metadataRecords);
+                } catch(e){
+                    console.error(e);
+                    $copado('#jqxgrid').html(noDataHtml);
+                }
+            } else {
+                $copado('#jqxgrid').html(noDataHtml);
+            }
+        };
+
+        var startGrid = function (data) {
+              //normalize data
+              var len = data.length;
+
+              var _datafields = [
+                      {name: 't', type: 'string'},
+                      {name: 'r', type: 'bool'},
+                      {name: 'n', type: 'string'},
+                      {name: 'b', type: 'string'},
+                      {name: 'd', type: 'string'},
+                      {name: 'cb', type: 'string'},
+                      {name: 'cd', type: 'string'}
+                  ];
+              var theme = 'base',
+              source = {
+                  localdata: data,
+                  datafields: _datafields,
+                  datatype: "array"
+              },
+              //adapter wrapper
+              dataAdapter = new $copado.jqx.dataAdapter(source),
+
+              //keep jquery pointer for performance query
+              $grid = $copado('<div>');
+
+              $copado("#jqxgrid").html($grid);
+
+              $grid.jqxGrid({
+                  width: '100%',
+                  source: dataAdapter,
+                  showfilterrow: true,
+                  filterable: true,
+                  theme: theme,
+                  editable: false,
+                  selectionmode: 'none',
+                  enablebrowserselection: true,
+                  pageable: true,
+                  pagesizeoptions: ['10', '20', '50','100','500'],
+                  pagesize: 20,
+                  sortable: true,
+                  columnsresize: true,
+                  localization: localizationobj,
+                  columns: [
+                      {
+                        text: copadoLabels.RETRIEVE_ONLY,
+                        datafield: 'r',
+                        columntype: 'checkbox',
+                        filterable: false,
+                        width: 80
+                    },
+                    {
+                        text: copadoLabels.name,
+                        filtertype: 'textbox',
+                        filtercondition: 'contains',
+                        editable: false,
+                        datafield: 'n'
+                    },
+                    {
+                        text: copadoLabels.type,
+                        datafield: 't',
+                        filterable: !this.isTypeFilterable,
+                        filtertype: this.TypeFilterType,
+                        editable: false,
+                        columntype: 'textbox',
+                        width: 130
+                    },
+                    {
+                        text: copadoLabels.LastModifiedById,
+                        filtertype: 'textbox',
+                        editable: false,
+                        datafield: 'b',
+                        width: 120
+                    },
+                    {
+                        text: copadoLabels.LastModifiedDate,
+                        filtertype: 'textbox',
+                        editable: false,
+                        datafield: 'd',
+                        width: 120
+                    },
+                    {
+                        text: copadoLabels.CREATEDBY,
+                        filtertype: 'textbox',
+                        editable: false,
+                        datafield: 'cb',
+                        width: 220
+                    },
+                    {
+                        text: copadoLabels.CREATEDDATE,
+                        filtertype: 'textbox',
+                        editable: false,
+                        datafield: 'cd',
+                        width: 120}
+                ]
+              });
+         };
+
+        $copado(prepareGrid);
+    </script>
+</apex:page>

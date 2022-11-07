@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Compliance Rule --></label>
+        <name>copado__Compliance_Rule__c</name>
+        <relationshipLabel><!-- Compliance Rule Criteria --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Criteria --></label>
+        <name>copado__Criteria__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Type --></label>
+        <name>copado__Field_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field --></label>
+        <name>copado__Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Node --></label>
+        <name>copado__Node__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operator --></label>
+        <name>copado__Operator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>copado__Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>copado__Value__c</name>
+    </fields>
+</CustomObjectTranslation>

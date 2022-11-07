@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Ready for testing</fullName>
+        <default>false</default>
+        <label>Ready for testing</label>
+    </customValue>
+    <customValue>
+        <fullName>Ready for UAT</fullName>
+        <default>false</default>
+        <label>Ready for UAT</label>
+    </customValue>
+    <customValue>
+        <fullName>Completed</fullName>
+        <default>false</default>
+        <label>Completed</label>
+    </customValue>
+    <customValue>
+        <fullName>Ready to Test</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ready to Test</label>
+    </customValue>
+    <customValue>
+        <fullName>Testing Complete</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Testing Complete</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete</label>
+    </customValue>
+    <masterLabel>Story Status After Deployment</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

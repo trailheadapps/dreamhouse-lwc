@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Dashboard Data --></help>
+        <label><!-- Dashboard Data --></label>
+        <name>QCloudsSaaS__Dashboard_Data__c</name>
+        <relationshipLabel><!-- Charts --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

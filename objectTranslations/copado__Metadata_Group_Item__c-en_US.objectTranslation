@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- The parent metadata group this item belongs to --></help>
+        <label><!-- Parent Group --></label>
+        <name>copado__Metadata_Group__c</name>
+        <relationshipLabel><!-- Metadata Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Match &apos;All&apos; metadata of this type, or only metadata whose name matches a pattern? --></help>
+        <label><!-- Metadata Name --></label>
+        <name>copado__Operator__c</name>
+    </fields>
+    <fields>
+        <help><!-- The type of metadata --></help>
+        <label><!-- Metadata Type --></label>
+        <name>copado__Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Match only metadata whose name matches this value (ignored if Metadata Name = &apos;All&apos; is selected) --></help>
+        <label><!-- Value --></label>
+        <name>copado__Value__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- When the Operator equals &apos;All&apos;, the Value field must be empty. --></errorMessage>
+        <name>copado__Validate_Value_field_against_Operator</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- When the Operator is not &quot;All&quot;, a Value is required. --></errorMessage>
+        <name>copado__Validate_Value_field_against_Operator_2</name>
+    </validationRules>
+</CustomObjectTranslation>

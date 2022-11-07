@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>copado__Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, all Branch Management features will be enabled in the Deployment Flow.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, all Branch Management features will be enabled in the Deployment Flow.</inlineHelpText>
+        <label>Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Block_Commits__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, committing changes on user stories linked to this Pipeline will not be allowed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, committing changes on user stories linked to this Pipeline will not be allowed</inlineHelpText>
+        <label>Block Commits</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Branch_Management_Coordinates__c</fullName>
+        <deprecated>false</deprecated>
+        <description>This field is used to store the Branch Management Step locations of each box. This field should not be added to the page layout.</description>
+        <externalId>false</externalId>
+        <label>Branch Management Coordinates</label>
+        <length>50000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>copado__Calculate_Based_on__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If Branch is selected, Branch Management page will work as before, if User Story selected, calculation and result will be based on User Stories.</inlineHelpText>
+        <label>Calculate Based on</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Branch</fullName>
+                    <default>false</default>
+                    <label>Branch</label>
+                </value>
+                <value>
+                    <fullName>User Story</fullName>
+                    <default>true</default>
+                    <label>User Story</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Copado_DX_Mode__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Selected DX mode will determine scratch metadata sources.</inlineHelpText>
+        <label>Copado DX Mode</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Git Package</fullName>
+                    <default>false</default>
+                    <label>Git Package</label>
+                </value>
+                <value>
+                    <fullName>Salesforce Package</fullName>
+                    <default>false</default>
+                    <label>Salesforce Package</label>
+                </value>
+                <value>
+                    <fullName>Branches</fullName>
+                    <default>false</default>
+                    <label>Branches</label>
+                </value>
+                <value>
+                    <fullName>Org Metadata</fullName>
+                    <default>false</default>
+                    <label>Org Metadata</label>
+                </value>
+                <value>
+                    <fullName>Git Artifacts</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Git Artifacts</label>
+                </value>
+                <value>
+                    <fullName>Package Artifacts</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Package Artifacts</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Disable_Validations__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, Deployment Flow Steps best practices validations will be disabled.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, Deployment Flow Steps best practices validations will be disabled.</inlineHelpText>
+        <label>Disable Validations</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Enable_Copado_DX__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Enable Copado DX</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Enable_Smart_Conflict_Resolution__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If unchecked, Copado will stop applying Smart Conflict resolution during the promotion process and users will have to manually resolve conflicts again in every subsequent promotion.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If unchecked, Copado will stop applying Smart Conflict resolution during the promotion process and users will have to manually resolve conflicts again in every subsequent promotion.</inlineHelpText>
+        <label>Enable Smart Conflict Resolution</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Equal_Branch_Environment_Name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, Environment names must equal their corresponding Branches in the Deployment Flow Steps.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, Environment names must equal their corresponding Branches in the Deployment Flow Steps.</inlineHelpText>
+        <label>Enforce branch/env naming convention</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Exclude_From_Auto_Resolve__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Conflicts found in the selected metadata types are not auto-resolved by Copado when merging feature branches into the promotion branch. The conflicts can be manually resolved using Copado.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Conflicts found in the selected metadata types are not auto-resolved by Copado when merging feature branches into the promotion branch. The conflicts can be manually resolved using Copado.</inlineHelpText>
+        <label>Exclude From Auto Resolve</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>copado__Auto_Resolve_Exceptions</valueSetName>
+        </valueSet>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>copado__Flow_Step_Coordinates__c</fullName>
+        <deprecated>false</deprecated>
+        <description>This field is used to store the Deployment Flow Step locations of each box. This field should not be added to the page layout.</description>
+        <externalId>false</externalId>
+        <label>Flow Step Coordinates</label>
+        <length>50000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>copado__Git_Repository__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Git Repository linked to the Deployment Flow. All branches of the Deployment Flow Steps must exist in this Git Repository.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Git Repository linked to the Deployment Flow. All branches of the Deployment Flow Steps must exist in this Git Repository.</inlineHelpText>
+        <label>Git Repository</label>
+        <referenceTo>copado__Git_Repository__c</referenceTo>
+        <relationshipName>Deployment_Flows</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Hide_Tabs__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Tabs to hide in Branch Management detail window</inlineHelpText>
+        <label>Hide Tabs</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Commits Ahead</fullName>
+                    <default>false</default>
+                    <label>Commits Ahead</label>
+                </value>
+                <value>
+                    <fullName>Commits Behind</fullName>
+                    <default>false</default>
+                    <label>Commits Behind</label>
+                </value>
+                <value>
+                    <fullName>Deployment Error</fullName>
+                    <default>false</default>
+                    <label>Deployment Error</label>
+                </value>
+                <value>
+                    <fullName>File Differences</fullName>
+                    <default>false</default>
+                    <label>File Differences</label>
+                </value>
+                <value>
+                    <fullName>Auto Resolved Conflicts</fullName>
+                    <default>false</default>
+                    <label>Auto Resolved Conflicts</label>
+                </value>
+                <value>
+                    <fullName>Merged Files</fullName>
+                    <default>false</default>
+                    <label>Merged Files</label>
+                </value>
+                <value>
+                    <fullName>Selenium Test Groups</fullName>
+                    <default>false</default>
+                    <label>Selenium Test Groups</label>
+                </value>
+                <value>
+                    <fullName>Compliance Scan Results</fullName>
+                    <default>false</default>
+                    <label>Compliance Scan Results</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>copado__Main_Branch__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Main branch of the selected Git Repository (e.g. master).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Main branch of the selected Git Repository (e.g. master).</inlineHelpText>
+        <label>Main Branch</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Manage_Branches__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Link to open the Pipeline Manager to promote and back promote User Stories.</description>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&apos;/apex/&apos;&amp;
+            IF($Setup.copado__Settings__c.copado__Namespace__c!=&apos;none&apos;,&apos;copado__&apos;, &apos;&apos;)&amp;IF( ISPICKVAL(copado__Calculate_Based_on__c, &apos;User Story&apos;), IF( copado__Active__c,&apos;PipelineManager?mode=manager&amp;id=&apos;&amp;Id, &apos;PipelineManager?mode=diagram&amp;id=&apos;&amp;Id), &apos;BranchManagement?id=&apos;&amp;Id), &apos;Pipeline Manager&apos;, IF($User.UIThemeDisplayed != &quot;Theme4d&quot;,&apos;_blank&apos;,&apos;_self&apos;))</formula>
+        <inlineHelpText>Link to open the Pipeline Manager to promote and back promote User Stories.</inlineHelpText>
+        <label>Manage Releases</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Merge_Strategy__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>When a conflicted file cannot be semantically merged during an Auto Resolve, the entire file is overwritten by default. You can choose to overwrite only the conflicting lines and merge the mergeable lines; Copado uses the &quot;Theirs&quot; git merge strategy.</inlineHelpText>
+        <label>Auto Resolve Conflict Strategy</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Default</fullName>
+                    <default>true</default>
+                    <label>Overwrite file</label>
+                </value>
+                <value>
+                    <fullName>Theirs</fullName>
+                    <default>false</default>
+                    <label>Overwrite conflicting lines only</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Order_by__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Fill that field only if you want to change the selected user stories order on deployment.
+This value will prefill the order by field on related Promotion record creation if set. (usage exp: name asc)</inlineHelpText>
+        <label>Order User Stories by</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Platform__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Platform</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Salesforce</fullName>
+                    <default>true</default>
+                    <label>Salesforce</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Static_Code_Analysis_Settings__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Static Code Analysis settings used whenever the analysis is run in Environments or User Stories linked to the Deployment Flow.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Static Code Analysis settings used whenever the analysis is run in Environments or User Stories linked to the Deployment Flow.</inlineHelpText>
+        <label>Static Code Analysis Settings</label>
+        <referenceTo>copado__Static_Code_Analysis_Settings__c</referenceTo>
+        <relationshipName>Deployment_Flows</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Pipeline</label>
+    <listViews>
+        <fullName>copado__All</fullName>
+        <columns>NAME</columns>
+        <columns>copado__Active__c</columns>
+        <columns>copado__Manage_Branches__c</columns>
+        <columns>copado__Git_Repository__c</columns>
+        <columns>copado__Main_Branch__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Pipeline Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Pipelines</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>copado__Active__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>copado__Manage_Branches__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
+        <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>PrintableListView</excludedStandardButtons>
+        <listViewButtons>copado__Pipeline_Wizard</listViewButtons>
+        <lookupDialogsAdditionalFields>copado__Active__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CREATED_DATE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>LAST_UPDATE</lookupDialogsAdditionalFields>
+        <searchFilterFields>copado__Active__c</searchFilterFields>
+        <searchResultsAdditionalFields>copado__Active__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LAST_UPDATE</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>copado__Find_Replace_Rule_Editor</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>page</linkType>
+        <masterLabel>Find &amp; Replace Rule Editor</masterLabel>
+        <openType>newWindow</openType>
+        <page>copado__Flow_FindAndReplaceEditor</page>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+    </webLinks>
+    <webLinks>
+        <fullName>copado__Manage_Branches</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Manage Releases</masterLabel>
+        <openType>noSidebar</openType>
+        <protected>false</protected>
+        <url>/apex/{!IF(CONTAINS($Action.copado__User_Story__c.New, &apos;copado__&apos;), &apos;copado__&apos;, &apos;&apos;)}{!IF(ISPICKVAL(copado__Deployment_Flow__c.copado__Calculate_Based_on__c, &apos;User Story&apos;), &apos;PipelineManager&apos;,&apos;BranchManagement&apos;)}?Id={!copado__Deployment_Flow__c.Id}&amp;mode={!IF(copado__Deployment_Flow__c.copado__Active__c, &apos;manager&apos;, &apos;diagram&apos;)}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>copado__Manage_Environment_Variables</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Manage Environment Variables</masterLabel>
+        <openType>sidebar</openType>
+        <page>copado__ManageEnvVars</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>copado__Manage_Regression_Tests</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Manage Regression Tests</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/{!IF(CONTAINS($Action.copado__User_Story__c.New, &apos;copado__&apos;), &apos;copado__&apos;, &apos;&apos;)}ManageSeleniumTesting?regression=true&amp;flowId={!copado__Deployment_Flow__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>copado__Pipeline_Wizard</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>page</linkType>
+        <masterLabel>Launch Pipeline Wizard</masterLabel>
+        <openType>replace</openType>
+        <page>copado__NewPipeline</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+    <webLinks>
+        <fullName>copado__Select_Main_Branch</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Select Main Branch</masterLabel>
+        <openType>sidebar</openType>
+        <page>copado__DeploymentFlowBranchSelection</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

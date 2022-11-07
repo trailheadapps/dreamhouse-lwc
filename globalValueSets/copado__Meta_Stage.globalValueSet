@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Build</fullName>
+        <default>false</default>
+        <label>Build</label>
+    </customValue>
+    <customValue>
+        <fullName>Test</fullName>
+        <default>false</default>
+        <label>Test</label>
+    </customValue>
+    <customValue>
+        <fullName>Production</fullName>
+        <default>false</default>
+        <label>Production</label>
+    </customValue>
+    <masterLabel>Meta Stage</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

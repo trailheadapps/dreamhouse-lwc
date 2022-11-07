@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Defines the deployment, back-promotion, and quality gate behavior for connections or sets the default for connections into a particular environment.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>copado__Back_Promotion_Behavior__c</fullName>
+        <deprecated>false</deprecated>
+        <description>How should user stories be moved back from higher environments (prod/test) to lower environments (test/dev)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>How should user stories be moved back from higher environments (prod/test) to lower environments (test/dev)</inlineHelpText>
+        <label>Back-Promotion Execution</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Automated</fullName>
+                    <default>false</default>
+                    <label>Automated</label>
+                </value>
+                <value>
+                    <fullName>Scheduled</fullName>
+                    <default>false</default>
+                    <label>Scheduled</label>
+                </value>
+                <value>
+                    <fullName>Manual</fullName>
+                    <default>true</default>
+                    <label>Manual</label>
+                </value>
+                <value>
+                    <fullName>Disabled</fullName>
+                    <default>false</default>
+                    <label>Disabled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Back_Promotion_Criteria__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Only user stories that meet this criteria will be eligible to be automatically back promoted.</inlineHelpText>
+        <label>Back-Promotion Criteria</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>copado__Back_Promotion_Schedule__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The schedule for back promotions (if they are scheduled)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The schedule for back promotions (if they are scheduled)</inlineHelpText>
+        <label>Back-Promotion Schedule</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Back_Promotion_Scheduled_Job_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The Salesforce Scheduled Job ID associated with scheduled back-promotion jobs</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Salesforce Scheduled Job ID associated with scheduled back-promotion jobs</inlineHelpText>
+        <label>Back-Promotion Scheduled Job ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Description__c</fullName>
+        <deprecated>false</deprecated>
+        <description>A summary of this connection behavior</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A summary of this connection behavior</inlineHelpText>
+        <label>Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>copado__DisableEnvironmentBranch__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Disable Environment Branch</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Execute_back_promotions_in_parallel__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Execute back-promotions in parallel</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Execute_promotions_in_parallel__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Execute promotions in parallel</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Max_Scheduled_Back_Promotion_Batch_Size__c</fullName>
+        <defaultValue>10</defaultValue>
+        <deprecated>false</deprecated>
+        <description>The maximum number of user stories that will be deployed together when a deployment is scheduled</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to 1 to deploy each story individually. Batching deployments speeds up the process but causes all stories in a batch to succeed or fail together. This can delay the deployment of some stories and make it harder to identify the cause of errors.</inlineHelpText>
+        <label>Scheduled Back-Promotion US Group Size</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Max_Scheduled_Promotion_Batch_Size__c</fullName>
+        <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
+        <description>The maximum number of user stories that will be deployed together when a deployment is scheduled</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to 1 to deploy each story individually. Batching deployments speeds up the process but causes all stories in a batch to succeed or fail together. This can delay the deployment of some stories and make it harder to identify the cause of errors.</inlineHelpText>
+        <label>Scheduled Promotion US Group Size</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Promotion_Behavior__c</fullName>
+        <deprecated>false</deprecated>
+        <description>How should user stories be deployed from lower (dev/test) environments to higher environments (test/prod)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>How should user stories be deployed from lower (dev/test) environments to higher environments (test/prod)</inlineHelpText>
+        <label>Promotion Execution</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>copado__Connection_Behavior_Type</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Promotion_Criteria__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Only user stories that meet this criteria will be eligible to be automatically promoted.</inlineHelpText>
+        <label>Promotion Criteria</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>copado__Promotion_Schedule__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The schedule for deployments (if they are scheduled)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The schedule for deployments (if they are scheduled)</inlineHelpText>
+        <label>Promotion Schedule</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Promotion_Scheduled_Job_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The Salesforce Scheduled Job ID associated with scheduled deployment jobs</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Salesforce Scheduled Job ID associated with scheduled deployment jobs</inlineHelpText>
+        <label>Deployment Scheduled Job ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Schedule_Back_Promotion__c</fullName>
+        <deprecated>false</deprecated>
+        <description>An action link to schedule back-promotions</description>
+        <externalId>false</externalId>
+        <formula>IF($Setup.copado__Settings__c.copado__Namespace__c != &apos;none&apos;,
+IF(
+TEXT(copado__Back_Promotion_Behavior__c) == &apos;Scheduled&apos;, 
+HYPERLINK(&quot;/apex/copado__ScheduleConnectionBehavior?id=&quot; + Id + &quot;&amp;promotionType=Back_Promotion&quot;, IF(   ISBLANK(copado__Back_Promotion_Schedule__c), &quot;Schedule Back-Promotion&quot;, copado__Back_Promotion_Schedule__c),&apos;_self&apos;),
+&apos;&apos;),
+IF(
+TEXT(copado__Back_Promotion_Behavior__c) == &apos;Scheduled&apos;, 
+HYPERLINK(&quot;/apex/ScheduleConnectionBehavior?id=&quot; + Id + &quot;&amp;promotionType=Back_Promotion&quot;, IF(   ISBLANK(copado__Back_Promotion_Schedule__c), &quot;Schedule Back-Promotion&quot;, copado__Back_Promotion_Schedule__c),&apos;_self&apos;),
+&apos;&apos;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>An action link to schedule back-promotions</inlineHelpText>
+        <label>Schedule Back-Promotions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Schedule_Promotion__c</fullName>
+        <deprecated>false</deprecated>
+        <description>An action link to schedule deployments</description>
+        <externalId>false</externalId>
+        <formula>IF($Setup.copado__Settings__c.copado__Namespace__c != &apos;none&apos;,
+IF(
+TEXT(copado__Promotion_Behavior__c) == &apos;Scheduled&apos;, HYPERLINK(&quot;/apex/copado__ScheduleConnectionBehavior?id=&quot; + Id + &quot;&amp;promotionType=Promotion&quot;,  IF( ISBLANK(copado__Promotion_Schedule__c) , &quot;Schedule Promotions&quot;, copado__Promotion_Schedule__c) ,&apos;_self&apos;),
+&apos;&apos;),
+IF(
+TEXT(copado__Promotion_Behavior__c) == &apos;Scheduled&apos;, HYPERLINK(&quot;/apex/ScheduleConnectionBehavior?id=&quot; + Id + &quot;&amp;promotionType=Promotion&quot;, IF( ISBLANK(copado__Promotion_Schedule__c) , &quot;Schedule Promotions&quot;, copado__Promotion_Schedule__c) ,&apos;_self&apos;),
+&apos;&apos;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>An action link to schedule deployments</inlineHelpText>
+        <label>Schedule Promotion</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Story_Status_After_Deployment__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Automatically change the status of user stories after deploying them to the target environment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>What status should user stories be set to after they are successfully deployed?</inlineHelpText>
+        <label>User Story Status After Promotion</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>copado__Story_Status_After_Deployment</valueSetName>
+        </valueSet>
+    </fields>
+    <label>Connection Behavior</label>
+    <listViews>
+        <fullName>copado__All</fullName>
+        <columns>NAME</columns>
+        <columns>copado__Promotion_Behavior__c</columns>
+        <columns>copado__Back_Promotion_Behavior__c</columns>
+        <columns>copado__Story_Status_After_Deployment__c</columns>
+        <columns>copado__Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Connection Behavior Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Connection Behaviors</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>copado__Batch_Size_Valid_Interval</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF(
+    OR(
+        OR( 
+           copado__Max_Scheduled_Promotion_Batch_Size__c &lt;= 0, 
+           copado__Max_Scheduled_Promotion_Batch_Size__c &gt; 2000
+        ),
+        OR(
+           copado__Max_Scheduled_Back_Promotion_Batch_Size__c  &lt;= 0, 
+           copado__Max_Scheduled_Back_Promotion_Batch_Size__c  &gt; 2000
+        )
+    )
+,true,
+false
+)</errorConditionFormula>
+        <errorMessage>Batch Size fields for Promotion or Back Promotion needs to be between 1 and 2000</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

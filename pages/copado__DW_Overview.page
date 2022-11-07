@@ -1,0 +1,315 @@
+<apex:page standardController="copado__Deployment__c" extensions="copado.DW_OverviewExtension,copado.Settings,copado.JsRemotingController" id="DW_Overview"
+    lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Deployment Overview">
+    <apex:slds />
+    <c:WizardUtils />
+    <apex:includeScript value="{!URLFOR($Resource.utilsV2) }" />
+    <c:IncludeStaticsResourceComponent addJquery="true" addJSON2js="true" addCometdjs="true" addJcometdjs="true" />
+    <apex:includeScript value="{!$Resource.copado__DW_javascript}" />
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+
+    <script>
+        var globalSldsResourcePath = '{!URLFOR($Asset.SLDS)}';
+        var currentStepValue = '{!currentStepValue}'; // currentStepValue is integer that's why no jsencode used
+        var namespace = '{!JSENCODE(namespace)}';
+        var Copado_Licenses = {!CurrentUserLicenses};
+        //***IMPORTANT***  use exactly the same name(jqxdatatable_config) for the configuration for future uses on new pages
+
+        var isRollback = '{!JSENCODE(deployment.Name)}'.startsWith('Rollback ');
+
+        if (isRollback) {
+            var jqxdatatable_config = {
+                data: {
+                    deploymentId: '{!deployment.Id}',
+                    stepId: '{!stepId}'
+                },
+                elts: {},
+                server: {
+                    baseUrl: '{!JSENCODE(urlBase)}',
+                    typesUrl: '{!JSENCODE(urlBase)}gitTypes{!JSENCODE(urlParameters)}'
+                },
+                jsonData: {
+                    selectedMetadata: []
+                },
+
+                ns: '{!JSENCODE(namespace)}',
+                scalableGrid: false,
+                gridMode: 'dwOverviewGrid',
+                attachmentName: 'Selected items to rollback',
+                eltMainId: 'metadataGrid',
+                previewOnly: true,
+                eltMainId: 'metadataGrid'
+            };
+        } else {
+            var jqxdatatable_config = {
+                data: {
+                    orgId: '{!deployment.copado__From_Org__c}',
+                    envId: '{!deployment.copado__Source_Environment__c}',
+                    deploymentId: '{!deployment.Id}',
+                    stepId: ''
+                },
+                elts: {},
+                server: {
+                    baseUrl: '{!JSENCODE(urlBase)}',
+                    metadataUrl: '{!metadataURL}&parentId={!deployment.copado__From_Org__c}',
+                    typesUrl: '{!JSENCODE(urlBase)}gitTypes{!JSENCODE(urlParameters)}'
+                },
+                jsonData: {
+                    selectedMetadata: []
+                },
+                ns: '{!JSENCODE(namespace)}',
+                scalableGrid: 'false',
+                gridMode: 'dwOverviewGrid',
+                attachmentName: 'MetaData',
+                previewOnly: true,
+                eltMainId: 'metadataGrid'
+            };
+        }
+    </script>
+
+    <apex:includeScript value="{!URLFOR($Resource.JsRemoting) }" />
+
+    <apex:form id="overviewForm">
+        <c:CopadoSpinner />
+
+        <apex:outputPanel layout="block" id="headerComponent">
+            <c:DW_Header currentStep="{!currentStepValue}" stepNameList="{!stepsList}" />
+        </apex:outputPanel>
+
+        <div class="co-dw-container">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-12"></div>
+                <div class="slds-col slds-size_10-of-12">
+                    <h1>{!deploymentInterface.StepGeneralHeader}</h1>
+                    <p class="subtitle">{!$Label.Deployment_Overview}</p>
+
+                    <apex:outputPanel layout="block" id="errorPanel">
+                        <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                            <div id="divToast" class="slds-notify_container slds-is-relative">
+                                <apex:repeat value="{!pageMessagesMap}" var="severity">
+                                    <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                                        <span class="slds-assistive-text"></span>
+                                        <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                            <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                                        </span>
+                                        <div class="slds-notify__content">
+                                            <apex:repeat value="{!pageMessagesMap[severity]}" var="messages">
+                                                <apex:outputPanel rendered="{!IF(CONTAINS(messages, '<html '),false, true)}">
+                                                    <h2 class="slds-text-heading_small ">{!messages}</h2>
+                                                </apex:outputPanel>
+                                                <apex:outputText escape="false" value="{!messages}" rendered="{!IF(CONTAINS(messages, '<html'),true, false)}" styleClass="slds-text-color_default"></apex:outputText>
+                                            </apex:repeat>
+
+                                        </div>
+                                        <div class="slds-notify__close">
+                                            <button type="button" class="slds-button slds-button_icon slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                                <span class="slds-icon_container slds-icon__svg--default closeToastIcon"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </apex:repeat>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <div class="deployment-flow-step">
+                        <div class="wrapper">
+                            <div class="source">
+                                <article class="slds-card pill source">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__body">
+                                                <h2 class="slds-card__header-title">
+                                                    <span>{!$Label.copado__Source}</span>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                    </div>
+                                </article>
+
+                                <div class="text-wrapper">
+                                    <span>
+                                        <apex:outputPanel layout="none" rendered="{!deployment.copado__Deployment_Source_Type__c == 'org'}">
+                                            <apex:outputField value="{!deployment.From_Org__r.copado__Environment__c}" />
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="none" rendered="{!deployment.copado__Deployment_Source_Type__c == 'git'}">
+                                            <apex:outputField value="{!Commit['Name']}" />
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel layout="none" rendered="{!deployment.copado__Deployment_Source_Type__c == ''}">
+                                            <apex:outputField value="{!deployment.copado__Rolled_back_Deployment__c}" />
+                                        </apex:outputPanel>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_left chevronright"></span>
+                            </div>
+                            <div class="target">
+                                <div class="text-wrapper">
+                                    <span>
+                                        <apex:outputField value="{!DestinationOrg.To_Org__r.copado__Environment__c}" />
+                                    </span>
+                                </div>
+
+                                <article class="slds-card pill target">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__body">
+                                                <h2 class="slds-card__header-title">
+                                                    <span>{!$Label.copado__TARGET}</span>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+
+                    <apex:outputPanel layout="none" rendered="{!deploymentInterface.StepGeneralHeader != $Label.copado__New_Data_Deployment}">
+                        <!-- Test Level Select. First option -->
+                        <div class="slds-form-element test-level-dropdown">
+                            <label class="slds-form-element__label" for="test-level">{!$Label.copado__Select_Test_Level}
+                                <span class="mandatory">*</span>
+                            </label>
+                            <div class="slds-grid">
+                                <div class="slds-select_container" style="width:400px;">
+                                    <apex:selectList styleClass="slds-select" value="{!stepTestLevel}" multiselect="false" size="1">
+                                        <apex:selectOptions value="{!TestLevels}" />
+                                        <apex:actionSupport oncomplete="unlockScreen();" onsubmit="lockScreen();" event="onchange" reRender="selectTestClass" />
+                                    </apex:selectList>
+                                </div>
+                                <apex:outputPanel id="selectTestClass" style="width:250px;margin-left: 10px;" rendered="{!isRollback}">
+                                    <apex:commandButton action="{!redirectToAddTestClassRollbackPage}" disabled="{!IF((stepTestLevel == 'RunSpecifiedTests'), 'false', 'true')}"
+                                        value="Add Test Classes" />
+                                </apex:outputPanel>
+                            </div>
+
+                        </div>
+                        <apex:outputPanel id="jqxMetadataGridComponent">
+                            <c:JQX_MetadataGrid title="" bigMetadata="false" tabs="false" />
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="none" rendered="{!deploymentInterface.StepGeneralHeader == $Label.copado__New_Data_Deployment}">
+                        <div class="data-template-wrapper">
+                            <div class="data-templates">
+                                <div class="name">
+                                    <span>{!dataTemplate.Name}</span> | {!dataTemplate.copado__Main_Object__c}
+                                    <apex:commandLink action="{!openRelationTemplate}" target="_blank">
+                                        <apex:image value="{!URLFOR($Resource.copado__DTS_images,'lookup.png')}" />
+                                        <apex:param name="relTemplateId" value="{!dataTemplate.Id}" />
+                                    </apex:commandLink>
+
+                                    <apex:outputPanel layout="none" rendered="{!$User.UiThemeDisplayed == 'Theme4d'}">
+                                        <div class="slds-float_right">
+                                            <button type="button" onClick="dw.redirectToRelationalDiagramLWC('{!dataTemplate.Id}');" class="slds-button strategy-icon">&nbsp;&nbsp;{!$Label.Relationship_Diagram}</button>
+                                        </div>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                            <div class="summary-info">
+                                <div class="slds-form" role="list">
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="line-item">
+                                                <span>{!$ObjectType.Data_Template__c.fields.Template_Source_Org__c.Label}:</span>
+                                                <span class="value">&nbsp;
+                                                    <apex:outputField value="{!dataTemplate.copado__Template_Source_Org__c}" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="line-item">
+                                                <span>{!$Label.copado__Total_Related_Objects}:</span>
+                                                <span class="value"> {!TotalRelationCount}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="line-item">
+                                                <span>{!$ObjectType.copado__Data_Template__c.fields.copado__Max_Record_Limit__c.Label}:</span>
+                                                <span class="value"> {!dataTemplate.copado__Max_Record_Limit__c}</span>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="line-item">
+                                                <span>{!$ObjectType.copado__Data_Template__c.fields.copado__Batch_Size__c.Label}:</span>
+                                                <span class="value">
+                                                    {!dataTemplate.copado__Batch_Size__c}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="line-item">
+                                                <span>{!$Label.copado__Filter_Override}:</span>
+                                                <span class="value"> {!OverrideFilterText}</span>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__item" role="listitem">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="dataTemplateValidationResult" layout="none" rendered="{!deploymentInterface.StepGeneralHeader == $Label.copado__New_Data_Deployment}">
+                        <div style="width: 70%; margin: 2rem auto 1rem auto;">
+                            <c:DataStepValidationResult stepId="{!DeploymentStepRecord.Id}" />
+                        </div>
+                    </apex:outputPanel>
+
+
+                    <div class="buttons slds-m-top--xx-large">
+                        <apex:commandLink styleClass="slds-button slds-button_outline-brand" onClick="lockScreen();" value="{!$Label.copado__BACK}" action="{!goToPreviousStep}"
+                            onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent" />
+                        <apex:commandLink styleClass="slds-button slds-button_outline-brand" onClick="lockScreen();" value="{!$Label.copado__SAVE_AND_CLOSE}"
+                            action="{!saveAndCloseStep}" onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent"
+                        />
+                        <apex:outputPanel layout="none" rendered="{!AND(EnableButtons,deploymentInterface.StepGeneralHeader != $Label.copado__New_Data_Deployment)}">
+                            <a class="slds-button slds-button_outline-brand" onclick="lockScreen();checkCredits('validation');">{!$Label.copado__Validate_Deployment}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!AND(EnableButtons,qualityGateList.size = 0,deploymentInterface.StepGeneralHeader == $Label.copado__New_Data_Deployment)}">
+                            <a class="slds-button slds-button_outline-brand" onclick="lockScreen();validateDataTemplate();">{!$Label.copado__Validate_Deployment}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!isRollback}">
+                            <a class="slds-button slds-button_outline-brand" onclick="redirectToDeploymentPage();">{!$Label.copado__RollbackPrePostSteps}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!AND(EnableButtons,qualityGateList.size = 0)}">
+                            <a class="slds-button slds-button_brand" onclick="lockScreen();checkCredits('deployment');">{!$Label.copado__Start_Deployment}</a>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel layout="none" rendered="{!AND(EnableButtons,qualityGateList.size > 0)}">
+                            <apex:commandLink styleClass="slds-button slds-button_brand" onClick="lockScreen();" value="{!$Label.copado__Go_to_Advanced_Deployment}"
+                                action="{!goToAdvanceDeployment}" onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent"
+                            />
+                        </apex:outputPanel>
+
+
+                    </div>
+
+                    <apex:actionFunction name="checkCredits" action="{!confirmDeployment}" onComplete="necessaryDMLS();">
+                        <apex:param name="actionName" value="" />
+                    </apex:actionFunction>
+                    <apex:actionFunction name="necessaryDMLS" action="{!deploymentDMLs}" onComplete="deploymentCalls();" />
+                    <apex:actionFunction name="deploymentCalls" action="{!deploymentCallout}" onComplete="goToNextStep();" />
+                    <apex:actionFunction name="goToNextStep" action="{!confirmAndGoNextStep}" onComplete="dw.buttonOnComplete();unlockScreen();"
+                        reRender="errorPanel,headerComponent" />
+                    <apex:actionFunction name="validateDataTemplate" action="{!validateDataTemplateDeployment}" onComplete="refreshAttachmentInDataStepValidationResultCtrl();unlockScreen()"
+                    />
+                    <apex:actionFunction name="redirectToDeploymentPage" action="{!redirectToDeploymentPage}" />
+
+
+
+                </div>
+                <div class="slds-col slds-size_1-of-12"></div>
+            </div>
+        </div>
+
+    </apex:form>
+</apex:page>

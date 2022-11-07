@@ -1,0 +1,213 @@
+<apex:page showHeader="true" sidebar="true" controller="copado.ManageSeleniumTestingExt" id="thePage" lightningStylesheets="true">
+
+    <head>
+        <style>
+            .duelingListBox .selectTitle {
+                padding: 0 0 .5em 0;
+                font-weight: bold;
+            }
+
+            .bPageBlock .detailList th,
+            .bPageBlock .detailList td {
+                vertical-align: middle;
+            }
+
+            .outputLink {
+                text-decoration: underline;
+                color: #015ba7;
+                cursor: pointer;
+            }
+
+            .pbTitle {
+                width: 45% !important;
+            }
+
+            .pbButton {
+                float: left;
+            }
+        </style>
+        <c:GAnalytics />
+        <c:IncludeStaticsResourceComponent addSMcss="true" addJQuery="true" addUIjs="true" addUIcss="true" />
+        <c:WizardUtils />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    </head>
+
+    <body>
+        <apex:outputPanel id="pmessages">
+            <apex:pageMessages escape="false" />
+            <script>
+                window.setTimeout(function () { $copado('div.message').detach() }, 10000);
+            </script>
+        </apex:outputPanel>
+        <apex:form id="theForm" styleClass="copado-lightning-container">
+            <apex:sectionHeader title="{!title} Selenium Tests" subtitle="Manage Selenium Tests" description="Manage Selenium Tests"
+            />
+            <div id="screenLockerLightning" class="slds-screenlocker">
+                <div id="screenLockerLightningFrame">
+                    <img style="width: 100px;" src="{!URLFOR($Resource.SLDS,'/assets/images/spinners/slds_spinner_brand.gif')}" />
+                    <p id="screenLockerLightningText"></p>
+                    <br />
+                    <br />
+                    <a href="#" onclick="setLockScreenMessage(); return false;">{!$Label.HIDE_MESSAGE}</a>
+                </div>
+            </div>
+            <c:ScreenLocker msg="" />
+            <c:SObjectSummaryComponent userStory="{!userStory}" columnsHeader="2" />
+            <apex:pageBlock id="pbEnvVars" title="{!title}  Selenium Tests">
+                <apex:pageBlockButtons id="pbButtons" location="top">
+                    <apex:commandButton action="{!save}" onClick="copadoUtil.setLockScreenMessage('Processing...');" styleClass="btnImportant"
+                        value="{!$Label.copado__Save}" reRender="pmessages,pbEnvVars,relatedList,scriptPnl" onComplete="copadoUtil.setLockScreenMessage();"
+                    /> &nbsp;
+                    <apex:commandButton action="{!back}" immediate="true" value="{!$Label.copado__BACK}" reRender="pbEnvVars" />
+                </apex:pageBlockButtons>
+                <apex:outputPanel id="editor">
+                    <apex:pageBlockSection >
+                        <apex:inputField required="false" label="Selenium Settings" value="{!mockGroup.copado__Selenium_Settings__c}" />
+
+                        <tr>
+                            <th class="labelCol vfLabelColTextWrap  first  last " scope="row">
+                                <label for="envs">Environment</label>
+                            </th>
+                            <td class="dataCol  first  last ">
+                                <input type="text" id="envs" value="{!selectedEnv}" disabled="{!selectedOrgs.size > 0}" />
+                            </td>
+                            <td class="labelCol empty">&nbsp;</td>
+                            <td class="dataCol empty">&nbsp;</td>
+                        </tr>
+
+                    </apex:pageBlockSection>
+                    <apex:outputPanel id="orgsPanel">
+                        <apex:outputPanel rendered="{!OR(allOrgs.size > 0,selectedOrgs.size > 0)}">
+                            <div>
+                                <div class="pbSubsection">
+                                    <table class="detailList" border="0" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <th class="labelCol vfLabelColTextWrap  first  last " scope="row">
+                                                    <label for="orgs">Org Credentials</label>
+                                                </th>
+                                                <td style="width:0px;" class="dataCol  first  last">
+                                                    <c:MultiselectPicklist leftLabel="Available Org Credentials" pleftOptions="{!allOrgs}" rightLabel="Selected Org Credentials"
+                                                        prightOptions="{!selectedOrgs}" size="14" width="250px" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="pbSubsection">
+                                    <table class="detailList" border="0" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <th class="labelCol vfLabelColTextWrap  first  last " scope="row">
+                                                    <label for="suites">Selenium Test Suites</label>
+                                                </th>
+                                                <td style="width:0px;" class="dataCol  first  last">
+                                                    <c:MultiselectPicklist leftLabel="Available Test Suites" pleftOptions="{!allSuites}" rightLabel="Selected Test Suites" prightOptions="{!selectedSuites}"
+                                                        size="14" width="250px" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <apex:pageBlockSection >
+                                <apex:inputField id="desc" style="width:350px" label="Description" value="{!mockGroup.copado__Description__c}" />
+                            </apex:pageBlockSection>
+                        </apex:outputPanel>
+                        <script>
+                            $copado('select.multilist').css('height', '240px');
+                            if (document.getElementById('envs').getAttribute('disabled') == "false") {
+                                document.getElementById('envs').removeAttribute('disabled');
+                            }
+                        </script>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:pageBlock>
+
+            <apex:outputPanel id="relatedList">
+                <apex:outputPanel rendered="{!stGroup4RelatedList.size > 0}">
+                    <apex:pageBlock id="pbRelatedList" title="Existing Selenium Test Groups">
+                        <apex:pageBlockTable value="{!stGroup4RelatedList}" var="currentListIndex">
+                            <apex:column >
+                                <apex:pageBlockTable value="{!currentListIndex}" var="stgItem">
+                                    <apex:column style="width:60px !important" headerValue="Action">
+                                        <b>
+                                            <a style="color:#015ba7;" class="outputLink" rid="{!stgItem.Id}" onclick="copadoUtil.editFunc(this);">Edit</a>
+                                        </b> |
+                                        <b>
+                                            <a style="color:#015ba7;" class="outputLink" rid="{!stgItem.Id}" onclick="copadoUtil.deleteFunc(this);">Del</a>
+                                        </b>
+                                    </apex:column>
+                                    <apex:column headerValue="Selenium Test Group Name">
+                                        <a href="/{!stgItem.Id}" target="_blank">{!stgItem.Name}</a>
+                                    </apex:column>
+                                    <apex:column value="{!stgItem.Selenium_Settings__r.Name}" />
+                                    <apex:column value="{!stgItem.Environment__r.Name}" />
+                                </apex:pageBlockTable>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:actionFunction name="populateBelowSection" action="{!populateSTG}" reRender="pmessages,orgsPanel" onComplete="copadoUtil.setLockScreenMessage();">
+                <apex:param name="selectedEnvironment" value="" />
+            </apex:actionFunction>
+            <apex:actionFunction name="deleteGroup" action="{!deleteSeleniumGroup_and_subRecords}" reRender="pmessages,relatedList,pbEnvVars,scriptPnl"
+                onComplete="copadoUtil.setLockScreenMessage();">
+                <apex:param name="groupId" value="" />
+            </apex:actionFunction>
+            <apex:actionFunction name="editGroup" action="{!editSeleniumGroup_and_subRecords}" reRender="pmessages,pbEnvVars" onComplete="copadoUtil.setLockScreenMessage();">
+                <apex:param name="groupId" value="" />
+            </apex:actionFunction>
+        </apex:form>
+    </body>
+    <apex:outputPanel id="scriptPnl">
+        <script>
+            var copadoUtil = { envs: {} }
+            $copado(document).ready(function () {
+                $copado('#screenLockerLightning').hide();
+                copadoUtil.envs = '{!JSENCODE(envNamesString)}';
+                copadoUtil.envs = copadoUtil.envs.replace('{', '').replace('}', '');
+                copadoUtil.envs = copadoUtil.envs.split(', ');
+
+                copadoUtil.initAc = $copado('[id$="envs"]').autocomplete({
+                    source: copadoUtil.envs,
+                    select: function (e, ui) {
+                        copadoUtil.setLockScreenMessage('Processing...');
+                        populateBelowSection(ui.item.value);
+                    }
+                });
+
+                copadoUtil.setLockScreenMessage = function (msg) {
+                    console.debug('setLockScreenMessage()', msg);
+                    var eltext = $copado('#screenLockerLightningText'), eltLock = $copado('#screenLockerLightning');
+                    if (msg) {
+                        eltext.text(msg);
+                        eltLock.show();
+                    } else {
+                        eltext.text('');
+                        eltLock.hide();
+                    }
+                }
+
+                copadoUtil.editFunc = function (elem) {
+                    var rid = $copado(elem).attr('rid');
+                    copadoUtil.setLockScreenMessage('Processing...');
+                    editGroup(rid);
+                }
+
+                copadoUtil.deleteFunc = function (elem) {
+                    var rid = $copado(elem).attr('rid');
+                    if (confirm('Are you sure?')) {
+                        copadoUtil.setLockScreenMessage('Processing...');
+                        deleteGroup(rid);
+                    }
+                }
+
+            });
+        </script>
+    </apex:outputPanel>
+</apex:page>

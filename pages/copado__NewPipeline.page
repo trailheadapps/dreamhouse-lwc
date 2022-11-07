@@ -1,0 +1,38 @@
+<apex:page id="NewPipeline" lightningStylesheets="true" standardController="copado__Deployment_Flow__c"
+           extensions="copado.NewPipelineExtension" action="{!setupDecisioner}" showHeader="false" sideBar="false">
+    <apex:slds />
+    <apex:form >
+        <apex:outputPanel styleClass="slds-scope" rendered="{!inProgress}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close">
+                            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"/>
+                            </svg>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                            {!$Label.Pipeline_There_is_a_setup_in_progress}
+                        </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>{!$Label.Pipeline_allow_only_one_setup_in_progress}</p>
+                        <p>{!$Label.Pipeline_Would_like_to_continue_to_setup} "<apex:outputText value="{!currentPipeline.Name}" />"?</p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <apex:commandLink value="{!$Label.copado__Cancel}" action="{!URLFOR($Action.Deployment_Flow__c.List,
+                        $ObjectType.Deployment_Flow__c)}" styleClass="slds-button slds-button_neutral slds-m-around_xxx-small"/>
+                        <apex:commandButton value="Start New" action="{!startNew}" styleClass="slds-button slds-button_destructive slds-m-around_xxx-small"/>
+                        <apex:commandButton action="{!goToSetup}" styleClass="slds-button slds-button_brand slds-m-around_xxx-small"
+                                            reRender="xx" value="{!$Label.copado__CONTINUE}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

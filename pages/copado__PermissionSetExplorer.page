@@ -1,0 +1,93 @@
+<apex:page showHeader="true" sidebar="true" controller="copado.PermissionSetExplorerExt" lightningStylesheets="true">  
+    <head>
+        <c:GAnalytics />
+        <link rel="stylesheet" href="{!URLFOR($Resource.Statics,'css/PermSets.css')}" /> 
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    </head>
+    <body>
+        <apex:form id="theForm" styleClass="copado-lightning-container">
+            <apex:sectionHeader title="Copado Permissioner" subtitle="Copado Permission Set Explorer" description="Explore all permissions included in each Permission Set"/>
+            <apex:pageMessages id="pmessages" escape="false"/>
+            <apex:pageBlock >
+                <strong>Persona:&nbsp;</strong>
+                <apex:selectList size="1" value="{!PersonaId}" label="Select Permission Set">
+                  <apex:selectOptions value="{!Personas}"></apex:selectOptions>
+                </apex:selectList>&nbsp;
+                <apex:commandButton action="{!LoadPermissions}" reRender="FLSrenderWrapper,OLSrenderWrapper,SUPrenderWrapper,pmessages" value="Load Permissions"/>
+                <br/>
+                <br/>
+                <apex:pageBlockSection title="Field Level Security" columns="1">
+                    <apex:outputPanel id="FLSrenderWrapper">
+                        <table class="list" id="tblData" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="headerRow">
+                                <th class="child">Object</th>
+                                <th class="child">Field</th>
+                                <th class="child">Readable</th>
+                                <th class="child">Editable</th>
+                            </tr>
+                            <apex:repeat value="{!Lfls}" var="fl">
+                                <tr class="dataRow">
+                                    <td><apex:outputText value="{!fl.SobjectType}"/></td>
+                                    <td><apex:outputText value="{!fl.Field}"/></td>
+                                    <td><apex:outputField value="{!fl.PermissionsRead}"/></td>
+                                    <td><apex:outputField value="{!fl.PermissionsEdit}"/></td>
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                        <br/>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Object Level Security" columns="1">
+                    <apex:outputPanel id="OLSrenderWrapper">
+                        <table class="list" id="tblData" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="headerRow">
+                                <th class="child">Object</th>
+                                <th class="child">Create</th>
+                                <th class="child">Read</th>
+                                <th class="child">Edit</th>
+                                <th class="child">Delete</th>
+                                <th class="child">View All</th>
+                                <th class="child">Modify All</th>
+                            </tr>
+                            <apex:repeat value="{!Lols}" var="ol">
+                                <tr class="dataRow">
+                                    <td><apex:outputText value="{!ol.SobjectType}"/></td>
+                                    <td><apex:outputField value="{!ol.PermissionsCreate}"/></td>
+                                    <td><apex:outputField value="{!ol.PermissionsRead}"/></td>
+                                    <td><apex:outputField value="{!ol.PermissionsEdit}"/></td>
+                                    <td><apex:outputField value="{!ol.PermissionsDelete}"/></td>
+                                    <td><apex:outputField value="{!ol.PermissionsViewAllRecords}"/></td>
+                                    <td><apex:outputField value="{!ol.PermissionsModifyAllRecords}"/></td>
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="System & User Permissions" columns="1">
+                    <apex:outputPanel id="SUPrenderWrapper">
+                        <table class="list" id="tblData" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="headerRow">
+                                <th class="child">Permission</th>
+                                <th class="child">Enabled</th>
+                            </tr>
+                            <apex:repeat value="{!Lsup}" var="sup">
+                                <tr class="dataRow">
+                                    <td><apex:outputText value="{!sup.fieldName}"/></td>
+                                    <td><img src="{! IF( sup.enabled=true, '/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')}" /></td>
+
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+        <script>
+            ga('send', 'pageview', {
+              'page': '/PermissionSetExplorer',
+              'title': 'PermissionSet Explorer'
+            });
+        </script>  
+        <c:CheckFeaturesComponent />
+    </body>
+</apex:page>

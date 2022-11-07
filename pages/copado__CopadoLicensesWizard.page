@@ -1,0 +1,30 @@
+<apex:page id="CopadoLicensesWizard" lightningStyleSheets="true" sideBar="false" docType="html-5.0" title="{!$Label.copado__Copado_License}">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__SetupDashboardJS)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__SetupDashboard)}" />
+    <script>
+    var svgButtonsId = [];
+        var svgButtonsClass = ['stepCompleted'];
+
+        var svgStruct = [];
+        var setSVGStruct = function(){
+            svgStruct['.stepCompleted'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}",
+                class:'slds-button__icon'
+            };
+        }
+        $copado(document).ready(function(){
+            setSVGStruct();
+            applyRenderSVG(svgButtonsId,svgButtonsClass);
+        });
+    </script>
+    <html>
+    <body class="slds-scope">
+    <apex:form >
+        <c:WizardSteps currentStep="2" />
+        <c:CopadoLicenses />
+    </apex:form>
+    </body>
+    </html>
+</apex:page>

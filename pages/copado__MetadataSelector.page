@@ -1,0 +1,159 @@
+<apex:page id="thePage" standardController="copado__User_Story__c" extensions="copado.MetadataselectorExtension,copado.Settings,copado.JsRemotingController" showHeader="false" sidebar="false" standardStyleSheets="true" lightningStylesheets="true">
+    <c:GAnalytics />
+    <head>
+        <style type="text/css">
+            @keyframes flash {
+                from {background-color: #03a9ff;}
+                to {background-color: #f2f3f3;}
+            }
+            @keyframes remove {
+                from {background-color: #f44274;}
+                to {background-color: #f2f3f3;}
+            }
+            .run-animation {
+                animation: flash 1s 1;
+            }
+        </style>
+        <c:WizardUtils />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    	<apex:includeScript value="{!URLFOR($Resource.JsRemoting) }"/>
+        <apex:includeScript value="{!URLFOR($Resource.statusManager) }" />
+        <apex:includeScript value="{!URLFOR($Resource.utilsV2) }"/>
+        <c:IncludeStaticsResourceComponent addJQuery="true" addCometdjs="true" addJSON2js="true" addJCometdjs="true"/>
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+        <script>
+            var Copado_Licenses = {!CurrentUserLicenses}; 
+        </script>
+        <c:IncludeConnectionJsComponent />
+        <apex:includeScript value="{!URLFOR($Resource.copadoStreamingService) }" />
+        
+        <c:WizardUtils />
+        <script>
+            var rock = rock || {};
+            rock.config = {
+                metadata_url : '{!JSENCODE(metadata_url)}'
+            };
+        </script>
+    </head>
+    <apex:form ><c:ScreenLocker msg="{!$Label.copado__LOADING}" /></apex:form>
+    <apex:sectionHeader rendered="{!mode=='ApexTests'}" id="sectionHeaderApex" title="{!$Label.copado__COPADO_CHANGE_MANAGEMENT}" subtitle="Apex Test Class selector" />
+    <apex:sectionHeader rendered="{!mode=='MetaData'}" id="sectionHeaderAll" title="{!$Label.copado__COPADO_CHANGE_MANAGEMENT}" subtitle="Metadata selector" />
+    
+    <apex:outputPanel id="msg" styleClass="fixedMsg">
+        <apex:pageMessages id="theMessages" />
+    </apex:outputPanel>
+
+    <div style="display:none;">
+        <apex:pageMessage title="{!$Label.copado__WARNING}" summary="__MSG__" severity="warning" strength="3" id="js-msg-WARNING" />
+        <apex:pageMessage title="{!$Label.copado__SUCCESS}" summary="__MSG__" severity="confirm" strength="3" id="js-msg-CONFIRM" />
+        <apex:pageMessage title="{!$Label.copado__ERROR}" summary="__MSG__" severity="error" strength="3" id="js-msg-ERROR" />
+    </div>
+
+    <apex:form id="theForm" rendered="{!hasOrg}" styleClass="copado-lightning-container">
+        <apex:actionFunction name="showMessage" action="{!showMessage}" rerender="msg">
+            <apex:param name="errorLevel" assignTo="{!errorLevel}" value="" />
+            <apex:param name="messageName" assignTo="{!messageName}" value="" />
+        </apex:actionFunction> 
+            
+        <apex:pageBlock id="pb" rendered="{!AND(showOptions,!showError)}" >
+            <apex:pageBlockButtons id="pbb_Save" location="top">
+                <apex:commandButton id="btnSave" value="{!$Label.site.save}"  onclick="return copadoApp.save();" rerender="pb" />&nbsp;
+                <apex:commandButton id="btnClose" value="{!$Label.copado__CLOSE}" onclick="return copadoApp.cancel();" />
+                &nbsp;
+                <apex:commandButton id="btnDelete" value="Clear All and Save" onclick="if (window.confirm('Are you sure you want to Clear All Selections and Save?')){return copadoApp.deleteAttachment();}else{return false}" />&nbsp;
+                <apex:outputPanel id="removeCacheContainer">&nbsp;
+                    <apex:commandLink style="display:none;" value="{!$Label.copado__CACHE_REFRESHED_NOW}" onclick="return copadoApp.refreshCache();" rerender="opDummy" id="removeCache"/>
+                </apex:outputPanel>
+            </apex:pageBlockButtons>
+            <apex:outputPanel layout="none" >
+                <div id="metadataGrid2">
+                    <div class='mg2_tabs'>
+                      <ul style="margin-left: 20px;">
+                        <li>{!$Label.All_Metadata}</li>
+                        <li>{!$Label.SelectedMetadata}</li>
+                      </ul>
+                      <div>
+                          <div class="mg2_scaleFilterFrame" style="padding: 5px; display: none;">
+                            <label class="mg2_mtFilter">Metadata Type Filter</label>&nbsp;
+                            <apex:commandLink value="({!$Label.copado__REFRESH})"  onclick="return metadataGrid2.refreshMetadataTypes();" rerender="opDummy" id="removeMTCache"/>
+                            <div class="mg2_scaleFilter" style="margin-bottom: 10px;"></div>
+                          </div>
+                      </div>
+                      <div><!-- empty div, needed as content for the two tabs --></div>
+                    </div>
+                    <div class="mg2_jqxgrid" >
+                     <center><img src="/img/loading.gif" /><i><span id="retry-label">{!$Label.copado__LOADING}</span></i></center>
+                    </div>
+                </div>
+             </apex:outputPanel>
+        </apex:pageBlock>
+        <script>
+        	var metadataApp = {
+                userStoryId: '{!JSENCODE(User_Story__c.Id)}',
+                mode: '{!JSENCODE(mode)}',
+                orgCredential: '{!JSENCODE(User_Story__c.Org_Credential__c)}',
+                ns: '{!JSENCODE(namespace)}',
+
+                showMessage: function(type, msg, timeout){
+                    $copado('.fixedMsg')
+                        .html($copado('[id$=js-msg-'+type+']').html().replace('__MSG__',msg))
+                        .fadeIn('slow');
+
+                    if(timeout == -1)return false;
+                    timeout = (timeout==0)? 7000 : timeout;
+
+                    setTimeout(function(){$copado('.fixedMsg').fadeOut('slow');},timeout);
+                    return false;
+                }
+            }
+        </script>
+
+        <script>
+            var _config = {
+                data:{
+                    id: '{!JSENCODE(User_Story__c.id)}',
+                    orgId: '{!JSENCODE(User_Story__c.Org_Credential__c)}',
+                    envId: '{!JSENCODE(User_Story__c.Org_Credential__c)}'                   
+                },
+                server: {
+                    metadataUrl: '{!JSENCODE(urlBase)}metadata/__ORGID__{!JSENCODE(urlParameters)}&parentId=__ORGID__&dates=format',
+                    typesUrl: '{!JSENCODE(urlBase)}gitTypes{!JSENCODE(urlParameters)}'
+                },
+                ns: '{!JSENCODE(namespace)}',
+                attachmentName: 'MetaData',
+                viewType: 0,
+                contextSize: 10,
+                leftContent: '',
+                rightContent: ''
+            };
+            $copado( document ).ready(function() {                
+                
+                copadoStreamingService.ns = '{!JSENCODE(namespace)}';
+                copadoStreamingService.init();
+                statusManager.ns = '{!JSENCODE(namespace)}';
+                statusManager.herokuServer = '{!JSENCODE(herokuServer)}';
+                statusManager.urlParameters = '{!JSENCODE(urlParameters)}';
+                statusManager.sessionId = __sfdcSessionId;
+                statusManager.parentId = '{!JSENCODE(User_Story__c.Id)}';
+                statusManager.initFunction = function(){ copadoApp.init(_config,false,{!scalableGrid}) };
+                //statusManager.successFunction = function(){ init(false); };
+                setTimeout(function(){
+                    statusManager.initialise();
+                },1000);
+                var body = document.getElementsByTagName('body')[0];
+                body.addEventListener("beforeunload", function(){
+                    copadoStreamingService.unload();
+                });
+            });
+        </script>
+        <script src="{!URLFOR($Resource.metadataGrid2) }" />
+        <script src="{!URLFOR($Resource.metadataselector) }"></script>
+    </apex:form>
+    
+    <script>
+        ga('send', 'pageview', {
+          'page': '/MetaDataSelector',
+          'title': 'MetaData Selector'
+        });
+    </script>
+</apex:page>

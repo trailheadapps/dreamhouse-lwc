@@ -1,0 +1,33 @@
+<apex:page id="ScratchOrgOpen" controller="copado.ScratchOrgOpen" sideBar="false" showHeader="false">
+    <c:IncludeStaticsResourceComponent addJquery="true" addUIjs="true"/>
+    <apex:form >
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}" id="slock"/>
+        <apex:pageMessages id="theMessages" />
+        <apex:actionFunction action="{!rScratchOrgJob}" name="reviewScratchOrgJob" onComplete="checkJobStatus();" reRender="cJFlag,theMessages">
+            <apex:param name="sorgId" value="" assignTo="{!soId}"/>
+        </apex:actionFunction>
+        <apex:outputPanel layout="block" id="cJFlag">
+        <script>
+            var stat = {!copadoJobFinished};
+            var msg = '{!JSENCODE(slockerMessage)}';
+            </script>
+                    </apex:outputPanel>
+                    <script type="application/javascript">
+            window.onload = function(e){
+            lockScreen();
+            reviewScratchOrgJob('{!JSENCODE($CurrentPage.parameters.Id)}');
+            }
+            function checkJobStatus(){
+                if(stat == true){
+                    unlockScreen();
+                    return false;
+                }else{
+                    setLockScreenMessage(msg);
+                    setTimeout(function(){
+                        reviewScratchOrgJob('{!JSENCODE($CurrentPage.parameters.Id)}');
+                    }, 3000);
+                }
+            }
+        </script>
+    </apex:form>
+</apex:page>

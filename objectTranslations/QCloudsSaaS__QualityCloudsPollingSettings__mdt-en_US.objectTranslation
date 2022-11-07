@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Value --></label>
+        <name>QCloudsSaaS__Setting_Value__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- The value must be bigger than 0 --></errorMessage>
+        <name>QCloudsSaaS__More_than_0</name>
+    </validationRules>
+</CustomObjectTranslation>

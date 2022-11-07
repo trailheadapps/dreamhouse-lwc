@@ -1,0 +1,64 @@
+<apex:page id="thePage" standardController="copado__Selenium_Settings__c" extensions="copado.Settings" lightningStylesheets="true">
+    <c:GAnalytics />
+    <c:WizardUtils />
+    <head>
+        <c:IncludeStaticsResourceComponent addJquery="true" addUIjs="true" addUIcss="true"/>
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+
+        
+        <apex:includeScript value="{!URLFOR($Resource.utilsV2) }"></apex:includeScript>
+        <script type="text/javascript" src="{!URLFOR($Resource.seleniumSettings)}"></script>
+        
+        <script type="text/javascript">
+            var Copado_Licenses = {!CurrentUserLicenses};
+        </script>
+        <c:IncludeConnectionJsComponent />
+    </head>
+    <div id="divNothingToShow" style="display:none;">
+        <apex:pageMessage id="msgNothingToShow" severity="INFO" summary="These Selenium Settings have no selections to show."  />    
+    </div>
+    <div id="jqxGrid" style="display:none;">
+        <div id="loading">
+            <center>
+                <img src="/img/loading.gif" /> <i>{!$Label.LOADING}<span id="retry-label"></span></i>
+            </center>
+        </div>
+    </div>
+    <script type="text/javascript">
+        seleniumSettings.config.herokuServer = '{!JSENCODE(herokuServer)}';
+        var copadoApp = {
+            urlParameters: '{!JSENCODE(urlParameters)}'
+        };
+        
+        seleniumSettings.labels.SELECTED = copadoLabels.selected;
+        seleniumSettings.labels.OS = copadoLabels.OS;
+        seleniumSettings.labels.OS_VERSION = copadoLabels.OS_VERSION;
+        seleniumSettings.labels.BROWSER = copadoLabels.BROWSER;
+        seleniumSettings.labels.BROWSER_VERSION = copadoLabels.BROWSER_VERSION;
+        seleniumSettings.labels.DEVICE = copadoLabels.DEVICE;
+        seleniumSettings.labels.RESOLUTION = copadoLabels.RESOLUTION;
+        seleniumSettings.labels.SELECTALL = copadoLabels.select_all;
+        seleniumSettings.labels.UNSELECTALL = copadoLabels.unselect_all;
+        
+        seleniumSettings.data.selectedProvider = '{!JSENCODE(Selenium_Settings__c.Provider__c)}';
+        seleniumSettings.data.selections = '{!JSENCODE(Selenium_Settings__c.Selected_Platforms__c)}';
+        seleniumSettings.providerSelector.hide = function(){};
+        seleniumSettings.providerSelector.showCustom = function(){};
+        if(seleniumSettings.data.selectedProvider=='Sauce Labs' || seleniumSettings.data.selectedProvider=='Browser Stack'){
+            seleniumSettings.grid.start(JSON.parse(seleniumSettings.data.selections), true);
+            seleniumSettings.providerSelector.show();
+        }
+        else{
+        	$copado('#jqxGrid').html('');
+            $copado('#divNothingToShow').show();
+        }
+    </script>
+    <apex:outputText value="{!copado__Selenium_Settings__c.copado__Provider__c}" rendered="false" />
+    <apex:outputText value="{!copado__Selenium_Settings__c.copado__Selected_Platforms__c}" rendered="false" />
+    <script>
+        ga('send', 'pageview', {
+            'page': '/SeleniumSetingSelections',
+            'title': 'Selenium Setting Selections'
+        });
+    </script> 
+</apex:page>

@@ -1,0 +1,65 @@
+<apex:page id="CCD_CreateQualityGate" standardController="copado__Quality_Gate__c" extensions="copado.CCD_CreateQualityGateExtension,copado.Settings,copado.JsRemotingController" lightningStylesheets="true" standardStylesheets="false" applyBodyTag="true" showHeader="true" docType="html-5.0">
+
+    <apex:slds />
+    <c:IncludeConnectionJsComponent />
+    
+    <style>
+    .slds-form-element {
+        padding: .5em .5em;
+    }
+    </style>
+    <script>
+        var saveTask = function(){
+            var data = urlCallout.save();
+            if(data){
+                var newPrevRes = [];
+                var parsed;
+                try{
+                    //UCU - if the selected type is apex then the parse crashes, so placed try cache block to solve it
+                    parsed = JSON.parse(data);
+                } catch(err){
+                    parsed = {};
+                }
+
+                if(parsed.prevRes){
+                    for(var pr=0;pr<parsed.prevRes.length;pr++){
+                        if(parsed.prevRes[pr].s){
+                            newPrevRes.push(parsed.prevRes[pr]);
+                        }
+                    }
+                    parsed.prevRes = newPrevRes;
+                    data = JSON.stringify(parsed);
+                }
+                lockScreen();
+                saveAct(data);
+
+                return false;
+            }else{
+                return false;
+            }
+        }
+    </script>
+    <div class="slds-scope">
+        <apex:form id="groupItemForm">
+            <apex:actionFunction name="rendergroupItemForm" reRender="groupItemForm" onComplete="unlockScreen();"/>
+            <apex:pageBlock >
+                <apex:PageMessages id="messages"/>
+                <c:CopadoSpinner />
+                <apex:pageBlockSection columns="1">
+                    <apex:pageBlockSectionItem rendered="{!thisQualityGate.copado__Type__c == 'URL Callout'}">
+                        <c:URLCalloutComponent isEdit="true" />
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+
+                <div class="slds-form-element slds-align_absolute-center">
+                    <apex:commandButton value="{!$Label.copado__Cancel}" action="{!cancel}" styleClass="slds-button slds-button_neutral" />
+                    <input type="button"  value="{!$Label.Save}" class="btn slds-button slds-button_brand"
+                                        onClick="saveTask();"/>
+                    <apex:actionFunction name="saveAct" action="{!save}" onComplete="unlockScreen();" reRender="messages">
+                        <apex:param name="dataJSON" value=""/>
+                    </apex:actionFunction>
+                </div>
+            </apex:pageBlock>
+        </apex:form>
+    </div>
+</apex:page>

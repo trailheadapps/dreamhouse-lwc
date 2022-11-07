@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Allow All Data --></label>
+        <name>copado__Allow_All_Data__c</name>
+    </fields>
+    <fields>
+        <label><!-- Condition Key --></label>
+        <name>copado__Condition_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Condition Logic --></label>
+        <name>copado__Condition_Logic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delete --></label>
+        <name>copado__Delete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Insert --></label>
+        <name>copado__Insert__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Api Name --></label>
+        <name>copado__Object_Api_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type Developer Name --></label>
+        <name>copado__Record_Type_Developer_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscriber Code --></label>
+        <name>copado__Subscriber_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Undelete --></label>
+        <name>copado__Undelete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update --></label>
+        <name>copado__Update__c</name>
+    </fields>
+</CustomObjectTranslation>

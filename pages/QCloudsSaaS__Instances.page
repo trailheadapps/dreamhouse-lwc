@@ -1,0 +1,71 @@
+<apex:page controller="QCloudsSaaS.InstancesController">
+    <apex:stylesheet value="{!$Resource.QCloudsSaaS__listtable}" />
+    <apex:pageMessage rendered="{! message_type != null}" summary="{! message}" severity="{! message_type}" strength="3" />
+    <apex:pageMessages />
+    <apex:form >
+        <apex:pageBlock title="OAuth Status">
+            <apex:pageBlockSection columns="2">
+                <p>
+                    <bold>Token expire date: </bold>{! settings.OAuth_expire_time__c }
+                </p>
+                <apex:commandButton action="{! go_settings }" value="Go to settings" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock title="Instances">
+            <apex:pageBlockSection columns="1">
+                <apex:dataTable value="{!instances}" var="instance" id="theTable" styleClass="v-table" rowClasses="odd,even" width="100%">
+
+                    <apex:column >
+                        <apex:facet name="header">Description</apex:facet>
+                        <apex:outputText value="{! instance.Description__c}" />
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">URL</apex:facet>
+                        <apex:outputText value="{!instance.QCloudsSaaS__url__c}" />
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">Feature Branch</apex:facet>
+                        <apex:outputText rendered="{! instance.Is_Featured_Banch__c}" value="✓" />
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">View Detail</apex:facet>
+                        <apex:commandLink action="{! openDetail }" value="View">
+                            <apex:param name="id" value="{! instance.ID__c}" assignTo="{! id_inst}" />
+                        </apex:commandLink>
+                    </apex:column>
+
+                    <apex:column >
+                        <apex:facet name="header">Refresh connection</apex:facet>
+                        <apex:commandLink rendered="{!! instance.QCloudsSaaS__Is_Featured_Banch__c}" action="{! authorize }" value="Refresh connection" target="_blank">
+                            <apex:param name="id" value="{! instance.ID__c}" assignTo="{! id_inst}" />
+                        </apex:commandLink>
+                    </apex:column>
+
+                </apex:dataTable>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons rendered="{! checkIfTokenValid}">
+                    <apex:commandButton action="{! updateInstances }" value="Import/Update" />
+                    <apex:commandButton action="{! openPopup }" value="Connect org to QC" />
+            </apex:pageBlockButtons>
+
+        </apex:pageBlock>
+        <apex:outputPanel id="tstpopup" rendered="{!showPopup}">
+            <apex:outputPanel styleClass="popupBackground" layout="block" />
+            <apex:outputPanel styleClass="custPopup" layout="block" >
+                    <center>
+                        <p><bold>QualityClouds connected app
+                              will be automatically created in this org, then corresponding 
+                              instance will be created in Quality Clouds portal.</bold></p><br/>
+                        <p><bold>If you agree to create connected app automatically,
+                             please enter org description and click Ok</bold></p><br/><br/>
+                        <apex:outputLabel styleClass="right-padding" value="Description" for="description"/>  <apex:inputText value="{! description }" id="description"/><br/><br/>
+                        <apex:commandButton value="Ok"  action="{! connectOrgToPortal }" />
+                        <apex:commandButton value="Cancel" action="{! Cancel }" />
+                    </center>
+                </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

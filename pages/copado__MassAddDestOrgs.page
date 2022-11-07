@@ -1,0 +1,28 @@
+<apex:page standardController="copado__Org__c" recordSetVar="orgs" extensions="copado.MassAddDestOrgs" title="{!$Label.copado__HEADER_DESC_SELECT_DEST_ORGS}" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    </head>
+    <body>
+        <apex:form id="theForm" styleClass="copado-lightning-container" html-novalidate="true">
+            <apex:pageMessages />
+            <apex:sectionHeader title="{!$ObjectType.copado__Deployment__c.Label}" subtitle="{!$Label.copado__HEADER_SELECT_DEST_ORGS2}" description="{!$Label.copado__HEADER_DESC_SELECT_DEST_ORGS}"/>
+            <apex:pageBlock mode="edit">
+                <apex:pageblockButtons location="bottom">
+                    <apex:commandButton value="{!$Label.site.cancel}" action="{!cancel}" />
+                    <apex:commandButton value="{!$Label.site.save}" styleClass="btnImportant" action="{!add}" />
+                </apex:pageblockButtons>
+                <apex:pageBlockSection columns="1">
+                    <apex:inputField value="{!dummy.copado__Deployment__c}" required="true"/>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+        <c:CheckFeaturesComponent />
+        <script>
+            ga('send', 'pageview', {
+              'page': '/MassAddDestOrgs',
+              'title': 'Mass Add Destination Orgs'
+            });
+        </script>
+    </body>
+</apex:page>

@@ -1,0 +1,81 @@
+<apex:page showHeader="true" sidebar="true" standardController="copado__OrgDiff__c" extensions="copado.OrgDiffExtension,copado.Settings" title="{!$ObjectType.copado__OrgDiff__c.Label} {!$ObjectType.copado__Deployment__c.Label}" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <c:IncludeStaticsResourceComponent addJQuery="true"/>
+        <script type="text/javascript">
+            var Copado_Licenses = {!CurrentUserLicenses};
+        </script>
+        <c:IncludeConnectionJsComponent />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+
+        <c:WizardUtils />
+
+        <script>
+            //todo get url by method
+            var diffDeployment = {}; 
+            $copado(function(){
+                diffDeployment.apiUrl = '{!JSENCODE(deploy_url)}';
+                diffDeployment.onSuccess = function(d){
+                    $copado('.js-diffDeployment').fadeOut();
+                    console.log(11,d);
+                    if(d.deploymentId != null){
+                        window.location.replace('/'+d.deploymentId+'/e');   
+                    }
+                    else{
+                        $copado('.js-diffDeployment').fadeOut();
+                        //TODO: translate message to fix diffDeployment data
+                        showMessage('ERROR',d.error);
+                    }
+                    //savediffDeployment(d.organizationId);
+                    //TODO RErender form
+                    //check secure DML save logic from editOrg.cls
+                };
+                diffDeployment.onError = function(d){
+                    $copado('.js-diffDeployment').fadeOut();
+                    //TODO: translate message to fix diffDeployment data
+                    showMessage('ERROR',d);
+                    //TODO: save result
+                };
+                
+                dw.u.getRemote(diffDeployment.apiUrl,diffDeployment.onSuccess,false,false, diffDeployment.onError);
+
+            });
+
+        </script>
+    </head>
+    <body>
+        <apex:form id="theForm" styleClass="copado-lightning-container">
+        <apex:sectionHeader title="{!$ObjectType.copado__OrgDiff__c.Label} {!$ObjectType.copado__Deployment__c.Label}" subtitle="{!copado__OrgDiff__c.Name}"/>
+        
+        <apex:actionFunction name="showMessage" action="{!showMessage}" rerender="pg_all">
+            <apex:param name="errorLevel" assignTo="{!errorLevel}" value="" />
+            <apex:param name="messageName" assignTo="{!messageName}" value="" />
+        </apex:actionFunction> 
+        <apex:pageBlock helpUrl="https://docs.copado.com/org-differences/org-differences-overview" helpTitle="{!$Label.copado__HELP_FOR_THIS_PAGE}" id="pg_all" title="{!$Label.copado__DETAILS}">
+            <apex:pageMessages />
+            <apex:pageBlockSection title="">
+                <apex:outputField value="{!copado__OrgDiff__c.Name}"/>
+                <apex:outputField value="{!copado__OrgDiff__c.copado__From_Org__c}"/>
+                <apex:outputField value="{!copado__OrgDiff__c.copado__To_Org__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock >
+            <apex:outputPanel styleClass="js-diffDeployment">
+                <div id="loading">
+                    <center><img src="/img/loading.gif" /> <i>{!$Label.LOADING}<span id="retry-label"></span></i></center>
+                </div>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        <apex:outputPanel rendered="false">
+            <apex:outputField value="{!copado__OrgDiff__c.copado__Metadata_Types__c}"/>
+        </apex:outputPanel>
+        </apex:form>
+        <c:CheckFeaturesComponent />
+        <script>
+            ga('send', 'pageview', {
+              'page': '/OrgDiffDeployment',
+              'title': 'Org Diff Deployment'
+            });
+        </script>
+    </body>
+</apex:page>

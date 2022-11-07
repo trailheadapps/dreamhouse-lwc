@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- If working with Copado Change Management, the Project must be linked to a Pipeline. --></help>
+        <label><!-- Pipeline --></label>
+        <name>copado__Deployment_Flow__c</name>
+        <relationshipLabel><!-- Projects --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>copado__End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Exclude Tabs from Promotion Page --></label>
+        <name>copado__Exclude_Tabs_from_Promotion_Page__c</name>
+        <picklistValues>
+            <masterLabel>Promotion User Story Metadata</masterLabel>
+            <translation><!-- Promotion User Story Metadata --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selenium Test</masterLabel>
+            <translation><!-- Selenium Test --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Static Code Analysis Summary</masterLabel>
+            <translation><!-- Static Code Analysis Summary --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- When this field is checked, Copado will index the metadata selected against the user stories into the User Story Metadata custom object. Indexed metadata can be used for reporting and compliance, and it&apos;s also used by Copado overlap awareness feature. --></help>
+        <label><!-- Index Metadata --></label>
+        <name>copado__Index_Metadata__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>copado__Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

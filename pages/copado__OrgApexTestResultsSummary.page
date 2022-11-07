@@ -1,0 +1,415 @@
+<apex:page showHeader="false" sidebar="false" standardController="copado__Org__c" extensions="copado.Settings" id="thePage" lightningStylesheets="true">
+    <head>
+        <c:IncludeStaticsResourceComponent addJQuery="true" addATRcss="true"/>
+        <c:GAnalytics />
+        <c:WizardUtils />
+        
+            <script type="text/javascript">
+                var Copado_Licenses = {!CurrentUserLicenses};
+            </script>
+            <c:IncludeConnectionJsComponent />
+            <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+            <style>
+                body {font-size: 12px;}
+                .col1{ }
+                .failed { text-align:left !important; }
+                .col2{ width:150px; text-align:left !important;}
+                .col3{ width:100px;}
+                .col4{ width:500px;}
+                .colMethods {width:500px;}
+                .colmsg {width:500px;}
+                .alignRight { text-align:right; padding-right:5px;}
+                @media print{
+                    .failed { -webkit-print-color-adjust: exact; text-align:left !important; }
+                    body {font-size: 12px;}
+                    .noprint, .col4{ display:none; }
+                }
+            </style>
+        <apex:includeScript value="{!URLFOR($Resource.utils) }" />
+
+        <script>
+            var copadoApp = copadoApp || {
+                orgId: '{!JSENCODE(Org__c.Id)}'
+               
+            };
+        </script>
+    </head>
+
+    <body>
+        <!-- THIS URL CAN BE CHANGED TO REPLACE THE LOGO-->
+        <img src="https://copado--c.eu2.content.force.com/servlet/servlet.ImageServer?id=015b0000005no4X&oid=00Db0000000YN5R&lastMod=1496992954000" style="margin: 16px 16px 0 0" />
+        <br />
+        <div class="noprint">
+            <apex:pageMessage strength="1" severity="info" summary="{!$Label.copado__APEX_TEST_RESULT_SUMMARY_INFO}"  />
+        </div>
+        <apex:form styleClass="copado-lightning-container">
+            <apex:pageBlock title="{!$Label.copado__SUMMARY}" id="pbSummary">
+                <apex:pageBlockSection id="pbsMain">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.copado__ORG_COVERAGE}"/>
+                        <div class="jstxt_Coverage"> </div>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.copado__DURATION}" />
+                        <div class="jstxt_Duration"> </div>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.copado__TESTS_PASSED}" />
+                        <div class="jstxt_TestsPassed"> </div>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+
+            <apex:pageBlock title="{!$Label.copado__CLASS_COVERAGE}" id="pbClassCoverage">
+                <table id="tblClassCoverage" width="100%" class="list" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr class="headerRow">
+                            <th class="col1">{!$Label.NAME}</th>
+                            <th class="col2">{!$Label.COVERAGE_STATUS}</th>
+                            <th class="col3">{!$Label.LINES_NOT_COVERED}</th>
+                            <th class="col3">{!$Label.LINES_COVERED_TOTAL_LINES}</th>
+                            <th class="col3">{!$Label.COVERAGE} %</th>
+                            <th class="col4"></th>
+                        </tr>
+                    </thead>
+                    <tbody> </tbody>
+                </table>
+            </apex:pageBlock>
+
+            <apex:pageBlock title="{!$Label.copado__TRIGGER_COVERAGE}" id="pbTriggerCoverage">
+                <table id="tblTriggerCoverage" width="100%" class="list" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr class="headerRow">
+                            <th class="col1">{!$Label.NAME}</th>
+                            <th class="col2">{!$Label.COVERAGE_STATUS}</th>
+                            <th class="col3">{!$Label.LINES_NOT_COVERED}</th>
+                            <th class="col3">{!$Label.LINES_COVERED_TOTAL_LINES}</th>
+                            <th class="col3">{!$Label.COVERAGE} %</th>
+                            <th class="col4"></th>
+                        </tr>
+                    </thead>
+                    <tbody> </tbody>
+                </table>
+            </apex:pageBlock>
+
+            <apex:pageBlock title="{!$Label.copado__METHODS}" id="pbMethods">
+                <table id="tblMethods" width="100%" class="list" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr class="headerRow">
+                            <th class="col1">{!$Label.APEX_CLASS}</th>
+                            <th class="col2">{!$Label.METHOD_NAME}</th>
+                            <th class="col3">{!$Label.PASS_FAIL_COLUMN_HEADER}</th>
+                            <th class="colmsg">{!$Label.copado__METHODS}</th>
+                        </tr>
+                    </thead>
+                    <tbody> </tbody>
+                </table>
+            </apex:pageBlock>
+        </apex:form>
+
+        <script type="text/javascript">
+            var apexTestResult = {
+                ns: '{!JSENCODE(namespace)}',
+                attachmentBody: '',
+                userStoryClassesArray: [],
+                userStoryTriggersArray: [],
+                testClassesArray: [],
+                globalObject: {},
+                classCoverageResults: [],
+                triggerCoverageResults: [],
+                testClassResults: [],
+                orgTestClasses: [],
+                showError: false,
+                renderTables: true,
+                orgCoverage: 0,
+                orgCoverageTotal: 0,
+
+                totalLines: 0,
+                linesNotCovered: 0,
+
+                
+
+                getLatestApexTestResult: function(){
+                    var me = apexTestResult;
+                    try{
+                        var result = sforce.connection.query("select id from "+me.ns+"Apex_Test_Result__c where "+me.ns+"Org__c='"+copadoApp.orgId+"' order by createddate desc limit 1");
+                        var records = result.getArray("records");
+                        if(records.length==1){
+                            result = sforce.connection.query("Select Id, Body from Attachment where Name='ApexTestResult' and ParentId='"+records[0].Id+"' limit 1");
+                            records = result.getArray("records");
+                            if(records.length==1){
+                                console.log('Apex Test Result attachment found');
+                                me.attachmentBody = Base64.decode(records[0].Body);
+                            }
+                            else{
+                                console.error('No Apex Test result attachment found');
+                            }
+                        }
+                        else{
+                            console.error('No Apex Test result found');
+                        }
+                        return null;
+                    }
+                    catch(error){
+                        me.showErrorMessage();
+                        console.error('Error getting attachment: '+error);
+                        return null;
+                    }
+                },
+                showErrorMessage: function(){
+                    var me = apexTestResult;
+                    me.showError = true;
+                    me.renderTables = false;
+                },
+                getObjectByString: function(o, s) {
+                    s = s.replace(/\[(\w+)\]/g, '.$1');  // convert indexes to properties
+                    s = s.replace(/^\./, ''); // strip leading dot
+                    var a = s.split('.');
+                    while (a.length) {
+                        var n = a.shift();
+                        if (n in o) {
+                            o = o[n];
+                        } else {
+                            return;
+                        }
+                    }
+                    return o;
+                },
+                /**
+                 * This method creates an array that includes: 
+                 *  the name, covetage, is include in User Story
+                 * @param  {[type]} source     [description]
+                 * @param  {[type]} result     [description]
+                 * @param  {[type]} sourceName [description]
+                 * @return {[type]}            [description]
+                 */
+                createCoverageArray: function(source, result, sourceName){
+                    var me = apexTestResult;
+                    //key == className
+                    var keys = Object.keys(source);   
+                    //var userStoryItemsCount = 0;
+
+                    //prepare classes/trigger names for Array
+                    var tmp_names = [];
+                    var usArray = sourceName=='classCoverageResults' ?  me.userStoryClassesArray : me.userStoryTriggersArray;
+
+                    for(var k in usArray){
+                        tmp_names.push(usArray[k].n);
+                    }
+                    
+                    //for each item in test results
+                    for(var i=0; i<keys.length; i++){
+                        var name = keys[i];
+                        var classRes = source[name];
+
+                        // get coverage or zero
+                        var c = (classRes && classRes.coverage) || 0;
+                        
+                        // prepare the complete coverage row
+                        var row = {
+                            inUserStory: false, //booly
+                            name: name,
+                            coverage:  Math.floor(c)+'%',
+                            coverageStatus: (c >=copadoApp.minCodeCoverage)? copadoLabels.PASSED : copadoLabels.FAILED, 
+                            progress:  c,
+                            numLocations: classRes.numLocations,
+                            numLocationsNotCovered: classRes.numLocationsNotCovered
+                        }
+                        result.push(row);
+                        console.log('create coverage array', classRes);
+                        me.addCoverageData(classRes);
+                    }
+                },
+
+                /**
+                 * This method use two algorithm to calculate the code coverage
+                 * 1. By general coverage for org and old user stories
+                 * 2. By calculating lines covered and not covered
+                 * @param {[type]} classRes [description]
+                 */
+                addCoverageData: function(classRes){
+                    var me = apexTestResult;
+                    if(classRes && classRes.numLocations){
+                        me.coverageMode = 2;
+                        me.totalLines += classRes.numLocations; 
+                        me.linesNotCovered += classRes.numLocationsNotCovered;
+                    }
+                    else{
+                        //Algorithm 1 by coverage average
+                        var c = classRes.coverage || 0;
+                        me.coverageMode = 1;
+
+                        // calculate the total coverage
+                        me.orgCoverageTotal = me.orgCoverageTotal + c;
+                    }
+                },
+
+                calculateCoverage: function(){
+                    var me = apexTestResult;
+                    console.log('calculate coverage')
+                    if(me.coverageMode == 2){
+                        me.orgCoverage = (1 - (me.linesNotCovered /me.totalLines)) * 100;
+                        console.log('mode 2', me.orgCoverage, me.linesNotCovered , me.totalLines);
+                    }
+                    else{
+                        me.orgCoverage = me.orgCoverageTotal / (me.classCoverageResults.length + me.triggerCoverageResults.length);
+
+                    }
+                },
+                createMethodArray: function(source, result){
+                    var me = apexTestResult;
+                    var keys = Object.keys(source);
+                    for(var i=0; i<keys.length; i++){
+                        var methods = me.getObjectByString(source, keys[i]+'.methods');
+                        for(var j=0; j<methods.length; j++){
+                            var row = {};
+                            row['class'] = keys[i];
+                            row['method'] = methods[j].name;
+                            row['msg'] = methods[j].message;
+                            row['success'] = (methods[j].success)?'Passed':'Failed';
+                            result.push(row);
+                        }
+                    }
+                },
+                parseJSON: function(){
+                    var me = apexTestResult;
+                    if(me.attachmentBody !=''){
+                        me.globalObject = $copado.parseJSON(me.attachmentBody);
+                        me.createCoverageArray(me.globalObject.classCoverageResults, me.classCoverageResults, 'classCoverageResults');
+                        me.createCoverageArray(me.globalObject.triggerCoverageResults, me.triggerCoverageResults, 'triggerCoverageResults');
+                        me.createMethodArray(me.globalObject.testClassResults, me.testClassResults);
+                        me.calculateCoverage();
+                    }
+                    return false;
+                },
+
+                getOrgMinCoverage: function(cb){
+
+                    var me = apexTestResult;
+                    var result = sforce.connection.query("Select "+me.ns+"Minimum_Apex_Test_Coverage__c from "+me.ns+"Org__c where Id='"+copadoApp.orgId+"' limit 1");
+                    var res = result.records[me.ns+'Minimum_Apex_Test_Coverage__c']  
+                    copadoApp.minCodeCoverage = parseInt(res) || 75;
+                    cb&&cb();
+
+                },
+
+                _init: function(){
+                    var me = apexTestResult;
+
+                    me.getOrgMinCoverage(me.getLatestApexTestResult);
+                    
+
+                    if(!me.showError)me.parseJSON();
+                    if(me.renderTables)$copado('#globalWrapper').show();
+                },
+                cellsrenderer: function (value) {
+                    var styleColor = (value >= copadoApp.minCodeCoverage)?'success':'danger';
+                    var prog = "<div class='progress' style='height:20px;width:100%'>"+
+                        "<div class='bar bar-"+styleColor+"' style='width:"+value+"% !important;'> </div>"+
+                    "</div>"
+                    return prog;
+                },
+                renderData: function(){
+                    console.info('classCoverageResults', apexTestResult.classCoverageResults);
+                    var rows = '';
+                    for(var i=0; i<apexTestResult.classCoverageResults.length; i++){
+                        var z = apexTestResult.classCoverageResults[i];
+                        var failedClass = (z.coverageStatus=='Failed')?'failed':'';
+                        var row='';
+                        row = '<tr>'+
+                                '<td class="col1">'+z.name+'</td>'+
+                                '<td class="col2 '+failedClass+'">'+z.coverageStatus+'</td>'+
+                                '<td class="col3 alignRight">'+z.numLocationsNotCovered+'</td>'+
+                                '<td class="col3 alignRight">'+(z.numLocations-z.numLocationsNotCovered)+' '+copadoLabels.FRACTION_OUT_OF_LABEL+' '+z.numLocations+'</td>'+
+                                '<td class="col3 alignRight">'+z.coverage+'</td>'+
+                                '<td class="col4">'+apexTestResult.cellsrenderer(z.progress)+'</td>'+
+                            '</tr>';
+                        rows = rows+row;
+                    }
+                    $copado(rows).appendTo('#tblClassCoverage tbody');
+
+                    console.info('triggerCoverageResults', apexTestResult.triggerCoverageResults);
+                    var rows = '';
+                    for(var i=0; i<apexTestResult.triggerCoverageResults.length; i++){
+                        var z = apexTestResult.triggerCoverageResults[i];
+                        var failedClass = (z.coverageStatus=='Failed')?'failed':'';
+                        var row='';
+                        row = '<tr>'+
+                                '<td class="col1">'+z.name+'</td>'+
+                                '<td class="col2 '+failedClass+'">'+z.coverageStatus+'</td>'+
+                                '<td class="col3 alignRight">'+z.numLocationsNotCovered+'</td>'+
+                                '<td class="col3 alignRight">'+(z.numLocations-z.numLocationsNotCovered)+' '+copadoLabels.FRACTION_OUT_OF_LABEL+' '+z.numLocations+'</td>'+
+                                '<td class="col3 alignRight">'+z.coverage+'</td>'+
+                                '<td class="col4">'+apexTestResult.cellsrenderer(z.progress)+'</td>'+
+                            '</tr>';
+                        rows = rows+row;
+                    }
+                    $copado(rows).appendTo('#tblTriggerCoverage tbody');
+
+                    console.info('testClassResults', apexTestResult.testClassResults);
+                    var rows = '';
+                    for(var i=0; i<apexTestResult.testClassResults.length; i++){
+                        var z = apexTestResult.testClassResults[i];
+                        var failedClass = (z.success=='Failed')?'failed':'';
+                        var row='';
+                        row = '<tr>'+
+                                '<td class="col1">'+z.class+'</td>'+
+                                '<td class="col2">'+z.method+'</td>'+
+                                '<td class="col3 '+failedClass+'">'+z.success+'</td>'+
+                                '<td class="colMethods"><p style="width:100%; height:auto; word-wrap:break-word; margin-top:0px;">'+z.msg+'</p></td>'+
+                            '</tr>';
+                        rows = rows+row;
+                    }
+                    $copado(rows).appendTo('#tblMethods tbody');
+                }
+            };
+            /**** END OF NAME SPACE ****/
+            /**** START OF AUTO RUN CODE ****/
+            apexTestResult.init =  function(){
+
+                console.info('apexTestResult.init');
+
+                apexTestResult._init();
+
+                var cellclass_success = function (row, columnfield, value) {
+                    if (value == copadoLabels.PASSED) {
+                        return 'passed';
+                    }
+                    else return 'failed';
+                }
+                var cellsrenderer_message = function (row, columnfield, value, defaulthtml, columnproperties) {
+                    var r = "<p style='width:100%; height:auto; word-wrap:break-word; margin-top:0px;'>"+value+"</p>";
+                    return r;
+                }
+
+                if(!isNaN(apexTestResult.globalObject.time)){
+                    
+                    var duration = reformatMilliseconds(apexTestResult.globalObject.time);
+                    $copado('.jstxt_Duration').text(duration);
+                    
+                    var perecent = ((apexTestResult.globalObject.tests-apexTestResult.globalObject.failures)/apexTestResult.globalObject.tests)*100
+                    var testPassedCalc = (apexTestResult.globalObject.tests>0)?(apexTestResult.globalObject.tests-apexTestResult.globalObject.failures)+'/'+apexTestResult.globalObject.tests+' ('+Math.floor(perecent)+'%)':'0/0 0%';
+                    $copado('.jstxt_TestsPassed').text(testPassedCalc);
+                }
+                
+                if(!isNaN(apexTestResult.orgCoverage)){
+                    $copado('.jstxt_Coverage').text(Math.floor(apexTestResult.orgCoverage)+'%');
+                    $copado('#summaryOrg').show();
+                }
+
+                apexTestResult.renderData();
+            };
+            //end of init()
+        </script>
+
+        <script type="text/javascript">
+            apexTestResult.init();
+        </script>
+        <script>
+            ga('send', 'pageview', {
+              'page': '/OrgApexTestResultsSummary',
+              'title': 'Apex Test Results Summary'
+            });
+        </script>
+    </body>
+</apex:page>

@@ -1,0 +1,23 @@
+<messaging:emailTemplate subject="Apex Test Result Summary" recipientType="User" relatedToType="copado__Apex_Test_Result__c">
+<messaging:htmlEmailBody >
+
+<br />
+<br />
+<!-- THIS URL CAN BE CHANGED TO REPLACE THE LOGO-->
+<img src="https://copado.secure.force.com/resource/1430211820000/WebsitePack/Images/CopadoLogo.png" height="50px" />
+<br />
+<br />
+
+{!$ObjectType.Org__c.Label}: {!relatedTo.Org__r.Name}<br />
+{!$ObjectType.Environment__c.Label}: {!relatedTo.Org__r.Environment__r.Name}<br />
+{!$ObjectType.Apex_Test_Result__c.fields.Status__c.Label}: {!relatedTo.Status__c}<br />
+{!$Label.DURATION}: <apex:outputText value="{0, number, 0 minute(s)}"><apex:param value="{!relatedTo.copado__Total_time__c/60000}" /></apex:outputText> <br />
+{!$ObjectType.Apex_Test_Result__c.fields.Tests_run__c.Label}: <apex:outputText value="{0, number, 0}"><apex:param value="{!relatedTo.copado__Tests_run__c}" /></apex:outputText> <br />
+{!$Label.TESTS_PASSED}: <apex:outputText value="{0, number, 0}"><apex:param value="{!relatedTo.copado__Tests_run__c - relatedTo.copado__Failures__c}" /></apex:outputText> <br />
+{!$ObjectType.Apex_Test_Result__c.fields.Failures__c.Label}: <apex:outputText value="{0, number, 0}"><apex:param value="{!relatedTo.copado__Failures__c}" /></apex:outputText> <br />
+{!$ObjectType.Apex_Test_Result__c.fields.Successes__c.Label}: <apex:outputText value="{0, number, 00.00}"><apex:param value="{!relatedTo.copado__Successes__c}" /></apex:outputText> <br />
+
+<c:OrgApexTestResultsSummaryEmail resId="{!relatedTo.Id}"/>
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

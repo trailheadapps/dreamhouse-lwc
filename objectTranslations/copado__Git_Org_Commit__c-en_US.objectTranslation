@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- CBM Fields --></label>
+        <name>copado__CBM_Fields</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Changes --></label>
+        <name>copado__Changes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commit Date --></label>
+        <name>copado__Commit_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commit Id --></label>
+        <name>copado__Commit_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commit Message --></label>
+        <name>copado__Commit_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Git Snapshot --></label>
+        <name>copado__Git_Backup__c</name>
+        <relationshipLabel><!-- Snapshot Commits --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Git operation executed by the Copado. --></help>
+        <label><!-- Git Operation --></label>
+        <name>copado__Git_Operation__c</name>
+        <picklistValues>
+            <masterLabel>Commit Files</masterLabel>
+            <translation><!-- Commit Files --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Destructive Changes</masterLabel>
+            <translation><!-- Destructive Changes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Credential --></label>
+        <name>copado__Org__c</name>
+        <relationshipLabel><!-- Snapshot Commits --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The status of the commit. This value is updating automatically by Copado. --></help>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Commit not in branch</masterLabel>
+            <translation><!-- Commit not in branch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Commit undone</masterLabel>
+            <translation><!-- Commit undone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Complete</masterLabel>
+            <translation><!-- Complete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No changes</masterLabel>
+            <translation><!-- No changes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- View in Git --></label>
+        <name>copado__View_in_Git__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- The commit status cannot be &apos;Pending&apos; or &apos;No changes&apos; whenever there is a commit Id. --></errorMessage>
+        <name>copado__Commit_Id_Status_Complete</name>
+    </validationRules>
+</CustomObjectTranslation>

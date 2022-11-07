@@ -1,0 +1,10 @@
+*** NEW CASE ASSIGNMENT NOTIFICATION ***  
+
+The following case has been assigned to you.  
+Company:  {!Account.Name} 
+Contact Name:  {!Contact.Name} 
+Case #:  {!Case.CaseNumber} 
+Subject:  {!Case.Subject} 
+Description: {!Case.Description}  
+
+Click on the link to access the case:  {!Case.Link}

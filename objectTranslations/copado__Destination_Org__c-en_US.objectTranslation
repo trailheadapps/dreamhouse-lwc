@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- % Completed --></label>
+        <name>copado__Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- # Completed --></label>
+        <name>copado__Count_Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Deployed --></label>
+        <name>copado__Deployed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deployment --></label>
+        <name>copado__Deployment__c</name>
+        <relationshipLabel><!-- Destination Credentials --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SUM Deployed --></label>
+        <name>copado__SUM_Deployed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Flag --></label>
+        <name>copado__Status_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed Successfully</masterLabel>
+            <translation><!-- Completed Successfully --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed with Errors</masterLabel>
+            <translation><!-- Completed with Errors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not started</masterLabel>
+            <translation><!-- Not started --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Step Count --></label>
+        <name>copado__Step_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- To Credential Name --></label>
+        <name>copado__To_Org_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- To Credential --></label>
+        <name>copado__To_Org__c</name>
+        <relationshipLabel><!-- Destination Credentials --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

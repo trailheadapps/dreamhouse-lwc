@@ -1,0 +1,13 @@
+<messaging:emailTemplate subject="Build Task has completed" relatedToType="copado__Build_Task__c">
+    <messaging:htmlEmailBody >
+        <style>
+            body { font-family: Arial,Helvetica,sans-serif; color:#222;font-size: 75%;}
+        </style>
+        Continuous Integration: {!relatedTo.Continuous_Integration__r.Name}<br />
+        Build Task: {!relatedTo.Name}<br />
+        Status: {!relatedTo.Status__c}<br />
+        Type: {!relatedTo.Type__c}<br />
+
+        <c:BuildTaskEmail btId="{!relatedTo.Id}" ciId="{!relatedTo.copado__Continuous_Integration__c}"/>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

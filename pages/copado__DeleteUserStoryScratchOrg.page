@@ -1,0 +1,9 @@
+<apex:page standardController="copado__User_Story__c" extensions="copado.ScratchOrgStatusCtrl" lightningStyleSheets="true">
+    <apex:slds />
+    <c:WizardUtils />
+    <c:IncludeStaticsResourceComponent addJquery="true"/>
+    <apex:form styleClass="slds-scope">
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}"/>
+        <c:ScratchOrgStatus orgId="{!copado__User_Story__c.copado__Org_Credential__c}"/>
+    </apex:form>
+</apex:page>

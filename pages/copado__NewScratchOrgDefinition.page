@@ -1,0 +1,30 @@
+<!--
+ - Created by mertyalti on 19/01/2018.
+ -->
+
+<apex:page id="NewScratchOrgDefinition" standardController="copado__Scratch_Org_Definition__c"
+           extensions="copado.ScratchOrgDefinitionController" lightningStyleSheets="true"
+           docType="html-5.0" sidebar="true" applyBodyTag="false">
+        <apex:slds />
+
+        <head>
+            <title>New Scratch Org Definition Template</title>
+            <c:IncludeStaticsResourceComponent addJQuery="true" />
+        </head>
+        <body class="slds-scope">
+            <apex:form >
+                <c:ScreenLocker msg="{!$Label.copado__LOADING}"/>
+                <apex:outputPanel layout="block" id="container">
+                    <apex:outputPanel rendered="{!copado__Scratch_Org_Definition__c.Id==null}">
+                        <c:ScratchOrgTemplate parentPageController="{!this}" componentName="NewScratchOrgTemplate"
+                                          showActionButtons="false" mode="{!componentMode}" showAllTemplateButtons="true"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!copado__Scratch_Org_Definition__c.Id!=null}">
+                        <c:ScratchOrgTemplate templateIds="{!copado__Scratch_Org_Definition__c.Id}" parentPageController="{!this}" componentName="NewScratchOrgTemplate"
+                                              showActionButtons="false" mode="{!componentMode}" showAllTemplateButtons="true"/>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:form>
+        </body>
+
+</apex:page>

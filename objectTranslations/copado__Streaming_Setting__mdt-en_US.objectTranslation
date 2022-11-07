@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Streaming channel (PushTopic) name --></help>
+        <label><!-- Channel Name --></label>
+        <name>copado__Channel_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- When enabled streaming for the given channel will be tracked for real time changes. --></help>
+        <label><!-- Enabled --></label>
+        <name>copado__Enabled__c</name>
+    </fields>
+    <fields>
+        <help><!-- Streaming service for the given channel will be unsubscribed when timeout(milliseconds) has reached. Blank mean infinite. --></help>
+        <label><!-- Timeout --></label>
+        <name>copado__Timeout__c</name>
+    </fields>
+</CustomObjectTranslation>

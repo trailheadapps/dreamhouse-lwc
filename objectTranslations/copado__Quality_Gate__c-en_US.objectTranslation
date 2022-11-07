@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Group of steps to be executed in the future. --></help>
+        <label><!-- Automation Template --></label>
+        <name>copado__Automation_Template__c</name>
+        <relationshipLabel><!-- Automations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If &apos;Compliance Check&apos; is selected as the type, what Compliance Rule Group should be run? --></help>
+        <label><!-- Compliance Rule Group --></label>
+        <name>copado__Compliance_Rule_Group__c</name>
+        <relationshipLabel><!-- Automations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- What Connection Behavior is this Quality Gate attached to? --></help>
+        <label><!-- Parent Connection Behavior --></label>
+        <name>copado__Connection_Behavior__c</name>
+        <relationshipLabel><!-- Automations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If &apos;URL Callout&apos; is selected as the type, this stores the details of that callout. --></help>
+        <label><!-- DataJSON --></label>
+        <name>copado__DataJSON__c</name>
+    </fields>
+    <fields>
+        <help><!-- The event that triggers this automation. --></help>
+        <label><!-- Execution Event --></label>
+        <name>copado__Execution_Event__c</name>
+        <picklistValues>
+            <masterLabel>Deployment</masterLabel>
+            <translation><!-- Deployment --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Defines if the automation should be executed before or after the event. --></help>
+        <label><!-- Execution Sequence --></label>
+        <name>copado__Execution_Sequence__c</name>
+        <picklistValues>
+            <masterLabel>After</masterLabel>
+            <translation><!-- After --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Before</masterLabel>
+            <translation><!-- Before --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If &apos;Manual Approval&apos;, &apos;Manual Test&apos;, or &apos;Pull Request&apos; is selected as the type, who should this task be assigned to? --></help>
+        <label><!-- Manual Task Owner --></label>
+        <name>copado__Manual_Task_Owner__c</name>
+        <relationshipLabel><!-- Automations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Automations and Quality Gates will be executed when the metadata deployed or committed matches the one specified here. --></help>
+        <label><!-- Metadata Group --></label>
+        <name>copado__Metadata_Group__c</name>
+        <relationshipLabel><!-- Automations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If &apos;Static Code Analysis&apos; is selected as the type, what static analysis score should be considered passing? --></help>
+        <label><!-- Static Analysis Score Threshold --></label>
+        <name>copado__Score_Threshold__c</name>
+    </fields>
+    <fields>
+        <help><!-- If &apos;Selenium Test&apos; is selected as the type, what Selenium Test Group should be run? --></help>
+        <label><!-- Selenium Test Group --></label>
+        <name>copado__Selenium_Test_Group__c</name>
+        <relationshipLabel><!-- Automations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If &apos;Static Code Analysis&apos; is selected as the type, which static analysis settings should be used? --></help>
+        <label><!-- Static Code Analysis Settings --></label>
+        <name>copado__Static_Code_Analysis_Settings__c</name>
+        <relationshipLabel><!-- Automations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If &apos;Apex Test with Validation&apos; is selected as the type, what test level should be performed. &apos;Run Specified Tests&apos; will run whatever tests are included on the user stories being deployed --></help>
+        <label><!-- Apex Test Level --></label>
+        <name>copado__Test_Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test --></label>
+        <name>copado__Test__c</name>
+        <relationshipLabel><!-- Automations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- What type of verification will be performed for this quality gate --></help>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+    </fields>
+</CustomObjectTranslation>

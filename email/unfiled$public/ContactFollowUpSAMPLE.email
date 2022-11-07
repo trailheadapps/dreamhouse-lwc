@@ -1,0 +1,5 @@
+Dear {!Contact.FirstName},  
+
+I really enjoyed speaking with you today.  I think that {!Organization.Name} has a lot to offer {!Account.Name} and I look forward to our next meeting.  
+
+Regards,  {!User.FirstName}

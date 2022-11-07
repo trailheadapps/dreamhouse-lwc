@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>None</fullName>
+        <default>false</default>
+        <label>None</label>
+    </customValue>
+    <customValue>
+        <fullName>CRT</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>CRT</label>
+    </customValue>
+    <customValue>
+        <fullName>ApexTest</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>ApexTest</label>
+    </customValue>
+    <masterLabel>Copado Test Tool</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

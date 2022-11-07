@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Job Template --></label>
+        <name>copado__JobTemplate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Type --></label>
+        <name>copado__TestType__c</name>
+    </fields>
+</CustomObjectTranslation>

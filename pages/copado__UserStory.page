@@ -1,0 +1,40 @@
+<apex:page standardController="copado__User_Story__c" extensions="copado.UserStoryExt" showHeader="false" applyHtmlTag="false" sidebar="false" applyBodyTag="false" docType="html-5.0" cache="false" lightningStylesheets="true">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+        <style>
+            div.message{
+                margin: 1px !important;
+                padding: 2px !important;
+            }
+        </style>
+    </head>
+    <body class="slds-scope">
+    <apex:form >
+        <apex:pageMessages id="msg" />
+        <!-- SLDS-Grid -->
+        <apex:outputPanel id="headerGrid" layout="block" styleClass="slds-grid" rendered="{!!showLicenseError}">
+            <apex:outputPanel id="flowSteps" layout="block" styleClass="slds-tabs--path" html-role="application">
+                <ul class="slds-tabs--path__nav" role="listbox" aria-orientation="horizontal">
+                    <apex:variable value="0" var="stepIndex" />
+                    <apex:repeat value="{!DeploymentFlowSteps}" var="step">
+                        <li class="slds-tabs--path__item {!step.style}" role="presentation">
+                            <a class="slds-tabs--path__link" id="path-{!stepIndex}" aria-controls="path-content-{!stepIndex}" aria-selected="{!IF(step.style == 'slds-is-current',true, false)}" tabindex="{!IF(step.style == 'slds-is-current',0,-1)}" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                <span class="slds-tabs--path__stage">
+                                    <span style="color:white;">{!HTMLENCODE(step.environment)}</span>
+                                </span>
+                                <span class="slds-tabs--path__title" title="{!HTMLENCODE(step.environment)} {!IF(AND(step.style='slds-is-current',NOT(ISBLANK(userStoriesAheadBehindTitle))),userStoriesAheadBehindTitle,'')}">
+                                    {!step.environment} {!IF(AND(step.style='slds-is-current',NOT(ISBLANK(userStoriesAheadBehindTitle))),userStoriesAheadBehindTitle,'')}
+                                </span>
+                            </a>
+                        </li>
+                        <apex:variable var="stepIndex" value="{!VALUE(stepIndex) + 1}" />
+                    </apex:repeat>
+                </ul>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <!-- // SLDS-GRID -->
+    </apex:form>
+    </body>
+    </html>
+</apex:page>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>copado__Channel_Name__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Streaming channel (PushTopic) name</inlineHelpText>
+        <label>Channel Name</label>
+        <length>80</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Enabled__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>When enabled streaming for the given channel will be tracked for real time changes.</inlineHelpText>
+        <label>Enabled</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Timeout__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Streaming service for the given channel will be unsubscribed when timeout(milliseconds) has reached. Blank mean infinite.</inlineHelpText>
+        <label>Timeout</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Streaming Setting</label>
+    <pluralLabel>Streaming Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

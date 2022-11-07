@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- How should user stories be moved back from higher environments (prod/test) to lower environments (test/dev) --></help>
+        <label><!-- Back-Promotion Execution --></label>
+        <name>copado__Back_Promotion_Behavior__c</name>
+        <picklistValues>
+            <masterLabel>Automated</masterLabel>
+            <translation><!-- Automated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Disabled</masterLabel>
+            <translation><!-- Disabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manual</masterLabel>
+            <translation><!-- Manual --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled</masterLabel>
+            <translation><!-- Scheduled --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Only user stories that meet this criteria will be eligible to be automatically back promoted. --></help>
+        <label><!-- Back-Promotion Criteria --></label>
+        <name>copado__Back_Promotion_Criteria__c</name>
+    </fields>
+    <fields>
+        <help><!-- The schedule for back promotions (if they are scheduled) --></help>
+        <label><!-- Back-Promotion Schedule --></label>
+        <name>copado__Back_Promotion_Schedule__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Salesforce Scheduled Job ID associated with scheduled back-promotion jobs --></help>
+        <label><!-- Back-Promotion Scheduled Job ID --></label>
+        <name>copado__Back_Promotion_Scheduled_Job_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- A summary of this connection behavior --></help>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Disable Environment Branch --></label>
+        <name>copado__DisableEnvironmentBranch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Execute back-promotions in parallel --></label>
+        <name>copado__Execute_back_promotions_in_parallel__c</name>
+    </fields>
+    <fields>
+        <label><!-- Execute promotions in parallel --></label>
+        <name>copado__Execute_promotions_in_parallel__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set to 1 to deploy each story individually. Batching deployments speeds up the process but causes all stories in a batch to succeed or fail together. This can delay the deployment of some stories and make it harder to identify the cause of errors. --></help>
+        <label><!-- Scheduled Back-Promotion US Group Size --></label>
+        <name>copado__Max_Scheduled_Back_Promotion_Batch_Size__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set to 1 to deploy each story individually. Batching deployments speeds up the process but causes all stories in a batch to succeed or fail together. This can delay the deployment of some stories and make it harder to identify the cause of errors. --></help>
+        <label><!-- Scheduled Promotion US Group Size --></label>
+        <name>copado__Max_Scheduled_Promotion_Batch_Size__c</name>
+    </fields>
+    <fields>
+        <help><!-- How should user stories be deployed from lower (dev/test) environments to higher environments (test/prod) --></help>
+        <label><!-- Promotion Execution --></label>
+        <name>copado__Promotion_Behavior__c</name>
+    </fields>
+    <fields>
+        <help><!-- Only user stories that meet this criteria will be eligible to be automatically promoted. --></help>
+        <label><!-- Promotion Criteria --></label>
+        <name>copado__Promotion_Criteria__c</name>
+    </fields>
+    <fields>
+        <help><!-- The schedule for deployments (if they are scheduled) --></help>
+        <label><!-- Promotion Schedule --></label>
+        <name>copado__Promotion_Schedule__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Salesforce Scheduled Job ID associated with scheduled deployment jobs --></help>
+        <label><!-- Deployment Scheduled Job ID --></label>
+        <name>copado__Promotion_Scheduled_Job_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- An action link to schedule back-promotions --></help>
+        <label><!-- Schedule Back-Promotions --></label>
+        <name>copado__Schedule_Back_Promotion__c</name>
+    </fields>
+    <fields>
+        <help><!-- An action link to schedule deployments --></help>
+        <label><!-- Schedule Promotion --></label>
+        <name>copado__Schedule_Promotion__c</name>
+    </fields>
+    <fields>
+        <help><!-- What status should user stories be set to after they are successfully deployed? --></help>
+        <label><!-- User Story Status After Promotion --></label>
+        <name>copado__Story_Status_After_Deployment__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Batch Size fields for Promotion or Back Promotion needs to be between 1 and 2000 --></errorMessage>
+        <name>copado__Batch_Size_Valid_Interval</name>
+    </validationRules>
+</CustomObjectTranslation>

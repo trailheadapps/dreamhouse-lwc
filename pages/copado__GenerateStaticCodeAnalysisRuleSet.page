@@ -1,0 +1,198 @@
+<apex:page standardController="copado__Static_Code_Analysis_Settings__c" extensions="copado.GenerateStaticCodeAnalysisRuleSet" id="RuleSetPage" lightningStylesheets="true" showHeader="true" standardStylesheets="true" sidebar="false" applyHtmlTag="true" applyBodyTag="false" docType="html-5.0">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+        <c:GAnalytics />
+        <apex:slds />
+        <c:IncludeStaticsResourceComponent addJQuery="true" />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <style type="text/css">
+            .col-right{
+                margin-left : 15px;
+            }
+            .slds-col{
+                padding-right: 20px;
+            }
+            .title{
+                text-transform: uppercase;
+            }
+        </style>
+        <script type="text/javascript">
+            var globalSldsResourcePath = '{!URLFOR($Asset.SLDS)}';
+
+            ga('send', 'pageview', {
+                'page': '/GenerateStaticCodeAnalysisRuleSet',
+                'title': 'Generate Static Code Analysis RuleSet'
+            });
+
+            var iconsList = [
+                {
+                    svgButtonsClass: 'warningToastIcon',
+                    name: 'warning'
+                },
+                {
+                    svgButtonsClass: 'successToastIcon',
+                    name: 'success'
+                },
+                {
+                    svgButtonsClass: 'errorToastIcon',
+                    name: 'error'
+                },
+                {
+                    svgButtonsClass: 'closeToastIcon',
+                    name: 'close'
+                },
+                {
+                    svgButtonsClass: 'infoToastIcon',
+                    name: 'info'
+                }
+            ];
+
+            var svgStruct = [];
+
+            var renderSVG = (elemId) => {
+                var elem = $copado(elemId);
+                var struct = svgStruct[elemId];
+                var imageURL, SVG, SVGUse;
+
+                if (struct) {
+                    imageURL = struct.imageURL;
+                    SVG = $copado('<svg/>', {
+                       class: struct.class,
+                    });
+                    SVGUse = $copado('<use/>');
+
+                    SVGUse.attr('xlink:href', imageURL);
+                    elem.prepend(SVG.append(SVGUse));
+                    elem.html(elem.html());
+                }
+            };
+
+            var applyRenderSVG = () => {
+                if (iconsList) {
+                    iconsList.forEach((element) => {
+                        renderSVG('.' + element.svgButtonsClass);
+                    });
+                }
+            };
+
+            var setSVGStruct = () => {
+                if (globalSldsResourcePath) {
+                    iconsList.forEach((item) => {
+                        svgStruct['.' + item.svgButtonsClass] = {
+                            imageURL: `${globalSldsResourcePath}/icons/utility-sprite/svg/symbols.svg#${item.name}`,
+                            class:'slds-button__icon'
+                        };
+                    });
+                }
+            };
+
+            $copado(document).ready(function(){
+                setSVGStruct();
+                applyRenderSVG();
+            });
+        </script>
+    </head>
+    <body class="slds-scope">
+    <apex:form id="theForm" styleClass="copado-lightning-container">
+        <c:CopadoSpinner />
+
+        <apex:outputPanel layout="block" id="pageMessages">
+            <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                <div id="divToast" class="slds-notify_container slds-is-relative">
+                    <apex:repeat value="{!pageMessagesMap}" var="severity">
+                        <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                            <span class="slds-assistive-text"></span>
+                            <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                            </span>
+                            <div class="slds-notify__content">
+                                <apex:repeat value="{!pageMessagesMap[severity]}" var="messages">
+                                    <h2 class="slds-text-heading_small ">
+                                        {!messages}
+                                    </h2>
+                                </apex:repeat>
+                            </div>
+                            <div class="slds-notify__close">
+                                <button type="button" class="slds-button slds-button_icon slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                    <span class="slds-icon_container slds-icon__svg--default closeToastIcon"> </span>
+                                </button>
+                            </div>
+                        </div>
+                    </apex:repeat>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+
+        <div class="slds-page-header" style="margin-top: 1%;">
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                		  <span class="slds-icon_container slds-icon-standard-skill" title="Apex Rule Sets">
+                		    <svg class="slds-icon" aria-hidden="true">
+                		      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#skill')}"></use>
+                		    </svg>
+                		  </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$Label.copado__APEX_RULES_SET}">{!$Label.copado__APEX_RULES_SET}</h1>
+                            <p class="slds-text-body_small slds-line-height_reset">{!$Label.copado__RULESET_GENERATOR}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                    <apex:commandButton styleClass="slds-button slds-button--neutral" value="{!$Label.copado__BACK}" action="{!goBack}" onClick="$copado('[id=divToast]').addClass('slds-hide');lockScreen();" />
+                    <apex:commandButton styleClass="slds-button slds-button_outline-brand" value="{!$Label.copado__Generate_RuleSets}" action="{!generateDefaultRuleSet}" onClick="$copado('[id=divToast]').addClass('slds-hide');lockScreen();" onComplete="applyRenderSVG();unlockScreen();" reRender="pageMessages,rulesPanel" />
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <apex:outputPanel layout="block" id="rulesPanel">
+            <apex:outputPanel layout="none" rendered="{!apexRulesList != null}">
+                <table class="slds-table slds-table_bordered slds-table_fixed-layout" id="tblData">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width:10rem;">
+                            <div class="slds-truncate" title="{!$Label.copado__RULE_NAME}">{!$Label.copado__RULE_NAME}</div>
+                        </th>
+                        <th scope="col" style="width:3rem;">
+                            <div class="slds-truncate" title="{!$Label.copado__PRIORITY}">{!$Label.copado__PRIORITY}</div>
+                        </th>
+                        <th scope="col" style="width:25rem;">
+                            <div class="slds-truncate" title="{!$Label.copado__MESSAGE_CAPITALS}">{!$Label.copado__MESSAGE_CAPITALS}</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <apex:repeat id="ruleSetId" value="{!apexRulesList}" var="rule">
+                        <tr>
+                            <td role="gridcell">
+                                <div class="slds-truncate" title="{!rule.copado__Rule_Name__c}">
+                                    <apex:outputText value="{!rule.copado__Rule_Name__c}" />
+                                </div>
+                            </td>
+                            <td role="gridcell">
+                                <div class="slds-truncate" title="{!rule.copado__Priority__c}">
+                                    <apex:outputText value="{!rule.copado__Priority__c}" />
+                                </div>
+                            </td>
+                            <td role="gridcell">
+                                <div class="slds-truncate" title="{!rule.copado__Message__c}">
+                                    <apex:outputText value="{!rule.copado__Message__c}" />
+                                </div>
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                    </tbody>
+                </table>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+    </body>
+    </html>
+</apex:page>

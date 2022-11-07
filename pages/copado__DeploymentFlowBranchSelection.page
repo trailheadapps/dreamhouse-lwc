@@ -1,0 +1,47 @@
+<!--
+ - Created by mertyalti on 30/07/2018.
+ -->
+
+<apex:page id="DeploymentFlowBranchSelection" standardController="copado__Deployment_Flow__c" lightningStylesheets="true" showChat="false" extensions="copado.Settings,copado.JsRemotingController">
+    <c:IncludeStaticsResourceComponent addJQuery="true" />
+    <apex:form >
+        <c:ManageRepositoryBranches repoId="{!copado__Deployment_Flow__c.copado__Git_Repository__c}" />
+
+        <script>
+
+            var selectBranch = function(branchName) {
+                var ns = '{!JSENCODE(namespace)}';
+                var core = ns ? window[ns.split('__')[0]] : window;
+
+                lockScreen();
+
+                var recordId = "{!JSENCODE(copado__Deployment_Flow__c.Id)}";
+                var fieldName = ns+"Main_Branch__c";
+
+                var res = (core).JsRemotingController.selectBranch(
+                    recordId,
+                    fieldName,
+                    branchName,
+                    function( result, event ) {
+                        unlockScreen();
+                        if(result === true){
+                            copadoNavigateToUrl(recordId,"{!URLFOR($Action.copado__Deployment_Flow__c.View,copado__Deployment_Flow__c.Id)}");
+                        } else {
+                            alert('Branch selection couldn\'t be completed.');
+                        }
+                    }
+                );
+            }
+
+            function copadoNavigateToUrl (id,url) {
+                // lightning/any other way to navigate
+                if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+                    sforce.one.navigateToSObject(id, 'detail');
+                } else {
+                    window.open(url, '_parent');
+                }
+            };
+
+        </script>
+    </apex:form>
+</apex:page>

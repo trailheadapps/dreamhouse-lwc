@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Chart --></help>
+        <label><!-- Chart --></label>
+        <name>QCloudsSaaS__Chart__c</name>
+        <relationshipLabel><!-- Datasets --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Group Label --></help>
+        <label><!-- Group Label --></label>
+        <name>QCloudsSaaS__Group_Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Label --></help>
+        <label><!-- Label --></label>
+        <name>QCloudsSaaS__Label__c</name>
+    </fields>
+    <fields>
+        <help><!-- Value --></help>
+        <label><!-- Value --></label>
+        <name>QCloudsSaaS__Value__c</name>
+    </fields>
+</CustomObjectTranslation>

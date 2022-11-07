@@ -1,0 +1,56 @@
+<apex:page standardController="copado__Release__c" extensions="copado.MassAddToReleaseExtension" id="thePage" lightningStylesheets="true">
+	<head>
+		<apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+	</head>
+	<body>
+		<apex:outputPanel layout="block" rendered="{!showLicenseError}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!showLicenseError}">
+			<apex:sectionHeader id="sectionHeader" title="Mass Add to Release" subtitle="{!release.Name}" />
+			<apex:pageMessages id="theMessages" />
+			
+			<apex:form id="theForm" styleClass="copado-lightning-container" html-novalidate="true">
+				<apex:pageBlock id="pb" mode="detail">
+					<apex:pageMessage id="msgSprintsShareProject" severity="INFO" strength="1" summary="All sprints are listed here that share the same project as this release ({!copado__Release__c.Project__r.Name})" />
+					<apex:pageBlockButtons id="pbButtons" location="bottom">
+						<apex:commandButton id="btnCancel" value="Cancel" action="{!cancel}" />
+						<apex:commandButton id="btnAddSelected" value="Add selected items to Release" action="{!massAdd_BySprint}"/>
+					</apex:pageBlockButtons>
+					<apex:repeat id="rptSprints" value="{!wrappedSprints}" var="s" >
+						<apex:pageBlockSection id="pbsSprint" title="{!s.sprint.Name}" columns="1">
+							<apex:pageBlockTable id="pbtUserStories" value="{!s.usWrapper}" var="u" >
+								<apex:column >
+									<apex:facet name="header">
+										<apex:inputCheckbox id="chkAll" onclick="checkAll(this,'{!$Component.pbtUserStories}','chkRelease')"/>
+									</apex:facet>
+									<apex:inputCheckbox id="chkRelease" value="{!u.selected}" />
+								</apex:column>
+								<apex:column >
+									<apex:facet name="header">
+										{!$ObjectType.copado__User_Story__c.fields.Name.Label}
+									</apex:facet>
+									<apex:outputText id="ot_UserStoryName" value="{!u.userStory.Name}" />
+								</apex:column>
+								<apex:column >
+									<apex:facet name="header">
+										{!$ObjectType.copado__User_Story__c.fields.copado__User_Story_Title__c.Label}
+									</apex:facet>
+									<apex:outputText id="ot_UserStoryTitle" value="{!u.userStory.copado__User_Story_Title__c}" />
+								</apex:column>
+							</apex:pageBlockTable>
+						</apex:pageBlockSection>
+					</apex:repeat>
+				</apex:pageBlock>
+			</apex:form>
+		</apex:outputPanel>
+		<script id="script_CheckAll" type="text/javascript" src="{!URLFOR($Resource.common) }"></script>
+		<c:GAnalytics />
+	    <script>
+	        ga('send', 'pageview', {
+	          'page': '/MassAddToRelease',
+	          'title': 'Mass Add to Release'
+	        });
+	    </script>
+	</body>
+</apex:page>

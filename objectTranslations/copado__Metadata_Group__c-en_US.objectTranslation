@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- A description of the metadata items that are contained in this group --></help>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+</CustomObjectTranslation>

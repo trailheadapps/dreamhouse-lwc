@@ -1,0 +1,100 @@
+<apex:page id="EditUserStoryMetadataSelection" standardController="copado__Step__c"
+           extensions="copado.Settings,copado.JsRemotingController,copado.AddTestClassesForRollbackCtrl" showHeader="false"
+           sidebar="false" standardStyleSheets="true" lightningStylesheets="true">
+
+    <c:WizardUtils id="cmpWizardUtilities"/>
+    <c:IncludeStaticsResourceComponent addJQuery="true" addCometdjs="true" addJSON2js="true" addJCometdjs="true" />
+    <c:IncludeJqxResourceComponent addJqxAlljs="true" addJqxBasecss="true"/>
+    <script type="text/javascript">
+            var Copado_Licenses = {!CurrentUserLicenses};
+    </script>
+    <c:IncludeConnectionJsComponent />
+    <apex:includeScript value="{!URLFOR($Resource.copado__JsRemoting)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.statusManager) }" />
+    <apex:includeScript value="{!URLFOR($Resource.utilsV2) }"/>
+    <apex:includeScript value="{!URLFOR($Resource.JsRemoting) }"/>
+    <apex:includeScript value="{!URLFOR($Resource.copadoStreamingService) }" />
+
+    <apex:includeScript value="{!URLFOR($Resource.metadataGrid2) }" />
+    <apex:includeScript value="{!URLFOR($Resource.UserStoryTestClasses) }" />
+
+    <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}"/>
+    <apex:form >
+        <apex:sectionHeader title="Deployment Rollback - Select Test Classes" subtitle="Select the Tests that will be executed during the Rollback Deployment" />
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}" useJobsManager="true" possibleRunningJobs=",UserStoryTestClassesRetriever,{!Id},true;"/>
+        <apex:pageBlock >
+            <apex:pageblockButtons location="top">
+                <apex:commandButton id="btnSave" value="{!$Label.site.save}"  onclick="return usTestClasses.save('rollback','{!JSENCODE(namespace)}');" rerender="pb" />
+                <apex:commandButton id="btnCancel" value="{!$Label.site.cancel}"  onclick="return usTestClasses.cancel('rollback','{!JSENCODE(namespace)}');" rerender="pb" />
+            </apex:pageblockButtons>
+            <apex:outputPanel layout="none" >
+                <apex:commandLink style="display:none;" value="{!$Label.copado__CACHE_REFRESHED_NOW}"  onclick="return usTestClasses.refreshCache();" rerender="opDummy" id="removeCache"/>
+                <div id="metadataGrid2">
+                    <div class='mg2_tabs'>
+                        <ul style="margin-left: 20px;">
+                            <li>{!$Label.All_Metadata}</li>
+                            <li>{!$Label.SelectedMetadata}</li>
+                        </ul>
+                        <div>
+                            <div class="mg2_scaleFilterFrame" style="padding: 5px; display: none;">
+                                <div class="mg2_scaleFilter" style="display:none;"></div>
+                            </div>
+                        </div>
+                        <div><!-- empty div, needed as content for the two tabs --></div>
+                    </div>
+                    <div class="mg2_jqxgrid" >
+                        <center><img src="/img/loading.gif" /><i><span id="retry-label">{!$Label.copado__LOADING}</span></i></center>
+                    </div>
+                </div>
+            </apex:outputPanel>
+        </apex:pageBlock>
+
+        <script type="text/javascript">
+            copadoStreamingService.ns = '{!JSENCODE(namespace)}';
+            copadoStreamingService.init();
+            statusManager.ns = '{!JSENCODE(namespace)}';
+            statusManager.herokuServer = '{!JSENCODE(herokuServer)}';
+            statusManager.urlParameters = '{!JSENCODE(urlParameters)}';
+            statusManager.sessionId = __sfdcSessionId;
+            statusManager.parentId = '{!destinationOrgId}';
+            statusManager.waitTimeout = 10000;
+
+            var copadoApp = {};
+            var _config = {
+                gridMode: 'testClasses',
+                data:{
+                    id: '{!JSENCODE(copado__Step__c.Id)}',
+                    orgId: '{!destinationOrgId}',
+                    envId: '{!destinationOrgId}'
+                },
+                server: {
+                  metadataUrl: '{!JSENCODE(urlBase)}testClasses/__ORGID__{!JSENCODE(urlParameters)}',
+                  typesUrl: '{!JSENCODE(urlBase)}gitTypes{!JSENCODE(urlParameters)}',
+                  autoSelectURL: '{!JSENCODE(urlBase)}userStories/{!JSENCODE(copado__Step__c.Id)}/testClasses/{!destinationOrgId}',
+                },
+                ns: '{!JSENCODE(namespace)}',
+                attachmentName: 'Test Classes',
+                isScalable: false,
+                isRollback: true
+            }
+            statusManager.initFunction = function(){
+                usTestClasses.init(_config,false,false);
+            };
+
+            setTimeout(function(){
+                statusManager.initialise();
+            },2000);
+            var body = document.getElementsByTagName('body')[0];
+            body.addEventListener("beforeunload", function(){
+                copadoStreamingService.unload();
+            });
+
+            window.addEventListener('copadoJobsManagerFinished', function (evt) {
+                for(var i=0 ; i < evt.detail.length ; i++ ) {
+                    var jobFinished = evt.detail[i];
+                    console.debug("Job Finished: ", jobFinished);
+                }
+            }, false);
+        </script>
+    </apex:form>
+</apex:page>

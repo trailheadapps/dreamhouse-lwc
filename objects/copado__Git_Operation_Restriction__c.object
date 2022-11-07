@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>This custom setting is for restricting git operations.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>copado__Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Restriction will be active if this checkbox is checked.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Restriction will be active if this checkbox is checked.</inlineHelpText>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Git_Operation_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>This field will be used to hide git operation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the names of Git Operations you want to restrict seperated with semi-colon (;) For example; if you want to restrict Destructive Changes and Full Profiles &amp; Permission Sets enter Destructive Changes;Full Profiles &amp; Permission Sets</inlineHelpText>
+        <label>Git Operation Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Git Operation Restriction</label>
+    <visibility>Public</visibility>
+</CustomObject>

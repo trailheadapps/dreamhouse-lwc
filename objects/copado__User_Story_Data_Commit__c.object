@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>false</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>false</enableSharing>
+    <enableStreamingApi>false</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>copado__Commit_Date__c</fullName>
+        <defaultValue>NOW()</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Commit Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>copado__Commit_Message__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Commit Message</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Data_Set__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Data Set</label>
+        <referenceTo>copado__Data_Set__c</referenceTo>
+        <relationshipLabel>User Story Data Commits</relationshipLabel>
+        <relationshipName>User_Story_Data_Commits</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Execution_Job__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Execution Job</label>
+        <referenceTo>copado__Deployment__c</referenceTo>
+        <relationshipLabel>User Story Data Commits</relationshipLabel>
+        <relationshipName>User_Story_Data_Commits</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>TEXT(copado__Execution_Job__r.copado__Status__c)</formula>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__User_Story__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>User Story</label>
+        <referenceTo>copado__User_Story__c</referenceTo>
+        <relationshipLabel>User Story Data Commits</relationshipLabel>
+        <relationshipName>User_Story_Data_Commits</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>User Story Data Commit</label>
+    <nameField>
+        <displayFormat>USDC-{0000000}</displayFormat>
+        <label>User Story Data Commit Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>User Story Data Commits</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>copado__Prevent_change_Commit_Date</fullName>
+        <active>true</active>
+        <description>This validation rule prevents the user from changing the Commit Date field once the record has been created.</description>
+        <errorConditionFormula>AND(
+NOT(ISNEW()),
+ISCHANGED(copado__Commit_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>copado__Commit_Date__c</errorDisplayField>
+        <errorMessage>It is not allowed to change the Commit Date once the User Story Data Commit has been created. Please create a new User Story Data Commit.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>copado__Prevent_change_Commit_Message</fullName>
+        <active>true</active>
+        <description>This validation rule prevents the user from changing the Commit Message field once the record has been created.</description>
+        <errorConditionFormula>AND(
+NOT(ISNEW()),
+ISCHANGED(copado__Commit_Message__c)
+)</errorConditionFormula>
+        <errorDisplayField>copado__Commit_Message__c</errorDisplayField>
+        <errorMessage>It is not allowed to change the Commit Message once the User Story Data Commit has been created. Please create a new User Story Data Commit.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>copado__Prevent_change_Data_Set</fullName>
+        <active>true</active>
+        <description>This validation rule prevents the user from changing the Data Set field once the record has been created.</description>
+        <errorConditionFormula>AND(
+NOT(ISNEW()),
+ISCHANGED(copado__Data_Set__c)
+)</errorConditionFormula>
+        <errorDisplayField>copado__Data_Set__c</errorDisplayField>
+        <errorMessage>It is not allowed to change the Data Set once the User Story Data Commit has been created. Please create a new User Story Data Commit.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>copado__Prevent_change_Execution_Job</fullName>
+        <active>true</active>
+        <description>This validation rule prevents the user from changing the Execution Job field once the record has been created.</description>
+        <errorConditionFormula>AND(
+NOT(ISNEW()),
+ISCHANGED(copado__Execution_Job__c)
+)</errorConditionFormula>
+        <errorDisplayField>copado__Execution_Job__c</errorDisplayField>
+        <errorMessage>It is not allowed to change the Execution Job once the User Story Data Commit has been created. Please create a new  User Story Data Commit.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

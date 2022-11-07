@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Error Code --></label>
+        <name>copado__Error_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>copado__Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Finished --></label>
+        <name>copado__IsFinished__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Success --></label>
+        <name>copado__IsSuccess__c</name>
+    </fields>
+    <fields>
+        <label><!-- Progress Status --></label>
+        <name>copado__Progress_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Result Id --></label>
+        <name>copado__ResultId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Result Data --></label>
+        <name>copado__Result_Data__c</name>
+    </fields>
+</CustomObjectTranslation>

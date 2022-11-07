@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Active --></label>
+        <name>copado__Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- Insert, update or remove attachments of the records that will get deployed. --></help>
+        <label><!-- Attachment Actions --></label>
+        <name>copado__Attachment_Options__c</name>
+        <picklistValues>
+            <masterLabel>Insert Attachments</masterLabel>
+            <translation><!-- Insert Attachments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Actions</masterLabel>
+            <translation><!-- No Actions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Remove Attachments</masterLabel>
+            <translation><!-- Remove Attachments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Replace Attachments</masterLabel>
+            <translation><!-- Replace Attachments --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Batch Size --></label>
+        <name>copado__Batch_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Continue on Error --></label>
+        <name>copado__Continue_on_Error__c</name>
+        <picklistValues>
+            <masterLabel>Continue deployment until blocker issue</masterLabel>
+            <translation><!-- Continue deployment until blocker issue --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Filter Logic --></label>
+        <name>copado__Filter_Logic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Object --></label>
+        <name>copado__Main_Object__c</name>
+    </fields>
+    <fields>
+        <help><!-- When not matching owners, the owner of the deployed records in the target Credential will be automatically assigned to the user executing the deployment. --></help>
+        <label><!-- Match Owners --></label>
+        <name>copado__Match_Owners__c</name>
+    </fields>
+    <fields>
+        <help><!-- When matching record types, the records in the target Credential are assigned to the same record type as in the source Credential, if found. Otherwise they are assigned to the default record type in the deploying user&apos;s profile. --></help>
+        <label><!-- Match Record Type --></label>
+        <name>copado__Match_Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Max. Record Limit --></label>
+        <name>copado__Max_Record_Limit__c</name>
+    </fields>
+    <fields>
+        <help><!-- The main objects, fields and related objects will be listed based on the Salesforce Org data model of the selected credential. The Salesforce user linked to the credential must have access to all the fields and objects necessary for your deployments. --></help>
+        <label><!-- Template Schema Credential --></label>
+        <name>copado__Template_Source_Org__c</name>
+        <relationshipLabel><!-- Data Templates --></relationshipLabel>
+    </fields>
+    <webLinks>
+        <label><!-- Import_Templates --></label>
+        <name>copado__Import_Templates</name>
+    </webLinks>
+</CustomObjectTranslation>

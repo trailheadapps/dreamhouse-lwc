@@ -1,0 +1,34 @@
+<apex:page controller="QCloudsSaaS.IssueDetailController" >
+    <apex:stylesheet value="{!$Resource.QCloudsSaaS__listtable}" />
+    <apex:pageMessage rendered="{! message_type != null}" summary="{! message}" severity="{! message_type}" strength="3" />
+    <apex:pageMessages />
+    <apex:form >
+        <apex:pageBlock title="Issue Details">
+            <apex:pageBlockSection >
+                <apex:outputField value="{! issue.Issue__c	 }" />
+                <apex:outputField value="{! issue.Element_Name__c }" />
+                <apex:outputField value="{! issue.Severity__c }" />
+                <apex:outputField value="{! issue.Element_Type__c }" />
+                <apex:outputField value="{! issue.Impact_Area__c }" />
+                <apex:outputField value="{! issue.Line_Number__c }" />
+                <apex:pageBlockSectionItem ><apex:outputLabel value=""/><apex:outputLink target="_blank" rendered="{! issue.Documentation__c != null}" value="{! issue.Documentation__c}">Documentation</apex:outputLink></apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem ><apex:outputLabel value=""/><apex:outputLink target="_blank" rendered="{! issue.Link_to_Element__c != null}" value="{!issue.QCloudsSaaS__Link_to_Element__c}">Go to element</apex:outputLink></apex:pageBlockSectionItem>
+                <apex:outputField value="{! issue.Created_By__c }" />
+                <apex:outputField value="{! issue.Created_On__c }" />
+                <apex:outputField value="{! issue.Updated_By__c }" />
+                <apex:outputField value="{! issue.Updated_On__c }" />
+                <apex:outputField value="{! issue.Baseline__c }" />
+                <apex:outputField value="{! issue.Write_off_Status__c }" rendered="{!IF( issue.QCloudsSaaS__Write_Off_Status__c!=NULL  , True, False)}"/>
+                <apex:outputField value="{! issue.Write_Off_Requested_Date__c }" rendered="{!IF(issue.QCloudsSaaS__Write_Off_Requested_Date__c!=NULL  , True, False)}" />
+                <apex:outputField value="{! issue.Write_Off_Requester__c }" rendered="{!IF(issue.QCloudsSaaS__Write_Off_Requester__c!=NULL  , True, False)}" />
+                <apex:outputField value="{! issue.Write_Off_Validation_Date__c }" rendered="{!IF(issue.QCloudsSaaS__Write_Off_Validation_Date__c !=NULL  , True, False)}" />
+                <apex:outputField value="{! issue.Write_Off_Validator__c }" rendered="{!IF(issue.QCloudsSaaS__Write_Off_Validator__c !=NULL  , True, False)}" />
+                <apex:outputField value="{! issue.Write_Off_Request_Reason__c }" rendered="{!IF(issue.QCloudsSaaS__Write_Off_Request_Reason__c!=NULL  , True, False)}" />
+                <apex:outputField value="{! issue.Write_Off_Request_Description__c }" rendered="{!IF(issue.QCloudsSaaS__Write_Off_Request_Description__c!=NULL  , True, False)}" />
+                <apex:outputField value="{! issue.Write_Off_Validation_Reason__c }" rendered="{!IF(issue.QCloudsSaaS__Write_Off_Validation_Reason__c !=NULL  , True, False)}" />
+
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:commandButton action="{! go_back }" value="Go to scan detail" />
+    </apex:form>
+</apex:page>

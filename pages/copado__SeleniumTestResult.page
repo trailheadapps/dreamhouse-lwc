@@ -1,0 +1,31 @@
+<apex:page id="thePage" standardController="copado__Selenium_Test_Result__c" extensions="copado.SeleniumTestResult,copado.LicenseHelper">
+    <c:IncludeStaticsResourceComponent addJquery="true"/>
+    
+    <c:GAnalytics />
+    
+    <!-- check that the feature is enabled, and the user has a license assigned -->
+    <apex:pageMessage severity="WARNING" strength="2" summary="{!possibleCSTErrorMsg}" rendered="{!!ISNULL(possibleCSTErrorMsg)}"></apex:pageMessage>
+
+    <apex:detail subject="{!copado__Selenium_Test_Result__c.Id}" title="true" showChatter="true" rendered="{!$Setup.copado__Copado_License__c.copado__Enable_CST__c}" />
+
+    <script>
+        ga('send', 'pageview', {
+            'page': '/SeleniumTestResult',
+            'title': 'Selenium Test Result'
+        });
+
+        $copado( document ).ready(function() {
+            $copado('div.selenese table td.failure_msg:contains("[Warning")').css('color', '#BF7F3F');
+            $copado('div.selenese table td.failure_msg:contains("[Failure")').css('color', '#ff6666');
+            $copado('div.selenese table td.index:contains("-")').parent().find('td').css('color', '#999');
+            $copado('div.selenese table td:nth-of-type(2):contains("echo")').parent().find('td').css('color', '#999');
+            var link = $copado('div.selenese > h2 a');
+            if(link&&link.length) {
+                link.each(function() {
+                    var id = $copado(this).attr('href').replace('/','');
+                    $copado(this).parent().append('&nbsp; <span style="font-size: 8pt;"><a target="_blank" href="copado:selenese/'+id+'">(open in recorder)</a></span>')
+                })
+            }
+        });
+    </script>
+</apex:page>

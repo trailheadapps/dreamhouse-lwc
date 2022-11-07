@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Customize your subscription to Copado system notifications</description>
+    <flexiPage>copado__Notifications_Center</flexiPage>
+    <label>Notifications Center</label>
+    <motif>Custom53: Bell</motif>
+</CustomTab>

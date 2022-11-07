@@ -1,0 +1,53 @@
+<apex:page id="ScheduleCopadoScheduledJob" standardController="copado__Scheduled_Job__c" lightningStylesheets="true" docType="html-5.0">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJquery="true" addUIjs="true"/>
+    <script type="text/javascript" src="{!URLFOR($Resource.cronExpression) }"></script>
+    <c:GAnalytics />
+    <c:CopadoSpinner />
+
+    <style>
+    .slds-scope {
+        padding: 0 .3rem;
+    }
+
+    .slds-scope .slds-page-header {
+        background-color: #F7F9FB;
+    }
+    </style>
+    <script>
+        lockScreen();
+
+        $copado(document).ready(function() {
+            unlockScreen();
+        });
+
+        ga('send', 'pageview', {
+            'page': '/ScheduleCopadoScheduledJob',
+            'title': 'Schedule a Scheduled Job'
+        });
+    </script>
+    <div class="slds-scope">
+        <div class="slds-page-header slds-page-header_record-home slds-m-bottom_small">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <apex:image value="{!URLFOR($Resource.copado__DTS_images, 'app_icon.png')}" />
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta">{!copado__Scheduled_Job__c.Name}</p>
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate">{!$ObjectType.copado__Scheduled_Job__c.Label}</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <c:ScheduleCronExpression recordId="{!copado__Scheduled_Job__c.Id}" cronExpression="{!copado__Scheduled_Job__c.copado__Cron_Expression__c}"/>
+    </div>
+</apex:page>

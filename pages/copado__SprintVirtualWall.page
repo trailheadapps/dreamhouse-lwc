@@ -1,0 +1,1505 @@
+<apex:page id="SprintVirtualWall" standardController="copado__Sprint__c" extensions="copado.SprintVirtualWall" showHeader="true" applyHtmlTag="true"
+    sidebar="false" applyBodyTag="false" docType="html-5.0" cache="false">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Sprint Wall {!HTMLENCODE(Sprint__c.Name)} | Copado</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Import the Design System style sheet -->
+        <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+        <apex:includeScript value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.js')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.css')}" />
+
+        <script>
+            var svgButtonsId = ['filterButton', 'chatButton', 'chartButton', 'completeButton', 'rowButton', 'snippetButton', 'dragButton', 'kanbanButton', 'refreshButton', 'userStoryImage', 'filterIcon'];
+            var svgButtonsClass = ['nextSprintButton', 'editButton', 'removeButton', 'previewButton', 'deleteButton', 'newButton'];
+
+            $copado(document).ready(function () {
+                alignFormWidth();
+                setSVGStruct();
+                userStoryDataTable();
+                applyRenderSVG(svgButtonsId, svgButtonsClass);
+                unlockScreen();
+            });
+
+            $copado(window).on('resize', function () {
+                alignFormWidth();
+            });
+
+            var alignFormWidth = function () {
+                var formContent = $copado('[id$=sprintwallform]');
+                var iWidht = $copado('#tabContainer').innerWidth() - 20;
+                if (iWidht > 0) {
+                    formContent.css('width', '' + iWidht + 'px');
+                }
+            }
+
+            function showUSRecTypeList() {
+                const output = $copado('#usRecTypeIdOutpt');
+                const input = $copado('#usRecTypeIdInp');
+                output.removeClass('slds-show');
+                input.removeClass('slds-hide');
+                output.addClass('slds-hide');
+                input.addClass('slds-show');
+            }
+
+            function userStoryDataTable() {
+                var pbTableUserStories = $copado('#pbTableUserStories');
+                var thSize = pbTableUserStories.find('thead>tr>th');
+                var aTargets = [0];
+                if (thSize) {
+                    aTargets.push(thSize.length - 1);
+                }
+                pbTableUserStories.DataTable({
+                    "paging": false,
+                    "scrollY": 540,
+                    "scrollX": true,
+                    "stateSave": true,
+                    "scrollCollapse": true,
+                    "info": false,
+                    "aoColumnDefs": [{
+                        "bSortable": false,
+                        "bSearchable": false,
+                        "aTargets": aTargets
+                    }],
+                    "fixedColumns": true
+                });
+            }
+
+            function userStorySnippetDataTable() {
+                var pbTableUserStoriesSnippets = $copado('#pbTableUserStoriesSnippets');
+                var thSize = pbTableUserStoriesSnippets.find('thead>tr>th');
+                var aTargets = [0, -2];
+                if (thSize) {
+                    aTargets.push(thSize.length - 1);
+                }
+                pbTableUserStoriesSnippets.dataTable({
+                    "paging": false,
+                    "scrollY": 540,
+                    "scrollX": true,
+                    "scrollCollapse": true,
+                    "stateSave": true,
+                    "info": false,
+                    "aoColumnDefs": [{
+                        "bSortable": false,
+                        "bSearchable": false,
+                        "aTargets": aTargets
+                    }],
+                    "fixedColumns": true,
+                });
+            }
+
+            function userStoryDragDataTable() {
+                var dragTableUserStories = $copado('#dragTableUserStories');
+                dragTableUserStories.DataTable({
+                    "paging": false,
+                    "scrollY": 540,
+                    "scrollX": true,
+                    "scrollCollapse": true,
+                    "info": false,
+                    "ordering": false,
+                    "searching": false,
+                    "fixedColumns": true
+                });
+            }
+
+            var svgStruct = [];
+            var setSVGStruct = function () {
+                svgStruct['#filterButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#filterList')}",
+                    class: 'slds-button__icon'
+                };
+                svgStruct['#chatButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#announcement')}",
+                    class: 'slds-button__icon'
+                };
+                svgStruct['#chartButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#metrics')}",
+                    class: 'slds-button__icon'
+                };
+                svgStruct['#completeButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#check')}",
+                    class: 'slds-button__icon'
+                };
+                svgStruct['#rowButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#rows')}",
+                    class: 'slds-button__icon'
+                };
+                svgStruct['#snippetButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#snippet')}",
+                    class: 'slds-button__icon'
+                };
+                svgStruct['#dragButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#tile_card_list')}",
+                    class: 'slds-button__icon'
+                };
+                svgStruct['#kanbanButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#kanban')}",
+                    class: 'slds-button__icon'
+                };
+                svgStruct['#refreshButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#refresh')}",
+                    class: 'slds-button__icon'
+                };
+                svgStruct['#userStoryImage'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/custom-sprite/svg/symbols.svg#custom18')}",
+                    class: 'slds-icon slds-icon-custom-18 slds-icon--small'
+                };
+                svgStruct['.nextSprintButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#right')}",
+                    class: 'slds-button__icon slds-button__icon--hint slds-button__icon--small'
+                };
+                svgStruct['.editButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#edit')}",
+                    class: 'slds-button__icon slds-button__icon--hint slds-button__icon--small'
+                };
+                svgStruct['.deleteButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#delete')}",
+                    class: 'slds-button__icon slds-button__icon--hint slds-button__icon--small'
+                };
+                svgStruct['.newButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#new')}",
+                    class: 'slds-button__icon slds-button__icon--hint slds-button__icon--small'
+                };
+                svgStruct['.previewButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#preview')}",
+                    class: 'slds-button__icon slds-button__icon--hint slds-button__icon--small previevButtonSvg'
+                };
+                svgStruct['.removeButton'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#remove_link')}",
+                    class: 'slds-button__icon slds-button__icon--hint slds-button__icon--small'
+                };
+                svgStruct['#filterIcon'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/action-sprite/svg/symbols.svg#filter')}",
+                    class: 'slds-icon slds-icon--small slds-icon-action-filter'
+                };
+            }
+
+            function applyRenderSVG(listIdArray, listClassArray) {
+                if (listIdArray) {
+                    listIdArray.forEach(function (element) {
+                        renderSVG('#' + element);
+                    });
+                }
+
+                if (listClassArray) {
+                    listClassArray.forEach(function (element) {
+                        renderSVG('.' + element);
+                    });
+                }
+            }
+
+            function renderSVG(elemId) {
+                var elem = $copado(elemId);
+                var struct = svgStruct[elemId];
+                var imageURL = struct.imageURL;
+                var SVG = $copado('<svg/>', {
+                    class: struct.class,
+                });
+
+                var SVGUse = $copado('<use/>');
+                SVGUse.attr('xlink:href', imageURL);
+                elem.prepend(SVG.append(SVGUse));
+                elem.html(elem.html());
+            }
+
+            function toggleChat() {
+                $copado('.chatWrapper').toggle();
+                var hasSelectedClass = $copado('#chatButton').hasClass('slds-is-selected');
+                if (hasSelectedClass) {
+                    $copado('#chatButton').removeClass('slds-is-selected');
+                } else {
+                    $copado('#chatButton').addClass('slds-is-selected');
+                }
+                unlockScreen();
+            }
+
+            function toggleChart() {
+                $copado('.chartWrapper').toggle();
+                var hasSelectedClass = $copado('#chartButton').hasClass('slds-is-selected');
+                if (hasSelectedClass) {
+                    $copado('#chartButton').removeClass('slds-is-selected');
+                } else {
+                    $copado('#chartButton').addClass('slds-is-selected');
+                }
+                renderChart();
+            }
+
+            function toggleOtherButtons() {
+                $copado('.chatWrapper').toggle();
+                $copado('.chartWrapper').toggle();
+            }
+
+            function showModal(modalId, backDropId) {
+                setTimeout(function () {
+                    $copado(backDropId).addClass('slds-backdrop--open');
+                    $copado(modalId).addClass('slds-fade-in-open');
+                }, 500);
+            }
+
+            function closeModal(modalId, backDropId) {
+                $copado(modalId).removeClass('slds-fade-in-open');
+                $copado(backDropId).removeClass('slds-backdrop--open');
+                return false;
+            }
+
+            function usUpdateOperationValidation() {
+                const usErrors = document.getElementById("SprintVirtualWall:sprintwallform:usErrors");
+                if (usErrors == null || usErrors.textContent == null || usErrors.textContent.length == 0) {
+                    usUpdateOperationClose();
+                }
+                return false;
+            }
+
+            function usTskOperationValidation() {
+                const usTskErrors = document.getElementById("SprintVirtualWall:sprintwallform:usTskErrors");
+                if (usTskErrors == null || usTskErrors.textContent == null || usTskErrors.textContent.length == 0) {
+                    usTaskOperationClose();
+                }
+                return false;
+            }
+
+            function sortTable() {
+                var taskKanban = $copado(".slds-col.taskKanbanItem");
+                if (taskKanban.length > 0) {
+                    $copado(".slds-col.taskKanbanItem").sortable(
+                        {
+                            connectWith: ".slds-col.taskKanbanItem",
+                            handle: ".slds-title",
+                            placeholder: "slds-item slds-m-around--small slds-item-placeholder copado-item-placeholder",
+                            start: function (event, ui) {
+                                $copado(ui.item).addClass("moving-card");
+                            },
+                            stop: function (event, ui) {
+                                $copado(ui.item).removeClass("moving-card");
+
+                                var taskId = $copado(ui.item).attr("id");
+                                var taskStatus = $copado(ui.item).parent().attr("name");
+                                var ns = '{!JSENCODE(namespace)}';
+                                var core = ns ? window[ns.split('__')[0]] : window;
+
+                                lockScreen();
+
+                                (core).SprintVirtualWall.updateRecordsPicklistValue(
+                                    taskId,
+                                    taskStatus,
+                                    function (result, event) {
+                                        unlockScreen();
+                                    }
+                                );
+                            }
+                        }
+                    );
+                }
+            }
+
+            function sortUSOrder() {
+                var firstItemIndex;
+                var lastItemIndex;
+                var currentIndex = 0;
+                var index2check;
+                var usOrderArray = [], oldUsOrderArray = [];
+                var flag = false;
+
+                $copado(".sortableTbody").sortable(
+                    {
+                        connectWith: ".sortableTbody",
+                        start: function (event, ui) {
+                            $copado(ui.item).addClass("moving-card");
+                            console.log('start');
+
+                            firstItemIndex = $copado(ui.item).index();
+                        },
+                        stop: function (event, ui) {
+                            $copado(ui.item).removeClass("moving-card");
+                            console.log('finish');
+
+                            lastItemIndex = $copado(ui.item).index();
+
+                            if (firstItemIndex != lastItemIndex) {
+                                index2check = lastItemIndex > firstItemIndex ? lastItemIndex : firstItemIndex;
+
+                                lockScreen();
+
+                                $copado(".slds-hint-parent").each(function () {
+                                    var lIndex = $copado(this).attr('usOrder');
+                                    var uiItem = ui.item.attr('usOrder');
+                                    if (lastItemIndex > firstItemIndex && !flag) {
+                                        oldUsOrderArray.push(uiItem);
+                                        flag = true;
+                                    }
+
+                                    if (currentIndex >= firstItemIndex && currentIndex <= lastItemIndex || currentIndex <= firstItemIndex && currentIndex >= lastItemIndex) {
+                                        usOrderArray.push(lIndex);
+                                        if (uiItem != lIndex) oldUsOrderArray.push(lIndex);
+                                    }
+
+                                    if (currentIndex == index2check) {
+                                        if (lastItemIndex < firstItemIndex) oldUsOrderArray.push(uiItem);
+                                        return false;
+                                    }
+                                    currentIndex++;
+                                });
+                                console.info('usOrderArray  ', usOrderArray);
+                                console.info('oldUsOrderArray  ', oldUsOrderArray);
+                                updateOrder(JSON.stringify(usOrderArray), JSON.stringify(oldUsOrderArray));
+                            }
+                        }
+                    }
+                ).disableSelection();
+
+                $copado('.sortableTbody td').not('.handleTd').mousedown(function (event) {
+                    event.stopImmediatePropagation();
+                });
+            }
+
+            function copadoNavigateToUrl(id, url) {
+                // lightning/any other way to navigate
+                if ((typeof sforce != 'undefined') && sforce && (!!sforce.one)) {
+                    sforce.one.navigateToSObject(id, 'detail');
+                } else {
+                    window.open(url, '_blank');
+                }
+            };
+        </script>
+
+        <style>
+            .slds-scope .slds-p-left--large {
+                padding-left: 0.5rem;
+            }
+
+            .previevButtonSvg {
+                margin-top: 3px;
+            }
+
+            .copado-title {
+                border-radius: 3px;
+                background-color: #e0e5ee;
+                border: 1px solid #d8dde6;
+                cursor: move;
+            }
+
+            .copado-item {
+                box-shadow: 0 0 10px gray;
+                border: none !important;
+                background-color: #fff;
+                border-radius: 0 !important;
+                border-left: 5px solid #56aadf !important;
+            }
+
+            .copado-item-placeholder {
+                border: 2px dotted gray !important;
+                height: 5rem;
+            }
+
+            .moving-card {
+                opacity: 0.5;
+                transform: rotate( -5deg);
+            }
+
+            .slds-scope .slds-section-title--divider {
+                text-transform: none;
+                overflow-x: scroll;
+            }
+
+            .slds-scope [hidden],
+            .slds-scope template {
+                display: block;
+            }
+
+            /* do not render the svg icons in lightning, they fail when dragging */
+
+            .dt-rowReorder-float .slds-button {
+                display: none;
+            }
+
+            .input-lookup a {
+                width: 20px !important;
+                border: unset !important;
+                margin: 0 .75rem !important;
+                background-color: transparent !important;
+                padding: 0 !important;
+            }
+
+            .input-lookup a:focus {
+                box-shadow: unset !important;
+            }
+        </style>
+    </head>
+
+    <body style="{!IF(AND(!showLicenseError, $User.UIThemeDisplayed == 'Theme4d'),'margin: 12px;background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2),linear-gradient(to top,rgba(32, 92, 159, 0), rgb(32, 92, 159));','')}">
+        <apex:outputPanel layout="block" rendered="{!showLicenseError}" style="{!IF($User.UIThemeDisplayed == 'Theme4d','padding: .75rem .75rem 0;','')}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!showLicenseError}">
+        <!-- REQUIRED SLDS WRAPPER -->
+        <div class="slds-scope">
+            <!-- MASTHEAD -->
+            <p class="slds-text-heading--label slds-m-bottom--small"></p>
+            <!-- / MASTHEAD -->
+            <apex:pageMessages id="errors" />
+
+            <!-- PAGE HEADER -->
+            <div class="slds-page-header" style="border-radius: 0.25rem;">
+                <!-- PAGE HEADER TOP ROW -->
+                <div class="slds-grid">
+                    <!-- PAGE HEADER / ROW 1 / COLUMN 1 -->
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <!-- MEDIA OBJECT = FIGURE + BODY -->
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__figure">
+                                <svg aria-hidden="true" class="slds-icon slds-icon-custom-95">
+                                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/custom-sprite/svg/symbols.svg#custom95')}"></use>
+                                </svg>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-title--caps slds-line-height--reset">
+                                    {!$label.SprintWall_Header} |
+                                    <a href="{!URLFOR($Action.Sprint__c.List, $ObjectType.Sprint__c)}">{!$Label.SprintWall_All_Sprints}</a>
+                                </p>
+                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">
+                                    <a href="{!URLFOR($Action.Sprint__c.Edit,Sprint__c.Id)}">{!HTMLENCODE(Sprint__c.Name)}</a>
+                                    <apex:outputPanel layout="none" rendered="{!PreviousSprint != null}">
+                                        <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                            title="{!$Label.SprintWall_Previous_Sprint}" onClick="lockScreen();goToRecord('previous');">
+                                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+                                                <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#left')}"></use>
+                                            </svg>
+                                            <span class="slds-assistive-text">{!$Label.SprintWall_Previous_Sprint}</span>
+                                        </button>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!NextSprint != null}">
+                                        <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                            title="{!$Label.SprintWall_Next_Sprint}" onClick="lockScreen();goToRecord('next');">
+                                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+                                                <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#right')}"></use>
+                                            </svg>
+                                            <span class="slds-assistive-text">{!$Label.SprintWall_Next_Sprint}</span>
+                                        </button>
+                                    </apex:outputPanel>
+                                </h1>
+                            </div>
+                        </div>
+                        <!-- / MEDIA OBJECT -->
+                    </div>
+                    <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
+                    <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                        <div class="slds-button-group" role="group">
+                            <apex:outputPanel layout="none" rendered="{!isUSCreateable}">
+                                <apex:outputPanel rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" layout="none">
+                                    <a class="slds-button slds-button--neutral" href="{!URLFOR($Action.copado__User_Story__c.New)}">{!$Label.copado__SprintWall_Button_New_US}</a>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" layout="none">
+                                    <button type="button" class="slds-button slds-button--neutral" onClick="lockScreen();prepareUs('','new');"> {!$label.SprintWall_Button_New_US} </button>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!isUsUpdateable}">
+                                <button type="button" class="slds-button slds-button--neutral" onClick="lockScreen();prepareUs('','massupdate');"> {!$label.SprintWall_Button_MassUpdate} </button>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                    <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
+                </div>
+                <!-- / PAGE HEADER TOP ROW -->
+
+
+                <!-- PAGE HEADER DETAIL ROW -->
+                <ul class="slds-grid slds-page-header__detail-row" style="border-radius: 0.25rem;">
+                    <!-- PAGE HEADER / ROW 2 / COLUMN 1 -->
+                    <li class="slds-page-header__detail-block">
+                        <p class="slds-text-title slds-truncate slds-m-bottom--xx-small" title="{!$label.SprintWall_Actual_Velocity}">
+                            {!$label.SprintWall_Actual_Velocity}
+                        </p>
+                        <p class="slds-text-body--regular slds-truncate">
+                            <apex:outputPanel layout="block" id="actualvelocities">
+                                {!CalculatedVelocities['actual']}
+                            </apex:outputPanel>
+                        </p>
+                    </li>
+                    <!-- PAGE HEADER / ROW 2 / COLUMN 2 -->
+                    <li class="slds-page-header__detail-block">
+                        <p class="slds-text-title slds-truncate slds-m-bottom--xx-small" title="{!$Label.SprintWall_Planned_Velocity}">
+                            {!$Label.SprintWall_Planned_Velocity}
+                        </p>
+                        <p class="slds-text-body--regular">
+                            <apex:outputPanel layout="block" id="plannedvelocities">
+                                {!CalculatedVelocities['planned']}
+                            </apex:outputPanel>
+                        </p>
+                    </li>
+                    <!-- PAGE HEADER / ROW 2 / COLUMN 3 -->
+                    <li class="slds-page-header__detail-block">
+                        <p class="slds-text-title slds-truncate slds-m-bottom--xx-small" title="{!$Label.SprintWall_Days_Left}">
+                            {!$Label.SprintWall_Days_Left}
+                        </p>
+                        <p class="slds-text-body--regular">
+                            <apex:outputPanel layout="block" id="daysleftstring">
+                                {!HTMLENCODE(DaysLeftString)}
+                            </apex:outputPanel>
+                        </p>
+                    </li>
+                    <!-- PAGE HEADER / ROW 2 / COLUMN 4 -->
+                    <li class="slds-page-header__detail-block">
+                        <p class="slds-text-title slds-truncate slds-m-bottom--xx-small" title="{!$ObjectType.Sprint__c.fields.Status__c.Label}">
+                            {!$ObjectType.Sprint__c.fields.Status__c.Label}
+                        </p>
+                        <p class="slds-text-body--regular">
+                            <apex:outputPanel layout="block" id="statusstring">
+                                {!HTMLENCODE(copado__Sprint__c.copado__Status__c)}
+                            </apex:outputPanel>
+                        </p>
+                    </li>
+                    <!-- PAGE HEADER / ROW 2 / COLUMN 5 -->
+                    <li class="slds-page-header__detail-block" style="width: 100%; max-width: 100%;">
+                        <p class="slds-text-title slds-truncate slds-m-bottom--xx-small"></p>
+                        <p>
+                            <apex:outputPanel styleClass="slds-card__header slds-grid slds-float_right" layout="block" id="pageHeaderDetailButton">
+                                <button title="{!$Label.Filter}" type="button" id="filterButton" class="slds-button slds-button--icon-border slds-icon--small slds-float_right {!IF(sectionRenderer == 'usWithFilter','slds-is-selected','')}"
+                                    onClick="lockScreen();filterRenderer('{!IF(sectionRenderer != " usWithFilter ","usWithFilter
+                                    ","onlyUS ")}');" style="margin-left: .25rem;"></button>
+                                <apex:outputPanel layout="none" rendered="{!IsChatterEnabled}">
+                                    <button title="{!$Label.Chatter}" type="button" id="chatButton" class="slds-button slds-button--icon-border slds-icon--small slds-float_right"
+                                        onClick="lockScreen();toggleChat();"></button>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="none" rendered="{!AND(copado__Sprint__c.copado__Start_Date__c != null,copado__Sprint__c.copado__Start_Date__c<=TODAY())}">
+                                    <button title="{!$Label.Burndown_Chart}" type="button" id="chartButton" class="slds-button slds-button--icon-border slds-icon--small slds-float_right"
+                                        onClick="lockScreen();toggleChart();"></button>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="none" rendered="{!copado__Sprint__c.copado__Status__c!='Completed'}">
+                                    <button title="{!$Label.Complete_Sprint}" type="button" id="completeButton" class="slds-button slds-button--icon-border slds-icon--small slds-float_right"
+                                        onClick="showModal('#sprintCompleteModal','#sprintCompleteBackdrop');"></button>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </p>
+                    </li>
+                </ul>
+                <!-- / PAGE HEADER DETAIL ROW -->
+            </div>
+            <!-- / PAGE HEADER -->
+
+            <!-- CHAT WRAPPER -->
+            <div class="myapp chatWrapper" style="display:none;">
+                <div class="slds-grid slds-m-top--large">
+                    <div class="slds-col slds-col-rule--right slds-size--12-of-12">
+                        <article class="slds-card">
+                            <div class="slds-card__header slds-grid">
+                                <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                                    <div class="slds-media__figure">
+                                        <svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon-action-announcement">
+                                            <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/action-sprite/svg/symbols.svg#announcement')}"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="slds-media__body slds-truncate">
+                                        <h2 class="slds-text-heading--small">{!$Label.Chatter}</h2>
+                                    </div>
+                                </header>
+                            </div>
+                            <div class="slds-card__body">
+                                <div class="slds-card__body--inner">
+                                    <div class="slds-tile">
+                                        <chatter:feed entityId="{!copado__Sprint__c.Id}" showPublisher="true" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-card__footer"></div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+            <!-- / CHAT WRAPPER -->
+
+
+            <apex:form id="sprintwallform">
+                <!-- CHART WRAPPER -->
+                <div class="myapp chartWrapper" style="display:none;">
+                    <div class="slds-grid slds-m-top--large">
+                        <div class="slds-col slds-col-rule--right slds-size--12-of-12">
+                            <article class="slds-card">
+                                <div class="slds-card__header slds-grid">
+                                    <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                                        <div class="slds-media__figure">
+                                            <svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon-standard-metrics">
+                                                <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#metrics')}"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="slds-media__body slds-truncate">
+                                            <h2 class="slds-text-heading--small">
+                                                {!$Label.Burndown_Chart} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                <apex:commandLink action="{!runBatchNow}" value="{!$Label.copado__REFRESH}" onClick="lockScreen();" onComplete="toggleChart();unlockScreen();"
+                                                    rendered="{!copado__Sprint__c.copado__Status__c != 'Completed'}" reRender="chartbody" />
+                                                <span title="{!$Label.Burndown_Chart_Info}" class="slds-float_right">
+                                                    <svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon-text-default">
+                                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#info')}"></use>
+                                                    </svg>
+                                                </span>
+                                            </h2>
+                                        </div>
+                                    </header>
+                                </div>
+                                <div class="slds-card__body">
+                                    <div class="slds-card__body--inner">
+                                        <apex:outputPanel layout="block" styleClass="slds-tile" id="chartbody">
+                                            <apex:chart height="400" width="700" data="{!Data}" resizable="true" id="myChartInner">
+                                                <apex:legend position="right" />
+                                                <apex:axis type="Numeric" position="left" fields="idealValue" grid="true" minimum="0" title="Story Points" />
+                                                <apex:axis type="Category" position="bottom" fields="dates" title="Date" />
+                                                <apex:lineSeries title="Expected" axis="left" xField="dates" yField="idealValue" markerType="circle" strokeColor="#32CD32"
+                                                    strokeWidth="4" markerFill="#369b58" />
+                                                <apex:lineSeries title="Actual" axis="left" xField="dates" yField="actualValue" markerType="circle" markerSize="4" markerFill="#ce1c1c"
+                                                />
+                                            </apex:chart>
+                                        </apex:outputPanel>
+                                    </div>
+                                </div>
+                                <div class="slds-card__footer"></div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                <!-- / CHART WRAPPER -->
+
+                <!-- FILTER WRAPPER -->
+                <apex:outputPanel layout="block" id="filterCard">
+                    <apex:outputPanel layout="none" rendered="{!sectionRenderer == 'usWithFilter'}">
+                        <div class="myapp">
+                            <div class="slds-grid slds-m-top--large">
+                                <div class="slds-col slds-col-rule--right slds-size--12-of-12">
+                                    <article class="slds-card">
+                                        <div class="slds-card__header slds-grid">
+                                            <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                                                <div class="slds-media__figure" id="filterIcon"></div>
+                                                <div class="slds-media__body slds-truncate">
+                                                    <h2 class="slds-text-heading--small">{!$Label.Filter}</h2>
+                                                </div>
+                                            </header>
+                                        </div>
+                                        <div class="slds-card__body">
+                                            <div class="slds-card__body--inner">
+                                                <div class="slds-tile">
+                                                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                                        <thead>
+                                                            <tr class="slds-text-title_caps">
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate" title="{!$label.SprintWall_Header_Status}" style="color: #02A9FF">
+                                                                        <span style="margin-left: 5%;">
+                                                                            <input type="checkbox" onclick="$copado('input.statusClass:checkbox').not(this).prop('checked', this.checked);"
+                                                                            />
+                                                                        </span>
+                                                                        <span style="margin-left: 25%;">{!$label.SprintWall_Header_Status}</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate" title="{!$label.SprintWall_Header_Type}" style="color: #02A9FF">
+                                                                        <span style="margin-left: 5%;">
+                                                                            <input type="checkbox" onclick="$copado('input.rtClass:checkbox').not(this).prop('checked', this.checked);"
+                                                                            />
+                                                                        </span>
+                                                                        <span style="margin-left: 25%;">{!$label.SprintWall_Header_Type}</span>
+                                                                    </div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate" title="{!$label.SprintWall_Header_Assignee}" style="color: #02A9FF">
+                                                                        <span style="margin-left: 5%;">
+                                                                            <input type="checkbox" onclick="$copado('input.developerClass:checkbox').not(this).prop('checked', this.checked);"
+                                                                            />
+                                                                        </span>
+                                                                        <span style="margin-left: 25%;">{!$label.SprintWall_Header_Assignee}</span>
+                                                                    </div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr style="vertical-align: top;">
+                                                                <td scope="row">
+                                                                    <div class="slds-truncate">
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <apex:repeat value="{!pickListValuesWrapperList}" var="rtw">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <apex:inputCheckbox styleClass="statusClass"
+                                                                                                value="{!rtw.isSelected}" />
+                                                                                        </td>
+                                                                                        <td>{!rtw.fieldValue}</td>
+                                                                                    </tr>
+                                                                                </apex:repeat>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="slds-truncate">
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <apex:repeat value="{!rtValuesWrapperList}" var="ussw">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <apex:inputCheckbox styleClass="rtClass"
+                                                                                                value="{!ussw.isSelected}" />
+                                                                                        </td>
+                                                                                        <td>{!ussw.fieldValue}</td>
+                                                                                    </tr>
+                                                                                </apex:repeat>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="slds-truncate">
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <apex:repeat value="{!usDevWrapperList}" var="usdwl">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <apex:inputCheckbox styleClass="developerClass"
+                                                                                                value="{!usdwl.isSelected}" />
+                                                                                        </td>
+                                                                                        <td>{!usdwl.fieldValue}</td>
+                                                                                    </tr>
+                                                                                </apex:repeat>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-card__footer">
+                                            <button type="button" class="slds-button slds-button--neutral" onClick="lockScreen();appfilter();"> {!$Label.Apply} </button>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- / FILTER WRAPPER -->
+
+                <c:ScreenLocker msg="{!$Label.copado__LOADING}" lockOnLoad="true" />
+                <apex:actionFunction name="filterRenderer" action="{!pageRendererAssignment}" onComplete="applyRenderSVG(['filterIcon','filterButton','chatButton','chartButton','completeButton']);unlockScreen();"
+                    reRender="filterCard,pageHeaderDetailButton,errors">
+                    <apex:param name="pRenderer" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="pageSwithcer" action="{!pageSwithcerAssignment}" onComplete="userStoryDataTable();userStorySnippetDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortTable();sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,errors">
+                    <apex:param name="pSwitcher" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="refreshPanel" action="{!refreshTable}" onComplete="userStoryDataTable();userStorySnippetDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage','filterButton','chatButton','chartButton','completeButton'],svgButtonsClass);sortTable();sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,filterCard,pageHeaderDetailButton,errors" />
+                <apex:actionFunction name="moveToNextSprint" action="{!moveUsToNextSprint}" onComplete="userStoryDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,actualvelocities,plannedvelocities,daysleftstring,errors">
+                    <apex:param name="usId" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="removeSprint" action="{!removeSprintFromUs}" onComplete="userStoryDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,actualvelocities,plannedvelocities,daysleftstring,errors">
+                    <apex:param name="usId" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="prepareUs" action="{!prepareUserStory}" onComplete="showModal('#usModal','#usBackdrop');unlockScreen();"
+                    reRender="usContent,usFooter,errors,usRecTypeIdInpField">
+                    <apex:param name="usId" value="" />
+                    <apex:param name="mode" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="usRecTypeEditEnable" action="{!enableUSrecTypeEdit}" oncomplete="showUSRecTypeList();" reRender="usRecTypeIdInpField"
+                />
+                <apex:actionFunction name="usUpdateOperationClose" onComplete="closeModal('#usModal','#usBackdrop');userStoryDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,actualvelocities,plannedvelocities,daysleftstring,usErrors,errors" />
+                <apex:actionFunction name="usUpdateOperation" action="{!userStoryUpdateOperation}" onComplete="usUpdateOperationValidation();unlockScreen();"
+                    reRender="usErrors" />
+                <apex:actionFunction name="gobeginning" action="{!beginning}" onComplete="userStoryDataTable();userStorySnippetDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortTable();sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,errors" />
+                <apex:actionFunction name="goprevious" action="{!previous}" onComplete="userStoryDataTable();userStorySnippetDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortTable();sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,errors" />
+                <apex:actionFunction name="gonext" action="{!next}" onComplete="userStoryDataTable();userStorySnippetDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortTable();sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,errors" />
+                <apex:actionFunction name="goend" action="{!end}" onComplete="userStoryDataTable();userStorySnippetDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortTable();sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,errors" />
+                <apex:actionFunction name="clearUstaskModal" action="{!prepareUserStoryTask}" onComplete="showModal('#usTaskModal','#usTaskBackdrop');unlockScreen();"
+                    reRender="usTaskContent,errors">
+                    <apex:param name="usId" value="" />
+                    <apex:param name="usTaskId" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="usTaskOperationClose" onComplete="closeModal('#usTaskModal','#usTaskBackdrop');userStorySnippetDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortTable();unlockScreen();"
+                    reRender="cardsPanel,errors" />
+                <apex:actionFunction name="usTaskOperation" action="{!userStoryTaskOperation}" onComplete="usTskOperationValidation();unlockScreen();"
+                    reRender="usTskErrors" />
+                <apex:actionFunction name="usTaskDeletion" action="{!userStoryTaskDeletion}" onComplete="userStorySnippetDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortTable();unlockScreen();"
+                    reRender="cardsPanel,errors">
+                    <apex:param name="usTaskId" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="appfilter" action="{!applyfilter}" onComplete="userStoryDataTable();userStorySnippetDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage','filterButton','chatButton','chartButton','completeButton'],svgButtonsClass);sortTable();sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,filterCard,pageHeaderDetailButton,errors" />
+                <apex:actionFunction name="goToRecord" action="{!goToStandardRecordView}" reRender="xxx">
+                    <apex:param name="sprMode" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="renderChart" onComplete="unlockScreen();" reRender="chartbody,errors" />
+                <apex:actionFunction name="sprintCompleteOperation" action="{!completeSprint}" onComplete="closeModal('#sprintCompleteModal','#sprintCompleteBackdrop');userStoryDataTable();userStorySnippetDataTable();userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage','filterButton','chatButton','chartButton','completeButton'],svgButtonsClass);sortTable();unlockScreen();"
+                    reRender="cardsPanel,statusstring,actualvelocities,plannedvelocities,pageHeaderDetailButton,errors" />
+                <apex:actionFunction name="updateOrder" action="{!updateUSOrder}" onComplete="userStoryDragDataTable();applyRenderSVG(['rowButton','snippetButton','dragButton','kanbanButton','refreshButton','userStoryImage'],svgButtonsClass);sortUSOrder();unlockScreen();"
+                    reRender="cardsPanel,errors">
+                    <apex:param value="" name="newUSOrder" />
+                    <apex:param value="" name="oldUSOrder" />
+                </apex:actionFunction>
+
+                <!-- US MODAL -->
+                <section role="dialog" id="usModal" tabindex="-1" aria-labelledby="usHeader" aria-modal="true" aria-describedby="usContent"
+                    class="slds-modal slds-modal_large">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="usHeader" class="slds-text-heading_medium slds-hyphenate">{!$Label.USER_STORY}</h2>
+                        </header>
+
+                        <apex:outputPanel layout="block" styleClass="slds-modal__content slds-p-around_medium" id="usContent">
+                            <apex:pageMessages id="usErrors" />
+                            <apex:outputPanel layout="none" rendered="{!usModalMode == 'edit'}">
+                                <div class="slds-form slds-form_horizontal">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label">{!$Label.copado__SprintWall_Header_Type}</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label"></label>
+                                                <div class="slds-show" id="usRecTypeIdOutpt">
+                                                    <div class="slds-form-element__control">
+                                                        <apex:outputField value="{!us.RecordTypeId}" styleclass="slds-input" />
+                                                        <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                                            title="{!$Label.SprintWall_Change_Record_Type}" onClick="usRecTypeEditEnable();">
+                                                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#change_record_type')}">
+                                                                </use>
+                                                            </svg>
+                                                            <span class="slds-assistive-text">{!$Label.copado__SprintWall_Change_Record_Type}</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-hide" id="usRecTypeIdInp">
+                                                    <div class="slds-form-element__control">
+                                                        <apex:inputField value="{!us.RecordTypeId}" styleclass="slds-input" id="usRecTypeIdInpField" rendered="{!usRecTypeEdit}"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label">{!$Label.SprintWall_Header_Title}</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label"></label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:inputField value="{!us.copado__User_Story_Title__c}" styleclass="slds-input" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label">{!$Label.SprintWall_Header_Status}</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label"></label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:inputField value="{!us.copado__Status__c}" styleclass="slds-input" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label">{!$Label.SprintWall_Header_Assignee}</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label"></label>
+                                                <div class="slds-form-element__control input-lookup">
+                                                    <apex:inputField value="{!us.copado__Developer__c}" styleclass="slds-input" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label">{!$Label.SprintWall_Header_Points}</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label"></label>
+                                                <div class="slds-form-element__control">
+                                                    <apex:inputField value="{!us.copado__Story_Points_SFDC__c}" styleclass="slds-input" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Sprint_Wall_Columns}" var="field">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">{!field.label}</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:outputPanel layout="none" rendered="{!NOT(CONTAINS(field.fieldPath,'.'))}">
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label"></label>
+                                                        <div class="slds-form-element__control input-lookup">
+                                                            <apex:inputField value="{!us[field.fieldPath]}" styleclass="{!IF(field.type == 'boolean','slds-inputcheckbox',IF(field.type == 'textarea','slds-textarea','slds-input'))}"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </apex:outputPanel>
+                                            </div>
+                                        </div>
+                                    </apex:repeat>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!usModalMode == 'new'}">
+                                <div class="slds-form slds-form_horizontal">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label">{!$Label.copado__SprintWall_Header_Type}</label>
+                                        <div class="slds-form-element__control">
+                                            <c:LightningReadyInputFields showClassic="false" showLabel="false" identity="Name" SObject="{!us}" requiredView="false" Field="RecordTypeId"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!usModalMode == 'massupdate'}">
+                                <div class="slds-form slds-form_horizontal">
+                                    <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__SprintWall_MassUpdate}" var="field">
+                                        <c:LightningReadyInputFields SObject="{!us}" Field="{!field.fieldPath}" />
+                                    </apex:repeat>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel layout="block" id="usFooter">
+                            <footer class="slds-modal__footer">
+                                <button type="reset" class="slds-button slds-button_neutral" onclick="closeModal('#usModal','#usBackdrop');">{!$Label.SprintWall_Button_Cancel}</button>
+                                <apex:outputPanel layout="none" rendered="{!usModalMode == 'edit'}">
+                                    <button type="button" class="slds-button slds-button_brand" onclick="lockScreen();usUpdateOperation();">{!$Label.Apply}</button>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="none" rendered="{!usModalMode == 'new'}">
+                                    <apex:commandLink action="{!userStoryCreateOperation}" styleClass="slds-button slds-button_brand" onclick="closeModal('#usModal','#usBackdrop');"
+                                        target="_blank">{!$Label.copado__NEXT}</apex:commandLink>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="none" rendered="{!usModalMode == 'massupdate'}">
+                                    <button type="button" class="slds-button slds-button_brand" onclick="lockScreen();usUpdateOperation();">{!$Label.Apply}</button>
+                                </apex:outputPanel>
+                            </footer>
+                        </apex:outputPanel>
+                    </div>
+                </section>
+                <div class="slds-backdrop" id="usBackdrop"></div>
+                <!-- / US MODAL -->
+
+                <!-- US TASK MODAL -->
+                <section role="dialog" id="usTaskModal" tabindex="-1" aria-labelledby="usTaskHeader" aria-modal="true" aria-describedby="usTaskContent"
+                    class="slds-modal slds-modal_large">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="usTaskHeader" class="slds-text-heading_medium slds-hyphenate">{!$Label.User_Story_Task}</h2>
+                        </header>
+
+                        <apex:outputPanel layout="block" styleClass="slds-modal__content slds-p-around_medium" id="usTaskContent">
+                            <apex:pageMessages id="usTskErrors" />
+                            <div class="slds-form slds-form_horizontal">
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label">{!$ObjectType.copado__User_Story_Task__c.fields.copado__Subject__c.Label}</label>
+                                    <div class="slds-form-element__control">
+                                        <c:LightningReadyInputFields showClassic="false" showLabel="false" identity="Name" SObject="{!usTask}" requiredView="false"
+                                            Field="Subject__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label">{!$ObjectType.copado__User_Story_Task__c.fields.copado__Hours_Remaining__c.Label}</label>
+                                    <div class="slds-form-element__control">
+                                        <c:LightningReadyInputFields showClassic="false" showLabel="false" identity="Name" SObject="{!usTask}" requiredView="false"
+                                            Field="Hours_Remaining__c" />
+                                    </div>
+                                </div>
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label">{!$ObjectType.copado__User_Story_Task__c.fields.copado__Status__c.Label}</label>
+                                    <div class="slds-form-element__control">
+                                        <c:LightningReadyInputFields showClassic="false" showLabel="false" identity="Name" SObject="{!usTask}" requiredView="false"
+                                            Field="Status__c" />
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel layout="block" id="usTaskFooter">
+                            <footer class="slds-modal__footer">
+                                <button type="reset" class="slds-button slds-button_neutral" onclick="closeModal('#usTaskModal','#usTaskBackdrop');">{!$Label.SprintWall_Button_Cancel}</button>
+                                <button type="button" class="slds-button slds-button_brand" onclick="lockScreen();usTaskOperation();">{!$Label.Save}</button>
+                            </footer>
+                        </apex:outputPanel>
+                    </div>
+                </section>
+                <div class="slds-backdrop" id="usTaskBackdrop"></div>
+                <!-- / US TASK MODAL -->
+
+                <!-- SPRINT MODAL -->
+                <section role="dialog" id="sprintCompleteModal" tabindex="-1" aria-labelledby="sprintCompleteHeader" aria-modal="true" aria-describedby="sprintCompleteContent"
+                    class="slds-modal">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="sprintCompleteHeader" class="slds-text-heading_medium slds-hyphenate">{!$Label.Complete_Sprint} {!HTMLENCODE(Sprint__c.Name)}</h2>
+                        </header>
+
+                        <apex:outputPanel layout="block" styleClass="slds-modal__content slds-p-around_medium" id="sprintCompleteContent">
+                            <div class="slds-form-element">
+                                <b>{!$Label.copado__Completed_User_Story}</b> {!CompletedUsNumber}
+                            </div>
+                            <div class="slds-form-element">
+                                <b>{!$Label.copado__Incomplete_User_Story}</b> {!InCompletedUsNumber}
+                            </div>
+                            <apex:outputPanel layout="none" rendered="{!InCompletedUsNumber > 0}">
+                                <div class="slds-form-element">
+                                    <u>{!$Label.Incomplete_US_Move}</u>
+                                </div>
+                                <div class="slds-form-element">
+                                    <b>{!$Label.Move_To} &nbsp;</b>
+                                    <apex:selectList value="{!selectedSprintCompleteOption}" multiSelect="false" size="1">
+                                        <apex:selectOptions value="{!SprintCompleteOptions}" />
+                                    </apex:selectList>
+                                </div>
+                                <div class="slds-form-element">
+                                    <sub>{!$Label.copado__Sub_Tasks_Info}</sub>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel layout="block" id="sprintCompleteFooter">
+                            <footer class="slds-modal__footer">
+                                <button type="reset" class="slds-button slds-button_neutral" onclick="closeModal('#sprintCompleteModal','#sprintCompleteBackdrop');">{!$Label.SprintWall_Button_Cancel}</button>
+                                <button type="button" class="slds-button slds-button_brand" onclick="lockScreen();sprintCompleteOperation();">{!$Label.Save}</button>
+                            </footer>
+                        </apex:outputPanel>
+                    </div>
+                </section>
+                <div class="slds-backdrop" id="sprintCompleteBackdrop"></div>
+                <!-- / SPRINT MODAL -->
+
+                <apex:outputPanel layout="block" id="cardsPanel">
+                    <!-- PRIMARY CONTENT WRAPPER -->
+                    <div class="myapp">
+                        <!-- RELATED LIST CARDS-->
+                        <div class="slds-grid slds-m-top--medium">
+
+                            <!-- MAIN CARD -->
+                            <div class="slds-col slds-col-rule--right slds-size--12-of-12">
+                                <article class="slds-card" style="border-radius: 0.25rem;">
+                                    <apex:outputPanel styleClass="slds-card__header slds-grid" layout="block" id="mainCardHeader">
+                                        <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                                            <div class="slds-media__figure" id="userStoryImage"></div>
+                                            <apex:outputPanel styleClass="slds-media__body slds-truncate" layout="block" id="sw_actionButtonGroup">
+                                                <span class="slds-text-heading--small">{!$Label.copado__User_Stories}</span>
+                                                <!-- BUTTONS -->
+                                                <apex:outputPanel layout="none" rendered="{!isKanbanCreateable}">
+                                                    <apex:commandLink action="{!kanbanBoardOperations}" styleClass="slds-button slds-button--icon-border slds-icon--small slds-float_right"
+                                                        style="ext-decoration:none;padding:4px;margin-left: .25rem;" title="{!$Label.copado__Kanban_View}">
+                                                        <span id="kanbanButton"></span>
+                                                    </apex:commandLink>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!isUsUpdateable}">
+                                                    <button type="button" title="{!$Label.Drag_Drop_Order}" id="dragButton" class="slds-button slds-button--icon-border slds-icon--small slds-float_right {!IF(sectionSwitcher == 'drag','slds-is-selected','')}"
+                                                        onClick="lockScreen();pageSwithcer('drag');"></button>
+                                                </apex:outputPanel>
+                                                <button type="button" title="{!$Label.Task_View}" id="snippetButton" class="slds-button slds-button--icon-border slds-icon--small slds-float_right {!IF(sectionSwitcher == 'snippet','slds-is-selected','')}"
+                                                    onClick="lockScreen();pageSwithcer('snippet');"></button>
+                                                <button type="button" title="{!$Label.List_View}" id="rowButton" class="slds-button slds-button--icon-border slds-icon--small slds-float_right {!IF(sectionSwitcher == 'list','slds-is-selected','')}"
+                                                    onClick="lockScreen();pageSwithcer('list');"></button>
+                                                <button type="button" title="{!$Label.copado__REFRESH}" id="refreshButton" class="slds-button slds-button--icon-border slds-icon--small slds-float_right"
+                                                    onClick="lockScreen();refreshPanel();"></button>
+                                                <!-- / BUTTONS -->
+                                            </apex:outputPanel>
+                                        </header>
+                                    </apex:outputPanel>
+                                    <!-- CARD BODY = TABLE -->
+
+
+                                    <div class="slds-card__body">
+
+                                        <!-- CARD BODY =  LIST TABLE -->
+                                        <apex:outputPanel layout="none" rendered="{!sectionSwitcher == 'list'}">
+                                            <table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer" id="pbTableUserStories">
+                                                <thead>
+                                                    <tr class="slds-text-heading--label">
+                                                        <th style="width: 10px;">
+                                                            <input type="checkbox" onclick="$copado('input.dataTableCheckbox:checkbox').not(this).prop('checked', this.checked);" />
+                                                        </th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Name_Header}</th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Header_Type}</th>
+                                                        <th style="width:30%" scope="col">{!$Label.SprintWall_Header_Title}</th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Header_Status}</th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Header_Assignee}</th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Header_Points}</th>
+                                                        <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Sprint_Wall_Columns}" var="field">
+                                                            <th class="slds-size--1-of-9" scope="col">{!field.label}</th>
+                                                        </apex:repeat>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <apex:repeat value="{!usWrapperList}" var="uStory">
+                                                        <tr class="slds-hint-parent">
+                                                            <td style="width: 10px;">
+                                                                <apex:inputCheckbox styleClass="dataTableCheckbox" value="{!uStory.isSelected}" />
+                                                            </td>
+                                                            <td class="slds-size--1-of-9" scope="row">{!uStory.userStory.Name}</td>
+                                                            <td class="slds-size--1-of-9">{!uStory.userStory.Recordtype.Name}</td>
+                                                            <td style="width:30%;white-space: initial;">{!uStory.userStory.copado__User_Story_Title__c}</td>
+                                                            <td class="slds-size--1-of-9">{!uStory.userStory.copado__Status__c}</td>
+                                                            <td class="slds-size--1-of-9">{!uStory.userStory.Developer__r.Name}</td>
+                                                            <td class="slds-size--1-of-9">{!uStory.userStory.copado__Story_Points_SFDC__c}</td>
+                                                            <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Sprint_Wall_Columns}" var="field">
+                                                                <td class="slds-size--1-of-9" scope="col">
+                                                                    <apex:outputPanel layout="none" rendered="{!field.Type == 'reference'}">
+                                                                        <apex:outputField value="{!uStory.userStory[field.fieldPath]}" />
+                                                                    </apex:outputPanel>
+                                                                    <apex:outputPanel layout="none" rendered="{!field.Type != 'reference'}">
+                                                                        {!uStory.userStory[field.fieldPath]}
+                                                                    </apex:outputPanel>
+                                                                </td>
+                                                            </apex:repeat>
+                                                            <td class="slds-cell-shrink">
+                                                                <a href="javascript:void(copadoNavigateToUrl('{!uStory.userStory.Id}','{!URLFOR($Action.User_Story__c.View,uStory.userStory.Id)}'));"
+                                                                    class="slds-button slds-button--icon-border-filled slds-button--icon-x-small previewButton"
+                                                                    title="{!$Label.Preview}" style="border-radius: 10px;">
+                                                                    <span class="slds-assistive-text">{!$Label.Preview}</span>
+                                                                </a>
+                                                                <apex:outputPanel layout="none" rendered="{!isUsUpdateable}">
+                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small editButton" style="border-radius: 10px;"
+                                                                        title="{!$label.SprintWall_Action_Edit}" onClick="lockScreen();prepareUs('{!JSENCODE(uStory.userStory.Id)}','edit');">
+                                                                        <span class="slds-assistive-text">{!$label.SprintWall_Action_Edit}</span>
+                                                                    </button>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel layout="none" rendered="{!AND(NextSprint != null,isUsUpdateable)}">
+                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small nextSprintButton" style="border-radius: 10px;"
+                                                                        title="{!$label.SprintWall_Action_Edit_Move_to_next_Sprint}"
+                                                                        onClick="lockScreen();moveToNextSprint('{!JSENCODE(uStory.userStory.Id)}');">
+                                                                        <span class="slds-assistive-text">{!$label.SprintWall_Action_Edit_Move_to_next_Sprint}</span>
+                                                                    </button>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel layout="none" rendered="{!isUsUpdateable}">
+                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small removeButton" style="border-radius: 10px;"
+                                                                        title="{!$Label.SprintWall_Action_Remove_from_Sprint}"
+                                                                        onClick="lockScreen();removeSprint('{!JSENCODE(uStory.userStory.Id)}');">
+                                                                        <span class="slds-assistive-text">{!$Label.SprintWall_Action_Remove_from_Sprint}</span>
+                                                                    </button>
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                        </apex:outputPanel>
+                                        <!-- / CARD BODY =  LIST TABLE -->
+
+
+                                        <!-- CARD BODY =  SNIPPET TABLE -->
+                                        <apex:outputPanel layout="none" rendered="{!sectionSwitcher == 'snippet'}">
+                                            <table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer" id="pbTableUserStoriesSnippets">
+                                                <thead>
+                                                    <tr class="slds-text-heading--label">
+                                                        <th style="width: 10px;">
+                                                            <input type="checkbox" onclick="$copado('input.dataTableSnippetCheckbox:checkbox').not(this).prop('checked', this.checked);"
+                                                            />
+                                                        </th>
+                                                        <th class="slds-size--1-of-6" scope="col">{!$label.SprintWall_Name_Header}</th>
+                                                        <th class="slds-size--1-of-6" scope="col">{!$label.SprintWall_Header_Type}</th>
+                                                        <th style="width:30%" scope="col">{!$label.SprintWall_Header_Title}</th>
+                                                        <th class="slds-size--3-of-6" scope="col">
+                                                            <div class="slds-grid">
+                                                                <div class="slds-col slds-size--4-of-12 slds-has-dividers--around-space slds-scrollable--y">
+                                                                    <span style="color: #02A9FF">
+                                                                        <center>{!$label.SprintWall_Header_Task_Not_Started}</center>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="slds-col slds-size--4-of-12 slds-has-dividers--around-space slds-scrollable--y">
+                                                                    <span style="color: #02A9FF">
+                                                                        <center>{!$label.SprintWall_In_Progress}</center>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="slds-col slds-size--4-of-12 slds-has-dividers--around-space slds-scrollable--y">
+                                                                    <span style="color: #02A9FF">
+                                                                        <center>{!$label.SprintWall_Header_Completed}</center>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <apex:repeat value="{!usWrapperList}" var="uStory">
+                                                        <tr class="slds-hint-parent">
+                                                            <td style="width: 10px;">
+                                                                <apex:inputCheckbox styleClass="dataTableSnippetCheckbox" value="{!uStory.isSelected}" />
+                                                            </td>
+                                                            <td class="slds-size--1-of-6" scope="row">{!uStory.userStory.Name}</td>
+                                                            <td class="slds-size--1-of-6">{!uStory.userStory.Recordtype.Name}</td>
+                                                            <td style="width:30%;white-space: initial;">{!uStory.userStory.copado__User_Story_Title__c}</td>
+                                                            <td class="slds-size--3-of-6">
+
+                                                                <div class="slds-grid">
+                                                                    <div class="slds-col slds-size--4-of-12 slds-has-dividers--around-space slds-scrollable--y taskKanbanItem" name="Not Started">
+                                                                        <apex:repeat value="{!uStory.userStory.User_Story_Tasks__r}" var="tsk">
+                                                                            <apex:outputPanel layout="none" rendered="{!tsk.copado__Status__c == 'Not Started'}">
+                                                                                <div class="slds-item slds-m-around--small copado-item" id="{!tsk.Id}">
+                                                                                    <div class="slds-tile slds-tile--board">
+                                                                                        <div class="slds-grid slds-section-title--divider slds-m-bottom--small slds-title slds-clearfix copado-title">
+                                                                                            {!tsk.Subject__c}
+                                                                                        </div>
+
+                                                                                        <div class="slds-tile__detail slds-text-body--small">
+                                                                                            <p class="slds-truncate">
+                                                                                                {!$Label.SprintWall_Tasks_Labels_Hours}&nbsp;{!tsk.Hours_Remaining__c}
+                                                                                                <apex:outputPanel layout="none" rendered="{!isUSTaskDeletable}">
+                                                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-float_right deleteButton"
+                                                                                                        style="margin-left: .25rem;border-radius: 10px;"
+                                                                                                        title="{!$Label.User_Story_Task_Delete}"
+                                                                                                        onClick="lockScreen();usTaskDeletion('{!JSENCODE(tsk.Id)}');">
+                                                                                                        <span class="slds-assistive-text">{!$Label.User_Story_Task_Delete}</span>
+                                                                                                    </button>
+                                                                                                </apex:outputPanel>
+                                                                                                <apex:outputPanel layout="none" rendered="{!isUsTaskUpdateable}">
+                                                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-float_right editButton"
+                                                                                                        style="border-radius: 10px;"
+                                                                                                        title="{!$Label.User_Story_Task_Edit}"
+                                                                                                        onClick="lockScreen();clearUstaskModal('{!JSENCODE(uStory.userStory.Id)}','{!JSENCODE(tsk.Id)}');">
+                                                                                                        <span class="slds-assistive-text">{!$Label.User_Story_Task_Edit}</span>
+                                                                                                    </button>
+                                                                                                </apex:outputPanel>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </apex:outputPanel>
+                                                                        </apex:repeat>
+                                                                    </div>
+                                                                    <div class="slds-col slds-size--4-of-12 slds-has-dividers--around-space slds-scrollable--y taskKanbanItem" name="In Progress">
+                                                                        <apex:repeat value="{!uStory.userStory.User_Story_Tasks__r}" var="tsk">
+                                                                            <apex:outputPanel layout="none" rendered="{!tsk.copado__Status__c == 'In Progress'}">
+                                                                                <div class="slds-item slds-m-around--small copado-item" id="{!tsk.Id}">
+                                                                                    <div class="slds-tile slds-tile--board">
+                                                                                        <div class="slds-grid slds-section-title--divider slds-m-bottom--small slds-title copado-title slds-clearfix">
+                                                                                            {!tsk.Subject__c}
+                                                                                        </div>
+
+                                                                                        <div class="slds-tile__detail slds-text-body--small">
+                                                                                            <p class="slds-truncate">
+                                                                                                {!$Label.SprintWall_Tasks_Labels_Hours}&nbsp;{!tsk.Hours_Remaining__c}
+                                                                                                <apex:outputPanel layout="none" rendered="{!isUSTaskDeletable}">
+                                                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-float_right deleteButton"
+                                                                                                        style="margin-left: .25rem;border-radius: 10px;"
+                                                                                                        title="{!$Label.User_Story_Task_Delete}"
+                                                                                                        onClick="lockScreen();usTaskDeletion('{!JSENCODE(tsk.Id)}');">
+                                                                                                        <span class="slds-assistive-text">{!$Label.User_Story_Task_Delete}</span>
+                                                                                                    </button>
+                                                                                                </apex:outputPanel>
+                                                                                                <apex:outputPanel layout="none" rendered="{!isUsTaskUpdateable}">
+                                                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-float_right editButton"
+                                                                                                        style="border-radius: 10px;"
+                                                                                                        title="{!$Label.User_Story_Task_Edit}"
+                                                                                                        onClick="lockScreen();clearUstaskModal('{!JSENCODE(uStory.userStory.Id)}','{!JSENCODE(tsk.Id)}');">
+                                                                                                        <span class="slds-assistive-text">{!$Label.User_Story_Task_Edit}</span>
+                                                                                                    </button>
+                                                                                                </apex:outputPanel>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </apex:outputPanel>
+                                                                        </apex:repeat>
+                                                                    </div>
+                                                                    <div class="slds-col slds-size--4-of-12 slds-has-dividers--around-space slds-scrollable--y taskKanbanItem" name="Completed">
+                                                                        <apex:repeat value="{!uStory.userStory.User_Story_Tasks__r}" var="tsk">
+                                                                            <apex:outputPanel layout="none" rendered="{!tsk.copado__Status__c == 'Completed'}">
+                                                                                <div class="slds-item slds-m-around--small copado-item" id="{!tsk.Id}">
+                                                                                    <div class="slds-tile slds-tile--board">
+                                                                                        <div class="slds-grid slds-section-title--divider slds-m-bottom--small slds-title copado-title slds-clearfix">
+                                                                                            {!tsk.Subject__c}
+                                                                                        </div>
+
+                                                                                        <div class="slds-tile__detail slds-text-body--small">
+                                                                                            <p class="slds-truncate">
+                                                                                                {!$Label.SprintWall_Tasks_Labels_Hours}&nbsp;{!tsk.Hours_Remaining__c}
+                                                                                                <apex:outputPanel layout="none" rendered="{!isUSTaskDeletable}">
+                                                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-float_right deleteButton"
+                                                                                                        style="margin-left: .25rem;border-radius: 10px;"
+                                                                                                        title="{!$Label.User_Story_Task_Delete}"
+                                                                                                        onClick="lockScreen();usTaskDeletion('{!JSENCODE(tsk.Id)}');">
+                                                                                                        <span class="slds-assistive-text">{!$Label.User_Story_Task_Delete}</span>
+                                                                                                    </button>
+                                                                                                </apex:outputPanel>
+                                                                                                <apex:outputPanel layout="none" rendered="{!isUsTaskUpdateable}">
+                                                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-float_right editButton"
+                                                                                                        style="border-radius: 10px;"
+                                                                                                        title="{!$Label.User_Story_Task_Edit}"
+                                                                                                        onClick="lockScreen();clearUstaskModal('{!JSENCODE(uStory.userStory.Id)}','{!JSENCODE(tsk.Id)}');">
+                                                                                                        <span class="slds-assistive-text">{!$Label.User_Story_Task_Edit}</span>
+                                                                                                    </button>
+                                                                                                </apex:outputPanel>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </apex:outputPanel>
+                                                                        </apex:repeat>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="slds-cell-shrink">
+                                                                <a href="javascript:copadoNavigateToUrl('{!uStory.userStory.Id}','{!URLFOR($Action.User_Story__c.View,uStory.userStory.Id)}');"
+                                                                    class="slds-button slds-button--icon-border-filled slds-button--icon-x-small previewButton"
+                                                                    title="Preview" style="border-radius: 10px;">
+                                                                    <span class="slds-assistive-text">{!$Label.Preview}</span>
+                                                                </a>
+                                                                <apex:outputPanel layout="none" rendered="{!isUSTaskCreateable}">
+                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small newButton" style="border-radius: 10px;"
+                                                                        title="{!$label.SprintWall_Action_Edit_Add_task}" onClick="lockScreen();clearUstaskModal('{!JSENCODE(uStory.userStory.Id)}');">
+                                                                        <span class="slds-assistive-text">{!$label.SprintWall_Action_Edit_Add_task}</span>
+                                                                    </button>
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                        </apex:outputPanel>
+                                        <!-- / CARD BODY =  SNIPPET TABLE -->
+
+
+                                        <!-- CARD BODY =  DRAG TABLE -->
+                                        <apex:outputPanel layout="none" rendered="{!sectionSwitcher == 'drag'}">
+                                            <table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer" id="dragTableUserStories">
+                                                <thead>
+                                                    <tr class="slds-text-heading--label">
+                                                        <th></th>
+                                                        <th style="width: 10px;">
+                                                            <input type="checkbox" onclick="$copado('input.dataTableCheckbox:checkbox').not(this).prop('checked', this.checked);" />
+                                                        </th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Name_Header}</th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Header_Type}</th>
+                                                        <th style="width:30%" scope="col">{!$Label.SprintWall_Header_Title}</th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Header_Status}</th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Header_Assignee}</th>
+                                                        <th class="slds-size--1-of-9" scope="col">{!$Label.SprintWall_Header_Points}</th>
+                                                        <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Sprint_Wall_Columns}" var="field">
+                                                            <th class="slds-size--1-of-9" scope="col">{!field.label}</th>
+                                                        </apex:repeat>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="sortableTbody">
+                                                    <apex:repeat value="{!usWrapperList}" var="uStory">
+                                                        <tr class="slds-hint-parent" id="{!uStory.userStory.Id}" usOrder="{!uStory.userStory.Order__c}">
+                                                            <td style="width: 3px;cursor: move;background-color: #f4f6f9;" class="handleTd">{!uStory.userStory.Order__c}</td>
+                                                            <td style="width: 10px;">
+                                                                <apex:inputCheckbox styleClass="dataTableCheckbox" value="{!uStory.isSelected}" />
+                                                            </td>
+                                                            <td class="slds-size--1-of-9" scope="row">{!uStory.userStory.Name}</td>
+                                                            <td class="slds-size--1-of-9">{!uStory.userStory.Recordtype.Name}</td>
+                                                            <td style="width:30%;white-space: initial;">{!uStory.userStory.copado__User_Story_Title__c}</td>
+                                                            <td class="slds-size--1-of-9">{!uStory.userStory.copado__Status__c}</td>
+                                                            <td class="slds-size--1-of-9">{!uStory.userStory.Developer__r.Name}</td>
+                                                            <td class="slds-size--1-of-9">{!uStory.userStory.copado__Story_Points_SFDC__c}</td>
+                                                            <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Sprint_Wall_Columns}" var="field">
+                                                                <td class="slds-size--1-of-9" scope="col">
+                                                                    <apex:outputPanel layout="none" rendered="{!field.Type == 'reference'}">
+                                                                        <apex:outputField value="{!uStory.userStory[field.fieldPath]}" />
+                                                                    </apex:outputPanel>
+                                                                    <apex:outputPanel layout="none" rendered="{!field.Type != 'reference'}">
+                                                                        {!uStory.userStory[field.fieldPath]}
+                                                                    </apex:outputPanel>
+                                                                </td>
+                                                            </apex:repeat>
+                                                            <td class="slds-cell-shrink">
+                                                                <a href="javascript:copadoNavigateToUrl('{!uStory.userStory.Id}','{!URLFOR($Action.User_Story__c.View,uStory.userStory.Id)}');"
+                                                                    class="slds-button slds-button--icon-border-filled slds-button--icon-x-small previewButton"
+                                                                    title="{!$Label.Preview}" style="border-radius: 10px;">
+                                                                    <span class="slds-assistive-text">{!$Label.Preview}</span>
+                                                                </a>
+                                                                <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small editButton" style="border-radius: 10px;"
+                                                                    title="{!$label.SprintWall_Action_Edit}" onClick="lockScreen();prepareUs('{!JSENCODE(uStory.userStory.Id)}','edit');">
+                                                                    <span class="slds-assistive-text">{!$label.SprintWall_Action_Edit}</span>
+                                                                </button>
+                                                                <apex:outputPanel layout="none" rendered="{!NextSprint != null}">
+                                                                    <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small nextSprintButton" style="border-radius: 10px;"
+                                                                        title="{!$label.SprintWall_Action_Edit_Move_to_next_Sprint}"
+                                                                        onClick="lockScreen();moveToNextSprint('{!JSENCODE(uStory.userStory.Id)}');">
+                                                                        <span class="slds-assistive-text">{!$label.SprintWall_Action_Edit_Move_to_next_Sprint}</span>
+                                                                    </button>
+                                                                </apex:outputPanel>
+                                                                <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small removeButton" style="border-radius: 10px;"
+                                                                    title="{!$Label.SprintWall_Action_Remove_from_Sprint}" onClick="lockScreen();removeSprint('{!JSENCODE(uStory.userStory.Id)}');">
+                                                                    <span class="slds-assistive-text">{!$Label.SprintWall_Action_Remove_from_Sprint}</span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                        </apex:outputPanel>
+                                        <!-- / CARD BODY =  DRAG TABLE -->
+                                    </div>
+                                    <!-- / CARD BODY = SECTION + TABLE -->
+                                    <div class="slds-card__footer">
+                                        {!$Label.Showing_Page} {!pageNumber} {!$Label.Of} {!totalPages}
+                                        <apex:outputPanel layout="none" rendered="{!DisablePrevious}">
+                                            <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                                disabled="disabled" title="Beginning" onClick="lockScreen();gobeginning();">
+                                                &#60;&#60;
+                                            </button>
+                                            <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;" disabled="disabled"
+                                                title="Previous" onClick="lockScreen();goprevious();">
+                                                &#60;
+                                            </button>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel layout="none" rendered="{!!DisablePrevious}">
+                                            <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                                title="Beginning" onClick="lockScreen();gobeginning();">
+                                                &#60;&#60;
+                                            </button>
+                                            <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                                title="Previous" onClick="lockScreen();goprevious();">
+                                                &#60;
+                                            </button>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel layout="none" rendered="{!DisableNext}">
+                                            <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                                disabled="disabled" title="Next" onClick="lockScreen();gonext();">
+                                                &#62;
+                                            </button>
+                                            <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                                disabled="disabled" title="End" onClick="lockScreen();goend();">
+                                                &#62;&#62;
+                                            </button>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel layout="none" rendered="{!!DisableNext}">
+                                            <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                                title="Next" onClick="lockScreen();gonext();">
+                                                &#62;
+                                            </button>
+                                            <button type="button" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" style="border-radius: 10px;"
+                                                title="End" onClick="lockScreen();goend();">
+                                                &#62;&#62;
+                                            </button>
+                                        </apex:outputPanel>
+                                    </div>
+                                </article>
+                            </div>
+                            <!-- / MAIN CARD -->
+
+                        </div>
+                        <!-- / RELATED LIST CARDS -->
+                    </div>
+                    <!-- / PRIMARY CONTENT WRAPPER -->
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+        <!-- / REQUIRED SLDS WRAPPER -->
+        </apex:outputPanel>
+    </body>
+
+    </html>
+</apex:page>

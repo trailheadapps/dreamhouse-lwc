@@ -1,0 +1,1465 @@
+<!--*
+* @author Ümit Can Uçkan
+* @version 2.0
+* @date 12/07/18
+* @description: Page to assign and track user stories
+* @libraries handleBarJs, RubaXa sortablejs
+*
+* please read the flow below - page init flow details
+* first constructor part of the js code works
+* if there is any saved panel data on the current user's related field, it loads,
+* if not, predefined 4 panels(current, next sprint, Status backlog and backburner panels) loads
+* either of them calls remoteAction2CreateTable function in a loop to create multiple tables via handlebar predefined template(handleBarHtml.component)
+* if there is no saved panel data on user's related field before, panels are saved on the user's field via remoteAction2SaveState function by checking isMemory flag
+* after creating panels, next action in the flow is adjustColumns function to be able to define which columns to show in the page
+*
+* when you select any value from add panel section other than status, the value page have is the Id of the defined record.
+* we add :changeOnBackend keyword(on prepareTableName method) as a flag to be able identify it on the apex side and change from id to record name to show logical string on the panel header on the newly created panel
+* (exp: from Sprint: a110N00000S0iNL:changeOnBackend to Sprint: Current Sprint)
+*
+* current panel table User story size which shown on every table inside paranthesis near table name are defined in handleBarHtml.component via handlebar.js's standard functionalty {{Uslist.length}}
+*
+* we use same function(changeConfig) for refreshing and changing panels
+* changeConfig method takes config name as a parameter to switch to desired panel(exp: default panel)
+*
+* we use same function(createNewState) for creating and editing configuration
+* if the panel name exist already, apex side makes the desired changes and sends found User Story list back based on the conditions
+* if the panel name doesn't exist, apex side clones the latest panel and creates a new one with a given config name
+* so when you click Edit or New button from the top of the page, the modal opened is exactly same just with and isNew flag on the save button.
+* if you click edit, apex checks for config criterias and via defineCriteria method and populates needed fields on the panel
+*
+* we use sforce.connection.query inside try catch block to be able to understand if the given filter logic in the modal is valid or not(see createNewState method)
+*
+* renderList method generates each tables HTML via template(context). template is Handlebars.compile(source) ; and source is the handleBarHtml.component nested by div.
+* so each template(context) is stored in a variable and appended to current html and shown on the page by .html(previousHtml + newTable) function
+*
+* we re-initialize Drag and drop functionalty via initDnd function after every table creation on success part of remoteAction2CreateTable function
+*
+* when you change column visibility on a table, the visible columns will be saved to the JSON either when you close the column selection dropdown or mouseover to the page header section (babyblue button section)
+*
+* panels header colors for WIP purpose are defined via checkMinMax function, it will be called in Drag and Drop function's stop section and hideSpinner function
+*
+* ---- SEE BELOW ---- ---- SEE BELOW ---- ---- SEE BELOW ----
+*
+* you can not directly call the function from the page. You need to see return object of main.fs
+* everything is reachable via main variable when you run the page via console
+* Type main and press enter on the console to see the object detail
+* al: ƒ ()
+* allItems: (3) [{…}, {…}, {…}]
+* defColumns: (2) ["User_Story_Title__c", "Story_Points_SFDC__c"]
+* defaultPanelRowCount: "200"
+* ec: ƒ (aQuery)
+* fixWidth: ƒ ()
+* fs: {shc: ƒ, ss: ƒ, hs: ƒ, ra: ƒ, ptn: ƒ, …}
+* newOption: "<option value="replaceMe" selected="selected">replaceMeAlso</option>"
+* ns: ""
+* ri: ƒ ()
+* rl: ƒ (rIndex)
+* rri: ƒ ()
+* rri2: ƒ (cIndex)
+* wmp: "{"panelData":[{"pWrappers":[{"sortOrder":null,"pType":"Project__c","pId":"a0X0Y00000UoQii","min":"23","max":"25","columns":["User_Story_Title__c","Story_Points_SFDC__c"]},{"sortOrder":null,"pType":"Project__c","pId":"a0X0Y00000VXy9M","min":"","max":"","columns":["User_Story_Title__c","Story_Points_SFDC__c"]},{"sortOrder":null,"pType":"Sprint__c","pId":"a0t0Y000003QiTH","min":"","max":"","columns":["User_Story_Title__c","Story_Points_SFDC__c"]}],"pName":"default23","panelRowCount":"200","additionalQuery":""},{"pWrappers":[{"sortOrder":null,"pType":"Project__c","pId":"a0X0Y00000UoQii","min":"23","max":"25","columns":["User_Story_Title__c","Story_Points_SFDC__c","Enable WIP"]},{"sortOrder":null,"pType":"Sprint__c","pId":"a0t0Y000003QiTH","min":"","max":"","columns":["User_Story_Title__c","Story_Points_SFDC__c"]},{"sortOrder":null,"pType":"Project__c","pId":"a0X0Y00000FzPU2","min":"","max":"","columns":["User_Story_Title__c","Story_Points_SFDC__c"]}],"pName":"test","panelRowCount":"250","additionalQuery":""},{"pWrappers":[{"sortOrder":null,"pType":"Project__c","pId":"a0X0Y00000FzPU2","min":"","max":"","columns":["User_Story_Title__c","Story_Points_SFDC__c"]},{"sortOrder":null,"pType":"Sprint__c","pId":"a0t0Y000003QiTH","min":"20","max":"","columns":["User_Story_Title__c","Story_Points_SFDC__c","Enable WIP"]},{"sortOrder":null,"pType":"Project__c","pId":"a0X0Y00000UoQii","min":"23","max":"25","columns":["User_Story_Title__c","Story_Points_SFDC__c"]}],"pName":"test 2","panelRowCount":"200","additionalQuery":"(Status__c = 'Cancelled' AND Status__c = 'Draft' AND Status__c = 'Backlog' AND Status__c = 'Ready for testing' AND Status__c = 'Awaiting Approval' )"},{"pWrappers":[{"sortOrder":"order by User_Story_Title__c asc","pType":"Project__c","pId":"a0X0Y00000FzPU2","min":"","max":"","columns":["User_Story_Title__c","Status__c","Story_Points_SFDC__c"]},{"sortOrder":"order by User_Story_Title__c asc","pType":"Sprint__c","pId":"a0t0Y000003QiTH","min":"20","max":"","columns":["User_Story_Title__c","Story_Points_SFDC__c","Enable WIP"]},{"sortOrder":"","pType":"Project__c","pId":"a0X0Y00000UoQii","min":"23","max":"25","columns":["User_Story_Title__c","Story_Points_SFDC__c"]}],"pName":"Test 1","panelRowCount":"200","additionalQuery":"(Project__c = 'a0X0Y00000FzPU2' )"}],"lastState":"Test 1"}"
+*
+* type JSON.parse(main.wmp) and press enter to see what is currently saved on CurrentUser's work manager field
+*-->
+<apex:page id="WorkManager" lightningStylesheets="true" controller="copado.WorkManager" sideBar="false" cache="false">
+    <apex:slds />
+    <apex:includeScript value="{!$Resource.copado__handleBar_v4_0_11}"/>
+    <apex:includeScript value="{!$Resource.copado__sortablejs}"/>
+    <c:IncludeStaticsResourceComponent addJquery="true" addUIjs="true"/>
+    <c:IncludeConnectionJsComponent />
+    <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    <apex:outputPanel rendered="{!!showLicenseError}">
+        <style>
+            @media all and (max-width: 2000px) and (min-width: 1863px) {
+                .widthcls {
+                    width:24%;
+                }
+            }
+            @media all and (max-width: 1862px) and (min-width: 1751px) {
+                .widthcls {
+                    width:26%;
+                }
+            }
+            @media all and (max-width: 1750px) and (min-width: 1557px) {
+                .widthcls {
+                    width:29%;
+                }
+            }
+            @media all and (max-width: 1556px) and (min-width: 1341px) {
+                .widthcls {
+                    width:34%;
+                }
+            }
+            @media all and (max-width: 1340px) and (min-width: 1164px) {
+                .widthcls {
+                    width:38%;
+                }
+            }
+            @media all and (max-width: 1163px) and (min-width: 1000px) {
+                .widthcls {
+                    width:43%;
+                }
+            }
+            .maxW{
+                max-width: 110px !important;
+                overflow: hidden;
+            }
+            .close-button{
+                background: 0 0;
+                color: #0070d2 !important;
+                border: 1px solid transparent;
+                outline: 0;
+            }
+            .copadoMain{
+                margin-top: 12px;
+                min-height: -webkit-fill-available;
+                overflow-x:overlay;
+            }
+            .copadoMain>.slds-panel{
+                max-width:1650px !important;
+                border: 1px solid #C5C5C5;
+            }
+            [data-api$="User_Story_Title__c"]{
+                min-width:300px;
+            }
+            .mh4tables{
+                height:400px !important;
+            }
+            .lookupIcon,.lookupIconOn{
+                margin-bottom: 10px;
+            }
+            /* ghostClass */
+            .ghost {
+                opacity: .5;
+                background: #C8EBFB;
+            }
+            .sortable{
+                cursor: move;
+                cursor: -webkit-grabbing;
+            }
+            /*html,body {
+                overflow:hidden;
+            }
+            ::-webkit-scrollbar {
+                display: none;
+            }*/
+            .slds-scope .slds-panel__section {
+                padding: 0em;
+                padding-left: 1rem;
+                padding-bottom: 1rem;
+                padding-right: 1rem;
+            }
+            .slds-scope h1, .slds-scope h2, .slds-scope h3, .slds-scope h4, .slds-scope h5, .slds-scope h6 {
+                font-weight: inherit;
+                font-size: 1.2em;
+            }
+            .slds-scope .slds-page-header {
+                padding: 0.5rem 1rem 0rem 1.75rem;
+            }
+            .slds-scope .slds-modal__container {
+                margin: 0 auto;
+                width: 500px;
+            }
+            select.ml{
+                margin-left:49px;
+            }
+            .adjustUserPicklist{
+                width: 130px;
+                margin-right: 5px !important;
+                margin-left: 50px !important;
+            }
+            select[id$="iField_mlktp"]{
+                margin-right: 5px;
+            }
+        </style>
+    
+        <apex:outputPanel rendered="{!$User.UIThemeDisplayed != 'Theme4d'}">
+            <style>
+                .iFieldC{
+                    vertical-align:top;
+                }
+                select.iFieldC{
+                    width: 152px;
+                    margin-right: 24px;
+                }
+                .tcn{
+                    margin-left: 88px;
+                    margin-right: 85px;
+                }
+                .fl{
+                    margin-left: 88px;
+                    margin-right: 57px;
+                }
+                .rpp{
+                    margin-left: 88px;
+                    margin-right: 30px;
+                }
+                .heightClass{
+                    height:22px;
+                }
+            </style>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+            <style>
+                body select[id$="iField2_mlktp"] ,body select.ml, body select.ml[size="0"], body select.ml[size="1"], .slds-vf-scope select, .slds-vf-scope select[size="0"], .slds-vf-scope select[size="1"] {
+                    max-width: 25%;
+                }
+                select.stateList{
+                    max-width:100% !important;
+                }
+                #theHeader,#main{
+                    margin-left: 1% !important;
+                }
+                #main{
+                    width: 100%;
+                }
+                .slds-template_iframe{
+                    background-color:transparent !important;
+                }
+                .mh4tablesln{
+                    height:82vh;
+                }
+                HTML {
+                    height: 86%;
+                }
+                .mtw{
+                    width:196px;
+                }
+                .tcn{
+                    margin-left: 85px;
+                    margin-right: 75px;
+                }
+                .fl{
+                    margin-left: 85px;
+                    margin-right: 49px;
+                }
+                .rpp{
+                    margin-left: 85px;
+                    margin-right: 25px;
+                }
+                select.iFieldC{
+                    min-width: 196px;
+                }
+                .heightClass{
+                    height:32px;
+                }
+            </style>
+        </apex:outputPanel>
+
+        <script type="text/javascript">
+            var main = {
+                fs:{},
+                allItems:[],
+                defaultPanelRowCount:'200',
+                wmp:'{!JSENCODE(workManagerPanel)}',
+                newOption:'<option value="replaceMe" selected="selected">replaceMeAlso</option>',
+                defColumns:['{!JSENCODE(ns)}'+"User_Story_Title__c", '{!JSENCODE(ns)}'+"Story_Points_SFDC__c"],
+                ns:'{!JSENCODE(ns)}',
+                fixWidth: function(){$copado('#theHeader').css('max-width',window.innerWidth-40);$copado('#main').css('max-width',window.innerWidth-40);}
+            };
+
+            window.onload = function() {
+                var myInput = document.getElementById('textConfiguration');
+                myInput.onpaste = function(e) {
+                    e.preventDefault();
+                }
+            }
+
+            window.onresize = function() {
+                main.fixWidth();
+            }
+
+            $copado(document).ready(function(){
+                main.fixWidth();
+                $copado('#filterLogic,.fl').css('display','none');
+
+                $copado('#theHeader').on('mouseover',function(){
+                    if($copado('.slds-dropdown-trigger.slds-dropdown-trigger_click.slds-is-open').length > 0){
+                        main.fs.ras();
+                        $copado('.slds-dropdown-trigger.slds-dropdown-trigger_click.slds-is-open').removeClass('slds-is-open');
+                    }
+                });
+                var core = main.ns ? window[main.ns.split('__')[0]] : window;
+                main.fs = (function(){
+                    var source = document.getElementById("entry-template").innerHTML;
+                    var template = Handlebars.compile(source);
+                    //saveCurrentTables
+                    var remoteAction2CreateTable = function(tableName,whereClause,lkid,currentColumns,additionalQuery,min,max, callbackOnEnd, panelRowCount, sortOrder){
+                        if(whereClause.length > 0 && lkid != '000000000000000'){
+                            if(!min) min = '';
+                            if(!max) max = '';
+                            if(!panelRowCount) panelRowCount = '';
+                            if(!sortOrder) sortOrder = '';
+                            (core).WorkManager.prepareUsList(tableName,whereClause,additionalQuery,min,max,panelRowCount,sortOrder,
+                                function(result,event){
+                                    if(event.status){
+                                        main.allItems.push(result);
+                                        renderList(result,currentColumns);
+                                        initDnd();
+                                    }else{
+                                        main.fs.hs();
+                                        alert('There is a problem on fetching operation. Please contact with your administrator. \n'+event.message);
+                                        console.log(event.message);
+                                    }
+                                    callbackOnEnd && callbackOnEnd();
+                                },
+                                {escape: false}
+                            );
+                        }
+                    }
+                    var renderList = function (context,currentColumns){
+                        var prevHtml,html = template(context);
+                        prevHtml = $copado('.copadoMain').html();
+                        html = prevHtml + html;
+                        $copado('.copadoMain').html(html);
+
+                        if(currentColumns && Object.keys(currentColumns).length){
+                            adjustColumns(currentColumns);
+                        }
+                        if(main.sr){
+                            main.sr = false;
+                            $copado('#main').scrollLeft(10000);
+                        }
+                        //main.fs.hs();
+                    }
+                    var adjustColumns = function(currentColumns,min,max){
+                        var stringifiedArray = JSON.stringify(currentColumns);
+                        var currentItem = main.allItems.length - 1;
+                        var orderIndex = main.allItems[currentItem].sortOrder.indexOf('order by');
+                        var apiIndex = orderIndex + 9;//9 stands for 'order by '
+                        if(orderIndex > -1 /*&& main.t2o == main.allItems[currentItem].tableHeader*/){
+                            var orderBy = main.allItems[currentItem].sortOrder.slice(apiIndex);
+                            var th4Order = $copado('.copadoMain>.slds-panel:last th[data-api='+orderBy.split(' ')[0]+']');
+                            if(orderBy.indexOf('desc') < 0){
+                                th4Order.find('svg.downs').css('display','');
+                                th4Order.find('svg.ups').css('display','none');
+                            }
+                            else{
+                                th4Order.find('svg.ups').css('display','');
+                                th4Order.find('svg.downs').css('display','none');
+                            }
+                        }
+                        $copado('.copadoMain>.slds-panel:last svg.slds-icon').each(function(){
+                            if(stringifiedArray.indexOf($copado(this).data('id')) > -1){
+                                $copado(this).css('visibility','visible');
+                            }
+                        });
+                        $copado('.copadoMain>.slds-panel:last td.maxW,.copadoMain>.slds-panel:last th.toAdjust').each(function(){
+                            if(stringifiedArray.indexOf($copado(this).data('api')) > -1){
+                                $copado(this).css('display','');
+                            }
+                        });
+                        if(stringifiedArray.indexOf('Enable WIP') > -1){
+                            $copado('.copadoMain>.slds-panel:last').find('.mm').css('visibility','visible');
+                        }
+                    }
+                    var prepareTableName = function(){
+                        var additionalCriteria = '';
+                        var panelRowCount = main.defaultPanelRowCount;
+                        if(main.allItems.length > 0){
+                            additionalCriteria = main.allItems[0].additionalQuery;
+                            panelRowCount = main.allItems[0].panelRowCount;
+                        }
+
+                        var objType = $copado('[id$="relatedObjects"]>option:selected').text();
+                        //console.log('objType==> ',objType);
+                        var lkid = (objType != 'Status' ? $copado('[id$="iField_lkid"]').val() : $copado('[id$="iField"]').val());
+                        var lkold = $copado('[id$="iField_lkold"]').val();
+                        var whereClause = $copado('[id$="relatedObjects"]').val() + ' = \''+ lkid +'\'';
+                        //console.log('lkid==> ',lkid);
+                        if(lkid != '000000000000000' && lkid != '' && lkid != '--None--'){
+                            main.sr = true;//scroll right after adding new table
+
+                            var deferreds = [];
+                            var deferred = new $copado.Deferred();
+                            deferreds.push( deferred );
+
+                            remoteAction2CreateTable(objType +': '+lkid+(objType == 'Status' ? '' :':changeOnBackend') ,whereClause,lkid,main.defColumns,additionalCriteria,'','',function() { deferred.resolve(); }, panelRowCount);
+
+                            $copado.when.apply(this, deferreds).then(function() {
+                                console.log("adding new table is completed!");
+                                main.fs.ras(main.fs.hs());
+                            })
+                        }
+                        else{
+                            alert('Please select a proper '+ objType +' to create a new table.');
+                            main.fs.hs();
+                        }
+                    }
+                    var showHideColumns = function(elem){
+                        var elemTitle = $copado(elem).attr('title');
+                        var currentorder = $copado(elem).parents('li:first').data('order');
+                        var cSvgItem = $copado(elem).find('svg');
+                        var thNtds = $copado(elem).parents('.slds-panel').find('th[data-order='+currentorder+'],td[data-order='+currentorder+']');
+                        if(cSvgItem.css('visibility') == 'visible'){
+                            cSvgItem.css('visibility','hidden');
+                            thNtds.css('display','none');
+                            if(elemTitle.indexOf('Enable WIP') > -1){
+                                var celem = $copado(elem).parents('.slds-media__body:first').find('.mm').css('visibility','hidden');
+                                //console.log('celem==1=> ',celem);
+                            }
+                        }else{
+                            cSvgItem.css('visibility','visible');
+                            thNtds.css('display','');
+                            if(elemTitle.indexOf('Enable WIP') > -1){
+                                var celem = $copado(elem).parents('.slds-media__body:first').find('.mm').css('visibility','visible');
+                                //console.log('celem==2=> ',celem);
+                            }
+                        }
+                    }
+                    var showSpinner = function(){
+                        lockScreen();
+                    }
+                    var hideSpinner = function(){
+                        main.fs.cmm(true);
+                        unlockScreen();
+                    }
+                    var removePanel = function(elem){
+                        var confirmation = confirm('Are you sure you want to delete this Panel?');
+                        if(confirmation){
+                            var headerTxt = $copado(elem).parent().next().text();
+                            var counter2Remove = 0;
+                            $copado('.slds-text-heading_small').each(function(){
+                                if($copado(this).text() == headerTxt) return false;
+                                else counter2Remove++;
+                            });
+                            main.allItems.splice(counter2Remove,1);
+                            $copado(elem).parents('.slds-panel').detach();
+                            main.fs.ras();
+                        }
+                    }
+                    var changeHeight = function(elem){
+                        if($copado('.changedHeight').length > 0) $copado('.changedHeight,.mh4tables').css('height',$copado(elem).find('option:selected').val()).removeClass('mh4tables').addClass('changedHeight');
+                        else $copado('.mh4tables').removeClass('mh4tables').addClass('changedHeight').css('height',$copado(elem).find('option:selected').val());
+                    }
+                    var changeConfig = function(str){
+                        $copado('.BC').prop('disabled',true);
+                        (core).WorkManager.changeConfig(str,function(result,event){
+                            if(event.status){
+                                main.allItems = [];
+                                $copado('.copadoMain').html('');
+                                var remoteActionSingleTable = function(deferred, i) {
+                                    var currentObj = result.pWrappers[i];
+                                    if(currentObj.columns){
+                                        var currentColumns = currentObj.columns;
+                                        var pureObjName = currentObj.pType.replace(main.ns,'').replace('__c','').replace('_','');
+                                        var addQuery = '', min = '', max = '', panelRowCount = '';
+                                        var sortOrder = currentObj.sortOrder ? currentObj.sortOrder : '';
+                                        if(result.additionalQuery){
+                                            addQuery = result.additionalQuery;
+                                        }
+                                        if(currentObj.min){
+                                            min = currentObj.min;
+                                        }
+                                        if(currentObj.max){
+                                            max = currentObj.max;
+                                        }
+                                        if(result.panelRowCount){
+                                            panelRowCount = result.panelRowCount;
+                                        }else panelRowCount = main.defaultPanelRowCount;
+
+                                        var tableName = (pureObjName == 'Status' ? pureObjName + ': '+currentObj.pId : (currentObj.pType + ':'+currentObj.pId + ':changeOnBackend'));
+                                        remoteAction2CreateTable(tableName, currentObj.pType +' = \''+currentObj.pId+'\'','', currentColumns, addQuery, min, max, function() { deferred.resolve(); }, panelRowCount, sortOrder);
+                                    }
+                                };
+
+                                var deferreds = [];
+                                for(var i = 0; i < result.pWrappers.length ; i++) {
+                                    var deferred = new $copado.Deferred();
+                                    deferreds.push( deferred );
+                                    remoteActionSingleTable(deferred, i);
+                                }
+                                //waits for every callout in the for loop to be done via deferred pattern and then calls the final actions
+                                $copado.when.apply(this, deferreds).then(function() {
+                                    console.log("Changing/Refreshing configuration is completed!");
+                                    main.ri();
+                                    main.fs.ras();
+                                })
+                            }else{
+                                //friendly message for user
+                                alert('There is a problem on this operation. Please contact with your administrator. Detailed informnation:\n'+event.message);
+                                //detailed message in console for debugging
+                                console.log(event.message);
+                                main.fs.hs();
+                            }
+                        },{escape: false});
+                    }
+                    var removeConfig = function(){
+                        var confirmation = confirm('Are you sure you want to delete this configuration?');
+                        if(confirmation){
+                            main.fs.ss();
+                            var config2remove = $copado('[id$="configName"] option:selected').val();
+                            if($copado('[id$="configName"] option').length > 1){
+                                (core).WorkManager.removeConfig(config2remove,function(result,event){
+                                    if(event.status){
+                                        main.allItems = [];
+                                        $copado('[id$="configName"] option').each(function(){
+                                            if($copado(this).val() == config2remove){
+                                                $copado(this).remove();
+                                            }
+                                            if(result.pName == $copado(this).val()){
+                                                $copado(this).attr('selected',true);
+                                            }
+                                            else{
+                                                $copado(this).attr('selected',false);
+                                            }
+                                        });
+                                        $copado('.copadoMain').html('');
+                                        var removePanelIterator = function(deferred,i){
+                                            var currentObj = result.pWrappers[i];
+                                            var currentColumns = currentObj.columns;
+                                            var pureObjName = currentObj.pType.replace(main.ns,'').replace('__c','').replace('_','');
+                                            var addQuery = '',min = '',max = '', panelRowCount = '';
+                                            if(result.additionalQuery){
+                                                addQuery = result.additionalQuery;
+                                            }
+                                            if(currentObj.min){
+                                                min = currentObj.min;
+                                            }
+                                            if(currentObj.max){
+                                                max = currentObj.max;
+                                            }
+                                            if(result.panelRowCount){
+                                                panelRowCount = result.panelRowCount;
+                                            }else panelRowCount = main.defaultPanelRowCount;
+
+                                            remoteAction2CreateTable((pureObjName == 'Status' ? pureObjName + ': '+currentObj.pId : (currentObj.pType + ':'+currentObj.pId + ':changeOnBackend')),currentObj.pType +' = \''+currentObj.pId+'\'','',currentColumns,addQuery,min,max,function() { deferred.resolve(); },panelRowCount);
+                                        }
+                                        var deferreds = [];
+                                        for(var i = 0; i<result.pWrappers.length ; i++){
+                                            var deferred = new $copado.Deferred();
+                                            deferreds.push( deferred );
+                                            removePanelIterator(deferred, i);
+                                        }
+                                        //waits for every callout in the for loop to be done via deferred pattern and then calls the final actions
+                                        $copado.when.apply(this, deferreds).then(function() {
+                                            console.log("removing configuration is completed!");
+                                            main.ri();
+                                        })
+                                    }else{
+                                        main.fs.hs();
+                                        //friendly message for user
+                                        alert('There is a problem on this operation. Please contact with your administrator. Detailed informnation:\n'+event.message);
+                                        //detailed message in console for debugging
+                                        console.log(event.message);
+                                    }
+                                },{escape: false});
+                            }
+                            else{
+                                alert('You need to have at least two configurations to be able to remove one!');
+                                main.fs.hs();
+                            }
+                        }
+                    }
+                    var remoteAction2SaveState = function(callbackOnEnd){
+                        var object2Send = [];
+                        $copado('.copadoMain>.slds-panel').each(function(){
+                            var columnsArray = [];
+                            var currentObj = {};
+                            $copado(this).find('svg.slds-icon').each(function(){
+                                if($copado(this).css('visibility') == 'visible'){
+                                    columnsArray.push($copado(this).data('id'));
+                                }
+                            });
+                            currentObj.pType = $copado(this).find('.slds-text-heading_small a').text().split(':')[0];
+                            currentObj.pId = $copado(this).find('.slds-text-heading_small a').text().split(':')[1].slice(1);
+                            currentObj.min = $copado(this).find('#min').val().replace('Min:','');
+                            currentObj.max = $copado(this).find('#max').val().replace('Max:','');
+                            currentObj.sortOrder = "";
+                            if($copado(this).find('.slds-button__icon[style=""]').length > 0){
+                                currentObj.sortOrder = 'order by ' + $copado(this).find('.slds-button__icon[style=""]').parents('th').data('api') + ' ' + ($copado(this).find('.slds-button__icon[style=""]').attr('class').indexOf('downs') > -1 ? 'asc' : 'desc');
+                            }
+                            var openColumns = [];
+                            $copado(this).find('ul:last svg').each(function(){
+                                if($copado(this).css('visibility') != 'hidden'){
+                                    openColumns.push($copado(this).parents('li:first').data('id'));
+                                }
+                            });
+
+                            //console.log('openColumns==> ',openColumns);
+                            currentObj.columns = openColumns;
+                            object2Send.push(currentObj);
+                        });
+
+                        for(var ta=0;ta<main.allItems.length;ta++){
+                            if(main.allItems[ta].additionalQuery.indexOf('order by') > -1){
+                                main.allItems[ta].additionalQuery = main.allItems[ta].additionalQuery.slice(0,main.allItems[ta].additionalQuery.indexOf('order by'));
+                            }
+                        }
+                        //console.log('main.allItems==> ',main.allItems);
+                        //console.log('object2Send==> ',object2Send);
+
+                        (core).WorkManager.saveCurrentTables(JSON.stringify(object2Send),JSON.stringify(main.allItems),$copado('[id$="configName"] option:selected').val(),prepareTableOrders(),function(result,event){
+                            if(event.status){
+                                //use the JSR result as context for a template
+                                //console.log('result==> ',result);
+                                main.wmp = result;
+                                console.info('Table states are successfully updated on your User!');
+                                $copado('.BC').prop('disabled',false);
+                            }else{
+                                //friendly message for user
+                                alert('There is a problem on this operation. Please contact with your administrator. Detailed informnation:\n'+event.message);
+                                //detailed message in console for debugging
+                                console.log(event.message);
+                            }
+                            callbackOnEnd && callbackOnEnd();
+                        },{escape: false});
+                    }
+                    var createNewState = function(elem){
+                        var type = $copado(elem).data('type');
+                        var filterLogic = $copado('#filterLogic').val(), adjustedFl = '';
+                        var additionalConditions, consObj = [], controlQuery = '',result,continueOp = true, stopProcess = false;
+                        var counterCons = 1;
+                        var filterCounter = 0;
+                        var rowsPerTable = $copado('[id$="rowsPerTable"]').val();
+                        if(!rowsPerTable){
+                            rowsPerTable = '200';
+                        }
+                        if(filterLogic != '') adjustedFl = filterLogic;
+
+                        $copado('[id$="relatedObjects2"]').each(function(){
+                            var path = $copado(this).find('option:selected').val(),finVal='', value1 = $copado(this).next().find('[id$="iField2_lkid"]').val(), value2 = $copado(this).next().find('[id$="iField2"] option:selected').val(), value3 = $copado(this).next().find('[id$="iField2"]').val();
+                            //console.log('path=> ',path);
+                            if(path != main.ns+'Status__c') finVal = value1;
+                            else finVal = value2;
+
+                            if(finVal === "000000000000000"){
+                                finVal = '';
+                            }
+
+                            if(finVal != '' || (value3 == '' && finVal == '')){
+                                if(filterLogic != ''){
+                                    adjustedFl = adjustedFl.replace(counterCons,counterCons+'toRep');
+                                    counterCons++;
+                                }
+                            }
+                        });
+                        var tempFilterLogic = adjustedFl;
+                        //console.log('tempFilterLogic=1==> ',tempFilterLogic);
+                        while(tempFilterLogic.indexOf('toRep') > -1){
+                            filterCounter++;
+                            tempFilterLogic = tempFilterLogic.replace('toRep','');
+                        }
+                        //console.log('tempFilterLogic=2==> ',tempFilterLogic);
+                        //console.log('filterCounter==> ',filterCounter);
+                        //console.log('conditions length==> ',$copado('[id$="relatedObjects2"]').length);
+                        counterCons = 1;
+                        $copado('[id$="relatedObjects2"]').each(function(){
+                            var path = $copado(this).find('option:selected').val(),finVal='', value1 = $copado(this).next().find('[id$="iField2_lkid"]').val(), value2 = $copado(this).next().find('[id$="iField2"] option:selected').val(), value3 = $copado(this).next().find('[id$="iField2"]').val();
+                            //console.log('path=> ',path);
+                            if(path != main.ns+'Status__c') finVal = value1;
+                            else finVal = value2;
+
+                            if(finVal === "000000000000000"){
+                                finVal = '';
+                            }
+
+                            if(finVal != '' || (value3 == '' && finVal == '')){
+                                consObj.push({fp:path,val:finVal});
+
+                                if(filterLogic != ''){
+                                    adjustedFl = adjustedFl.replace(counterCons+'toRep', path + ' = \'' + finVal + '\'');
+                                    counterCons++;
+                                }
+                                else{
+                                    adjustedFl = adjustedFl + path + ' = \'' + finVal + '\' AND ';
+                                }
+                            }
+                            else if(finVal == '' && value3 != ''){
+                                stopProcess = true;
+                            }
+                        });
+
+                        if(counterCons == 1){
+                            adjustedFl = adjustedFl.slice(0,adjustedFl.length - 4)
+                        }
+                        var count = (adjustedFl.match(/\(/g) || []).length;
+                        var count2 = (adjustedFl.match(/OR|or/g) || []).length;
+                        //console.log(count);
+                        if(adjustedFl.length > 0 && (adjustedFl.slice(0,1) != '(' || adjustedFl.slice(0,1) == '(' && (count>1 || count2>0) && adjustedFl.slice(0,2) != '((')){
+                            adjustedFl = '(' + adjustedFl + ')';
+                        }
+                        //console.log('adjustedFl==> ',adjustedFl);
+                        controlQuery = "select id from "+main.ns+"User_Story__c where "+adjustedFl;
+                        //console.log('controlQuery===> ',controlQuery);
+                        if(counterCons != 1 && consObj.length > 0){
+                            try{
+                                result = sforce.connection.query(controlQuery);
+                            }
+                            catch(exception){
+                                continueOp = false;
+                                main.fs.hs();
+                                alert('Please enter a valid filter!');
+                            }
+                        }
+                        var filterFlag = true;
+                        if(filterCounter < $copado('[id$="relatedObjects2"]').length && filterCounter!=0){
+                            filterFlag = confirm('Some filter conditions are defined but not referenced in your filter logic. If you continue, conditions which not referenced in the filter logic will not apply.\n\nDo you want to continue?');
+                        }
+                        if($copado('#textConfiguration').val().replace(new RegExp(' ', 'g'),'').length > 0 && continueOp && !stopProcess && filterFlag){
+                            $copado('[id$="sModal"]').hide();
+                            var newVal = $copado('#textConfiguration').val();
+                            (core).WorkManager.addConfig($copado('#textConfiguration').val(),$copado('[id$="configName"] option:selected').text(),adjustedFl,type,rowsPerTable,function(result,event){
+                                if(event.status){
+                                    console.info('New config has been added successfully.');
+                                    //console.log('result==> ',result);
+                                    //console.log('type==> ',type);
+                                    var appendMe = main.newOption.replace('replaceMe',newVal).replace('replaceMeAlso',newVal);
+                                    if(type == 'update'){
+                                        $copado('[id$="configName"] option:selected').after(appendMe).detach();
+                                    }
+                                    else{
+                                        $copado('[id$="configName"] option:selected').after(appendMe).prev().attr('selected',false);
+                                    }
+
+                                    $copado('#textConfiguration').val('');
+                                    main.fn = '';
+                                    main.fl = '';
+                                    main.allItems = [];
+                                    main.wmp = result.jsonWmp;
+                                    $copado('.copadoMain').html('');
+
+                                    var deferreds = [];
+
+                                    var addTable = function(deferred, i){
+                                        var currentObj = result.pData.pWrappers[i];
+                                        var currentColumns = currentObj.columns;
+                                        var pureObjName = currentObj.pType.replace(main.ns,'').replace('__c','').replace('_','');
+                                        var addQuery = '',min = '',max = '';
+                                        if(result.pData["additionalQuery"]){
+                                            addQuery = result.pData.additionalQuery;
+                                        }
+                                        if(currentObj.min){
+                                            min = currentObj.min;
+                                        }
+                                        if(currentObj.max){
+                                            max = currentObj.max;
+                                        }
+
+                                        remoteAction2CreateTable((pureObjName == 'Status' ? pureObjName + ': '+currentObj.pId : (currentObj.pType + ':'+currentObj.pId + ':changeOnBackend')),currentObj.pType +' = \''+currentObj.pId+'\'','',currentColumns,addQuery,min,max,function() { deferred.resolve(); }, rowsPerTable, '');
+                                    }
+                                    for(var i = 0; i<result.pData.pWrappers.length ; i++){
+                                        var deferred = new $copado.Deferred();
+                                        deferreds.push( deferred );
+                                        addTable(deferred, i);
+                                    }
+                                    //waits for every callout in the for loop to be done via deferred pattern and then calls the final actions
+                                    $copado.when.apply(this, deferreds).then(function() {
+                                        console.log("Table creation is done!");
+                                        main.ri();
+                                    })
+                                }else{
+                                    main.fs.hs();
+                                    //friendly message for user
+                                    alert('There is a problem on this operation. Please contact with your administrator. Detailed informnation:\n'+event.message);
+                                    //detailed message in console for debugging
+                                    console.log(event.message);
+                                }
+                            },{escape:false});
+                        }
+                        else if(stopProcess){
+                            main.fs.hs();
+                            alert('You need to enter a valid criteria.');
+                        }
+                        else if(continueOp && filterFlag){
+                            main.fs.hs();
+                            alert('Configuration name cannot be empty.');
+                        }
+                        else if(!filterFlag){
+                            main.fs.hs();
+                        }
+                    }
+                    var openStateModal = function(str){
+                        if(main.allItems.length > 0){
+                            $copado('#rowsPerTable').val(main.allItems[0].panelRowCount);
+                        }
+                        if(str.indexOf('New') > -1){
+                            $copado('#saveB').data('type','create');
+                            //console.log($copado('#saveB').data('type'));
+                        }
+                        else{
+                            $copado('#saveB').data('type','update');
+                            //console.log($copado('#saveB').data('type'));
+                        }
+                        $copado('#modal-heading-01').text(str);
+                        $copado('[id$="sModal"]').show();
+                        //only alphaNumeric for ConfigName
+                        $copado('#textConfiguration').keypress(function (e) {
+                            var regex = new RegExp("^[a-zA-Z0-9]+$");
+                            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                            if ((regex.test(str) && e.charCode != 229 && !e.charCode != 221) || e.charCode == 32) {
+                                return true;
+                            }
+                            e.preventDefault();
+                            return false;
+                        });
+                        $copado('#textConfiguration').focus();
+                    }
+                    var closeStateModal = function(){
+                    $copado('[id$="sModal"]').hide();
+                    $copado('#textConfiguration').val("");
+                    $copado('#filterLogic').val("");
+                    }
+                    var saveNewClause = function(tblName,rid){
+                        var queryObject, clause;
+                        for(var t=0; t<main.allItems.length; t++){
+                            if(main.allItems[t].tableHeader == tblName){
+                                queryObject = main.allItems[t].qObject;
+                                clause = main.allItems[t].clause;
+                                t = main.allItems.length;
+                            }
+                        }
+                        (core).WorkManager.saveNewClause(rid,queryObject,clause,function(result,event){
+                            if(event.status){
+                                console.info('The record has been successfully updated.');
+                            }else{
+                                //friendly message for user
+                                alert('There is a problem on this operation. Please contact with your administrator. Detailed informnation:\n'+event.message);
+                                //detailed message in console for debugging
+                                console.log(event.message);
+                            }
+                        });
+                    }
+                    var prepareTableOrders = function(){
+                        var tableHeadersArray = [];
+                        $copado('.slds-text-heading_small>a').each(function(){
+                            tableHeadersArray.push($copado(this).text());
+                        });
+                        return tableHeadersArray;
+                    }
+                    var initDnd = function(){
+                        var main = document.getElementById("main");
+                        Sortable.create(main,{
+                            ghostClass: 'ghost',
+                            onEnd: function (evt) {
+                                remoteAction2SaveState();
+                            }
+                        });
+                        for(var c = 0;c<document.getElementsByClassName('tbodys2each').length; c++){
+                            var el = document.getElementsByClassName('tbodys2each')[c];
+                            var sortable = Sortable.create(el,{
+                            group:{
+                                name:'words',
+                                pull:true
+                            },
+                            animation: 150,
+                            draggable: '.sortable',
+                            ghostClass: 'ghost',
+                            filter:'.filterthis',
+                            onEnd: function (evt) {
+                                var fromTable,toTable,sortedIdArray = [];
+                                fromTable = $copado(evt.from).parents('.slds-panel__section').prev().find('h2>a').text();
+                                toTable = $copado(evt.item).parents('.slds-panel__section').prev().find('h2>a').text();
+                                $copado('.hidenshow').css('display','none');
+                                if(fromTable == toTable && fromTable.slice(0,7) == 'Status:'){
+                                    $copado(evt.from).find('tr.sortable').not('tr.hidenshow').each(function(){
+                                        sortedIdArray.push($copado(this).data('rid'));
+                                    });
+                                    (core).WorkManager.saveStatusOrders(sortedIdArray,fromTable.slice(8),function(result,event){
+                                        if(event.status){
+                                            console.info('The ranks has been successfully updated.');
+                                        }else{
+                                            //friendly message for user
+                                            alert('There is a problem on this operation. Please contact with your administrator. Detailed informnation:\n'+event.message);
+                                            //detailed message in console for debugging
+                                            console.log(event.message);
+                                        }
+                                    });
+                                }
+                                else{
+                                    var itemEl = evt.item;
+                                    var savecounter = 0;
+                                    $copado(itemEl).parents('tbody:first').find('tr').each(function(){
+                                        if($copado(this).data('rid') == $copado(itemEl).data('rid')){
+                                            savecounter++;
+                                        }
+                                    });
+                                    if(savecounter == 1){//that means the record is unique for the table, otherwise detach the new one to prevent duplication
+                                        var rid = $copado(itemEl).data('rid');
+                                        var txt = $copado(itemEl).parents('.slds-panel__section.slds-border_bottom').find('h2>a').text();
+                                        checkMinMax(true);
+                                        saveNewClause(txt,rid);
+                                    }else $copado(itemEl).detach();
+                                }
+                            },
+                            onStart: function (evt) {
+                                var cItem = evt.item;
+                                $copado('.hidenshow').css('display','');
+                            },
+                            });
+                        };
+                    }
+                    var searchFunction = function(elem){
+                        var input, filter, tr;
+                        input = $copado(elem);
+                        filter = input.val().toLowerCase();
+                        tr = input.parents('.slds-media:first').next().find('tr.sortable').not('tr.hidenshow');
+                        $copado(tr).each(function(){
+                            var flag = false;
+                            $copado(this).find('td').each(function(){
+                            if($copado(this).css('display') != 'none'){
+                                if($copado(this).text().toLowerCase().indexOf(filter) > -1){
+                                    flag = true;
+                                }
+                            }
+                            });
+                            if(flag == true){
+                                $copado(this).css('display','');
+                            }else $copado(this).css('display','none');
+                        });
+                    }
+                    var defineIndexAndCallAF = function(elem){
+                        $copado(elem).next().find('[id$="iField2"]').val('');
+                        var index = $copado(elem).attr('id').slice(27,28);
+                        //slice(27,28) returns the index of the selected config creteria picklist from the dom id generated by page
+                        //exp: WorkManager:j_id62:rptCons:1:relatedObjects2
+                        //we can't be sure about j_id62 part of the id chars but the length is always 6
+                        main.rri2(index);
+                    }
+                    var defineInitCriteria = function(){
+                        main.fs.ss();
+                        var crits = '';
+                        var cCong = JSON.parse(main.wmp);
+                        for(var lc = 0;lc<cCong.panelData.length;lc++){
+                            if(cCong.lastState == cCong.panelData[lc].pName){
+                                crits = cCong.panelData[lc].additionalQuery;
+                            }
+                        }
+                        //console.log('crits=1=> ',crits);
+                        if(crits.indexOf('order by') > -1){
+                            crits = crits.slice(0,crits.indexOf('order by'));
+                        }
+                        //console.log('crits=2=> ',crits);
+                        main.fs.osm('Edit Configuration');
+                        main.ec(crits);
+                    }
+                    var defineCriteriaLogic = function(){
+                        var crits = '',panelRowCount = '',flag = false;
+                        var cCong = JSON.parse(main.wmp);
+                        for(var lc = 0;lc<cCong.panelData.length;lc++){
+                            if(cCong.lastState == cCong.panelData[lc].pName){
+                                crits = cCong.panelData[lc].additionalQuery;
+                                panelRowCount = cCong.panelData[lc].panelRowCount;
+                            }
+                        }
+                        if(crits.length > 0){
+                            flag = true;
+                        }
+                        //console.log('crits1==> ',crits);
+
+                        var countercl = 1;
+                        $copado('[id$="relatedObjects2"]').each(function(){
+                            var path = $copado(this).find('option:selected').val(),finVal='', value1 = $copado(this).next().find('[id$="iField2_lkid"]').val(), value2 = $copado(this).next().find('[id$="iField2"] option:selected').val();
+
+                            if(path != main.ns+'Status__c') finVal = value1;
+                            else finVal = value2;
+
+                            if(finVal == '000000000000000') finVal = '';
+
+                            crits = crits.replace(path+' = \''+finVal+'\'',countercl);
+                            countercl++;
+                        });
+                        if(flag){
+                            $copado('#filterLogic').val(crits);
+                        }
+                        if(panelRowCount){
+                            $copado('#rowsPerTable').val(panelRowCount);
+                        }
+                    }
+                    var saveColumns = function(elem){
+                        var openIndex = $copado(elem).parent().attr('class').indexOf('slds-is-open');
+                        if(openIndex < 0){
+                            main.fs.ras();
+                        }
+                    }
+                    var sortColumnOrder = function(elem){
+                        var deferredsInit = [];
+
+                        var makeSorting = function(){
+                            main.fs.ss();
+                            var api = $copado(elem).data('api');
+                            //t2o -> table to order to be able to use it as a flag on needed other functions
+                            var clickedTableOrder = 0, shouldContinue = true;
+                            var searchInputArray = [];
+                            $copado('.searchInput').each(function(){
+                                searchInputArray.push($copado(this).val());
+                            });
+                            main.t2o = $copado(elem).parents('.slds-panel__section.slds-border_bottom').addClass('justSorted').find('h2>a').text();
+
+                            //defines the order of the to be sorted table before sorting to be able to modify sortOrder to the JSON
+                            $copado('.slds-panel__section.slds-border_bottom').each(function(){
+                                if(shouldContinue){
+                                    if($copado(this).attr('class').indexOf('justSorted') > -1){
+                                        shouldContinue = false;
+                                    }else clickedTableOrder++;
+                                }
+                            });
+                            main.allItems = [];
+                            $copado('.copadoMain').html('');
+                            var preConf = JSON.parse(main.wmp);
+                            for(var j = 0; j<preConf.panelData.length ; j++){
+                                if(preConf.panelData[j].pName == preConf.lastState){
+                                    var panelRowCount = preConf.panelData[j].panelRowCount;
+                                    var applySort = function(deferred, i){
+                                        var currentObj = preConf.panelData[j].pWrappers[i];
+                                        var currentColumns = currentObj.columns;
+                                        var sortOrder = currentObj.sortOrder ? currentObj.sortOrder : '';
+                                        var pureObjName = currentObj.pType.replace(main.ns,'').replace('__c','').replace('_','');
+                                        var addQuery = '',min = '',max = '', tableHeader = (pureObjName == 'Status' ? pureObjName + ': '+currentObj.pId : (currentObj.pType + ':'+currentObj.pId + ':changeOnBackend'));
+                                        if(preConf.panelData[j]["additionalQuery"]){
+                                            addQuery = preConf.panelData[j].additionalQuery;
+                                        }
+                                        if(currentObj.min){
+                                            min = currentObj.min;
+                                        }
+                                        if(currentObj.max){
+                                            max = currentObj.max;
+                                        }
+                                        if(clickedTableOrder == i){
+                                            sortOrder = ' order by '+ api;
+                                            if($copado(elem).find('svg[style=""]').length > 0){
+                                                if($copado(elem).find('svg[style=""]').attr('class').indexOf('downs') > -1){
+                                                    sortOrder = sortOrder + ' desc';
+                                                }
+                                                else{
+                                                    sortOrder = sortOrder + ' asc';
+                                                }
+                                            }
+                                        }
+                                        remoteAction2CreateTable(tableHeader,currentObj.pType +' = \''+currentObj.pId+'\'','',currentColumns,addQuery,min,max,function() { deferred.resolve() }, panelRowCount, sortOrder);
+                                    }
+
+                                    for(var i = 0; i<preConf.panelData[j].pWrappers.length ; i++){
+                                        var deferred = new $copado.Deferred();
+                                        deferredsInit.push( deferred );
+                                        applySort(deferred, i);
+                                    }
+                                    //waits for every callout in the for loop to be done via deferred pattern and then calls the final actions
+                                    $copado.when.apply(this, deferredsInit).then(function() {
+                                        console.log("Sorting has completed!");
+                                        populateSearchInputs(searchInputArray);
+                                        main.fs.hs();
+                                        main.fs.ras();
+                                    })
+                                }
+                            }
+                        }
+                        if($copado(elem).parents('.mh4tables').find('.slds-dropdown_left').css('display') == 'block'){
+                            var deferred = new $copado.Deferred();
+                            deferredsInit.push( deferred );
+                            main.fs.ras(function() { deferred.resolve(); });
+
+                            $copado.when.apply(this, deferredsInit).then(function() {
+                                makeSorting();
+                            })
+                        }else{
+                            makeSorting();
+                        }
+                    }
+                    var removeLine = function(elem){
+                        if(confirm('Are you sure you want to remove this filter option?')){
+                            var cIndex2r = $copado(elem).attr('rindex');
+                            //console.log('cIndex2r==> ',cIndex2r);
+                            $copado('#filterLogic').val('');
+                            main.fl = '';
+                            main.fs.ss();
+                            main.rl(cIndex2r);
+                        }
+                    }
+                    var reInitIndexes = function(){
+                        var counter = 0;
+                        $copado('.dindex').each(function(){
+                            $copado(this).attr('rindex',counter);
+                            counter++;
+                        });
+                    }
+                    var prepareInputValue = function(elem){
+                        var cVar = $copado(elem).val();
+                        $copado(elem).val(cVar.replace('Min:','').replace('Max:',''));
+                    }
+                    var correctInputValue = function(elem){
+                        var currentTableHeader = $copado(elem).parents('.slds-media__body:first').find('h2>a').text();
+                        var cid = $copado(elem).attr('id');
+                        var ph = $copado(elem).attr('placeholder');
+                        var val = $copado(elem).val();
+                        var pMax = $copado(elem).parent().find('#max').val().replace('Max:','');
+                        var pMin = $copado(elem).parent().find('#min').val().replace('Min:','');
+                        var currentItem;
+                        for(var i=0;i<main.allItems.length;i++){
+                            if(main.allItems[i].tableHeader == currentTableHeader){
+                                currentItem = main.allItems[i];
+                            }
+                        }
+                        if(cid == 'min' && pMax != '' && parseInt(pMax) < parseInt(val)){
+                            $copado(elem).val('Min:'+currentItem.min);
+                            alert('Minimum value can not be greater than maximum value');
+                        }else if(cid == 'max' && pMin != '' && parseInt(pMin) > parseInt(val)){
+                            $copado(elem).val('Max:'+currentItem.max);
+                            alert('Maximum value can not be less than minimum value');
+                        }else{
+                            if(val.length > 0){
+                                $copado(elem).val(ph+val);
+                                main.fs.cmm();
+                            }
+                        }
+                    }
+                    var preventDefault4Input = function(e){
+                        var keyCode = (e.keyCode ? e.keyCode : e.which);
+                        if (keyCode < 48 || keyCode > 57){
+                            e.preventDefault();
+                        }
+                    }//if hs is false or undefined, it saves the current panels on current user's related field as a final action
+                    var checkMinMax = function(hs){
+                        $copado('.mmpanel').each(function(){
+                            var minElemVisibility = $copado(this).find('#min').css('visibility');
+                            var min = $copado(this).find('#min').val().replace('Min:','');
+                            var max = $copado(this).find('#max').val().replace('Max:','');
+                            var current = $copado(this).closest('.mh4tables,.changedHeight').find('tbody tr.sortable').not('.hidenshow').length;
+                            if(max != '' && current > max && minElemVisibility=='visible'){
+                                $copado(this).closest('.slds-media__body').css('background-color','#d04437');
+                                $copado(this).find('input').css('background-color','#d04437');
+                                $copado(this).css('color','white');
+                                $copado(this).parent().find('h2').children().css('color','white');
+                            }else if(min != '' && current < min && minElemVisibility=='visible'){
+                                $copado(this).closest('.slds-media__body').css('background-color','#fff143');
+                                $copado(this).find('input').css('background-color','#fff143');
+                                $copado(this).css('color','black');
+                                $copado(this).parent().find('h2').children().css('color','#0070d2');
+                            }else{
+                                $copado(this).closest('.slds-media__body').css('background-color','white');
+                                $copado(this).find('input').css('background-color','white');
+                                $copado(this).css('color','black');
+                                $copado(this).parent().find('h2').children().css('color','#0070d2');
+                            }
+                        });
+                        if(!hs){
+                            main.fs.ras();
+                        }
+                    }//re-populates search inputs to narrow down records after re-creation of each table
+                    var populateSearchInputs = function(searchInputArray){
+                        for(var k = 0; k<searchInputArray.length; k++){
+                            if(searchInputArray[k].length > 0){
+                                console.log('updated '+k+'. search input with "'+searchInputArray[k]+'"');
+                                var elem2Search = $copado('.copadoMain>.slds-panel:nth('+ k +')').find('.searchInput');
+                                elem2Search.val(searchInputArray[k]);
+                                main.fs.sf(elem2Search);
+                            }
+                        }
+                    }
+                    {//constructor START ************************************************************** START
+                        var isMemory = false;
+                        var deferredsInit = [];
+                        if(main.wmp.length == 0){
+                            var deferred1 = new $copado.Deferred();
+                            deferredsInit.push( deferred1 );
+                            remoteAction2CreateTable('Status: Backlog',main.ns+'Status__c != \'Backburner\'  AND '+main.ns+'Status__c != \'Cancelled\' AND '+main.ns+'Status__c != \'Rejected\' AND '+main.ns+'Sprint__c = null','',main.defColumns,'','','',function() { deferred1.resolve(); }, main.defaultPanelRowCount);
+                            var deferred2 = new $copado.Deferred();
+                            deferredsInit.push( deferred2 );
+                            remoteAction2CreateTable('Status: Backburner',main.ns+'Status__c = \'Backburner\' AND '+main.ns+'Sprint__c = null','',main.defColumns,'','','',function() { deferred2.resolve(); }, main.defaultPanelRowCount);
+
+
+                            var cSprint = '{!cSprintId}';
+                            var nSprint = '{!nSprintId}';
+                            //console.log('current sprint Id ',cSprint);
+                            //console.log('next sprint Id ',nSprint);
+                            if(cSprint.length > 0){
+                                var deferred3 = new $copado.Deferred();
+                                deferredsInit.push( deferred3 );
+                                remoteAction2CreateTable('Status: '+cSprint+':changeOnBackend',main.ns+'Sprint__c = \''+cSprint+'\'','',main.defColumns,'','','',function() { deferred3.resolve(); }, main.defaultPanelRowCount);
+                            }
+
+                            if(nSprint.length > 0){
+                                var deferred4 = new $copado.Deferred();
+                                deferredsInit.push( deferred4 );
+                                remoteAction2CreateTable('Status: '+nSprint+':changeOnBackend',main.ns+'Sprint__c = \''+nSprint+'\'','',main.defColumns,'','','',function() { deferred4.resolve(); }, main.defaultPanelRowCount);
+                            }
+
+                        }
+                        else{
+                            isMemory = true;
+                            var preConf = JSON.parse(main.wmp);
+
+                            for(var j = 0; j<preConf.panelData.length ; j++){
+                                if(preConf.panelData[j].pName == preConf.lastState){
+                                    if(preConf.panelData[j].pWrappers.length > 0){
+                                        var createTables = function(deferred,i){
+                                            var currentObj = preConf.panelData[j].pWrappers[i];
+                                            var sortOrder = currentObj.sortOrder ? currentObj.sortOrder : '';
+                                            var currentColumns = currentObj.columns;
+
+                                            if(currentColumns && Object.keys(currentColumns).length){
+                                                var pureObjName = currentObj.pType.replace('__c','').replace(main.ns,'').replace('_','');
+                                                var tableHeader = (pureObjName == 'Status' ? pureObjName + ': '+currentObj.pId : (currentObj.pType + ':'+currentObj.pId + ':changeOnBackend'));
+                                                var addQuery = '',min = '',max = '',panelRowCount='';
+                                                if(preConf.panelData[j]["additionalQuery"]){
+                                                    addQuery = preConf.panelData[j].additionalQuery;
+                                                }
+                                                if(currentObj.min){
+                                                    min = currentObj.min;
+                                                }
+                                                if(currentObj.max){
+                                                    max = currentObj.max;
+                                                }
+                                                if(currentObj.panelRowCount){
+                                                    panelRowCount = currentObj.panelRowCount;
+                                                }else panelRowCount = main.defaultPanelRowCount;
+
+                                                remoteAction2CreateTable(tableHeader,currentObj.pType +' = \''+currentObj.pId+'\'','',currentColumns,addQuery,min,max,function() { deferred.resolve() }, panelRowCount, sortOrder);
+                                            }
+                                        }
+                                        for(var i = 0; i<preConf.panelData[j].pWrappers.length ; i++){
+                                            var deferred = new $copado.Deferred();
+                                            deferredsInit.push( deferred );
+                                            createTables(deferred,i);
+                                        }
+                                    }
+                                    else{
+                                        checkMinMax(true);
+                                        unlockScreen();
+                                    }
+                                }
+                            }
+                        }
+                        //waits for every callout either in the for loop or predefined panel settings to be done via deferred pattern and then calls the final actions
+                        $copado.when.apply(this, deferredsInit).then(function() {
+                            console.log("init finished!");
+                            main.fs.hs();
+                            if(!isMemory){
+                                main.fs.ras();
+                            }
+                        })
+                    }//constructor END ************************************************************** END
+                    return {
+                        shc :showHideColumns,
+                        ss  :showSpinner,
+                        hs  :hideSpinner,
+                        ra  :remoteAction2CreateTable,
+                        ptn :prepareTableName,
+                        rp  :removePanel,
+                        ch  :changeHeight,
+                        ras :remoteAction2SaveState,
+                        rc  :removeConfig,
+                        osm :openStateModal,
+                        csm :closeStateModal,
+                        cns :createNewState,
+                        cc  :changeConfig,
+                        sf  :searchFunction,
+                        dif :defineIndexAndCallAF,
+                        dc  :defineInitCriteria,
+                        dcl :defineCriteriaLogic,
+                        sc  :saveColumns,
+                        sco :sortColumnOrder,
+                        rl  :removeLine,
+                        rii :reInitIndexes,
+                        cv  :correctInputValue,
+                        pd  :preventDefault4Input,
+                        piv :prepareInputValue,
+                        cmm :checkMinMax
+                    }
+                })();
+            });
+        </script>
+    </apex:outputPanel>
+    <body>
+        <apex:outputPanel layout="block" rendered="{!showLicenseError}" style="{!IF($User.UIThemeDisplayed == 'Theme4d','padding: .75rem .75rem 0;','')}">
+                <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+    </body>
+    <apex:outputPanel rendered="{!!showLicenseError}">
+        <apex:form html-autocomplete="off">
+            <c:ScreenLocker msg="{!$Label.copado__LOADING}"/>
+            <apex:actionFunction action="{!clearInputUs}" name="reRenderInput" oncomplete="adjustWidth();"  reRender="panelInput"/>
+            <apex:actionFunction action="{!showInputUs}" name="reRenderInput2" oncomplete="adjustWidth4Modal(); main.fs.rii(); main.fs.hs();"  reRender="panelInput2">
+                <apex:param name="cIndex" value=""/>
+            </apex:actionFunction>
+            <apex:actionFunction action="{!addLine}" name="addLine" oncomplete="adjustWidth4Modal();$copado('#textConfiguration').val(main.fn);$copado('#filterLogic').val(main.fl);main.fs.hs();"  reRender="loopConditions"/>
+            <apex:actionFunction action="{!removeLine}" name="removeLine" oncomplete="adjustWidth4Modal();$copado('#textConfiguration').val(main.fn);$copado('#filterLogic').val(main.fl);main.fs.hs();"  reRender="loopConditions">
+                <apex:param name="rIndex" value=""/>
+            </apex:actionFunction>
+            <apex:actionFunction action="{!reInitList}" name="reInit" oncomplete="main.fs.hs();"  reRender="loopConditions"/>
+            <apex:actionFunction action="{!EditCriterias}" name="eCrits" oncomplete="$copado('#textConfiguration').val($copado('[id$=\'configName\'] option:selected').text());main.fs.dcl();adjustWidth4Modal();main.fs.hs();"  reRender="loopConditions">
+                <apex:param name="aQuery" value=""/>
+            </apex:actionFunction>
+            <script>
+                lockScreen();
+                main.rri = reRenderInput;
+                main.rri2 = reRenderInput2;
+                main.al = addLine;
+                main.ri = reInit;
+                main.ec = eCrits;
+                main.rl = removeLine;
+                var previousLookupSelection;
+                var islgt = "{!$User.UIThemeDisplayed == 'Theme4d'}";
+                function adjustWidth(){
+                    var cw = $copado('.widthcls').css('width');
+                    var pw = $copado('.slds-icon_container').css('width');
+                    var ncw = parseInt(cw.slice(0,cw.length-2));
+                    var npw = parseInt(pw.slice(0,cw.length-2));
+                    var mt;
+                    if($copado('select[id$="iField_mlktp"]').length > 0 && previousLookupSelection != true){
+                        if(islgt != "true") mt = '2px';
+                        ncw = ((ncw * 100/npw)+10)+'%';
+                        previousLookupSelection = true;
+                    }else if($copado('select[id$="iField_mlktp"]').length == 0){
+                        if(previousLookupSelection){
+                            mt = '0px';
+                            ncw = ((ncw * 100/npw)-10)+'%';
+                            previousLookupSelection = false;
+                        }
+                    }
+                    //console.log('ncw==> ',ncw);
+                    if(ncw.toString().indexOf('%') > -1){
+                        $copado('.widthcls').css('width',ncw);
+                        $copado('[id$=relatedObjects]').css('margin-top',mt);
+                    }
+                    main.fs.hs();
+                }
+                function adjustWidth4Modal(){
+                    $copado('[id$="relatedObjects2"]').css('margin-right','');
+                    $copado('[id$="iField2_mlktp"]').each(function(){
+                        $copado(this).addClass('adjustUserPicklist');
+                        $copado(this).closest('div').find('span').css('vertical-align','top');
+                        $copado(this).parents('span:first').prev().css('margin-right',islgt != "true" ? '225px' : '246px');
+                        $copado(this).closest('div').css('margin-bottom',islgt == "true" ? '12px' : '6px');
+                        var rIcon = $copado(this).closest('div').next();
+                        $copado(this).closest('div').append($copado(rIcon)[0].outerHTML);
+                        rIcon.detach();//css('display','none');
+                    });
+                }
+            </script>
+            <body>  
+                <div class="copado-lightning-VF">
+                    <apex:outputPanel layout="block" id="sModal" style="display: none;">
+                        <div>
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header">
+                                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="main.fs.csm();main.ri(); return false;">
+                                            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                            </svg>
+                                            <span class="slds-assistive-text"></span>
+                                        </button>
+                                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Configuration</h2>
+                                    </header>
+                                    <div class="slds-modal__content" style="max-height:500px;overflow-y:overlay;">
+                                        <apex:outputPanel id="jserror">
+                                            <apex:messages />
+                                            <apex:message />
+                                            <apex:pageMessages />
+                                        </apex:outputPanel>
+                                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="text-align: center;">
+                                                <apex:outputPanel id="loopConditions">
+                                                    <div style="display:flex;margin-bottom:12px;">
+                                                            <label for="textConfiguration" class="tcn">{!$label.WorkManager_Config_Label_Name}</label>
+                                                            <input type="text" class="mtw" name="fname" id="textConfiguration"/>
+                                                    </div>
+                                                    <apex:variable value="{!0}" var="count"/>
+                                                    <apex:repeat value="{!inputUsList}" var="current" id="rptCons">
+                                                        <div>
+                                                            <apex:selectList styleClass="ml" style="vertical-align:top;margin-bottom: 10px;" id="relatedObjects2" value="{!current.copado__User_Story_Title__c}" multiselect="false" size="1" onchange="main.fs.ss(); main.fs.dif(this); return false;">
+                                                                <apex:selectOptions value="{!usRelations}"/>
+                                                            </apex:selectList>
+                                                            <apex:outputPanel id="panelInput2" style="margin-left: 4px;">
+                                                                <apex:inputField value="{!current[current.copado__User_Story_Title__c]}" styleClass="iFieldC" rendered="{!current.copado__User_Story_Title__c != ''}"  id="iField2"/>
+                                                                <apex:outputLink styleClass="dindex" html-rindex="{!count}" onClick="main.fl = $copado('#filterLogic').val();main.fn = $copado('#textConfiguration').val();main.fs.rl(this); return false;">Remove</apex:outputLink>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                        <apex:variable value="{!count+1}" var="count"/>
+                                                    </apex:repeat>
+                                                    <script>
+                                                        if($copado('[id$="relatedObjects2"]').length == 0){
+                                                            $copado('#filterLogic,.fl').css('display','none');
+                                                        }else{
+                                                            $copado('#filterLogic,.fl').css('display','');
+                                                        }
+                                                    </script>
+                                                    <div style="display:flex;margin-bottom:12px;">
+                                                        <label for="filterLogic" class="fl" title="if empty, default logic is 1 and 2 and 3 etc.">Filter Logic:</label>
+                                                        <input type="text" class="mtw" name="flogic" id="filterLogic" title="if empty, default logic is 1 and 2 and 3 etc."/>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                <div style="display:flex;margin-bottom:12px;">
+                                                    <label for="rowsPerTable" class="rpp" title="if empty, default row count is 200.">Rows Per Panel:</label>
+                                                    <input type="text" class="mtw" name="rptable" onkeypress="main.fs.pd(event);"  id="rowsPerTable" title="if empty, default row count is 200."/>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <button class="slds-button slds-button_neutral" onclick="main.fn = $copado('#textConfiguration').val();main.fl = $copado('#filterLogic').val();main.fs.ss();main.al(); return false;">Add Line</button>
+                                        <button data-type="save" id="saveB" class="slds-button slds-button_brand" onclick="main.fs.ss();main.fs.cns(this); return false;">{!$label.WorkManager_Config_Button_Save}</button>
+                                    </footer>
+                                </div>
+
+                            </section>
+                        </div>
+                        <div class="slds-backdrop slds-backdrop_open" id="USbackdrop"></div>
+                    </apex:outputPanel>
+                    <div class="slds-spinner_container slds-hide">
+                        <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert" style="position: fixed;z-index:9999;">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                    <span class="slds-page-header" id="theHeader" style="height: 95px; display:block;width:100%;border: 1px solid #C5C5C5;border-radius: .25rem;">
+                            <h1 style="margin-bottom: 1px;color: #0070d2;">{!$label.WorkManager_Title}</h1>
+                        <span style="background-color:transparent !important;width:100% !important;" class="slds-icon_container slds-icon-standard-opportunity" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+                            <svg class="slds-icon slds-icon-custom-96" aria-hidden="true" style="vertical-align: top;height:30px;">
+                                <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/custom-sprite/svg/symbols.svg#custom96')}"></use>
+                            </svg>
+
+                                <span style="display: inline-block;min-width: 120px;">
+                                    <apex:selectList id="configName" value="{!selectedState}" onchange="main.fs.ss(); main.fs.cc($copado(this).val());" style="width: 100%;height:31px;margin-left:2px;" multiselect="false" size="1" styleClass="stateList">
+                                        <apex:selectOptions value="{!availablePanelStates}"/>
+                                    </apex:selectList>
+                                </span>
+                                <button style="margin-bottom: 0px; margin-right: 0px !important;margin-left: 3px;vertical-align:top;" class="slds-button slds-button_neutral BC"
+                                        onclick="main.fs.osm('New Configuration'); return false;">{!$label.WorkManager_NewButton}</button>
+                                <button style="margin-bottom: 0px; margin-left: 0px !important;vertical-align:top;" class="slds-button slds-button_neutral BC"
+                                    onclick="main.fs.dc(); return false;">Edit</button>
+                                <button style="margin-bottom: 0px; margin-left: 0px !important;vertical-align:top;" class="slds-button slds-button_neutral BC"
+                                        onclick="main.fs.rc(); return false;">{!$label.WorkManager_Button_Remove}</button>
+                                <button style="margin-bottom: 0px; margin-left: 0px !important;vertical-align:top;" class="slds-button slds-button_neutral BC"
+                                        onclick="main.fs.ss(); main.fs.cc($copado('[id$=\'configName\'] option:selected').val()); return false;">Refresh Panels</button>
+
+                                <apex:outputPanel styleClass="widthcls" style="float:right;">
+                                    <div style="    display: inline-flex;">
+                                    <apex:selectList style="vertical-align:top;" styleClass="heightClass" id="relatedObjects" value="{!currentFieldApiSelection}" multiselect="false" size="1" onchange="main.fs.ss(); $copado('[id$=\'iField\']').val(''); main.rri(); return false;">
+                                        <apex:selectOptions value="{!usRelations}"/>
+                                    </apex:selectList>
+                                    <apex:outputPanel id="panelInput" style="margin-left: 4px;">
+                                        <apex:messages />
+                                        <apex:message />
+                                        <apex:pageMessages />
+                                        <apex:inputField value="{!inputUs[currentFieldApiSelection]}" styleClass="iFieldC" rendered="{!currentFieldApiSelection != ''}"  id="iField"/>
+                                    </apex:outputPanel>
+                                    <button style="margin-left: 5px;vertical-align: inherit;" class="slds-button slds-button_neutral"
+                                            onclick="main.fs.ss(); main.fs.ptn();$copado('[id$=\'iField\']').val('');$copado('[id$=\'iField_lkid\']').val(''); return false;">{!$label.WorkManager_Button_AddPanel}</button>
+                                    </div>
+                                    <br/>
+                                    <apex:outputPanel layout="none" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}">
+                                        <apex:outputLabel style="margin-right:2%;">Change Panel Height:  </apex:outputLabel>
+                                        <apex:selectList id="chooseSize" size="1" onChange="main.fs.ch(this);">
+                                            <apex:selectOption itemValue="200px" itemLabel="Short"/>
+                                            <apex:selectOption itemValue="400px" html-selected="selected" itemLabel="Standard"/>
+                                            <apex:selectOption itemValue="600px" itemLabel="Tall"/>
+                                        </apex:selectList>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </span>
+                    </span>
+                    <div id="main" class="copadoMain slds-grid">
+
+                    </div>
+                </div>
+            </body>
+            <apex:outputPanel rendered="{!!showLicenseError}">
+                <script id="entry-template" type="text/x-handlebars-template">
+                    <c:HandleBarHtml />
+                </script>
+            </apex:outputPanel>
+        </apex:form>
+    </apex:outputPanel>
+</apex:page>

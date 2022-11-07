@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Copado Header Fields --></label>
+        <name>copado__Copado_Header_Fields</name>
+    </fieldSets>
+    <fields>
+        <help><!-- Status of the most recent Compliance Scan of the Org. --></help>
+        <label><!-- Compliance Status --></label>
+        <name>copado__Compliance_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- Eg: https://company.my.salesforce.com --></help>
+        <label><!-- Custom Domain --></label>
+        <name>copado__Custom_Domain__c</name>
+    </fields>
+    <fields>
+        <help><!-- If selected, this will be the preferred credential for Promotion deployments --></help>
+        <label><!-- Default Credential --></label>
+        <name>copado__Default_Credential__c</name>
+    </fields>
+    <fields>
+        <help><!-- Will be used for Review app creation out of promotions. Otherwise every scratch org may be created by their own scratch org definition either with a template or without. --></help>
+        <label><!-- Default Scratch Org Definition --></label>
+        <name>copado__Default_Scratch_Org_Definition__c</name>
+        <relationshipLabel><!-- Credentials --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Developer Hub Credential --></label>
+        <name>copado__Developer_Hub_Org__c</name>
+        <relationshipLabel><!-- Credentials --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Checking this checkbox will not validate the credentials when the record is saved or viewed. --></help>
+        <label><!-- Disable Validation --></label>
+        <name>copado__Disable_Validation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Environment records are created automatically when Credentials are authenticated. The Environment may have multiple Credentials which correspond to different users of the same Environment. --></help>
+        <label><!-- Environment --></label>
+        <name>copado__Environment__c</name>
+        <relationshipLabel><!-- Credentials --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Error --></label>
+        <name>copado__Error__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Apex Tests Datetime --></label>
+        <name>copado__Last_Apex_Tests_Datetime__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Apex Tests Status --></label>
+        <name>copado__Last_Apex_Tests_Status__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OK</masterLabel>
+            <translation><!-- OK --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Last Compliance Scan Date --></label>
+        <name>copado__Last_Compliance_Scan_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Git Backup Datetime --></label>
+        <name>copado__Last_Git_Backup_Datetime__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Git Backup Status --></label>
+        <name>copado__Last_Git_Backup_Status__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OK</masterLabel>
+            <translation><!-- OK --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Empty means all types. Select one or more types to limit the backup only to selected items. --></help>
+        <label><!-- Metadata Types --></label>
+        <name>copado__Metadata_Types__c</name>
+    </fields>
+    <fields>
+        <help><!-- Minimum code coverage required for deploying changes from this Environment. --></help>
+        <label><!-- Minimum Apex Test Coverage --></label>
+        <name>copado__Minimum_Apex_Test_Coverage__c</name>
+    </fields>
+    <fields>
+        <help><!-- This value is automatically set and updated by Copado. --></help>
+        <label><!-- Oauth Signature --></label>
+        <name>copado__Oauth_Signature__c</name>
+    </fields>
+    <fields>
+        <label><!-- Org Type --></label>
+        <name>copado__Org_Type__c</name>
+        <picklistValues>
+            <masterLabel>Production/Developer</masterLabel>
+            <translation><!-- Production/Developer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sandbox</masterLabel>
+            <translation><!-- Sandbox --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scratch Org</masterLabel>
+            <translation><!-- Scratch Org --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scratch Org - Test only</masterLabel>
+            <translation><!-- Scratch Org - Test only --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Platform --></label>
+        <name>copado__Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- Profile Name --></label>
+        <name>copado__Profile_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Organization Id for the Environment. --></help>
+        <label><!-- SFDC Org ID --></label>
+        <name>copado__SFDC_Org_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scratch Org Expiration Date --></label>
+        <name>copado__Scratch_Org_Expiration_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scratch Org Status --></label>
+        <name>copado__Scratch_Org_Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deleted</masterLabel>
+            <translation><!-- Deleted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Expired</masterLabel>
+            <translation><!-- Expired --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Missing</masterLabel>
+            <translation><!-- Missing --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Continuous Integration feature. Run all Apex Test methods and save the results in the Apex Test Result object to create email alerts or reports. This feature is very powerful along with Git Backups to detect recent failing changes automatically. --></help>
+        <label><!-- Test Frequency --></label>
+        <name>copado__Test_Frequency__c</name>
+        <picklistValues>
+            <masterLabel>Daily</masterLabel>
+            <translation><!-- Daily --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- A security token is an automatically generated key that you must use when connecting via the API. --></help>
+        <label><!-- Security Token --></label>
+        <name>copado__Token__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type Icon --></label>
+        <name>copado__Type_Icon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Username --></label>
+        <name>copado__Username__c</name>
+    </fields>
+    <fields>
+        <help><!-- Latest OAuth authentication validation date. --></help>
+        <label><!-- Validated Date --></label>
+        <name>copado__Validated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Validated Status --></label>
+        <name>copado__Validated_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Developer Hub Credential --></label>
+        <name>copado__is_Developer_Hub_Org__c</name>
+    </fields>
+    <webLinks>
+        <label><!-- Add_to_Deployment --></label>
+        <name>copado__Add_to_Deployment</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Validate_Org --></label>
+        <name>copado__Validate_Org</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,236 @@
+<apex:page id="UserStoryReadyForPromote" sideBar="false" standardController="copado__User_Story__c" extensions="copado.UserStoryReadyForPromoteExtension" title="Submit {!currentUserStory.Name} for Promotion">
+
+    <apex:slds />
+    <style>
+        .slds-is-won .slds-tabs--path__title, .slds-scope .slds-tabs_path .slds-is-complete, .slds-scope .slds-tabs--path .slds-is-complete, .slds-scope .slds-tabs_path__item+.slds-is-complete:before, .slds-scope .slds-tabs_path__item+.slds-is-current:before, .slds-scope .slds-tabs--path__item+.slds-is-complete:before, .slds-scope .slds-tabs--path__item+.slds-is-current:before {
+            background-color: #e0e5ee;
+            color: black !important;
+        }
+        .slds-scope .slds-tabs_path__item:hover+.slds-is-complete:before, .slds-tabs_path__item:hover .slds-tabs--path__title, .slds-scope .slds-tabs_path__item:hover+.slds-is-current:before, .slds-scope .slds-tabs--path__item:hover+.slds-is-complete:before, .slds-scope .slds-tabs--path__item:hover+.slds-is-current:before, .slds-scope .slds-tabs_path .slds-is-complete:hover, .slds-scope .slds-tabs--path .slds-is-complete:hover {
+            background-color: #d8dde6;
+        }
+        li .slds-tabs--path__item{
+            cursor:pointer;
+        }
+        .slds-scope .slds-tabs_path .slds-is-last:hover, .slds-scope .slds-tabs--path .slds-is-last:hover, .slds-is-won .slds-tabs--path__title, .slds-scope .slds-tabs_path .slds-is-last, .slds-scope .slds-tabs--path .slds-is-last {
+            background-color: #f0f2f7 !important;
+        }
+        .slds-is-last .slds-tabs--path__title{
+            color: #0000003b !important;
+        }
+        .slds-is-last a{
+            cursor:not-allowed !important;
+        }
+    </style>
+    <c:IncludeStaticsResourceComponent addJquery="true" />
+    <script>
+        $copado(document).ready(function(){
+            isLastInit();
+        });
+
+        function isLastInit(){
+            $copado('.slds-tabs--path__item:last').addClass('slds-is-last');
+        }
+
+        function closeUSDep(){
+          $copado('[id$="dependencyUSComponent"]').hide();
+        }
+        function renderQualityGatesforEnvironment(elem){
+            console.log('1 ',parseInt($copado(elem).data('stepindex'))+1);
+            console.log('2 ',$copado('.slds-tabs--path__item').length);
+            if($copado('.slds-tabs--path__item').length == parseInt($copado(elem).data('stepindex'))+1){
+                var dest = document.querySelector('[data-stepindex="'+$copado(elem).data('stepindex')+'"] .slds-tabs--path__title').innerText,
+                 source = document.querySelector('[data-stepindex="'+(parseInt($copado(elem).data('stepindex'))-1)+'"] .slds-tabs--path__title').innerText;
+
+                return;
+            }
+            lockScreen();
+            var selectedSourceEnv = $copado(elem).data('env');
+            console.log('elem===> ',selectedSourceEnv);
+            $copado('.slds-tabs--path__item').each(function(){
+                if($copado(this).find('a').data('env') != selectedSourceEnv){
+                    $copado(this).attr('class','slds-tabs--path__item slds-is-incomplete');
+                } else{
+                    console.log('$(this).attr(class)   ',$copado(this).attr('class'));
+                    if($copado(this).attr('class') == 'slds-tabs--path__item slds-is-current'){
+                        unlockScreen();
+                        return;
+                    }
+                    $copado(this).attr('class','slds-tabs--path__item slds-is-current');
+                }
+            });
+            renderQualityGatesforEnvironmentAcf(selectedSourceEnv);
+        }
+
+    </script>
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+
+    <apex:form >
+
+        <apex:actionFunction name="renderQualityGatesforEnvironmentAcf" action="{!calculateConnectionBehavior}" reRender="connectionBehaviorPanel" onComplete="isLastInit();unlockScreen();">
+            <apex:param name="environment" value="" />
+        </apex:actionFunction>
+        <c:CopadoErrorPanel pageMessagesMap="{!pageMessagesMap}" />
+        <c:CopadoSpinner />
+        <div class="co-dw-container">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_3-of-12"></div>
+                <div class="slds-col slds-size_6-of-12">
+                    <apex:outputPanel rendered="{!!hasApiKey}" layout="none">
+                        <center style="font-size: initial;">
+                            <apex:outputText value="{!$Label.copado__ApiKeyNotSet}"/>
+                            <apex:commandlink action="{!redirectToAccountSummary}" value="{!$Label.copado__ClickHere}" target="_blank"/>
+                            &nbsp;<apex:outputText value="{!$Label.copado__ToSetApiKey}"/>
+                        </center>
+                    </apex:outputPanel>
+                    <h1>
+                        <apex:outputText value="{!currentUserStory.Name}"></apex:outputText>
+                    </h1>
+                    <p class="subtitle">Submit Changes for Promotion</p>
+
+                    <div class="slds-col slds-size_1-of-1" style="text-align:center;">
+                        <p>
+                            Your changes will be deployed from <b> {!currentUserStory.Environment__r.Name} </b> to
+                            <b>{!nextEnvironment}</b> environment
+                        </p>
+                        <br />
+                        <br />
+                    </div>
+
+
+                    <apex:outputPanel id="headerGrid" layout="block" styleClass="slds-grid">
+                        <apex:outputPanel id="flowSteps" layout="block" styleClass="slds-tabs--path" html-role="application">
+                            <ul class="slds-tabs--path__nav" role="listbox" aria-orientation="horizontal">
+                                <apex:variable value="0" var="stepIndex" />
+                                <apex:repeat value="{!DeploymentFlowSteps}" var="step">
+                                    <li class="slds-tabs--path__item {!step.style}" role="presentation">
+                                        <a class="slds-tabs--path__link" onclick="renderQualityGatesforEnvironment(this);" data-env="{!step.environment}" id="path-{!stepIndex}" data-stepIndex="{!stepIndex}" aria-controls="path-content-{!stepIndex}" aria-selected="{!IF(step.style == 'slds-is-current',true, false)}" tabindex="{!IF(step.style == 'slds-is-current',0,-1)}" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                            <span class="slds-tabs--path__stage">
+                                                <span style="color:white;">{!HTMLENCODE(step.environment)}</span>
+                                            </span>
+                                            <span class="slds-tabs--path__title">
+                                                {!step.environment}
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <apex:variable var="stepIndex" value="{!VALUE(stepIndex) + 1}" />
+                                </apex:repeat>
+                            </ul>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="connectionBehaviorPanel">
+                        <div class="slds-grid slds-wrap" style="max-height:50%;align-items: center;padding-left: 20%;">
+
+                            <div class="slds-col slds-size_3-of-6" style="margin-top:30px;">
+                                <div style="margin: 10px 20px 0px 0px; float:left;">
+                                    <div class="slds-media__figure">
+                                        <apex:image value="{!URLFOR($Resource.copado__SetupDashboardIcons, 'PipelineSvgIcons/ccd-link.png')}" /> {!$Label.copado__USDependency_USDependenciesTitle}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_3-of-6" style="margin-top:30px;">
+                                <div class="slds-box_x-small slds-m-around_x-small slds-p-around_x-small">
+                                    <ul style="float:left;margin: 0px 0px 0px 0px;">
+                                        <li>
+                                            <apex:outputPanel rendered="{!If(dependenciesList.size > 0, false, true)}" layout="none">
+                                                <span>{!$Label.copado__No_Dependencies}</span>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!If(dependenciesList.size > 0, true, false)}" layout="none">
+                                                <a href="#" onclick="$copado('[id$=\'dependencyUSComponent\']').show();">({!TEXT(dependenciesList.size)}) {!$Label.copado__Dependent_User_Stories}</a>
+                                            </apex:outputPanel>
+                                        </li>
+                                    </ul>
+                                    <br />
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_3-of-6">
+                                <div style="margin: 10px 20px 0px 0px; float:left;">
+                                    <div class="slds-media__figure">
+                                        <apex:image value="{!URLFOR($Resource.copado__SetupDashboardIcons, 'PipelineSvgIcons/pipeline-infinity.png')}" />
+                                        Deployment
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_3-of-6">
+                                <div class="slds-box_x-small slds-m-around_x-small slds-p-around_x-small">
+                                    <ul style="float:left;margin: 0px 0px 0px 0px;">
+
+                                        <li>
+                                            {!connectionBehavior} <br />
+                                            To {!nextEnvironment}
+                                        </li>
+                                    </ul>
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_3-of-6" style="margin-bottom:5%;">
+                                <div style="margin: 10px 20px 0px 0px; float:left;">
+                                    <div class="slds-media__figure">
+                                        <apex:image value="{!URLFOR($Resource.copado__SetupDashboardIcons, 'PipelineSvgIcons/pipeline-shield.png')}" />
+                                        Quality Gate
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_3-of-6" style="margin-bottom:5%;">
+                                <div class="slds-box_x-small slds-m-around_x-small slds-p-around_x-small">
+                                    <ul style="float:left;margin: 0px 0px 0px 0px;">
+                                        <apex:outputPanel rendered="{!IF(qualityGateList.size > 0, true, false)}">
+                                            <apex:repeat value="{!qualityGateList}" var="qa">
+                                                <li>
+                                                    <apex:outputText value="{!qa.Name}" />
+                                                    <apex:outputText style="color:#9e9e9e;" value="  ({!qa.copado__Type__c})" />
+                                                </li>
+                                            </apex:repeat>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(qualityGateList.size > 0, false, true)}">
+                                            <li>
+                                                {!$Label.copado__No_Quality_Gates_Will_Be_Created}
+                                            </li>
+                                        </apex:outputPanel>
+                                    </ul>
+                                    <br />
+                                </div>
+                            </div>
+
+
+                            <div class="slds-col slds-size_4-of-6" style="text-align:center;">
+                                <div class="buttons slds-m-top--xx-large">
+                                    <apex:commandButton styleClass="slds-button slds-button_outline-brand" value="Back to User Story" action="{!goBackToUserStory}" />
+                                    <apex:commandButton styleClass="slds-button slds-button_brand" value="Submit Changes" action="{!submitChanges}" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </apex:outputPanel>
+                </div>
+                <div class="slds-col slds-size_3-of-12"></div>
+            </div>
+        </div>
+        <apex:outputPanel layout="block" id="dependencyUSComponent" style="display: none;" styleClass="slds-scope">
+            <div class="slds-modal_large">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    title="Close" onclick="closeUSDep(); return false;">
+                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink"  xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                </svg>
+                                <span class="slds-assistive-text">{!$Label.CLOSE}</span>
+                            </button>
+                            <h2 id="modal-heading-01"
+                                class="slds-text-heading_medium slds-hyphenate">{!$label.USDependency_USDependenciesTitle}</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <c:UserStoryDependencies usList="{!dependenciesList}" />
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="slds-backdrop slds-backdrop_open" id="USbackdrop"></div>
+        </apex:outputPanel>
+    </apex:form>
+
+</apex:page>

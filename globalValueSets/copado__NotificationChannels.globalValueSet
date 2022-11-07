@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+        <label>Email</label>
+    </customValue>
+    <customValue>
+        <fullName>Chatter</fullName>
+        <default>false</default>
+        <label>Chatter</label>
+    </customValue>
+    <masterLabel>Notification Channels</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

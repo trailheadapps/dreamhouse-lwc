@@ -1,0 +1,106 @@
+<apex:page standardController="copado__Static_Code_Analysis_Settings__c" extensions="copado.StaticCodeAnalysisSettingsExt" title="{!$Label.site.edit} {!$ObjectType.copado__Static_Code_Analysis_Settings__c.Label}"
+    id="thePage" lightningStylesheets="true" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" sidebar="{!$User.UIThemeDisplayed=='Theme3'}"
+    applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+
+    <head>
+        <title>Edit SCA Settings| Copado</title>
+        <c:GAnalytics />
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+        <c:IncludeStaticsResourceComponent addJQuery="true" />
+        <script>
+            $copado(document).ready(function () {
+                //Buttons To middle No PBtitle
+                if ((typeof sforce != 'undefined') && sforce && (!!sforce.one)) {
+                    var mTitle = $copado('.pbTitle');
+                    if (mTitle) {
+                        mTitle.remove();
+                        var tdrow = $copado($copado('.pbButton'));
+                        if (tdrow) {
+                            tdrow.css("text-align", "center");
+                        }
+                    }
+                }
+                //Only execute this code if RecordType is 'CodeScan'
+                var codeScanRcTp = "{!!IsPMD}";
+                if (codeScanRcTp == 'true') {
+                    shCloudOrg();
+                }
+            });
+            //show or Hide 'Cloud Organization field depending on CodeScan Version'
+            var shCloudOrg = function () {
+                var stVersion = $copado('[id$=version]').val();
+                var labelOrg = $copado('.last'); //Get label in last column
+                var stOrg = $copado('[id$=org]'); //Org Field
+                if (stVersion != 'Cloud') {
+                    stOrg.hide();
+                    labelOrg.hide();
+                } else {
+                    stOrg.show();
+                    labelOrg.show();
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="copado-lightning-VF">
+            <apex:sectionHeader title="{!$ObjectType.copado__Static_Code_Analysis_Settings__c.Label} {!$Label.copado__EDIT}" subtitle="{!IF(ISBLANK(staticCodeAnalysisSettings.Name),'New '+ $ObjectType.copado__Static_Code_Analysis_Settings__c.Label ,staticCodeAnalysisSettings.Name)}"
+                description="" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+            <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+            <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                <div class="slds-page-header">
+                    <apex:outputPanel layout="block" id="pageMessages">
+                        <apex:pagemessages id="msg" />
+                    </apex:outputPanel>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container slds-icon-custom-custom67" title="Description of icon when needed">
+                                        <svg class="slds-icon" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom67')}"></use>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.Static_Code_Analysis_Settings__c.Label}</p>
+                                    <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.Static_Code_Analysis_Settings__c.Label}">{!$Label.NEW} {!$ObjectType.Static_Code_Analysis_Settings__c.Label}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ACTION BUTTONS-->
+                        <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                            <div class="slds-button-group" role="group">
+
+                            </div>
+                        </div>
+                        <!-- / ACTION BUTTONS -->
+                    </div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel id="orgPanel" layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+                <apex:form id="theForm" styleClass="copado-lightning-container" style="padding-top:12px;" html-novalidate="true">
+                    <apex:pageBlock id="pb_editSCA" mode="edit" helpUrl="https://docs.copado.com/static-code-analysis/static-code-analysis-overview"
+                        helpTitle="{!$Label.copado__HELP_FOR_THIS_PAGE}" rendered="true" title="{!$Label.copado__DETAILS}">
+                        <apex:pageblockButtons >
+                            <apex:commandButton value="{!$Label.site.save}" action="{!saveWithCustomSetting}" />
+                            <apex:commandButton value="{!$Label.site.cancel}" action="{!cancel}" />
+                        </apex:pageblockButtons>
+                        <apex:pageBlockSection id="pbsMain" columns="1">
+                            <apex:inputField id="name" value="{!staticCodeAnalysisSettings.Name}" />
+                            <apex:inputField id="deltaPMD" value="{!staticCodeAnalysisSettings.copado__ReportIssuesFromLatestCommit__c}" rendered="{!IsPMD}"
+                            />
+                            <apex:inputField id="version" value="{!staticCodeAnalysisSettings.copado__CodeScan_Version__c}" rendered="{!!IsPMD}" onChange="shCloudOrg();"
+                            />
+                            <apex:inputField id="token" value="{!staticCodeAnalysisSettings.copado__CodeScan_Token__c}" rendered="{!!IsPMD}" />
+                            <apex:inputField id="url" value="{!staticCodeAnalysisSettings.copado__CodeScan_URL__c}" rendered="{!!IsPMD}" />
+                            <apex:inputField id="org" value="{!staticCodeAnalysisSettings.copado__Cloud_Organization__c}" rendered="{!!IsPMD}" />
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </apex:form>
+                <c:CheckFeaturesComponent />
+            </apex:outputPanel>
+        </div>
+    </body>
+</apex:page>

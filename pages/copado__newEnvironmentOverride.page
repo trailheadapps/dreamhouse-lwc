@@ -1,0 +1,3 @@
+<apex:page standardController="copado__Environment__c">
+    <!-- page can not be deleted immediatelly from managed package, so emptied the code in order to remove references in next release and following releases we can delete -->
+</apex:page>

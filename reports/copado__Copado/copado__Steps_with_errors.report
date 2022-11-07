@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CHILD_NAME</field>
+    </columns>
+    <columns>
+        <field>copado__Deployment__c.copado__Status__c</field>
+    </columns>
+    <columns>
+        <field>copado__Step__c.copado__Type__c</field>
+    </columns>
+    <columns>
+        <field>copado__Step__c.copado__Status__c</field>
+    </columns>
+    <columns>
+        <field>copado__Step__c.copado__Org_Count__c</field>
+    </columns>
+    <columns>
+        <field>copado__Step__c.copado__Count_Completed__c</field>
+    </columns>
+    <columns>
+        <field>copado__Step__c.copado__Completed__c</field>
+    </columns>
+    <columns>
+        <field>copado__Step__c.copado__Deployed__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>copado__Step__c.copado__Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Completed with Errors</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>CUST_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Steps with errors</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$copado__Deployment__c$copado__Step__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>copado__Deployment__c.copado__Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

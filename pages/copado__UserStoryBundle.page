@@ -1,0 +1,28 @@
+<apex:page standardController="copado__User_Story__c" recordSetVar="storyList" extensions="copado.UserStoryBundleCtrl" lightningStylesheets="true">
+    <apex:includeLightning />
+
+    <apex:form >
+        <apex:actionFunction action="{!navigate}" name="navigate" reRender="">
+            <apex:param name="url" value="" assignTo="{!recordId}" />
+        </apex:actionFunction>
+    </apex:form>
+
+    <div id="lightningvf" />
+
+    <script>
+        const namespace = '{! namespace }';
+        $Lightning.use(namespace + ":" + "UserStoryBundleApp", function () {
+            $Lightning.createComponent(namespace + ":" + "userStoryBundle",
+                {
+                    ids: {! stories }
+                },
+                "lightningvf",
+                function (cmp) { }
+            );
+        });
+
+        document.addEventListener("navigatetorecord", (event) => {
+            navigate(event.detail);
+        });
+    </script>
+</apex:page>

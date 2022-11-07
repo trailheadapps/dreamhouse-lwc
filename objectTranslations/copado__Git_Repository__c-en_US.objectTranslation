@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Copado Header Fields --></label>
+        <name>copado__Copado_Header_Fields</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- Custom Fields --></label>
+        <name>copado__CustomFields</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Allow Functions Git Cache --></label>
+        <name>copado__Allow_Functions_Git_Cache__c</name>
+    </fields>
+    <fields>
+        <help><!-- Base URL of your Repository branches, e.g.: https://github.com/[COMPANY]/[REPOSITORY]/tree/ --></help>
+        <label><!-- Branch Base URL --></label>
+        <name>copado__Branch_Base_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Base URL of your Repository commits, e.g.: https://github.com/[COMPANY]/[REPOSITORY]/commit/ --></help>
+        <label><!-- Commit Base URL --></label>
+        <name>copado__Commit_Base_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Copado generates specific links to the Git Repository, its branches and commits based on the selected Git Provider. --></help>
+        <label><!-- Git Provider --></label>
+        <name>copado__Git_Provider__c</name>
+        <picklistValues>
+            <masterLabel>Bitbucket</masterLabel>
+            <translation><!-- Bitbucket --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Copado Version Control</masterLabel>
+            <translation><!-- Copado Version Control --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GitLab</masterLabel>
+            <translation><!-- GitLab --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Github</masterLabel>
+            <translation><!-- Github --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Microsoft Team Service</masterLabel>
+            <translation><!-- Microsoft Team Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Base URL of your Repository, e.g.: https://github.com/[COMPANY]/[REPOSITORY]/ https://bitbucket.org/[COMPANY]/[REPOSITORY]/ https://gitlab.org/[COMPANY]/[REPOSITORY]/ --></help>
+        <label><!-- Pull Request Base URL --></label>
+        <name>copado__Pull_Request_Base_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Choose between standard Metadata API folder and file structure or DX source structure that uses a different set of files and file extensions. Default is Metadata. --></help>
+        <label><!-- Source Format --></label>
+        <name>copado__Source_Format__c</name>
+        <picklistValues>
+            <masterLabel>Metadata</masterLabel>
+            <translation><!-- Metadata --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Base URL of your Repository, e.g.: https://github.com/[COMPANY]/[REPOSITORY]/releases/tag/ --></help>
+        <label><!-- Tag Base URL --></label>
+        <name>copado__Tag_Base_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- HTTPS or SSH URL to connect to the Git Repository. --></help>
+        <label><!-- URI --></label>
+        <name>copado__URI__c</name>
+    </fields>
+</CustomObjectTranslation>

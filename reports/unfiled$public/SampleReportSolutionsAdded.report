@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ISSUE</field>
+    </columns>
+    <columns>
+        <field>SOLUTION_NUMBER</field>
+    </columns>
+    <columns>
+        <field>SOLUTION_NOTE</field>
+    </columns>
+    <columns>
+        <field>OWNER</field>
+    </columns>
+    <columns>
+        <field>EXTERNAL</field>
+    </columns>
+    <columns>
+        <field>TIMES_USED</field>
+    </columns>
+    <columns>
+        <field>LAST_UPDATE</field>
+    </columns>
+    <description>How Many Solutions are Being Added to the Knowledgebase each Month?</description>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>STATUS</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>CREATED_DATE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sample Report: Solutions Added</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>SolutionList</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <endDate>2006-06-29</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2006-06-22</startDate>
+    </timeFrameFilter>
+</Report>

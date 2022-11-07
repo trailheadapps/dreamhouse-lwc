@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Getting started page for the Copado Compliance Hub application.</description>
+    <label>Compliance Getting Started</label>
+    <motif>Custom20: Airplane</motif>
+    <page>copado__ComplianceGettingStarted</page>
+</CustomTab>

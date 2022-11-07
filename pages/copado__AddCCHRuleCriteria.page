@@ -1,0 +1,482 @@
+<apex:page docType="html-5.0" standardController="copado__Compliance_Rule__c" lightningStylesheets="true" extensions="copado.AddCCHRuleCriteriaExt" applyHtmlTag="true" showHeader="true" sidebar="true" standardStylesheets="true" title="Manage {!$ObjectType.copado__Compliance_Rule__c.Label} Criteria" cache="false">
+    <apex:outputField value="{!rule.copado__Metadata_Type__c}" rendered="false"/><!-- NR to avoid vf NS issues -->
+	<c:IncludeStaticsResourceComponent addJquery="true"/>
+
+    <head>
+        <apex:stylesheet value="{!URLFOR($Resource.copado__SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+        <apex:slds />
+        <apex:outputPanel rendered="{!$User.UIThemeDisplayed != 'Theme4d'}">
+            <style>
+                .slds-scope img {
+                    max-width: 100%;
+                    height: 15px;
+                }
+            </style>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+            <style>
+                .slds-scope .slds-theme--warning, .slds-scope .slds-theme_warning {
+                     background-color: #ffb75d !important;
+                 }
+                 .slds-scope .slds-theme--success, .slds-scope .slds-theme_success {
+                     background-color: #04844b !important;
+                 }
+                 .slds-scope .slds-theme--error, .slds-scope .slds-theme_error {
+                     background-color: #c23934 !important;
+                 }
+                 .slds-scope .slds-theme--shade, .slds-scope .slds-theme_shade {
+                     background-color: #f4f6f9 !important;
+                 }
+                 .slds-scope .slds-theme--info, .slds-scope .slds-theme_info {
+                     background-color: #54698d !important;
+                 }
+            </style>
+        </apex:outputPanel>
+        <style>
+            dl{
+                text-align:center;
+            }
+            .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox_faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox--faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox_faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox--faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox--faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox_faux {
+                border-color: green;
+                background-color: green;
+            }
+            .slds-scope .slds-checkbox--toggle [type=checkbox]:checked:focus+.slds-checkbox--faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked:focus+.slds-checkbox--faux_container .slds-checkbox--faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked:focus+.slds-checkbox_faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked:focus+.slds-checkbox_faux_container .slds-checkbox_faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked:focus~.slds-checkbox--faux, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked:focus~.slds-checkbox_faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked:focus+.slds-checkbox--faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked:focus+.slds-checkbox--faux_container .slds-checkbox--faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked:focus+.slds-checkbox_faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked:focus+.slds-checkbox_faux_container .slds-checkbox_faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked:focus~.slds-checkbox--faux, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked:focus~.slds-checkbox_faux {
+                background-color: green;
+                border-color: green;
+            }
+            .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux:focus, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux:hover, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux:focus, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux:hover, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox_faux:focus, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox_faux:hover, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:focus, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:hover, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox--faux:focus, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox--faux:hover, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox_faux:focus, .slds-scope .slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox_faux:hover, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox--faux:focus, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox--faux:hover, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux:focus, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux:hover, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux:focus, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux:hover, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:focus, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:hover, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox--faux:focus, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox--faux:hover, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox_faux:focus, .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox_faux:hover {
+                background-color: green;
+                border-color: green;
+            }
+            body p>.helpButton, body p>.helpButtonOn, .slds-vf-scope p>.helpButton, .slds-vf-scope p>.helpButtonOn{
+                justify-content: center !important;
+            }
+            body .slds-col>.helpButton, body .slds-col>.helpButtonOn, .slds-vf-scope .slds-col>.helpButton, .slds-vf-scope .slds-col>.helpButtonOn {
+                justify-content: left;
+            }
+
+        </style>
+
+    </head>
+    <script type="text/javascript">
+		$copado(document).ready(function(){
+			overridePageMessages();
+		})
+	</script>
+	<apex:outputPanel layout="block" >
+		<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="height: 100%;">
+		    <head>
+		    	<TITLE>Compliance Manage Criteria {!Compliance_Rule__c.Name} | Copado</TITLE>
+
+		      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		    </head>
+		    <body style="{!IF($User.UIThemeDisplayed == 'Theme4d','margin: 12px;background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2),linear-gradient(to top,rgba(32, 92, 159, 0), rgb(32, 92, 159));','')}">
+
+                <div class="slds-scope">
+		    	<center>
+	    			<div style="position: fixed;top:-5px;left:20%;right:20%;z-index:999999999999;">
+	    				<p>
+                            <apex:outputPanel id="topMessages">
+                                <apex:pageMessages />
+                                <script>
+                                    var iconURl = "{!URLFOR($Resource.copado__SLDS, 'assets/icons/action/close_60.png')}";
+                                    $copado('.messageTable tr:first').append('<td><apex:image style="cursor:pointer;float: right;" onclick="$copado(this).closest(\'[role=alert]\').remove();" value="'+iconURl+'"/>');
+                                </script>
+                            </apex:outputPanel>
+                        </p>
+	    			</div>
+	    		</center>
+		    	<apex:form id="form" rendered="{!renderDetails}">
+		    		<c:ScreenLocker msg="{!$Label.copado__LOADING}" /> 
+		    		
+		    		<apex:pageBlock mode="detail">
+                        <apex:pageBlockButtons location="top">
+                            <apex:outputPanel id="buttons" layout="block" style="display:inline-flex;">
+                                <apex:commandButton value="{!$Label.site.save}" onclick="preSave()" action="{!dummy}" immediate="false" reRender="xxx"/>
+                                <apex:actionFunction name="saveCriterias" action="{!saveCriterias}" reRender="topMessages,renderPanel,criterias,buttons,validateRule" oncomplete="overridePageMessages(undefined,true);"/>
+                                <apex:actionFunction name="validateRuleAct" action="{!validateRuleFromPage}" immediate="false" reRender="topMessages,renderPanel,criterias,validateRule,buttons,cbValidity" oncomplete="overridePageMessages();showLoader(false);"/>
+                                <input value="{!$Label.RESET}" type="button" onclick="if(confirm('{!$Label.CCH_Criteria_Values_Clear_Warning_Message}')){showLoader(true);resetAcf();}" class="btn"/>
+                                <apex:actionFunction name="resetAcf" action="{!refresh}" onComplete="overridePageMessages();showLoader(false);" reRender="criterias,topMessages,metaType,metaType2,mc,mc2,rc,rc2,cbValidity"/>
+
+                            </apex:outputPanel>
+                            <td style="float: right;">
+                            <apex:outputPanel id="cbValidity">
+                                    <label class="slds-checkbox_toggle slds-grid" style="pointer-events: none;">
+                                        <input name="checkbox-toggle-1" id="cbvalid" type="checkbox"  aria-describedby="checkbox-toggle-1" value="checkbox-toggle-1"/>
+                                        <span id="checkbox-toggle-1" class="slds-checkbox_faux_container" aria-live="assertive">
+                                                <span class="slds-checkbox_faux" style="{!IF(rule.Is_Valid__c,'','margin-left: 25%;')}">
+                                                </span>
+                                                <span class="slds-checkbox_on" style="text-align:center;font-size: initial;">Valid</span>
+                                                <span class="slds-checkbox_off" style="text-align:center;font-size: initial;">Not Validated</span>
+                                            </span>
+                                    </label>
+                                    <script>
+                                        if("{!rule.Is_Valid__c}" == "true"){
+                                            $copado('[id="cbvalid"]').prop('checked',true);
+                                        }
+                                    </script>
+                            </apex:outputPanel>
+                            </td>
+                        </apex:pageBlockButtons>
+                            <!-- Place previous criteria section fields here  -->
+                        <apex:outputPanel layout="none" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}">
+                            <div class="pbSubsection">
+                                <table class="detailList" id="tblDetail" border="0" cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                    <tr>
+                                        <td class="labelCol">{!$ObjectType.Compliance_Rule__c.Fields.Metadata_Type__c.Label}</td>
+                                        <td class="dataCol col02">
+                                            <apex:outputPanel layout="block" id="metaType">
+                                                <apex:outputPanel layout="block" id="hasNoType" rendered="{!OR(ISBLANK(rule.copado__Metadata_Type__c),rule.copado__Metadata_Type__c == '--None--')}">
+
+                                                    <apex:selectList value="{!rule.copado__Metadata_Type__c}" size="1" id="mt" multiselect="false">
+                                                        <apex:selectOptions value="{!categoryTypes}" />
+                                                        <apex:actionSupport action="{!getNodePicklist}" event="onchange" reRender="criterias,metaType,buttons" />
+                                                        <!-- add process spinner to above action support -->
+                                                    </apex:selectList>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel id="hasType" layout="none" rendered="{!AND(NOT(ISBLANK(rule.copado__Metadata_Type__c)),rule.copado__Metadata_Type__c != '--None--')}">
+                                                    <apex:outputField value="{!rule.copado__Metadata_Type__c}"/>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </td>
+                                        <td class="labelCol">
+                                            <span class="helpButton" id="cr.mc-_help">
+                                                <span>{!$ObjectType.Compliance_Rule__c.Fields.Matching_Criteria__c.Label}</span>
+                                                <img src="/img/s.gif" alt="" class="helpOrb" title=""/>
+                                                <script>
+                                                    sfdcPage.setHelp('cr.mc', "{!$ObjectType.Compliance_Rule__c.Fields.Matching_Criteria__c.inlineHelpText}");
+                                                </script>
+                                            </span>
+                                        </td>
+                                        <td class="dataCol">
+                                            <apex:outputPanel id="mc">
+                                                <apex:inputField value="{!rule.copado__Matching_Criteria__c}"/>
+                                            </apex:outputPanel>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labelCol">
+                                            {!$ObjectType.copado__Compliance_Rule__c.Fields.copado__Record_Count_Criteria__c.Label}
+                                        </td>
+                                        <td class="dataCol col02">
+                                            <apex:inputField id="asg" value="{!rule.copado__Record_Count_Criteria__c}"/>
+
+                                        </td>
+                                        <td class="labelCol">
+                                            <span class="helpButton" id="cr.rc-_help">
+                                                <span>{!$ObjectType.Compliance_Rule__c.Fields.Record_Count__c.Label}</span>
+                                                <img src="/img/s.gif" alt="" class="helpOrb" title=""/>
+                                                <script>
+                                                    sfdcPage.setHelp('cr.rc', "{!$ObjectType.Compliance_Rule__c.Fields.Record_Count__c.inlineHelpText}");
+                                                </script>
+                                            </span>
+                                        </td>
+                                        <td class="dataCol">
+                                            <apex:outputPanel id="rc">
+                                                <apex:inputField id="Classicrrc" value="{!rule.copado__Record_Count__c}"/>
+                                            </apex:outputPanel>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                            <div class="slds-grid slds-page-header__detail-row">
+                                <div class="slds-col--padded slds-size--1-of-2">
+                                    <dl>
+                                        <dt>
+                                            <p class="slds-text-heading--label slds-truncate" title="{!$ObjectType.copado__Compliance_Rule__c.Fields.copado__Metadata_Type__c.Label}">{!$ObjectType.copado__Compliance_Rule__c.Fields.copado__Metadata_Type__c.Label} </p>
+                                        </dt>
+                                        <dd>
+                                            <p class="slds-text-body--regular slds-truncate">
+                                                <apex:outputPanel layout="block" id="metaType2">
+                                                    <apex:outputPanel layout="block" id="hasNoType2" rendered="{!OR(ISBLANK(rule.copado__Metadata_Type__c),rule.copado__Metadata_Type__c == '--None--')}">
+
+                                                        <apex:selectList value="{!rule.copado__Metadata_Type__c}" size="1" id="mt2" multiselect="false">
+                                                            <apex:selectOptions value="{!categoryTypes}" />
+                                                            <apex:actionSupport action="{!getNodePicklist}" event="onchange" reRender="criterias,metaType2,buttons" />
+                                                            <!-- add process spinner to above action support -->
+                                                        </apex:selectList>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel id="hasType2" layout="none" rendered="{!AND(NOT(ISBLANK(rule.copado__Metadata_Type__c)),rule.copado__Metadata_Type__c != '--None--')}">
+                                                        <apex:outputField value="{!rule.copado__Metadata_Type__c}"/>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </p>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="slds-col--padded slds-size--1-of-2">
+                                    <dl>
+                                        <dt>
+                                            <p class="slds-text-heading--label slds-truncate">
+                                                <span class="helpButton" id="cr.mc-_help">
+                                                    <span>{!$ObjectType.Compliance_Rule__c.Fields.Matching_Criteria__c.Label}</span>
+                                                    <img src="/img/s.gif" alt="" class="helpOrb" title=""/>
+                                                    <script>
+                                                        sfdcPage.setHelp('cr.mc', "{!$ObjectType.Compliance_Rule__c.Fields.Matching_Criteria__c.inlineHelpText}");
+                                                    </script>
+                                                </span>
+                                            </p>
+                                        </dt>
+                                        <dd>
+                                            <p class="slds-text-body--regular slds-truncate"><apex:outputPanel id="mc2"><apex:inputField value="{!rule.copado__Matching_Criteria__c}"/></apex:outputPanel></p>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-page-header__detail-row">
+                                <div class="slds-col--padded slds-size--1-of-2">
+                                    <dl>
+                                        <dt>
+                                            <p class="slds-text-heading--label slds-truncate" title="{!$ObjectType.copado__Compliance_Rule__c.Fields.copado__Record_Count_Criteria__c.Label}">{!$ObjectType.copado__Compliance_Rule__c.Fields.copado__Record_Count_Criteria__c.Label} </p>
+                                        </dt>
+                                        <dd>
+                                            <p class="slds-text-body--regular slds-truncate"><apex:inputField value="{!rule.copado__Record_Count_Criteria__c}"/></p>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="slds-col--padded slds-size--1-of-2">
+                                    <dl>
+                                        <dt>
+                                            <p class="slds-text-heading--label slds-truncate">
+                                                <span class="helpButton" id="cr.rc-_help">
+                                                    <span>{!$ObjectType.Compliance_Rule__c.Fields.Record_Count__c.Label}</span>
+                                                    <img src="/img/s.gif" alt="" class="helpOrb" title=""/>
+                                                    <script>
+                                                        sfdcPage.setHelp('cr.rc', "{!$ObjectType.Compliance_Rule__c.Fields.Record_Count__c.inlineHelpText}");
+                                                    </script>
+                                                </span>
+                                            </p>
+                                        </dt>
+                                        <dd>
+                                            <p class="slds-text-body--regular slds-truncate"><apex:outputPanel id="rc2"><apex:inputField id="Lexrrc" value="{!rule.copado__Record_Count__c}"/></apex:outputPanel></p>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                        <div style="padding: 10px;background: #fdfdfd;border-collapse: collapse; background: #fdfdfd;border-radius: 4px;">
+                            <!-- Filter Criteria Selection -->
+                            <fieldset class="slds-box slds-theme--default slds-container--fluid">
+                                <legend id="newaccountform" class="slds-text-heading--medium slds-p-vertical--medium">
+                                    {!$Label.Criteria_Selection}
+                                </legend>
+                                <apex:outputPanel id="criterias" layout="block" >
+
+                                    <table cellspacing="1" cellpadding="1" style="border-collapse: collapse;" class="slds-table slds-table_cell-buffer">
+                                        <thead style="font-weight: bold;font-size: 11pt;">
+                                        <tr style="padding-bottom: 5px;">
+                                            <td style="width: 5%;">&nbsp;</td>
+                                            <td >{!$Label.Node}</td>
+                                            <td >{!$Label.Field}</td>
+                                            <td >{!$Label.Operator}</td>
+                                            <td >{!$Label.Value}</td>
+                                            <td >&nbsp;</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <apex:outputPanel layout="none" rendered="{!NOT(NodeFieldsisEmpty)}">
+                                        <apex:repeat value="{!criteriaList}" var="criteria">
+                                            <tr style="min-height: 40px;">
+                                                <td style="width: 3%;">
+                                                    <apex:outputPanel layout="block" rendered="{!showFilterLogic}">
+                                                        <span style="display: block;" class="defaultAnd">{!criteria.order}</span>
+                                                    </apex:outputPanel>
+                                                </td>
+                                                <td style="width: 20%;">
+                                                    <apex:selectList styleClass="slds-select" style="width: 100%;" value="{!criteria.nodeName}" size="1" multiselect="false">
+                                                        <apex:selectOptions value="{!categoryNodes}" />
+                                                        <apex:actionSupport action="{!SelectNode}" event="onchange" reRender="criterias" />
+                                                    </apex:selectList>
+                                                </td>
+                                                <td style="width: 20%;">
+                                                    <apex:selectList styleClass="slds-select" style="width: 100%;" value="{!criteria.fieldName}" size="1" multiselect="false">
+                                                        <apex:selectOptions value="{!nodeFields[criteria.nodeName]}" />
+                                                        <apex:actionSupport action="{!getFieldOperators}" event="onchange" reRender="criterias">
+                                                            <apex:param name="cro" value="{!criteria.order}" />
+                                                        </apex:actionSupport>
+                                                    </apex:selectList>
+                                                </td>
+                                                <td style="width: 15%;">
+                                                    <apex:selectList styleClass="slds-select" style="width: 100%;"  value="{!criteria.operator}" size="1" multiselect="false">
+                                                        <apex:selectOptions value="{!criteria.operatorSet}" />
+                                                        <apex:actionSupport action="{!dummy}" event="onchange" reRender="criterias,metaType,metaType2" />
+                                                    </apex:selectList>
+                                                </td>
+                                                <td >
+                                                    <apex:input styleClass="slds-input" rendered="{!OR(criteria.fieldType='STRING', criteria.fieldType='ID', criteria.fieldType='BASE64BINARY')}" value="{!criteria.input}" type="text"/>
+                                                    <apex:input styleClass="slds-input" rendered="{!criteria.fieldType='DATE'}" value="{!criteria.input}" type="date"/>
+                                                    <apex:input styleClass="slds-input" rendered="{!criteria.fieldType='DATETIME'}" value="{!criteria.input}" type="datetime"/>
+                                                    <apex:input styleClass="slds-input" html-myId="numberInput{!criteria.order}" rendered="{!OR(criteria.fieldType='INTEGER', criteria.fieldType='DOUBLE',criteria.fieldType='INT',criteria.fieldType='PERCENT')}" value="{!criteria.input}" type="text"/>
+                                                    <script type="text/javascript">
+										        	$copado(function () {
+													    $copado("input[myId^='numberInput']").keydown(function (event) {
+													        if (event.shiftKey == true) {
+													            event.preventDefault();
+													        }
+													        if ((event.keyCode >= 48 && event.keyCode <= 57) ||
+													            (event.keyCode >= 96 && event.keyCode <= 105) ||
+													            event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 ||
+													            event.keyCode == 39 || event.keyCode == 46 || event.keyCode == 190 || event.keyCode == 44 || event.keyCode == 188 || event.keyCode == 110) {
+
+													        } else {
+													            event.preventDefault();
+													        }
+													        if($copado(this).val().indexOf('.') !== -1 && event.keyCode == 190 && $copado(this).val().indexOf(',') === -1){
+													            event.preventDefault();
+													        }
+													        if($copado(this).val().indexOf('.') === -1 && $copado(this).val().indexOf(',') !== -1 && (event.keyCode == 188 || event.keyCode == 44 || event.keyCode == 110)){
+													            event.preventDefault();
+													        }
+													        //if a decimal has been added, disable the "." or "," -button
+
+													    });
+													})
+										        </script>
+                                                    <apex:inputCheckbox style="font-size: x-large;" rendered="{!criteria.fieldType='BOOLEAN'}" value="{!criteria.input}"/>
+                                                    <apex:input styleClass="slds-input" rendered="{!criteria.fieldType='TIME'}" value="{!criteria.input}" type="text"/>
+                                                </td>
+                                                <td style="width: 3%;">
+                                                    <apex:outputPanel layout="block" rendered="{!!showFilterLogic}">
+                                                        <span style="display: block;" class="defaultAnd">AND</span>
+                                                    </apex:outputPanel>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                        </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+
+                                </apex:outputPanel>
+                                <apex:commandLink id="addRow" action="{!addNewCriteria}" reRender="criterias,renderPanel" value="Add Row" />&nbsp;&nbsp;
+
+                                <apex:outputPanel id="removeRowPanel" >
+                                    <apex:commandLink id="removeRow" action="{!removeCriteria}" reRender="criterias,renderPanel" value="Remove Row" rendered="{!showFilterLogic}"/>
+                                </apex:outputPanel>
+                                <!-- Filter Criteria Selection End -->
+                                <!-- Filter Logic Entry -->
+                                <apex:outputPanel layout="block" styleClass="slds-grid" id="logicPanel" >
+                                    <div class="slds-col" >
+                                        <span class="helpButton" id="cr.fl-_help">
+                                            <a href="#" id="addLogic" onclick="togglePanel($copado(this))" active="{!showFilterLogic}">
+                                                {!IF(showFilterLogic,$Label.Clear_Filter_Logic,$Label.Add_Filter_Logic)}
+                                            </a>
+                                            <img id="imgfl" src="/img/s.gif" alt="" class="helpOrb" title="" onmouseover="adjustTooltip();"/>
+                                            <script>
+                                                sfdcPage.setHelp('cr.fl', "{!$ObjectType.Compliance_Rule__c.Fields.Filter_Criteria__c.inlineHelpText}");
+                                            </script>
+                                        </span>
+
+                                        <apex:outputPanel layout="block" id="renderPanel">
+                                            <apex:outputPanel layout="block" rendered="{!showFilterLogic}">
+                                                <p>
+                                                    <apex:inputText styleClass="logic slds-input" style="width: 50%;" value="{!filterLogic}" />
+                                                </p>
+                                                <!--<img class="logic" src="/img/report_boolean_filter.gif" alt="Open tips link above for help using filters" width="533" height="211" title="Open tips link above for help using filters"/>-->
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <apex:actionFunction name="toggleLogic" action="{!toggleLogic}" reRender="renderPanel,criterias,removeRowPanel"/>
+                                </apex:outputPanel>
+                            </fieldset>
+                            <!-- Filter Logic Entry END-->
+                        </div>
+                    </apex:pageBlock>
+
+		    	</apex:form>
+		    	<script type="text/javascript">
+
+                    if(typeof sforce != 'undefined'){
+                        $copado('div.pbBody').css('overflow','hidden');
+                        //$copado('div.bPageBlock').css('border','0px');
+                        $copado('body.slds-scope').attr('style','');
+                    }
+                    $copado('td.pbTitle').css('width','42%');
+					var togglePanel = function(elem){
+						var show = elem.attr('active');
+						console.log(show);
+						if(show === "false"){
+							toggleLogic();
+							$copado('.defaultAnd').hide()
+							elem.text("{!JSENCODE($Label.Clear_Filter_Logic)}");
+							elem.attr('active',"true"); 
+							// TODO: call and action function to clear filterLogic
+						}else{
+							toggleLogic();
+							$copado('.defaultAnd').show()
+							elem.text("{!JSENCODE($Label.Add_Filter_Logic)}");
+							elem.attr('active',"false");
+						}									
+						return false;
+					}
+					var adjustTooltip = function(){
+					    var toLeft = $copado('#imgfl').offset().left+'px';
+					    if($copado('div.helpText').css('display') == 'none' || $copado('div.helpText').length == 0){
+                            window.setTimeout(adjustTooltip,1);
+					    } else if(toLeft != $copado('div.helpText').css('left')){
+					        $copado('div.helpText').css('left',toLeft);
+                        }
+                    }
+					var showLoader = function(show){
+						if(show === false){
+							unlockScreen();
+						}else{
+							lockScreen();
+						}									
+						return false;
+					}
+					var preSave = function(){
+						showLoader(true);
+						saveCriterias();
+						return false;
+					}
+					var overridePageMessages = function(cb,validate){
+
+		                textureEffect = 'slds-theme--alert-texture';
+
+		                $copado('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);          
+		                $copado('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);    
+		                $copado('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+		                $copado('.errorM4').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+		                $copado('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);    
+
+		                $copado('.errorM3').removeClass('errorM3'); 
+		                $copado('.errorM4').removeClass('errorM3'); 
+		                $copado('.confirmM3').removeClass('confirmM3'); 
+		                $copado('.infoM3').removeClass('infoM3');   
+		                $copado('.warningM3').removeClass('warningM3');
+
+		                $copado('.message').css('margin',0);
+		                if(typeof sforce != 'undefined'){
+		                    $copado('div.message').attr('style','margin-top:80px !important');
+		                } else $copado('div.message').attr('style','margin-top:45px !important');
+		                $copado('.message').css('font-size','11pt');
+						$copado('.messageText').css('color','white');
+						$copado('.messageText').css('font-weight','500');
+						$copado('.messageText h4').css('color','white');
+						$copado('.customMessage').css('z-index','999');
+						$copado('.messageText').css('width','87%');
+						$copado('.messageText').css('overflow-wrap','break-word');
+                        if($copado('.messageTable').length == 0 && validate){
+                            validateRuleAct();
+                        } else showLoader(false);
+		                if(cb){
+		                    cb();
+                        }
+
+		                return false;
+		            }
+                    window.addEventListener("load",function(){
+                        $copado('input[type=text]').blur();
+                    },false);
+				</script>
+                </div>
+		    </body>
+		</html>
+	</apex:outputPanel>
+</apex:page>

@@ -1,0 +1,34 @@
+<apex:page id="PipelineTemplatesWizard" lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Pipeline Templates">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+    <script type="text/javascript" src="{!URLFOR($Resource.CopadoChangeManagement, 'Assets/js/jquery.svg.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.CopadoChangeManagement, 'Assets/js/jquery.connectingLine.js')}"></script>
+
+    <apex:includeScript value="{!URLFOR($Resource.copado__SetupDashboardJS)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__SetupDashboard)}" />
+    <script>
+        var svgButtonsId = [];
+        var svgButtonsClass = ['stepCompleted'];
+
+        var svgStruct = [];
+        var setSVGStruct = function(){
+            svgStruct['.stepCompleted'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}",
+                class:'slds-button__icon'
+            };
+        }
+        $copado(document).ready(function(){
+            setSVGStruct();
+            applyRenderSVG(svgButtonsId,svgButtonsClass);
+        });
+    </script>
+    <html>
+    <body class="slds-scope">
+    <apex:form >
+        <c:WizardSteps currentStep="4" />
+        <c:PipelineTemplate />
+    </apex:form>
+
+    </body>
+    </html>
+</apex:page>

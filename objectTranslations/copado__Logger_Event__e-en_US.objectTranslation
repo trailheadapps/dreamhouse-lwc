@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Exception Details --></label>
+        <name>copado__Exception_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Generic Id --></label>
+        <name>copado__Generic_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Limits Usage --></label>
+        <name>copado__Limits_Usage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Log Level --></label>
+        <name>copado__Log_Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payload --></label>
+        <name>copado__Payload__c</name>
+    </fields>
+    <fields>
+        <label><!-- Section --></label>
+        <name>copado__Section__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Id --></label>
+        <name>copado__User_Id__c</name>
+    </fields>
+</CustomObjectTranslation>

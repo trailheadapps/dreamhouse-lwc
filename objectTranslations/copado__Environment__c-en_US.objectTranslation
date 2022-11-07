@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Compliance Rule Group --></label>
+        <name>copado__Compliance_Rule_Group__c</name>
+        <relationshipLabel><!-- Environments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Compliance Scan Events --></label>
+        <name>copado__Compliance_Scan_Events__c</name>
+        <picklistValues>
+            <masterLabel>Commits</masterLabel>
+            <translation><!-- Commits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deployments</masterLabel>
+            <translation><!-- Deployments --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Compliance Status --></label>
+        <name>copado__Compliance_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Incoming Connection Behavior --></label>
+        <name>copado__Connection_Behavior__c</name>
+        <relationshipLabel><!-- Environment Default Behavior --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Current Code Coverage --></label>
+        <name>copado__Current_Code_Coverage__c</name>
+    </fields>
+    <fields>
+        <help><!-- Current Static Code Analysis Score --></help>
+        <label><!-- Current SCA Score --></label>
+        <name>copado__Current_SCA_Score__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enable Rollbacks for any Deployments/Promotions have this Environment as destination. Rollbacks will be available for Deployments/Promotions created after this feature is enabled --></help>
+        <label><!-- Enable Rollback --></label>
+        <name>copado__Enable_Rollback__c</name>
+    </fields>
+    <fields>
+        <help><!-- If enabled, when a Back Promotion is completed and contains Metadata found in User Stories in the destination Environment, the status of the User Story Metadata records of these User Stories will be updated to &quot;Back Promoted&quot;. --></help>
+        <label><!-- Index Back Promotion Metadata --></label>
+        <name>copado__Index_Back_Promotion_metadata__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Compliance Scan Date --></label>
+        <name>copado__Last_Compliance_Scan_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Refresh Date --></label>
+        <name>copado__Last_Refresh_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Latest Deployment Status --></label>
+        <name>copado__Latest_Deployment_Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed Successfully</masterLabel>
+            <translation><!-- Completed Successfully --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed with Errors</masterLabel>
+            <translation><!-- Completed with Errors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merge Conflict</masterLabel>
+            <translation><!-- Merge Conflict --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paused</masterLabel>
+            <translation><!-- Paused --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled</masterLabel>
+            <translation><!-- Scheduled --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Latest Deployment --></label>
+        <name>copado__Latest_Deployment__c</name>
+        <relationshipLabel><!-- Environments --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Maximum Static Code Analysis Score --></help>
+        <label><!-- Maximum SCA Score --></label>
+        <name>copado__Maximum_SCA_Score__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set the Minimum Apex Test Coverage here which will be used for Apex Test Results on the Org Credential detail page. --></help>
+        <label><!-- Minimum Apex Test Coverage --></label>
+        <name>copado__Minimum_Apex_Test_Coverage__c</name>
+    </fields>
+    <fields>
+        <help><!-- If you&apos;re developing managed packages, this will help you to write only one version of the pre/post Apex Code in Selenium Test Suites. Copado will replace any &quot;{!NS}&quot; text with this value. --></help>
+        <label><!-- Namespace --></label>
+        <name>copado__Namespace__c</name>
+    </fields>
+    <fields>
+        <label><!-- Org ID --></label>
+        <name>copado__Org_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Platform --></label>
+        <name>copado__Platform__c</name>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce</masterLabel>
+            <translation><!-- Salesforce --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The Default Credential for the target Org is always selected by default. Optionally, the Default Credential can be selected only if the user has no Org Credential for the target Org. --></help>
+        <label><!-- Promotion Default Credential --></label>
+        <name>copado__Promotion_Default_Credential__c</name>
+        <picklistValues>
+            <masterLabel>Always</masterLabel>
+            <translation><!-- Always --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Only If User Has No Org Credential</masterLabel>
+            <translation><!-- Only If User Has No Org Credential --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If selected, &quot;Run all local tests&quot; will be enforced when deploying to this environment. --></help>
+        <label><!-- Run all local tests --></label>
+        <name>copado__Run_all_tests__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+        <picklistValues>
+            <masterLabel>Production/Developer</masterLabel>
+            <translation><!-- Production/Developer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sandbox</masterLabel>
+            <translation><!-- Sandbox --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scratch Org</masterLabel>
+            <translation><!-- Scratch Org --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The Default Credential for the target Org is always selected by default. Optionally, the Default Credential can be selected only if the user has no Org Credential for the target Org. --></help>
+        <label><!-- Validation Promotion Default Credential --></label>
+        <name>copado__Validation_Promotion_Default_Credential__c</name>
+        <picklistValues>
+            <masterLabel>All Validation Promotions</masterLabel>
+            <translation><!-- All Validation Promotions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Only If User Has No Org Credential</masterLabel>
+            <translation><!-- Only If User Has No Org Credential --></translation>
+        </picklistValues>
+    </fields>
+    <webLinks>
+        <label><!-- Find_Replace_Rule_Editor --></label>
+        <name>copado__Find_Replace_Rule_Editor</name>
+    </webLinks>
+</CustomObjectTranslation>

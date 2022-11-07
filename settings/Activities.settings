@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ActivitiesSettings xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <allowUsersToRelateMultipleContactsToTasksAndEvents>false</allowUsersToRelateMultipleContactsToTasksAndEvents>
+    <autoRelateEventAttendees>false</autoRelateEventAttendees>
+    <enableActivityReminders>true</enableActivityReminders>
+    <enableClickCreateEvents>false</enableClickCreateEvents>
+    <enableDragAndDropScheduling>true</enableDragAndDropScheduling>
+    <enableEmailTracking>true</enableEmailTracking>
+    <enableFlowTaskNotifsViaApex>false</enableFlowTaskNotifsViaApex>
+    <enableGroupTasks>true</enableGroupTasks>
+    <enableHideChildEventsPreference>false</enableHideChildEventsPreference>
+    <enableListViewScheduling>false</enableListViewScheduling>
+    <enableLogNote>false</enableLogNote>
+    <enableMLSingleClientProfile>false</enableMLSingleClientProfile>
+    <enableMultidayEvents>true</enableMultidayEvents>
+    <enableRecurringEvents>true</enableRecurringEvents>
+    <enableRecurringTasks>true</enableRecurringTasks>
+    <enableRollUpActivToContactsAcct>true</enableRollUpActivToContactsAcct>
+    <enableSidebarCalendarShortcut>false</enableSidebarCalendarShortcut>
+    <enableSimpleTaskCreateUI>true</enableSimpleTaskCreateUI>
+    <enableTimelineCompDateSort xsi:nil="true"/>
+    <enableUNSTaskDelegatedToNotifications>true</enableUNSTaskDelegatedToNotifications>
+    <enableUserListViewCalendars>false</enableUserListViewCalendars>
+    <showCustomLogoMeetingRequests>false</showCustomLogoMeetingRequests>
+    <showEventDetailsMultiUserCalendar>false</showEventDetailsMultiUserCalendar>
+    <showHomePageHoverLinksForEvents>true</showHomePageHoverLinksForEvents>
+    <showMyTasksHoverLinks>true</showMyTasksHoverLinks>
+</ActivitiesSettings>

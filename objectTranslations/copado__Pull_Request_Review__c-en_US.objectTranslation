@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Body --></label>
+        <name>copado__Body__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pull Request --></label>
+        <name>copado__Pull_Request__c</name>
+        <relationshipLabel><!-- Pull Request Reviews --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Review Action --></label>
+        <name>copado__Review_Action__c</name>
+    </fields>
+    <fields>
+        <label><!-- Review Id --></label>
+        <name>copado__Review_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- URL Link --></label>
+        <name>copado__URL_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Url --></label>
+        <name>copado__Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Avatar Url --></label>
+        <name>copado__User_Avatar_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Avatar --></label>
+        <name>copado__User_Avatar__c</name>
+    </fields>
+    <fields>
+        <label><!-- Username --></label>
+        <name>copado__Username__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- API name of static resource --></help>
+        <label><!-- Provider --></label>
+        <name>copado__Provider__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of static resource bundle provider --></help>
+        <label><!-- Static Resource Name --></label>
+        <name>copado__StaticResourceName__c</name>
+    </fields>
+</CustomObjectTranslation>

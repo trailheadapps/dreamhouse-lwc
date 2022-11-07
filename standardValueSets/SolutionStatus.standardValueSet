@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Draft</fullName>
+        <default>true</default>
+        <label>Draft</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Reviewed</fullName>
+        <default>false</default>
+        <label>Reviewed</label>
+        <reviewed>true</reviewed>
+    </standardValue>
+    <standardValue>
+        <fullName>Duplicate</fullName>
+        <default>false</default>
+        <label>Duplicate</label>
+        <reviewed>false</reviewed>
+    </standardValue>
+</StandardValueSet>

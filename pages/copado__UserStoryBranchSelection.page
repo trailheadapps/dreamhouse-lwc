@@ -1,0 +1,48 @@
+<!--
+ - Created by mertyalti on 30/07/2018.
+ -->
+
+<apex:page id="UserStoryBranchSelection" standardController="copado__User_Story__c" lightningStylesheets="true" showChat="false" extensions="copado.Settings,copado.JsRemotingController">
+    <c:IncludeStaticsResourceComponent addJQuery="true" />
+    <apex:form >
+        <c:SObjectSummaryComponent userStory="{!copado__User_Story__c}" columnsHeader="2" />
+        <c:ManageRepositoryBranches repoId="{!IF(copado__User_Story__c.copado__Project__c != null, copado__User_Story__c.Project__r.Deployment_Flow__r.copado__Git_Repository__c, IF(copado__User_Story__c.copado__Release__c != null,copado__User_Story__c.Release__r.Project__r.Deployment_Flow__r.copado__Git_Repository__c,null))}" />
+
+        <script>
+
+            var selectBranch = function(branchName) {
+                var ns = '{!JSENCODE(namespace)}';
+                var core = ns ? window[ns.split('__')[0]] : window;
+
+                lockScreen();
+
+                var recordId = "{!JSENCODE(copado__User_Story__c.Id)}";
+                var fieldName = ns+"Base_Branch__c";
+
+                var res = (core).JsRemotingController.selectBranch(
+                    recordId,
+                    fieldName,
+                    branchName,
+                    function( result, event ) {
+                        unlockScreen();
+                        if(result === true){
+                            copadoNavigateToUrl(recordId,"{!URLFOR($Action.copado__User_Story__c.View,copado__User_Story__c.Id)}");
+                        } else {
+                            alert('Branch selection couldn\'t be completed.');
+                        }
+                    }
+                );
+            }
+
+            function copadoNavigateToUrl (id,url) {
+                // lightning/any other way to navigate
+                if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+                    sforce.one.navigateToSObject(id, 'detail');
+                } else {
+                    window.open(url, '_parent');
+                }
+            };
+
+        </script>
+    </apex:form>
+</apex:page>

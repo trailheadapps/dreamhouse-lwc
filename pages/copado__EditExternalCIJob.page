@@ -1,0 +1,502 @@
+<apex:page docType="html-5.0" standardController="copado__External_CI_Job__c" applyHtmlTag="true" showHeader="true" sidebar="true" standardStylesheets="true" extensions="copado.ExternalCIJobsExtension" title="{!$Label.site.edit} {!$ObjectType.copado__External_CI_Job__c.Label}">
+	<apex:outputPanel layout="block">
+		<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="height: 100%;">
+		<head>
+			<c:GAnalytics />
+			<apex:slds />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<c:IncludeStaticsResourceComponent addJQuery="true"/>
+			<apex:stylesheet value="{!URLFOR($Resource.copado__SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+
+			<style type="text/css">
+	      	.col-right{
+	      		margin-left : 15px;
+	      	}
+	      	#overlay {
+				background-color: black;
+				position: fixed;
+				top: 0; right: 0; bottom: 0; left: 0;
+				opacity: 0.5;
+				-moz-opacity:0.5;
+				-khtml-opacity: 0.5;
+				z-index: 9999;
+			}
+			.message{
+				margin-left: 0px;
+			}
+			.customMessage * {
+                color: #fff!important
+            }
+            .customMessage {
+                margin: 5px 0!important;
+                max-width: 1280px;
+                opacity: 1!important;
+                width: 100%;
+                font-size: 12px;
+                border: 0px;
+                padding-left: 10px;
+            }
+
+	      </style>
+			<script>
+
+            $copado(document).ready(function(){
+               if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+               		// No override in LEX
+           		} else {
+           			overridePageMessages();
+           		}
+            });
+
+            function overridePageMessages(){
+
+                textureEffect = 'slds-theme--alert-texture';
+
+                $copado('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
+                $copado('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);
+                $copado('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);
+                $copado('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);
+
+                $copado('.errorM3').removeClass('errorM3');
+                $copado('.confirmM3').removeClass('confirmM3');
+                $copado('.infoM3').removeClass('infoM3');
+                $copado('.warningM3').removeClass('warningM3');
+            }
+
+			//Modal Open
+			$copado('#toggleBtn').click(function(){
+			  $copado('#backdrop').addClass('slds-backdrop--open');
+			  $copado('#modal').addClass('slds-fade-in-open');
+			  return null;
+			});
+
+			//Modal Close
+			function closeModal(){
+			  $copado('#modal').removeClass('slds-fade-in-open');
+			  $copado('#backdrop').removeClass('slds-backdrop--open');
+			  return false;
+			}
+
+			var ciJob = ciJob || {};
+			ciJob.bindings = ciJob.bindings || {};
+			ciJob.param = ciJob.param || {};
+			ciJob.urlParams = ciJob.urlParams?ciJob.urlParams:[];
+			ciJob.template = ciJob.template || {};
+			ciJob.cacheDate = ciJob.cacheDate || '';
+
+			$copado('div[id=urlParameters]').on('keyup', '.ci-param', function(event){
+			    if((event.which>=16&&event.which<=20)||(event.which>=36&&event.which<=40))return;
+			    ciJob.paramsToUrl($copado(this));
+			});
+
+
+			$copado('input[id$="url"]').on('keyup blur', function(event){
+			    ciJob.url = encodeURI($copado(this).val())
+			    ciJob.parseUrl($copado(this).val());
+			});
+			$copado('input[id$="url"]').on('blur', function(event){
+			    ciJob.encode();
+			});
+
+			ciJob.encode = function(){
+				var elm = $copado('input[id$="url"]');
+				elm.val(encodeURI(elm.val()));
+				console.log('ecnoded URI ',elm.val());
+				return false;
+			}
+			/* PARAM METHODS */
+			ciJob.param.addRow = function(){
+			    var wrapper;
+			    var parentId = 'urlParameters';
+			    wrapper = ciJob.template.paramRow(ciJob.urlParams.length, null);
+			    ciJob.urlParams.push(["",""]);
+			    $copado(wrapper).appendTo('#'+parentId);
+			};
+			ciJob.param.deleteRow = function(i){
+			    ciJob.urlParams.splice(i,1);
+			    ciJob.createChildRows(ciJob.urlParams, 'param');
+			    ciJob.paramsToUrl();
+			};
+
+
+			/*
+			    Pre-save validation method to ensure we don't have empty params.
+			*/
+			ciJob.param.validate = function(){
+			    var isValid = true;
+			    var params = ciJob.urlParams;
+			    for(var i=0; i<params.length; i++){
+			        if(isValid==false)break;
+			        isValid = (params[i][0].length>0 && params[i][1].length>0);
+			    }
+			    return isValid;
+			};
+
+			/*
+			 *  Convert the object array to a flat string url
+			 *  return { string }  the flattened url
+			*/
+			ciJob.paramsToUrl = function($obj){
+			    var me = ciJob;
+			    var al = $obj?$obj.data('al'):0;
+			    var at = $obj?$obj.data('type'):'';
+
+			    var url = "{!JSENCODE(url)}";
+			    if($obj)me.urlParams[al] = [(at=='name')?$obj.val():me.urlParams[al][0], (at=='value')?$obj.val():me.urlParams[al][1]];
+			    var data = me.urlParams;
+			    for(var i=0; i<data.length; i++){
+			        url = url+((i==0)?'buildWithParameter?':'&')+data[i][0]+'='+data[i][1];
+			    }
+			    me.url = url;
+			    $copado("[Id$='dataJSON']").val(JSON.stringify(data));
+			    console.log('JSON-->'+$copado("[Id$='dataJSON']").val());
+			    return url;
+			};
+
+			/*
+			 *  This method will create the rows depending on which type is selected (for as Header or as Param).
+			 *  type = param | header
+			 *   return {[]}
+			*/
+			ciJob.createChildRows = function(array, type){
+			    var parentId = (type=='param')?'urlParameters':'';
+
+			    var parent = document.getElementById(parentId);
+			    while (parent.firstChild) {
+			        parent.removeChild(parent.firstChild);
+			    }
+
+			    if(array.length==0 && type=='param'){
+			        ciJob.urlParams = [];
+			        return;
+			    }
+			    for(var i=0; i<array.length; i++){
+			        var wrapper = (type=='param')?ciJob.template.paramRow(i, array[i]):'';
+			        $copado(wrapper).appendTo('#'+parentId);
+			    }
+			};
+
+			/*
+			 *  converts string parameters to object and sets against urlParams
+			 *  return { array }  object array
+			*/
+			ciJob.paramsToObject = function(value){
+			    var value = (value.charAt(0) === '?')?value.substr(1):value;
+			    if(value.indexOf("=") == -1)return ciJob.urlParams;
+			    var kvps = value.replace(/&/g, '|');
+			    kvps = kvps.split('|');
+			    ciJob.urlParams = [];
+			    for(var i=0; i<kvps.length; i++){
+			        var pair = kvps[i].split('=');
+			        if(pair.length==2){
+			            ciJob.urlParams.push([pair[0], pair[1]]);
+			        }
+			        if(pair.length==0){
+			            ciJob.urlParams.push(['', '']);
+			        }
+			        if(pair.length==1){
+			            ciJob.urlParams.push([pair[0], '']);
+			        }
+			    }
+			    return ciJob.urlParams;
+			};
+
+			/**
+			 * @return {[type]}
+			 */
+			ciJob.setSetting = function(){
+				setTimeout(function(){
+					 $copado('input[identifier=settingLookup]').parent().parent().children().each(function(){
+						if($copado(this).prop('id').indexOf('lookup_lkid') > -1){
+							console.log('setSetting $copado(this).val() -->',$copado(this).val());
+							if($copado(this).val() != null)
+							callSettingMethod($copado(this).val());
+						}
+					});
+				}, 200);
+				setTimeout(function(){
+					 ciJob.getCacheDate();
+				}, 200);
+			}
+
+			/*
+			 *  This method will parse the url and create the params list
+			 *  return {[]}  nothing
+			*/
+			ciJob.parseUrl = function(value){
+			    var parseUrl = value;
+			    if(value==''){
+			        var parent = document.getElementById('urlParameters');
+			        while (parent.firstChild) {
+			            parent.removeChild(parent.firstChild);
+			        }
+			        ciJob.urlParams = [];
+			    }
+
+			    var query="";
+			    if(value.indexOf("?")>-1){
+			        query=value.substring(value.indexOf("?"));
+			        value=value.substring(0,value.indexOf("?"));
+			    }
+			    ciJob.host = value;
+			    ciJob.url = value+query;
+			    ciJob.urlParams = ciJob.paramsToObject(query);
+			    ciJob.createChildRows(ciJob.urlParams, 'param');
+			};
+
+			/* TEMPLATES */
+			ciJob.template.paramRow = function(rowNumber, keyPair){
+			    var n = keyPair?keyPair[0]:'';
+			    var v = keyPair?keyPair[1]:'';
+			    var btn = '<button id="del-param-'+rowNumber+'" onclick="ciJob.param.deleteRow('+rowNumber+'); return false;" class="btn">Delete</button';
+			    var nameField =   '<input type="text" class="ci-param" id="param-'+rowNumber+'-name" data-type="name" data-al="'+rowNumber+'" value="'+n+'" />';
+			    var valueField = '<input type="text" class="ci-param" id="param-'+rowNumber+'-value" data-type="value" data-al="'+rowNumber+'" value="'+v+'" />';
+			    var wrapper = '<div id="paramWrapper-'+rowNumber+'" style="clear:both;">'+nameField+valueField+btn+'</div>';
+			    return wrapper;
+			};
+
+			ciJob.getCacheDate = function(param){
+				var todayDate= param ? param : new Date('{!lastCacheDate}');
+				ciJob.cacheDate = ciJob.cacheDate ? $copado("[Id$='removeCache']").text() : ciJob.cacheDate;
+				console.log('TodayD ==>'+todayDate);
+				var textTemplate = "{!$Label.copado__CACHE_REFRESHED_NOW}";
+				textTemplate = textTemplate.replace('__METATYPE__','');
+				if(todayDate != "Invalid Date"){
+					var format ="AM";
+					var hour=todayDate.getHours();
+					var min=todayDate.getMinutes();
+					if(hour>11){format="PM";}
+					if (hour   > 12) { hour = hour - 12; }
+					if (hour   == 0) { hour = 12; }
+					if (min < 10){min = "0" + min;}
+					var month = parseInt(todayDate.getMonth())+1;
+					$copado("[Id$='removeCache']").text(textTemplate.replace('__DATE__',todayDate.getDate() + "/"+ month + "/" +  todayDate.getFullYear()+" "+hour+":"+min+" "+format));
+				}else{
+					$copado("[Id$='removeCache']").text(textTemplate.replace('__DATE__',''));
+				}
+			}
+			$copado('input[identifier=settingLookup]').on('change', function() {
+				console.log('on the way of setting');
+			    ciJob.setSetting();
+			});
+
+			$copado(document).ready(function(){
+
+				$copado('input[identifier=settingLookup]').on('change', function() {
+					console.log('on the way of setting');
+				    ciJob.setSetting();
+				});
+				ciJob.getCacheDate();
+				var parsed;
+				if($copado("[Id$='dataJSON']").val() != "" && $copado("[Id$='dataJSON']").val() != null ){
+					parsed = JSON.parse($copado("[Id$='dataJSON']").val());
+					var paramArray = parsed.parameters;
+					for(i = 0; i < paramArray.length; i++){
+						ciJob.urlParams.push([paramArray[i].name,paramArray[i].value]);
+					}
+					ciJob.createChildRows(ciJob.urlParams,'param');
+					$copado("[Id$='dataJSON']").val('');
+				}
+
+
+				$copado('div[id$="urlParameters"]').on('keyup', '.ci-param', function(event){
+				    if((event.which>=16&&event.which<=20)||(event.which>=36&&event.which<=40))return;
+				    ciJob.paramsToUrl($copado(this));
+				});
+
+				$copado('input[id$="url"]').on('keyup blur', function(event){
+			    	ciJob.url = encodeURI($copado(this).val());
+			    	ciJob.parseUrl($copado(this).val());
+				});
+				$copado('input[id$="url"]').on('blur', function(event){
+			    	ciJob.encode();
+				});
+
+				$copado("[Id$='dataJSON']").val(JSON.stringify(ciJob.urlParams));
+
+				$copado('#toggleBtn').click(function(){
+				  $copado('#backdrop').addClass('slds-backdrop--open');
+				  $copado('#modal').addClass('slds-fade-in-open');
+				  return null;
+				});
+				ciJob.encode();
+			});
+
+		  </script>
+		</head>
+		<body class="slds-scope"  style="{!IF($User.UIThemeDisplayed == 'Theme4d','margin: 12px;background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2),linear-gradient(to top,rgba(32, 92, 159, 0), rgb(32, 92, 159));','')}">
+		<apex:form id="form">
+			<apex:inputHidden id="dataJSON" value="{!tempJSON}" />
+			<apex:outputPanel >
+				<!--<div class="slds-scope">-->
+				<div class="slds-page-header" style="{!IF($User.UIThemeDisplayed == 'Theme4d','background: #fdfdfd;margin-bottom: 12px;border-collapse: collapse;border-radius: 4px;','')}">
+					<apex:outputPanel layout="block" id="pageMessages">
+						<apex:pagemessages id="pageMessage"/>
+					</apex:outputPanel>
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media">
+								<div class="slds-media__figure">
+									<span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+										<svg class="slds-icon" aria-hidden="true">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/standard-sprite/svg/symbols.svg#custom_notification')}"></use>
+										</svg>
+									</span>
+								</div>
+								<div class="slds-media__body">
+									<p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.External_CI_Job__c.Label}</p>
+									<h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.External_CI_Job__c.Label} {!$Label.EDIT}">{!externalCIjob.Name} {!$Label.EDIT}</h1>
+								</div>
+							</div>
+						</div>
+						<!-- ACTION BUTTONS -->
+						<div class="slds-col slds-no-flex slds-grid slds-align-top ">
+							<div class="slds-button-group" role="group">
+								<apex:commandButton value="{!$Label.site.save}" styleClass="slds-button slds-button_success" action="{!saveJob}" reRender="generalMessage" rendered="{!AND(showOptions,!showError)}"/>
+								<apex:commandButton value="{!$Label.site.cancel}" action="{!cancel}" immediate="true" styleClass="slds-button slds-button--neutral" reRender="xxx"/>
+							</div>
+						</div>
+						<!-- / ACTION BUTTONS -->
+					</div>
+				</div>
+				<apex:outputPanel rendered="{!AND(showOptions,!showError)}">
+					<div style="padding:12px;background: #fdfdfd;border-collapse: collapse; background: #fdfdfd;border-radius: 4px;">
+						<fieldset class="slds-box slds-theme--default slds-container--fluid">
+							<legend id="newaccountform" class="slds-text-heading--medium ">
+								{!IF(ISBLANK(externalCIjob.Name),$Label.NEW +' '+ $ObjectType.External_CI_Job__c.Label ,externalCIjob.Name)}
+							</legend>
+							<form class="slds-form--stacked">
+								<div class="slds-grid">
+									<div class="slds-col" >
+										<c:LightningReadyInputFields SObject="{!externalCIjob}" requiredView="true" Field="Name"/>
+										<c:LightningReadyInputFields SObject="{!externalCIjob}" identity="settingLookup" requiredView="true" Field="External_CI_Setting__c"/>
+										<c:LightningReadyInputFields SObject="{!externalCIjob}" Field="Environment__c"/>
+										<c:LightningReadyInputFields SObject="{!externalCIjob}" requiredView="true" Field="Invoke_on__c"/>
+										<c:LightningReadyInputFields SObject="{!externalCIjob}" requiredView="false" Field="Continue_on_failure__c"/>
+										<c:LightningReadyInputFields SObject="{!externalCIjob}" requiredView="true" Field="Timeout_in_minutes__c"/>
+									</div>
+									<div class="slds-col col-right">
+										<c:LightningReadyInputFields SObject="{!externalCIjob}" Field="User_Story__c"/>
+										<c:LightningReadyInputFields SObject="{!externalCIjob}" requiredView="true" Field="Order__c"/>
+									</div>
+									<apex:actionFunction action="{!setSetting}" name="callSettingMethod" status="status" immediate="true" reRender="jobRenderPanel" oncomplete="renderPanels();">
+										<apex:param name="setId" value="" />
+									</apex:actionFunction>
+									<apex:actionFunction name="renderPanels" reRender="jobRenderPanel" />
+								</div>
+							</form>
+						</fieldset>
+					</div>
+					<apex:outputPanel id="jobSetupPanel" layout="block" style="padding:12px;background: #fdfdfd;border-collapse: collapse; background: #fdfdfd;border-radius: 4px; margin-top:12px;">
+						<fieldset class="slds-box slds-theme--default slds-container--fluid">
+							<legend id="newaccountform" class="slds-text-heading--medium slds-p-vertical--medium">
+								{!$Label.JOB_SETUP}
+							</legend>
+							<form class="slds-form--stacked" style="margin-bottom:12px;">
+								<div class="slds-col" >
+									<div class="slds-form-element">
+										<input type="button" class="slds-button slds-button--brand" id="toggleBtn" onclick="ciJob.getCacheDate();" value="{!$Label.Select_CI_Job}"></input>
+									</div>
+									<apex:outputPanel id="jobRenderPanel" layout="block">
+										<div class="slds-form-element">
+											<label class="slds-form-element__label" for="urlText">
+												{!$ObjectType.copado__External_CI_Job_Result__c.fields.copado__Job_URL__c.label}
+											</label>
+											<div class="slds-form-element__control" id="urlText">
+												<apex:inputText styleClass="slds-input" value="{!url}" id="url" />
+											</div>
+										</div>
+									</apex:outputPanel>
+									<div class="slds-form-element" id="urlParameters">
+
+										<label class="slds-form-element__label" for="urlParametersSection">
+											{!$Label.copado__BUILD_PARAMETERS}
+										</label>
+										<apex:actionFunction immediate="true" action="{!removeUrlParam}" reRender="paramLoop" name="removeParam">
+											<apex:param name="order" value="" />
+										</apex:actionFunction>
+										<apex:outputPanel id="paramLoop" layout="block">
+											<apex:variable value="{!0}" var="count" id="counter"/>
+										</apex:outputPanel>
+									</div>
+									<input type="button" value="{!$Label.Add_Build_Parameter}" class="btn slds-button slds-button_neutral" id="btn-js-addUrlParameter" onclick="ciJob.param.addRow(); return false;"/>
+								</div>
+							</form>
+						</fieldset>
+					</apex:outputPanel>
+					<apex:actionFunction name="renderPanels" reRender="jobsPanel" />
+					<apex:actionFunction name="retrieveJob" status="status" oncomplete="overridePageMessages();ciJob.getCacheDate(new Date());$copado('[id$=removeCache]').show();" reRender="jobsPanel,pmessage" action="{!retrievejobsList}">
+						<apex:param name="settingParam" value=""/>
+					</apex:actionFunction>
+					<div class="slds-modal" aria-hidden="false" role="dialog" id="modal">
+						<div class="slds-modal__container">
+							<apex:pagemessages id="pmessage"/>
+							<div class="slds-modal__header">
+								<button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="closeModal()">
+									<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+										<use xlink:href="/assets/icons/action-sprite/svg/symbols.svg#close"></use>
+									</svg>
+									<span class="slds-assistive-text">{!$Label.CLOSE}</span>
+								</button>
+								<h2 class="slds-text-heading--medium">{!$Label.Available_Jobs_for} {!settingType}</h2>
+							</div>
+							<div class="slds-modal__content slds-p-around--medium">
+								<div class="slds-align_absolute-center">
+									<apex:commandLink value="{!$Label.copado__CACHE_REFRESHED_NOW}" status="status" onclick="retrieveJob($copado('input[identifier=settingLookup]').val());$copado(this).hide();"  rerender="xxx" id="removeCache"/>
+								</div>
+								<apex:outputPanel layout="block" id="jobsPanel">
+									<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+										<thead>
+										<tr class="slds-text-title_caps">
+											<th scope="col" class="slds-cell-wrap">
+												<div class="slds-truncate" title="{!$Label.Job_Name}">{!$Label.Job_Name}</div>
+											</th>
+											<th scope="col" class="slds-cell-wrap">
+												<div class="slds-truncate" title="{!$Label.Job_URL}">{!$Label.Job_URL}</div>
+											</th>
+										</tr>
+										</thead>
+										<tbody>
+										<apex:repeat value="{!jobsList}" var="j" id="jobsList">
+											<tr>
+												<td data-label="Job Name" class="">
+													<div class="slds-truncate" title="{!j.JobName}">
+														<apex:commandLink value="{!j.jobName}" immediate="false" onclick="jobSelection('{!JSENCODE(j.JobName)}');return false;" rerender="xxx" id="selectJob"/>
+													</div>
+												</td>
+												<td data-label="URL" class="">
+													<div class="slds-truncate" title="{!j.url}">{!j.url}</div>
+												</td>
+											</tr>
+										</apex:repeat>
+										</tbody>
+									</table>
+								</apex:outputPanel>
+							</div>
+							<div class="slds-modal__footer">
+								<apex:commandLink value="{!$Label.copado__Cancel}" immediate="true" oncomplete="closeModal();" rerender="xxx" id="selectJob"/>
+							</div>
+						</div>
+					</div>
+					<div class="slds-backdrop" id="backdrop"></div>
+				</apex:outputPanel>
+				<apex:actionFunction name="jobSelection" action="{!selectJob}" status="status" rerender="jobRenderPanel" oncomplete="ciJob.encode();closeModal();">
+					<apex:param name="selectedJob" value="" assignTo="{!jobName}"/>
+				</apex:actionFunction>
+			</apex:outputPanel>
+			</apex:form>
+			<apex:actionStatus id="status" styleClass="overlay" style="align:center;" >
+				<apex:facet name="start" >
+					<div id="overlay" style="height: 100%;">
+						<div role="status" class="slds-spinner slds-spinner_medium">
+							<span class="slds-assistive-text">{!$Label.LOADING}</span>
+							<div class="slds-spinner__dot-a"></div>
+							<div class="slds-spinner__dot-b"></div>
+						</div>
+					</div>
+				</apex:facet>
+			</apex:actionStatus>
+		</body>
+		</html>
+	</apex:outputPanel>
+</apex:page>

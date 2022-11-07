@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Continuous Integration --></label>
+        <name>copado__Continuous_Integration__c</name>
+        <relationshipLabel><!-- Build Tasks --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Deployment --></label>
+        <name>copado__Deployment__c</name>
+        <relationshipLabel><!-- Build Tasks --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Duration --></label>
+        <name>copado__Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Time --></label>
+        <name>copado__Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+        <picklistValues>
+            <masterLabel>Deploy</masterLabel>
+            <translation><!-- Deploy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validate</masterLabel>
+            <translation><!-- Validate --></translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

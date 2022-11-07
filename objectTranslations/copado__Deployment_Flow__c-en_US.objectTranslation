@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- If checked, all Branch Management features will be enabled in the Deployment Flow. --></help>
+        <label><!-- Active --></label>
+        <name>copado__Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked, committing changes on user stories linked to this Pipeline will not be allowed --></help>
+        <label><!-- Block Commits --></label>
+        <name>copado__Block_Commits__c</name>
+    </fields>
+    <fields>
+        <label><!-- Branch Management Coordinates --></label>
+        <name>copado__Branch_Management_Coordinates__c</name>
+    </fields>
+    <fields>
+        <help><!-- If Branch is selected, Branch Management page will work as before, if User Story selected, calculation and result will be based on User Stories. --></help>
+        <label><!-- Calculate Based on --></label>
+        <name>copado__Calculate_Based_on__c</name>
+        <picklistValues>
+            <masterLabel>Branch</masterLabel>
+            <translation><!-- Branch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Story</masterLabel>
+            <translation><!-- User Story --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Selected DX mode will determine scratch metadata sources. --></help>
+        <label><!-- Copado DX Mode --></label>
+        <name>copado__Copado_DX_Mode__c</name>
+        <picklistValues>
+            <masterLabel>Branches</masterLabel>
+            <translation><!-- Branches --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Git Package</masterLabel>
+            <translation><!-- Git Package --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Org Metadata</masterLabel>
+            <translation><!-- Org Metadata --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce Package</masterLabel>
+            <translation><!-- Salesforce Package --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If checked, Deployment Flow Steps best practices validations will be disabled. --></help>
+        <label><!-- Disable Validations --></label>
+        <name>copado__Disable_Validations__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Copado DX --></label>
+        <name>copado__Enable_Copado_DX__c</name>
+    </fields>
+    <fields>
+        <help><!-- If unchecked, Copado will stop applying Smart Conflict resolution during the promotion process and users will have to manually resolve conflicts again in every subsequent promotion. --></help>
+        <label><!-- Enable Smart Conflict Resolution --></label>
+        <name>copado__Enable_Smart_Conflict_Resolution__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked, Environment names must equal their corresponding Branches in the Deployment Flow Steps. --></help>
+        <label><!-- Enforce branch/env naming convention --></label>
+        <name>copado__Equal_Branch_Environment_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Conflicts found in the selected metadata types are not auto-resolved by Copado when merging feature branches into the promotion branch. The conflicts can be manually resolved using Copado. --></help>
+        <label><!-- Exclude From Auto Resolve --></label>
+        <name>copado__Exclude_From_Auto_Resolve__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flow Step Coordinates --></label>
+        <name>copado__Flow_Step_Coordinates__c</name>
+    </fields>
+    <fields>
+        <help><!-- Git Repository linked to the Deployment Flow. All branches of the Deployment Flow Steps must exist in this Git Repository. --></help>
+        <label><!-- Git Repository --></label>
+        <name>copado__Git_Repository__c</name>
+        <relationshipLabel><!-- Pipelines --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Tabs to hide in Branch Management detail window --></help>
+        <label><!-- Hide Tabs --></label>
+        <name>copado__Hide_Tabs__c</name>
+        <picklistValues>
+            <masterLabel>Auto Resolved Conflicts</masterLabel>
+            <translation><!-- Auto Resolved Conflicts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Commits Ahead</masterLabel>
+            <translation><!-- Commits Ahead --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Commits Behind</masterLabel>
+            <translation><!-- Commits Behind --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Compliance Scan Results</masterLabel>
+            <translation><!-- Compliance Scan Results --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deployment Error</masterLabel>
+            <translation><!-- Deployment Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>File Differences</masterLabel>
+            <translation><!-- File Differences --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merged Files</masterLabel>
+            <translation><!-- Merged Files --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selenium Test Groups</masterLabel>
+            <translation><!-- Selenium Test Groups --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Main branch of the selected Git Repository (e.g. master). --></help>
+        <label><!-- Main Branch --></label>
+        <name>copado__Main_Branch__c</name>
+    </fields>
+    <fields>
+        <help><!-- Link to open the Pipeline Manager to promote and back promote User Stories. --></help>
+        <label><!-- Manage Releases --></label>
+        <name>copado__Manage_Branches__c</name>
+    </fields>
+    <fields>
+        <help><!-- When a conflicted file cannot be semantically merged during an Auto Resolve, the entire file is overwritten by default. You can choose to overwrite only the conflicting lines and merge the mergeable lines; Copado uses the &quot;Theirs&quot; git merge strategy. --></help>
+        <label><!-- Auto Resolve Conflict Strategy --></label>
+        <name>copado__Merge_Strategy__c</name>
+        <picklistValues>
+            <masterLabel>Overwrite conflicting lines only</masterLabel>
+            <translation><!-- Overwrite conflicting lines only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Overwrite file</masterLabel>
+            <translation><!-- Overwrite file --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Fill that field only if you want to change the selected user stories order on deployment.
+This value will prefill the order by field on related Promotion record creation if set. (usage exp: name asc) --></help>
+        <label><!-- Order User Stories by --></label>
+        <name>copado__Order_by__c</name>
+    </fields>
+    <fields>
+        <label><!-- Platform --></label>
+        <name>copado__Platform__c</name>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce</masterLabel>
+            <translation><!-- Salesforce --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Static Code Analysis settings used whenever the analysis is run in Environments or User Stories linked to the Deployment Flow. --></help>
+        <label><!-- Static Code Analysis Settings --></label>
+        <name>copado__Static_Code_Analysis_Settings__c</name>
+        <relationshipLabel><!-- Pipelines --></relationshipLabel>
+    </fields>
+    <webLinks>
+        <label><!-- Find_Replace_Rule_Editor --></label>
+        <name>copado__Find_Replace_Rule_Editor</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Manage_Branches --></label>
+        <name>copado__Manage_Branches</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Manage_Environment_Variables --></label>
+        <name>copado__Manage_Environment_Variables</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Manage_Regression_Tests --></label>
+        <name>copado__Manage_Regression_Tests</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Pipeline_Wizard --></label>
+        <name>copado__Pipeline_Wizard</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Select_Main_Branch --></label>
+        <name>copado__Select_Main_Branch</name>
+    </webLinks>
+</CustomObjectTranslation>

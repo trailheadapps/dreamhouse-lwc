@@ -1,0 +1,194 @@
+<apex:page id="thePage" standardController="copado__Artifact__c" extensions="copado.ArtifactManageMetadataController,copado.Settings,copado.JsRemotingController" standardStyleSheets="true" lightningStylesheets="true" sideBar="false" action="{!redirectIfUnlocked}">
+    <c:GAnalytics />
+    <apex:slds />
+    <head>
+        <style type="text/css">
+            @keyframes flash {
+                from {background-color: #03a9ff;}
+                to {background-color: #f2f3f3;}
+            }
+            @keyframes remove {
+                from {background-color: #f44274;}
+                to {background-color: #f2f3f3;}
+            }
+            .run-animation {
+                animation: flash 1s 1;
+            }
+        </style>
+        <c:WizardUtils />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <apex:includeScript value="{!URLFOR($Resource.JsRemoting) }" />
+        <apex:includeScript value="{!URLFOR($Resource.statusManager) }" />
+        <apex:includeScript value="{!URLFOR($Resource.utilsV2) }" />
+        <c:IncludeStaticsResourceComponent addJquery="true" addJSON2js="true" addCometdjs="true" addJcometdjs="true" />
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true" />
+        <script>
+            var Copado_Licenses = {!CurrentUserLicenses};
+        </script>
+        <c:IncludeConnectionJsComponent />
+        <apex:includeScript value="{!URLFOR($Resource.copadoStreamingService) }" />
+
+        <c:WizardUtils />
+        <script>
+            var rock = rock || {};
+            rock.config = {
+                metadata_url : '{!JSENCODE(metadata_url_art)}'
+            };
+        </script>
+    </head>
+
+    <apex:outputPanel id="msg" styleClass="fixedMsg">
+        <apex:pageMessages id="theMessages" />
+    </apex:outputPanel>
+
+    <div style="display:none;">
+        <apex:pageMessage title="{!$Label.copado__WARNING}" summary="__MSG__" severity="warning" strength="3" id="js-msg-WARNING" />
+        <apex:pageMessage title="{!$Label.copado__SUCCESS}" summary="__MSG__" severity="confirm" strength="3" id="js-msg-CONFIRM" />
+        <apex:pageMessage title="{!$Label.copado__ERROR}" summary="__MSG__" severity="error" strength="3" id="js-msg-ERROR" />
+    </div>
+
+    <div id="mdHardSizeLimitMessage" style="display:none;">
+        <apex:pageMessage severity="warning" title="Warning: Metadata size for SFDX push command is limited." detail="Selected set of metadata exceeded Salesforce mdAPI and SFDX metadata size limit therefore this artifact is not be suitable to push into a scratch org" summary="Please make sure selected artifact does not contain more than 10.000 metadata." strength="3" />
+    </div>
+
+    <apex:form id="theForm" rendered="{!AND(hasOrg,hasOLS)}" styleClass="copado-lightning-container">
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}" />
+        <apex:actionFunction name="showMessage" action="{!showMessage}" rerender="msg">
+            <apex:param name="errorLevel" assignTo="{!errorLevel}" value="" />
+            <apex:param name="messageName" assignTo="{!messageName}" value="" />
+        </apex:actionFunction>
+
+        <apex:actionFunction name="checkUpdate" action="{!checkJobApex}" onComplete="checkJob();" rerender="cJFlag, msg" />
+        <apex:outputPanel layout="block" id="cJFlag">
+            <script>
+                var stat = {!copadoJobFinished};
+                var msgcJob = '{!JSENCODE(slockerMessage)}';
+            </script>
+        </apex:outputPanel>
+        <c:CopadoHelp sectionText="{!$Label.copado__Artifact_Help}" sectionTitle="{!$Label.copado__HELP}" sectionLink="https://docs.copado.com/" sectionLinkTitle="{!$Label.copado__MORE_INFORMATION_HERE}" sectionOpen="false" />
+        <apex:pageBlock id="pb" rendered="{!AND(showOptions,!showError)}" title="{!copado__Artifact__c.Name}">
+            <apex:pageBlockButtons id="pbb_Save" location="top">
+                <!--<apex:commandButton id="btnFindDependency" value="Find Dependencies" onClick="lockScreen();findDependencies(JSON.stringify(metadataGrid2.dependencyRetrieveArray));" reRender="xxx" />&nbsp;-->
+                <apex:commandButton id="btnSave" value="{!$Label.site.save}" onclick="lockScreen();copadoApp.save(callJob);" reRender="cJFlag, msg" />&nbsp;
+                <apex:commandButton id="btnClose" value="Back" action="{!cancel}" />
+                <apex:outputPanel id="removeCacheContainer">&nbsp;
+                    <apex:commandLink style="display:none;" value="{!$Label.copado__CACHE_REFRESHED_NOW}" onclick="return copadoApp.refreshCache();" rerender="opDummy" id="removeCache" />
+                </apex:outputPanel>
+            </apex:pageBlockButtons>
+            <apex:actionFunction action="{!callJob}" name="callJob" reRender="cJFlag, msg" onComplete="checkJob();" />
+            <apex:outputPanel layout="none">
+                <div id="metadataGrid2">
+                    <div class='mg2_tabs'>
+                        <ul style="margin-left: 20px;">
+                            <li>{!$Label.All_Metadata}</li>
+                            <li>{!$Label.SelectedMetadata}</li>
+                            <!--<li>Retrieve Dependencies</li>-->
+                        </ul>
+                        <div>
+                            <div class="mg2_scaleFilterFrame" style="padding: 5px; display: none;">
+                                <label class="mg2_mtFilter">Metadata Type Filter</label>&nbsp;
+                                <apex:commandLink value="({!$Label.copado__REFRESH})" onclick="return metadataGrid2.refreshMetadataTypes();" rerender="opDummy" id="removeMTCache" />
+                                <div class="mg2_scaleFilter" style="margin-bottom: 10px;"></div>
+                            </div>
+                        </div>
+                        <div><!-- empty div, needed as content for the two tabs --></div>
+                        <!--<div> empty div, needed as content for the three tabs </div>-->
+                    </div>
+                    <div class="mg2_jqxgrid">
+                        <center><img src="/img/loading.gif" /><i><span id="retry-label">{!$Label.copado__LOADING}</span></i>
+                        </center>
+                    </div>
+                </div>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        <script>
+            var metadataApp = {
+                userStoryId: '{!JSENCODE(copado__Artifact__c.Id)}',
+                orgCredential: '{!JSENCODE(copado__Artifact__c.copado__Org_Credential__c)}',
+                ns: '{!JSENCODE(namespace)}',
+                showMessage: function(type, msg, timeout){
+                    $copado('.fixedMsg')
+                        .html($copado('[id$=js-msg-'+type+']').html().replace('__MSG__',msg))
+                        .fadeIn('slow');
+                    if(timeout == -1)return false;
+                    timeout = (timeout==0)? 7000 : timeout;
+                    setTimeout(function(){$copado('.fixedMsg').fadeOut('slow');},timeout);
+                    return false;
+                }
+            }
+
+            function checkJob(){
+                console.log(stat == true);
+                if(stat == true){
+                    unlockScreen();
+                    return false;
+                }else{
+                    setLockScreenMessage(msgcJob);
+                    setTimeout(function(){
+                        checkUpdate();
+                    }, 3000);
+                }
+            }
+            var s = [];
+            <apex:repeat value="{!relatedArtifactIds}" var="r">
+              s.push('{!JSENCODE(r)}');
+            </apex:repeat>
+
+            var _config = {
+                data:{
+                    id: '{!JSENCODE(copado__Artifact__c.id)}',
+                    orgId: '{!JSENCODE(copado__Artifact__c.copado__Org_Credential__c)}',
+                    envId: '{!JSENCODE(copado__Artifact__c.copado__Org_Credential__c)}',
+                    relArtifIds : s
+                },
+                server: {
+                    metadataUrl: '{!JSENCODE(urlBase)}metadata/__ORGID__{!JSENCODE(urlParameters)}&parentId=__ORGID__&dates=format',
+                    typesUrl: '{!JSENCODE(urlBase)}gitTypes{!JSENCODE(urlParameters)}'
+                },
+                ns: '{!JSENCODE(namespace)}',
+                attachmentName: 'MetaData',
+                artifactAttName: 'ArtifactMetaData',
+                viewType: 0,
+                contextSize: 10,
+                leftContent: '',
+                rightContent: ''
+            };
+
+            $copado( document ).ready(function() {
+                copadoStreamingService.ns = '{!JSENCODE(namespace)}';
+                copadoStreamingService.init();
+                statusManager.ns = '{!JSENCODE(namespace)}';
+                statusManager.herokuServer = '{!JSENCODE(herokuServer)}';
+                statusManager.urlParameters = '{!JSENCODE(urlParameters)}';
+                statusManager.sessionId = __sfdcSessionId;
+                statusManager.parentId = '{!JSENCODE(copado__Artifact__c.Id)}';
+                copadoApp.init(_config,false,{!scalableGrid});
+                var body = document.getElementsByTagName('body')[0];
+                body.addEventListener("beforeunload", function(){
+                    copadoStreamingService.unload();
+                });
+                metadataGrid2.eltGrid.jqxGrid('hidecolumn', 'rd');
+
+                metadataGrid2.eltTabs.on('selected', function (event) {
+                    var selectedTab = event.args.item;
+                    copadoApp.renderGridColumnsForDependency(selectedTab);
+                });
+
+                if({!jobisExecuting} == true){
+                    lockScreen();
+                    setLockScreenMessage(msgcJob);
+                    checkUpdate();
+                }
+            });
+        </script>
+        <apex:includeScript value="{!URLFOR($Resource.metadataGrid2) }" />
+        <apex:includeScript value="{!URLFOR($Resource.artifactmanagemetadata) }" />
+    </apex:form>
+
+    <script>
+        ga('send', 'pageview', {
+          'page': '/ArtifactManageMetadata',
+          'title': 'Artifact Manage Metadata'
+        });
+    </script>
+</apex:page>

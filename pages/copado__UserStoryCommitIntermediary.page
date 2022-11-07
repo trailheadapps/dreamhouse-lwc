@@ -1,0 +1,129 @@
+<apex:page standardController="copado__User_Story__c" extensions="copado.UserStoryCommitIntermediaryExt,copado.Settings" id="thePage" sidebar="false" showHeader="false" readOnly="false" standardStylesheets="true" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+    <head>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    </head>
+
+    <body>
+    <div class="copado-lightning-VF">
+        <apex:sectionHeader id="theHeader" title="Copado" subtitle="{!$Label.copado__USER_STORY_COMMIT_INTM_TITLE}" description="{!$Label.copado__USER_STORY_COMMIT_INTM_DESCRIPTION}" rendered="{!AND(showOptions, !showError)},{!$User.UIThemeDisplayed != 'Theme4d'}" />
+        <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+
+        <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+            <div class="slds-page-header">
+                <apex:outputPanel layout="block" id="pageMessages">
+                    <apex:pagemessages id="msg" />
+                </apex:outputPanel>
+                <div class="slds-grid">
+                    <apex:outputPanel layout="none" rendered="{!!showError}">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media">
+                                <div class="slds-media__figure">
+                                  <span class="slds-icon_container slds-icon-custom-custom87" title="Description of icon when needed">
+                                    <svg class="slds-icon" aria-hidden="true">
+                                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom87')}"></use>
+                                    </svg>
+                                  </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <p class="slds-text-heading--label slds-line-height--reset">Copado</p>
+                                    <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$Label.copado__USER_STORY_COMMIT_INTM_TITLE}">{!$Label.copado__USER_STORY_COMMIT_INTM_TITLE}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    <!-- ACTION BUTTONS -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top {!IF($User.UIThemeDisplayed == 'Theme4d','slds-float_right','')}">
+                        <div class="slds-button-group" role="group">
+                            <a href="/{! URLFOR($Action.User_Story__c.View, userStory.Id)}" class="slds-button slds-button--neutral">{!$Label.RETURN_TO_USER_STORY}</a>
+                        </div>
+                    </div>
+                    <!-- / ACTION BUTTONS -->
+                </div>
+                <apex:outputPanel layout="none" rendered="{!!showError}">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-align-middle">
+                            <p class="slds-text-body_small">{!$Label.copado__USER_STORY_COMMIT_INTM_DESCRIPTION}</p>
+                        </div>
+                    </div>
+                    <div style="background: white; height: 25px;">
+                        <!-- Header details buffer-->
+                    </div>
+                </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+            <apex:outputPanel rendered="{!showError},{!$User.UIThemeDisplayed != 'Theme4d'}">
+                <a href="/{! URLFOR($Action.copado__User_Story__c.View, userStory.Id)}">{!$Label.copado__RETURN_TO_USER_STORY}</a>
+            </apex:outputPanel>
+
+            <apex:form id="theForm" styleClass="copado-lightning-container">
+                <c:ScreenLocker msg="{!$Label.copado__LOADING}" useJobsManager="true" possibleRunningJobs=",DxCreateProjectBranch,,true;" />
+                <script>
+                window.addEventListener('copadoJobsManagerFinished', function (evt) {
+                    for(var i=0 ; i < evt.detail.length ; i++ ) {
+                        var jobFinished = evt.detail[i].isFinished;
+                        var jobSuccess = evt.detail[i].isSuccess;
+                        var jobMessage = evt.detail[i].message;
+                        var jobType = evt.detail[i].type;
+                        console.debug("Job Success: ", jobSuccess);
+                        console.debug("Job Finished: ", jobFinished);
+                        console.debug("Job Message: ", jobMessage);
+                        console.debug("Job Type: ", jobType);
+                        jobstatus(jobFinished,jobSuccess,jobMessage,jobType);
+                    }
+                }, false);
+
+                </script>
+                <apex:actionFunction name="jobstatus" action="{!jobStatusNotification}" reRender="dxOperationErrors,pnlScript,redirectMsg,msg">
+                    <apex:param value="" name="jobFinished" />
+                    <apex:param value="" name="jobSuccess" />
+                    <apex:param value="" name="jobMessage" />
+                    <apex:param value="" name="jobType" />
+                </apex:actionFunction>
+
+                <div style="margin-bottom:10px" class="clear">&nbsp;</div>
+                <apex:pageBlock id="pb">
+                    <apex:pageBlockButtons location="top">
+                        <apex:commandButton rendered="{!showCreateDXBranchButton}" value="Create DX Branch" action="{!createDXBranch}" reRender="pmessage" />
+                    </apex:pageBlockButtons>
+                    <apex:pageBlockTable id="theTable" value="{!snapshots}" var="s" rendered="{!AND(showOptions,!showError)}">
+                        <apex:column id="col1">
+                            <apex:facet name="header">{!$ObjectType.copado__Git_Backup__c.fields.Name.Label}</apex:facet>
+                            <apex:outputLink value="/apex/{!namespace}{!targetPage}?{!additionalParams}snapshotId={!s.Id}&repoId={!s.copado__Git_Repository__c}&orgId={!s.copado__Org__c}&userStoryId={!userStory.Id}&mainBranch={!mainBranch}">{!s.Name}</apex:outputLink>
+                        </apex:column>
+                        <apex:column id="col2">
+                            <apex:facet name="header">{!$ObjectType.copado__Git_Backup__c.fields.copado__Git_Repository__c.Label}</apex:facet>
+                            <apex:outputText value="{!s.Git_Repository__r.Name}" />
+                        </apex:column>
+                        <apex:column id="col3">
+                            <apex:facet name="header">{!$ObjectType.copado__Git_Backup__c.fields.copado__Org__c.Label}</apex:facet>
+                            <apex:outputText value="{!s.Org__r.Name}" />
+                        </apex:column>
+                        <apex:column id="col4">
+                            <apex:facet name="header">{!$ObjectType.copado__Git_Backup__c.fields.copado__Branch__c.Label}</apex:facet>
+                            <apex:outputField value="{!s.copado__Branch__c}" />
+                        </apex:column>
+                        <apex:column id="col5">
+                            <apex:facet name="header">{!$ObjectType.copado__Git_Backup__c.fields.copado__Frequency__c.Label}</apex:facet>
+                            <apex:outputField value="{!s.copado__Frequency__c}" />
+                        </apex:column>
+                        <apex:column id="col6">
+                            <apex:facet name="header">{!$ObjectType.copado__Git_Backup__c.fields.copado__Git_Snapshot_Permissions__c.Label}</apex:facet>
+                            <apex:outputField value="{!s.copado__Git_Snapshot_Permissions__c}" />
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlock>
+
+            </apex:form>
+            <apex:outputPanel id="pnlScript" rendered="{!AND(!showOptions, !showError)}">
+                <apex:pageMessage id="redirectMsg" severity="INFO" summary="{!$Label.copado__LOADING}" />
+                <script>
+                        window.location='/apex/{!JSENCODE(namespace)}{!JSENCODE(targetPage)}?{!JSENCODE(additionalParams)}snapshotId={!JSENCODE(snapshotId)}&repoId={!JSENCODE(repoId)}&orgId={!JSENCODE(orgId)}&userStoryId={!JSENCODE(userStory.Id)}&mainBranch={!JSENCODE(mainBranch)}';
+                </script>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </div>
+    </body>
+</apex:page>

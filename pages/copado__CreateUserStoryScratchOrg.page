@@ -1,0 +1,210 @@
+<apex:page showHeader="false" docType="html-5.0" sidebar="false" applyHtmlTag="false" applyBodyTag="false"
+           standardController="copado__User_Story__c" lightningStyleSheets="true"
+           extensions="copado.CreateUserStoryScratchOrgController,copado.Settings">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <title>Scratch Org for {!User_Story__c.Name}</title>
+        <c:WizardUtils />
+        <c:IncludeStaticsResourceComponent addJquery="true" />
+        <script type="text/javascript">
+            var Copado_Licenses = {!CurrentUserLicenses};
+
+        </script>
+        <c:IncludeConnectionJsComponent />
+
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    </head>
+    <body>
+    <apex:form >
+        <c:CopadoSmartHelpComponent />
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}" useJobsManager="true"
+                        possibleRunningJobs=",DxCreateFullScratchOrgJob,,true;,DxListRepositoryBranches,,true;,DxListOrgPackagesJob,,true" />
+        <script>
+			window.addEventListener('copadoJobsManagerFinished', function (evt) {
+                    for(var i=0 ; i < evt.detail.length ; i++ ) {
+                        var jobFinished = evt.detail[i].isFinished;
+                        var jobSuccess = evt.detail[i].isSuccess;
+                        var jobMessage = evt.detail[i].message;
+                        var jobType = evt.detail[i].type;
+
+                        jobstatus(jobFinished,jobSuccess,jobMessage,jobType);
+                        var scheduleMessage = $copado('[Id$=completionMessages]');
+                        if(scheduleMessage){
+                            scheduleMessage.hide();
+                        }
+                        if(jobFinished && jobSuccess && jobType == 'DxListRepositoryBranches') {
+                            if(typeof rerenderbranchGridContainer != 'undefined'){
+                                rerenderbranchGridContainer();
+                            }
+                        } else if(jobFinished && jobSuccess && jobType == 'DxCreateFullScratchOrgJob') {
+                            CompleteFullCreate();
+                        } else if(jobFinished){
+                            setLockScreenMessage('{!JSENCODE($Label.copado__LOADING)}');
+                        }
+                    }
+                }, false);
+
+        </script>
+        <apex:actionFunction name="jobstatus" action="{!jobStatusNotification}" reRender="dxNotEnabledMessage,jobStatus">
+            <apex:param value="" name="jobFinished" />
+            <apex:param value="" name="jobSuccess" />
+            <apex:param value="" name="jobMessage" />
+            <apex:param value="" name="jobType" />
+        </apex:actionFunction>
+        <apex:actionFunction name="CompleteFullCreate" action="{!fullCreateCompleted}" reRender="componentSection" onComplete="setLockScreenMessage('{!JSENCODE($Label.copado__LOADING)}');"/>
+        <apex:outputPanel layout="block" id="dxNotEnabled" rendered="{!!isDXEnabled}">
+            <apex:pageMessages id="dxNotEnabledMessage" />
+        </apex:outputPanel>
+        <apex:outputPanel layout="block" id="jobStatus">
+            <apex:pageMessages id="jobStatusMessage" rendered="{!jobFinished}" />
+        </apex:outputPanel>
+        <apex:outputPanel layout="block" id="progressContainer" rendered="{!isDXEnabled}">
+            <div class="slds-scope">
+                <div class="slds-grid" style="padding: 10px;">
+                    <apex:outputLink id="btn_prev" rendered="{!!disablePreviousButton}"
+                                     onClick="previousStep(); return false;" value="#"
+                                     styleClass="slds-button slds-button_brand slds-path__mark-complete slds-no-flex slds-m-horizontal_small">
+                        Previous &nbsp;
+                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#back')}"></use>
+                        </svg>
+                    </apex:outputLink>
+                    <div class="slds-tabs--path" role="application">
+                        <ul class="slds-tabs--path__nav" role="tablist">
+                            <li class="slds-tabs--path__item {!IF(metadata == 'COMPLETE','slds-is-complete slds-is-won',IF(metadata == 'CURRENT','slds-is-current','slds-is-incomplete'))}" role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-93" aria-controls="content-path-1"
+                                   aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);"
+                                   aria-live="assertive">
+								<span class="slds-path__stage">
+									<svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+									<!--<use xlink:href="{!IF(definition == 'COMPLETE', URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#check'),'')}" />-->
+									</svg>
+										<span class="slds-assistive-text">test</span>
+								</span>
+                                    <span class="slds-tabs--path__title">
+									Load Metadata
+								</span>
+                                </a>
+                            </li>
+                            <li class="slds-tabs--path__item {!IF(definition == 'COMPLETE','slds-is-complete slds-is-won',IF(definition == 'CURRENT','slds-is-current','slds-is-incomplete'))}" role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-93" aria-controls="content-path-1"
+                                   aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);"
+                                   aria-live="assertive">
+								<span class="slds-path__stage">
+									<svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+									<!--<use xlink:href="{!IF(metadata == 'COMPLETE', URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#check'),'')}" />-->
+									</svg>
+									<span class="slds-assistive-text">test 2</span>
+								</span>
+                                    <span class="slds-tabs--path__title">
+									Scratch Org Definition
+								</span>
+                                </a>
+                            </li>
+                            <li class="slds-tabs--path__item {!IF(extension == 'COMPLETE','slds-is-complete slds-is-won',IF(extension == 'CURRENT','slds-is-current','slds-is-incomplete'))}" role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-93" aria-controls="content-path-1"
+                                   aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);"
+                                   aria-live="assertive">
+								<span class="slds-path__stage">
+									<svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+									<!--<use xlink:href="{!IF(metadata == 'COMPLETE', URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#check'),'')}" />-->
+									</svg>
+									<span class="slds-assistive-text">test 2</span>
+								</span>
+                                    <span class="slds-tabs--path__title">
+									Extensions
+								</span>
+                                </a>
+                            </li>
+                            <li class="slds-tabs--path__item {!IF(review == 'COMPLETE','slds-is-complete slds-is-won',IF(review == 'CURRENT','slds-is-current','slds-is-incomplete'))}"
+                                role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-93" aria-controls="content-path-1"
+                                   aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);"
+                                   aria-live="assertive">
+								<span class="slds-path__stage">
+									<svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+									<!--<use xlink:href="{!IF(review == 'COMPLETE', URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#check'),'')}" />-->
+									</svg>
+									<span class="slds-assistive-text">test 2</span>
+								</span>
+                                    <span class="slds-tabs--path__title">
+									Review &amp; Complete
+								</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <apex:outputLink id="btn_validate" rendered="{!!disableNextButton && definition != 'CURRENT'}"
+                                     onClick="lockScreen();nextStep(); return false;" value="#"
+                                     styleClass="slds-button slds-button_brand slds-path__mark-complete slds-no-flex slds-m-horizontal_small">
+                        {!nextButtonLabel} &nbsp;
+                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#forward')}"></use>
+                        </svg>
+                    </apex:outputLink>
+                    <apex:outputLink id="btn_validate_scratchOrgTemplate" rendered="{!!disableNextButton && definition == 'CURRENT'}"
+                                     onClick="lockScreen();cmapp.validate('validate'); return false;" value="#"
+                                     styleClass="slds-button slds-button_brand slds-path__mark-complete slds-no-flex slds-m-horizontal_small">
+                        {!nextButtonLabel} &nbsp;
+                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#forward')}"></use>
+                        </svg>
+                    </apex:outputLink>
+                </div>
+            </div>
+        </apex:outputPanel>
+        <apex:outputPanel id="componentSection">
+            <apex:outputPanel layout="block" id="componentContainer" rendered="{!isDXEnabled}">
+
+                <apex:outputPanel layout="block" rendered="{!metadata == 'CURRENT'}">
+                    <apex:actionFunction name="renderParent" reRender="progressContainer" />
+                    <c:ScratchOrgMetadata parentPageController="{!this}" componentName="ScratchOrgMetadata"
+                                          showActionButtons="false" mode="wizard"/>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" rendered="{!definition == 'CURRENT'}">
+                    <apex:actionFunction name="renderParent" reRender="progressContainer" />
+                    <c:ScratchOrgTemplate parentPageController="{!this}" componentName="ScratchOrgTemplate"
+                                          showActionButtons="false" mode="wizard" showAllTemplateButtons="true" />
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" rendered="{!extension == 'CURRENT'}">
+                    <apex:actionFunction name="renderParent" reRender="progressContainer" />
+                    <c:ScratchOrgExtensions parentPageController="{!this}" componentName="ScratchOrgExtensions" mode="wizard" />
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" rendered="{!AND(OR(review == 'CURRENT',review == 'COMPLETE'),!showExtensionStatus)}">
+                    <c:ScratchOrgCompletion id="reviewComponent" parentPageController="{!this}" componentName="ScratchOrgCompletion"
+                                            showActionButtons="false" mode="wizard" />
+                    <apex:inputHidden value="{!selectedPermissions}" id="permSetsPage" />
+                    <apex:actionFunction name="loadReviewData" action="{!loadReviewData}" reRender="reviewComponent" />
+                    <script type="application/javascript">
+                    (function () {
+                        setTimeout(function () {
+                            loadReviewData();
+                        }, 100)
+                    })();
+                    </script>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" rendered="{!showExtensionStatus}">
+                    <apex:actionFunction name="renderParent" reRender="progressContainer" />
+                    <c:DXExtensionStatuses parentPageController="{!this}" componentName="ExtensionStatuses" mode="wizard" destinationEnvironmentName="Scratch Org For {!thisUserStory.Name}" />
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:actionFunction action="{!nextStepOrgTemplate}" name="nextStepOrgTemplate" onComplete="unlockScreen();"
+                             reRender="componentContainer,progressContainer,userStoryWizardMessage">
+            <apex:param name="jsonfile" value="" assignTo="{!jsonSettingsFeatures}"/>
+            <apex:param value="" name="nextStepParam" />
+        </apex:actionFunction>
+        <apex:actionFunction action="{!nextStep}" name="nextStep" onComplete="unlockScreen();"
+                             reRender="componentContainer,progressContainer,userStoryWizardMessage">
+            <apex:param value="" name="nextStepParam" />
+        </apex:actionFunction>
+        <apex:actionFunction action="{!previousStep}" name="previousStep"
+                             reRender="componentContainer,progressContainer,userStoryWizardMessage" />
+    </apex:form>
+    </body>
+    </html>
+</apex:page>

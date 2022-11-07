@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Application --></label>
+        <name>copado__Parent_Application__c</name>
+        <relationshipLabel><!-- Sub-Applications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Manager --></label>
+        <name>copado__Product_Manager__c</name>
+        <relationshipLabel><!-- Applications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Release Status --></label>
+        <name>copado__Release_Status__c</name>
+        <picklistValues>
+            <masterLabel>Beta</masterLabel>
+            <translation><!-- Beta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Definition</masterLabel>
+            <translation><!-- Definition --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Development</masterLabel>
+            <translation><!-- Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GA</masterLabel>
+            <translation><!-- GA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pilot</masterLabel>
+            <translation><!-- Pilot --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Stability Status --></label>
+        <name>copado__Stability_Icon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stability --></label>
+        <name>copado__Stability__c</name>
+        <picklistValues>
+            <masterLabel>Stable</masterLabel>
+            <translation><!-- Stable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Uncertain</masterLabel>
+            <translation><!-- Uncertain --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unstable</masterLabel>
+            <translation><!-- Unstable --></translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

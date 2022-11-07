@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Api Version --></label>
+        <name>copado__Api_Version__c</name>
+        <picklistValues>
+            <masterLabel>20.0</masterLabel>
+            <translation><!-- 20.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>21.0</masterLabel>
+            <translation><!-- 21.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>22.0</masterLabel>
+            <translation><!-- 22.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>23.0</masterLabel>
+            <translation><!-- 23.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>24.0</masterLabel>
+            <translation><!-- 24.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>25.0</masterLabel>
+            <translation><!-- 25.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>26.0</masterLabel>
+            <translation><!-- 26.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>27.0</masterLabel>
+            <translation><!-- 27.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>28.0</masterLabel>
+            <translation><!-- 28.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>29.0</masterLabel>
+            <translation><!-- 29.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30.0</masterLabel>
+            <translation><!-- 30.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>31.0</masterLabel>
+            <translation><!-- 31.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>32.0</masterLabel>
+            <translation><!-- 32.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>33.0</masterLabel>
+            <translation><!-- 33.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>34.0</masterLabel>
+            <translation><!-- 34.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>35.0</masterLabel>
+            <translation><!-- 35.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>36.0</masterLabel>
+            <translation><!-- 36.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>37.0</masterLabel>
+            <translation><!-- 37.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>38.0</masterLabel>
+            <translation><!-- 38.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>39.0</masterLabel>
+            <translation><!-- 39.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>40.0</masterLabel>
+            <translation><!-- 40.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>41.0</masterLabel>
+            <translation><!-- 41.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>42.0</masterLabel>
+            <translation><!-- 42.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>43.0</masterLabel>
+            <translation><!-- 43.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>44.0</masterLabel>
+            <translation><!-- 44.0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>45.0</masterLabel>
+            <translation><!-- 45.0 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Developer Hub Credential --></label>
+        <name>copado__Developer_Hub_Org__c</name>
+        <relationshipLabel><!-- Scratch Org Project Templates (Developer Hub Org) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Namespace --></label>
+        <name>copado__Namespace__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project JSON --></label>
+        <name>copado__Project_JSON__c</name>
+    </fields>
+    <fields>
+        <label><!-- SFDC Login Url --></label>
+        <name>copado__SFDC_Login_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Metadata Type --></label>
+        <name>copado__Source_Metadata_Type__c</name>
+        <picklistValues>
+            <masterLabel>Branch</masterLabel>
+            <translation><!-- Branch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Git Artifacts</masterLabel>
+            <translation><!-- Git Artifacts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Metadata</masterLabel>
+            <translation><!-- Metadata --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Patch a Release (Beta)</masterLabel>
+            <translation><!-- Patch a Release (Beta) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Second-Generation Packages</masterLabel>
+            <translation><!-- Second-Generation Packages --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unlocked Packages</masterLabel>
+            <translation><!-- Unlocked Packages --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unmanaged Packages</masterLabel>
+            <translation><!-- Unmanaged Packages --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Source Credential --></label>
+        <name>copado__Source_Org_Credential__c</name>
+        <relationshipLabel><!-- Scratch Org Project Templates (Source Credential) --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

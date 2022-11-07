@@ -1,0 +1,12 @@
+<apex:page standardController="copado__Deployment_Flow__c" docType="html-5.0">
+    <c:GAnalytics />
+    <br/>
+    <br/>
+    <h1>Deprecated page. Please remove it from the Page Layout, and use the related list to add/edit steps, and "Manage Branches" to view the graph.</h1>
+    <script>
+        ga('send', 'pageview', {
+          'page': '/DeploymentFlowConnections',
+          'title': 'Deployment Flow Connections'
+        });
+    </script>
+</apex:page>

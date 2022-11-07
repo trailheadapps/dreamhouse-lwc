@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>ApexClass</fullName>
+        <default>false</default>
+        <label>ApexClass</label>
+    </customValue>
+    <customValue>
+        <fullName>ApexComponent</fullName>
+        <default>false</default>
+        <label>ApexComponent</label>
+    </customValue>
+    <customValue>
+        <fullName>ApexPage</fullName>
+        <default>false</default>
+        <label>ApexPage</label>
+    </customValue>
+    <customValue>
+        <fullName>ApexTrigger</fullName>
+        <default>false</default>
+        <label>ApexTrigger</label>
+    </customValue>
+    <customValue>
+        <fullName>AuraDefinitionBundle</fullName>
+        <default>false</default>
+        <label>AuraDefinitionBundle</label>
+    </customValue>
+    <customValue>
+        <fullName>Layout</fullName>
+        <default>false</default>
+        <label>Layout</label>
+    </customValue>
+    <description>Metadata types to be excluded from the auto-resolve feature of Copado.</description>
+    <masterLabel>Auto Resolve Exceptions</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

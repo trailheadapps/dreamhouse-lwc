@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>MFGAnalytics_User_PSG</label>
+    <permissionSets>force__CustomerExperienceAnalyticsUser</permissionSets>
+    <permissionSets>force__EinsteinAnalyticsPlusUser</permissionSets>
+    <permissionSets>force__LoyaltyAnalyticsUser</permissionSets>
+    <permissionSets>force__ManufacturingAnalyticsUser</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

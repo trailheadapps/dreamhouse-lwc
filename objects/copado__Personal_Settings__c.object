@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>This object stores the personal settings for Copado</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>copado__API_Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>API Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__AccessStatusColumn__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Options are either &quot;dropdown&quot; or &quot;images&quot;</inlineHelpText>
+        <label>AccessStatusColumn</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Build_Task_Rows__c</fullName>
+        <defaultValue>5</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>This value determines the number of build task rows that should be displayed when viewing a Continuous Integration.</inlineHelpText>
+        <label>Build Task Rows</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__DeployConnectionBox_height__c</fullName>
+        <defaultValue>80</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>DeployConnectionBox height</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__DeployConnectionBox_width__c</fullName>
+        <defaultValue>70</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>DeployConnectionBox width</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Disable_Auto_Resolve__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Disables Auto-Resolve from Online Conflict Resolution</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Disables Auto-Resolve from Online Conflict Resolution</inlineHelpText>
+        <label>Disable Auto-Resolve</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Disable_Re_Create_Feature_Branch_in_US__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Disable Re-Create Feature Branch in US</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__MaskApiKey__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Default is false to maintain compatibility. Only if the user changes it to true the API Key will be masked or replaced by a placeholder.</description>
+        <externalId>false</externalId>
+        <label>Mask API Key</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Minimum_Logging_Level__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Minimum log level for copado processes. 0: TRACE, 1: DEBUG, 2: INFO, 3: WARN, 4: ERROR
+Temporarily lower this value to get better information in the Result Objects when troubleshooting/developing a Multi-Cloud solution</description>
+        <externalId>false</externalId>
+        <label>Minimum Logging Level</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Personal Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

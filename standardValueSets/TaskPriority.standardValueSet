@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>High</fullName>
+        <default>false</default>
+        <label>High</label>
+        <highPriority>true</highPriority>
+    </standardValue>
+    <standardValue>
+        <fullName>Normal</fullName>
+        <default>true</default>
+        <label>Normal</label>
+        <highPriority>false</highPriority>
+    </standardValue>
+    <standardValue>
+        <fullName>Low</fullName>
+        <default>false</default>
+        <label>Low</label>
+        <highPriority>false</highPriority>
+    </standardValue>
+</StandardValueSet>

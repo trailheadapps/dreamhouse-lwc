@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Link to Scan --></label>
+        <name>Link_to_Scan__c</name>
+    </fields>
+    <fields>
+        <help><!-- Branch scanned. Only available for feature branch scans --></help>
+        <label><!-- Branch Name --></label>
+        <name>QCloudsSaaS__Branch_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of Configuration Elements analysed --></help>
+        <label><!-- Configuration Elements --></label>
+        <name>QCloudsSaaS__Configuration_Elements__c</name>
+    </fields>
+    <fields>
+        <help><!-- Scan date --></help>
+        <label><!-- Scan Date --></label>
+        <name>QCloudsSaaS__Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Duration of the Scan --></help>
+        <label><!-- Duration --></label>
+        <name>QCloudsSaaS__Duration__c</name>
+    </fields>
+    <fields>
+        <help><!-- Internal scan id. Used only for technical support --></help>
+        <label><!-- Internal ID --></label>
+        <name>QCloudsSaaS__ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Instance for this scann --></help>
+        <label><!-- Instance --></label>
+        <name>QCloudsSaaS__Instance__c</name>
+        <relationshipLabel><!-- Scans --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quality Gate Message --></label>
+        <name>QCloudsSaaS__Quality_Gate_Message__c</name>
+    </fields>
+    <fields>
+        <help><!-- Quality Gate Result --></help>
+        <label><!-- Quality Gate Result --></label>
+        <name>QCloudsSaaS__Quality_Gate_Result__c</name>
+    </fields>
+    <fields>
+        <help><!-- Overall quality indicator, not available for feature branch scans --></help>
+        <label><!-- Quality of Cloud --></label>
+        <name>QCloudsSaaS__Quality_of_Cloud__c</name>
+    </fields>
+    <fields>
+        <help><!-- Scan Type --></help>
+        <label><!-- Scan Type --></label>
+        <name>QCloudsSaaS__Scan_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Result of the scan --></help>
+        <label><!-- Scan Result --></label>
+        <name>QCloudsSaaS__State__c</name>
+    </fields>
+    <fields>
+        <help><!-- Development time to fix the detected issues --></help>
+        <label><!-- Technical Debt (hours) --></label>
+        <name>QCloudsSaaS__Technical_Debt_hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of issues detected in the scan --></help>
+        <label><!-- Total Issues --></label>
+        <name>QCloudsSaaS__Total_Issues__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>User_Story__c</name>
+        <relationshipLabel><!-- Scans --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

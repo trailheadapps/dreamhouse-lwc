@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Related List Fields --></label>
+        <name>copado__relatedListFields</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration (in seconds) --></label>
+        <name>copado__Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Time --></label>
+        <name>copado__End_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Environment --></label>
+        <name>copado__Environment__c</name>
+        <relationshipLabel><!-- External CI Job Results --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- External CI Job ID --></label>
+        <name>copado__External_CI_Job_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- External CI Job --></label>
+        <name>copado__External_CI_Job__c</name>
+        <relationshipLabel><!-- External CI Job Results --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Job URL Link --></label>
+        <name>copado__Job_URL_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job URL --></label>
+        <name>copado__Job_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Time --></label>
+        <name>copado__Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Timed out</masterLabel>
+            <translation><!-- Timed out --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>copado__User_Story__c</name>
+        <relationshipLabel><!-- External CI Job Results --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

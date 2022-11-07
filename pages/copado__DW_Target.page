@@ -1,0 +1,105 @@
+<apex:page standardController="copado__Deployment__c" extensions="copado.DW_TargetExtension" id="DW_Target" lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Target Source">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+    <apex:includeScript value="{!$Resource.copado__DW_javascript}" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.css')}" />
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+
+
+    <script>
+        var globalSldsResourcePath = '{!URLFOR($Asset.SLDS)}';
+        var currentStepValue = '{!currentStepValue}';
+        dataTableId = 'targetTable';
+        $copado(document).ready(() => {
+            dw.checkDisable();
+        });
+    </script>
+
+    <apex:form >
+        <c:CopadoSpinner />
+
+        <apex:outputPanel layout="block" id="headerComponent">
+            <c:DW_Header currentStep="{!currentStepValue}" stepNameList="{!stepsList}"/>
+        </apex:outputPanel>
+
+        <div class="co-dw-container">
+
+            <div class="slds-grid">
+                <div class="slds-col slds-size_3-of-12"></div>
+                <div class="slds-col slds-size_6-of-12">
+                    <h1>{!deploymentInterface.StepGeneralHeader}</h1>
+                    <p class="subtitle">{!$Label.Add_Target}</p>
+
+                    <apex:outputPanel layout="block" id="errorPanel">
+                        <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                            <div id="divToast" class="slds-notify_container slds-is-relative">
+                                <apex:repeat value="{!pageMessagesMap}" var="severity">
+                                    <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                                        <span class="slds-assistive-text"></span>
+                                        <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                            <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                                        </span>
+                                        <div class="slds-notify__content">
+                                            <apex:repeat value="{!pageMessagesMap[severity]}" var="messages">
+                                                <h2 class="slds-text-heading_small ">{!messages}</h2>
+                                            </apex:repeat>
+                                        </div>
+                                        <div class="slds-notify__close">
+                                            <button type="button" class="slds-button slds-button_icon slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                                <span class="slds-icon_container slds-icon__svg--default closeToastIcon"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </apex:repeat>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <div class="table">
+                        <table id="targetTable" class="stripe slds-hidden">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="no-sort">{!$ObjectType.Org__c.fields.Name.Label}</th>
+                                    <th class="no-sort">{!$ObjectType.Org__c.fields.Username__c.Label}</th>
+                                    <th class="no-sort">{!$ObjectType.Org__c.fields.Environment__c.Label}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!sourceList}" var="orgs">
+                                    <tr>
+                                        <td>
+                                            <apex:inputCheckbox styleClass="slds-checkbox" html-recordId="{!orgs.orgRecord.Id}" value="{!orgs.isSelected}" />
+                                        </td>
+                                        <td>{!orgs.orgRecord.Name}</td>
+                                        <td>{!orgs.orgRecord.copado__Username__c}</td>
+                                        <td>{!orgs.orgRecord.Environment__r.Name}</td>
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <apex:actionFunction name="upsertDestinationOrgClose" action="{!upsertDestinationOrg}" onComplete="dw.buttonOnComplete();saveAndCloseOrg();" reRender="errorPanel,headerComponent" />
+                    <apex:actionFunction name="upsertDestinationOrgNext" action="{!upsertDestinationOrg}" onComplete="dw.buttonOnComplete();goToNextStep();" reRender="errorPanel,headerComponent" />
+                    <apex:actionFunction name="saveAndCloseOrg" action="{!saveAndCloseStep}" onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent" />
+                    <apex:actionFunction name="goToNextStep" action="{!confirmAndGoNextStep}" onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent" />
+                    <apex:actionFunction name="checkIfValid" action="{!checkIfSelectedOrgIsValid}" onComplete="upsertDestinationOrgNext();" reRender="xxx" >
+                        <apex:param name="selection" value="" />
+                    </apex:actionFunction>
+
+
+                    <div class="buttons">
+                        <apex:commandButton styleClass="slds-button slds-button_outline-brand" onClick="lockScreen();" value="{!$Label.copado__BACK}" action="{!goToPreviousStep}"  onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent" />
+                        <apex:commandButton styleClass="slds-button slds-button_outline-brand" onClick="lockScreen();" value="{!$Label.copado__SAVE_AND_CLOSE}" action="{!checkIfSelectedOrgIsValid}" onComplete="upsertDestinationOrgClose();"/>
+                        <input type="button" class="slds-button slds-button_brand disabled disabled-Buttons" onClick="lockScreen();checkIfValid(dw.selection);" value="{!$Label.Confirm_Target}"/>
+                    </div>
+
+                </div>
+                <div class="slds-col slds-size_3-of-12"></div>
+            </div>
+        </div>
+    </apex:form>
+    <!-- </div> -->
+ </apex:page>

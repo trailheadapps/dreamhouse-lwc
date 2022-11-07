@@ -1,0 +1,334 @@
+<apex:page id="thePage" tabStyle="copado__Deployment__c" standardController="copado__Deployment__c" extensions="copado.DeploymentStatusExtension,copado.Settings" sidebar="false" showHeader="false" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <c:WizardUtils id="cmpWizardUtilities" />
+        <c:IncludeStaticsResourceComponent addJquery="true" addCometdjs="true" addJcometdjs="true" addJSON2js="true" addCirclifuljs="true" addCirclifulcss="true" addFAcss="true" addDScss="true"/>
+        
+        <script type="text/javascript">
+            var Copado_Licenses = {!CurrentUserLicenses};
+        </script>
+        <c:IncludeConnectionJsComponent />
+
+        <apex:includeScript value="{!URLFOR($Resource.copadoStreamingService) }" />
+    </head>
+    <body>
+        <script>
+            copadoApp = {
+                ns: '{!JSENCODE(namespace)}',
+                deploymentId: '{!JSENCODE(Deployment__c.Id)}',
+                deployment: [],
+                jobIds: [],
+                streamingAPI_clientId: '',
+                CopadoNotifications: null,
+                fileName: 'DEPLOYMENT_STATUS_COPADO',
+
+                queryRecords: function(query){
+                    var result = sforce.connection.query(query);
+                    var records = result.getArray("records");
+                    return records;
+                },
+                setStatus: function(o, jobId){
+                    if(o.status && jobId){
+                        console.log('Setting status: '+o.status+' for job Id: '+jobId);
+                        var finished = o.status=='Succeeded'||o.status=='Failed';
+                        var checkOnly = $copado("#CheckOnly_"+jobId).val()=='true';
+                        var imgTag = '<img src="/img/loading.gif" />';
+                        var action = checkOnly?copadoLabels.VALIDATION:'{!$ObjectType.Deployment__c.Label}';
+                        $copado("#txtAction_"+jobId).text(action);
+                        if(o.status=='InProgress')$copado("#txtStatus_"+jobId).html(imgTag+' '+copadoLabels.INPROGRESS);
+                        if(o.status=='Pending')$copado("#txtStatus_"+jobId).html(imgTag+' '+copadoLabels.PENDING);
+                        if(o.status=='Succeeded')$copado("#txtStatus_"+jobId).html(copadoLabels.SUCCEEDED);
+                        if(o.status=='Failed'){
+                            $copado("#txtStatus_"+jobId).html(copadoLabels.FAILED);
+                        }
+                        if(o.status=='Canceling')$copado("#txtStatus_"+jobId).html(copadoLabels.CANCELLING);
+                        if(o.status=='Canceled')$copado("#txtStatus_"+jobId).html(copadoLabels.CANCELLED);
+                    }
+                },
+                setCancelButton: function(o, jobId){
+                    if(o.status=='InProgress'||o.status=='Pending'){
+                        $copado('#btnCancel_'+jobId).show();
+                    }
+                    else{
+                        $copado('#btnCancel_'+jobId).hide();
+                    }
+                },
+                updateChart: function(o, jobId){
+                    console.log('Updating chart...', jobId);
+                    var finished = o.status=='Succeeded'||o.status=='Failed'||o.status=='Canceled';
+                    var dpl_pc = finished?100:(o.comp_deployed / o.comp_total)*100;
+                    var tst_pc = finished?100:(o.test_completed / o.test_total)*100
+                    var dpl_colour = (o.comp_error>0)?'#d68184':'#60C170';
+                    var tst_colour = (o.test_error>0)?'#d68184':'#60C170';
+                    
+                    if($copado('#tdspan_'+jobId).length){
+                        console.log('create div elements');
+                        var htmlDiv1 = '<div id="dplContainer_'+jobId+'" class="componentProgressDetailsContainer"><div class="chartHeaderContainer"><div class="chartHeaderNumbering">1</div><div class="chartHeaderText">'+copadoLabels.DEPLOY_COMPONENTS+'</div></div><div class="progressChartContainer"><div id="circliful_d_'+jobId+'" data-startdegree="0" data-type="full" style="float:left;" data-dimension="150" data-text="'+o.comp_deployed+'/'+o.comp_total+'" data-info="'+o.comp_error+'" data-width="20" data-fontsize="18" data-percent="'+dpl_pc+'" data-fgcolor="'+dpl_colour+'" data-animationstep="0" data-bgcolor="#eee" data-fill="#fff"></div></div></div>';
+                        var htmlDiv2 = '<div id="tstContainer_'+jobId+'" class="testProgressDetailsContainer"><div class="chartHeaderContainer"><div class="chartHeaderNumbering">2</div><div class="chartHeaderText">'+copadoLabels.RUN_APEX_TESTS+'</div></div><div class="progressChartContainer"><div id="circliful_t_'+jobId+'" data-startdegree="0" data-type="full" style="float:left;" data-dimension="150" data-text="'+o.test_completed+'/'+o.test_total+'" data-info="'+o.test_error+'" data-width="20" data-fontsize="18" data-percent="'+tst_pc+'" data-animationstep="0" data-fgcolor="'+tst_colour+'" data-bgcolor="#eee" data-fill="#fff"></div></div>';
+                        $copado('#tdspan_'+jobId).remove();
+                        $copado('#tbl_tr_'+jobId).append('<td>'+htmlDiv1+'</td><td>'+htmlDiv2+'</td>');
+                    }
+                    else{
+                        console.log('update existing elements');
+                        $copado('#circliful_d_'+jobId).empty().removeData();
+                        $copado('#circliful_d_'+jobId).attr('data-percent', dpl_pc);
+                        $copado('#circliful_d_'+jobId).attr('data-text', o.comp_deployed+'/'+o.comp_total);
+                        $copado('#circliful_d_'+jobId).attr('data-info', o.comp_error);
+                        $copado('#circliful_d_'+jobId).attr('data-fgcolor', dpl_colour);
+                        $copado('#circliful_t_'+jobId).empty().removeData();
+                        $copado('#circliful_t_'+jobId).attr('data-percent', tst_pc);
+                        $copado('#circliful_t_'+jobId).attr('data-text', o.test_completed+'/'+o.test_total);
+                        $copado('#circliful_t_'+jobId).attr('data-info', o.test_completed+'/'+o.test_total);
+                        $copado('#circliful_t_'+jobId).attr('data-fgcolor', tst_colour);
+                    }
+                    $copado("#txtStartTime_"+jobId).text(new Date(o.start).toLocaleTimeString());
+                    $copado('#txtEndTime_'+jobId).text(new Date(o.end).toLocaleTimeString());
+                    $copado('#txtDuration_'+jobId).text(reformatMilliseconds(o.duration*1000));
+                    
+                    $copado('#circliful_d_'+jobId).circliful();
+                    $copado('#circliful_t_'+jobId).circliful();
+
+                    if(o.comp_error>0){
+                        $copado("#circliful_d_"+jobId+" .circle-info-half").html('<img src="{!URLFOR($Resource.Statics, "img/icons/cautiontrianglered.png")}">&nbsp;'+o.comp_error);
+                        $copado("#circliful_d_"+jobId+" .circle-info-half").addClass('failureCount');
+                    }
+                    if(o.test_error>0){
+                        $copado("#circliful_t_"+jobId+" .circle-info-half").html('<img src="{!URLFOR($Resource.Statics, "img/icons/cautiontrianglered.png")}">&nbsp;'+o.test_error);
+                        $copado("#circliful_t_"+jobId+" .circle-info-half").addClass('failureCount');
+                    }
+                },
+                updateUI: function(obj, jobId){
+                    console.log('Updating UI...');
+                    var me = copadoApp;
+                    me.updateChart(obj, jobId);
+                    me.setStatus(obj, jobId);
+                    me.setCancelButton(obj, jobId);
+                    adjustWith();
+                },
+                getAttachments: function(){
+                    var me = copadoApp;
+                    var doneCount = me.jobIds.length;
+                    for(var i=0; i<me.jobIds.length; i++){
+                        sforce.connection.query("select Id, Name, ContentType, ParentId, Body from Attachment where ParentId='"+me.jobIds[i]+"' and Name='"+me.fileName+"' order by LastModifiedDate DESC", {
+                            onSuccess: function(result) {
+                                var records = result.getArray("records");
+                                if(records.length == 1){
+                                    var o = JSON.parse(Base64.decode(records[0].Body));
+                                    console.log('Result:', o);
+                                    me.updateUI(o, records[0].ParentId);
+                                }
+                            },
+                            onFailure : function(error) {
+                                //console.error("An error has occurred " + error);
+                            }
+                        });
+                        var att = me.getAttachment(me.jobIds[i], 'PROGRESS_STATUS_COPADO');
+                        if(att){
+                            me.readStatusFromAttachment(att);
+                        }
+                    }
+                },
+                getDeployment: function(){
+                    var me = copadoApp;
+                    me.deployment = me.queryRecords('select Id, '+me.ns+'Status__c from '+me.ns+'Deployment__c where Id=\''+me.deploymentId+'\'')[0];
+                },
+                polling: function(){
+                    var me = copadoApp;
+                    
+                    fn = function(){
+                        if(me.deployment[me.ns+'Status__c']=='In progress'||me.deployment[me.ns+'Status__c']=='Scheduled'){
+                            me.getAttachments();
+                            me.getDeployment();
+                        }
+                    };
+                    setInterval(fn, 10000);                    
+                },
+                init: function(){
+                    var me = copadoApp;
+                    if(me.deploymentId != ''){
+                        var s = $copado("[data-stepType='MetaData'], [data-stepType='Git MetaData'], [data-stepType='Git Promotion'],[data-stepType='Rollback']");
+                        for(var i=0; i<s.length; i++){
+                            me.jobIds.push(s[i].id.split('_')[1]);
+                            console.log('Data',s[i].id.split('_')[1]);
+                        }
+                        me.getDeployment();
+                        me.getAttachments();
+                        me.polling();
+                    }
+                    else{
+                        alert('We don\'t have a deployment Id !!!');
+                    }
+                },
+                
+                /***************************************************************/
+                /*                          Streaming API methods              */
+                /***************************************************************/
+                
+                readStatusFromAttachment: function(att){
+                    console.log('Reading status from attachment...');
+                    var me = copadoApp;
+                    var obj = JSON.parse(att.Body);
+                    if(att[0].Name==me.fileName){
+                        me.updateUI(obj, att[0].ParentId);
+                        me.setAsyncJobId(att[0].ParentId, obj.async_id);
+                    }
+                    if(att[0].Name=='PROGRESS_STATUS_COPADO'){
+                        $copado('#txtStatus_'+att[0].ParentId).html(obj.status);
+                    }
+                },
+                getAttachment: function(parentId, name){
+                    var att = dw.u.getDecodedAttach(parentId, name);
+                    return att;
+                },
+                setAsyncJobId: function(jobId, ajid){
+                    $copado('#asyncJobId_'+jobId).attr('value',ajid);
+                },
+                readStream: function(message){
+                    var me = copadoApp;
+                    me.streamingAPI_clientId = message.clientId;
+                    console.info('Stream received:',message);
+                    if(message.channel=='/topic/CopadoNotifications'){
+                        if((message.data.sobject.Name=='PROGRESS_STATUS_COPADO' || message.data.sobject.Name==me.fileName) && $copado.inArray(message.data.sobject[me.ns+'ParentId__c'], me.jobIds) >= 0){
+                            var att = me.getAttachment(message.data.sobject[me.ns+'ParentId__c'], message.data.sobject.Name);
+                            if(att){
+                                me.readStatusFromAttachment(att);
+                            }
+                        }
+                    }
+                },
+                cancelDeployment: function(jobId){
+                    var orgId = $copado('#orgId_'+jobId).val();
+                    var asyncJobId = $copado('#asyncJobId_'+jobId).val();
+                    var url= '{!JSENCODE(settings.urlBase)}cancelDeployment/'+orgId+'/'+asyncJobId+'{!JSENCODE(settings.urlParameters)}&jobId='+jobId;
+                    console.log("Cancel URL:", url);
+                    sforce.connection.remoteFunction({
+                        url : url,
+                        requestHeaders: {
+                                "Content-Type": "text/json",
+                                "userId": _temp_conf.userId,
+                                "orgId": _temp_conf.orgId,                                
+                                "token": _temp_conf.token
+                        },
+                        method: "GET",
+                        requestData: {},
+                        onSuccess : function(res) {
+                            $copado("#btnCancel_"+jobId).html(copadoLabels.CANCELLING+'...');
+                            $copado("#btnCancel_"+jobId).attr('disabled','disabled');
+                            console.log('Success: ',res);
+                        },
+                        onFailure : function(response) {
+                            console.error('Failure: ', response);
+                        },
+                        timeout: 25000
+                    });
+                }
+            }
+        </script>
+        
+        <apex:pageMessages id="theMessages" />
+        <apex:form id="theForm">
+            <div class="inProgressSectionContainer">
+                <table class="js-stepList" id="tSteps" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <thead class="">
+                            <tr class="">
+                                <apex:repeat value="{!wrapperList}" var="s" rows="1">
+                                    <apex:repeat value="{!s.jobs}" var="do">
+                                        <th scope="col"><h1 class="DestOrgNameHeader">{!do.copado__To_Org_Name__c}</h1></th>
+                                    </apex:repeat>
+                                </apex:repeat>
+                            </tr>
+                        </thead>
+                        <tbody id="tSteps-tb">
+                            <apex:repeat value="{!wrapperList}" var="s">
+                                <tr style="border-bottom:solid black">
+                                    <apex:repeat value="{!s.jobs}" var="j">
+                                        <td class="js-col-job" colspan="1">
+                                            <div class="inProgressSummaryContainer" id="job_{!j.Id}" data-stepType="{!s.Step.Type__c}">
+                                                <table id="tbl_{!j.Id}" class="noBorder" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                    <tr id="tbl_tr_{!j.Id}">
+                                                        <td class="sectionContainerCell">
+                                                            <div class="inProgressSummaryContainer">
+                                                                <input type="hidden" id="asyncJobId_{!j.Id}" value="{!j.Async_Job_ID__c}"/>
+                                                                <input type="hidden" id="orgId_{!j.Id}" value="{!j.Destination_Org__r.To_Org__c}" />
+                                                                <input type="hidden" id="CheckOnly_{!j.Id}" value="{!s.Step.CheckOnly__c}" />
+                                                                <h2 id="txtAction_{!j.Id}" class="inProgressDeployHeader">
+                                                                    {!j.Status__c}
+                                                                </h2>
+                                                                <ul>
+                                                                    <li>{!$ObjectType.Step__c.Fields.Status__c.Label}: <span id="txtStatus_{!j.Id}"> </span></li>
+                                                                    <li>{!$ObjectType.Step__c.Fields.Name.Label}: {!s.Step.Name}</li>
+                                                                    <li>{!$ObjectType.Step__c.Fields.Type__c.Label}: {!s.Step.Type__c}</li>
+                                                                    <li style="{!IF(AND(s.Step.Type__c!='MetaData', s.Step.Type__c!='Git MetaData', s.Step.Type__c!='Git Promotion'),'display:none;','')}">{!$Label.START_TIME}: <span id="txtStartTime_{!j.Id}"> </span></li>
+                                                                    <li style="{!IF(AND(s.Step.Type__c!='MetaData', s.Step.Type__c!='Git MetaData', s.Step.Type__c!='Git Promotion'),'display:none;','')}">{!$Label.END_TIME}: <span id="txtEndTime_{!j.Id}"></span></li>
+                                                                    <li style="{!IF(AND(s.Step.Type__c!='MetaData', s.Step.Type__c!='Git MetaData', s.Step.Type__c!='Git Promotion'),'display:none;','')}">{!$Label.DURATION}: <span id="txtDuration_{!j.Id}"></span></li>
+                                                                    <li style="{!IF(AND(s.Step.Type__c!='MetaData', s.Step.Type__c!='Git MetaData', s.Step.Type__c!='Git Promotion'),'display:none;','')}"><button style="display:none;" id="btnCancel_{!j.Id}" type="button" class="inProgressCancelButton" onclick="copadoApp.cancelDeployment('{!j.Id}')" value="{!$Label.Site.CANCEL}">{!$Label.Site.CANCEL}</button></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div id="dplContainer_{!j.Id}" class="componentProgressDetailsContainer">
+                                                                <div class="chartHeaderContainer">
+                                                                    <div class="chartHeaderNumbering">1</div>
+                                                                    <div class="chartHeaderText">{!$Label.DEPLOY_COMPONENTS}</div>
+                                                                </div>
+                                                                <div class="progressChartContainer">
+                                                                    <div id="circliful_d_{!j.Id}" data-startdegree="0" data-type="full" style="float:left;" data-dimension="150" data-text="0" data-info="0" data-width="20" data-fontsize="18" data-percent="0" data-fgcolor="" data-animationstep="0" data-bgcolor="#eee" data-fill="#fff"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div id="tstContainer_{!j.Id}" class="testProgressDetailsContainer">
+                                                                <div class="chartHeaderContainer">
+                                                                    <div class="chartHeaderNumbering">2</div>
+                                                                    <div class="chartHeaderText">{!$Label.RUN_APEX_TESTS}</div>
+                                                                </div>
+                                                                <div class="progressChartContainer">
+                                                                    <div id="circliful_t_{!j.Id}" data-startdegree="0" data-type="full" style="float:left;" data-dimension="150" data-text="0" data-info="0" data-width="20" data-fontsize="18" data-percent="0" data-animationstep="0" data-fgcolor="0" data-bgcolor="#eee" data-fill="#fff"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <script>
+                                                    $copado('#circliful_d_{!j.Id}').circliful();
+                                                    $copado('#circliful_t_{!j.Id}').circliful();
+                                                </script>
+                                            </div>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+            </div>
+        </apex:form>
+        <script>
+            $copado( document ).ready(function() {
+                copadoStreamingService.ns = '{!JSENCODE(namespace)}';
+                copadoStreamingService.init();
+                $copado.cometd.subscribe('/topic/CopadoNotifications', function(message) {
+                    console.info('Push message: ', message);
+                    copadoApp.readStream(message);
+                });
+                window.onbeforeunload = copadoStreamingService.disconnect;
+                copadoApp.init();
+                adjustWith();
+            });
+            function adjustWith(){
+                var w = 0;
+                $copado(".sectionContainerCell").each(function(){
+                   if($copado(this).width()>w)w=$copado(this).width();
+                });
+                $copado(".sectionContainerCell").each(function(){
+                   $copado(this).width(w);
+                });
+            }
+        </script> 
+    </body>
+    <script>
+        ga('send', 'pageview', {
+          'page': '/DeploymentStatus',
+          'title': 'Deployment Status'
+        });
+    </script>
+</apex:page>

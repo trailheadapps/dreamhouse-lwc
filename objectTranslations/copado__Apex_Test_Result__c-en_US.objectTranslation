@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Details --></label>
+        <name>copado__Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Failures --></label>
+        <name>copado__Failures__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credential --></label>
+        <name>copado__Org__c</name>
+        <relationshipLabel><!-- Apex Test Results --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Errors</masterLabel>
+            <translation><!-- Errors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Successes (%) --></label>
+        <name>copado__Successes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tests run --></label>
+        <name>copado__Tests_run__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the total time taken to run the Apex Tests --></help>
+        <label><!-- Total time (ms) --></label>
+        <name>copado__Total_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>copado__User_Story__c</name>
+        <relationshipLabel><!-- Apex Test Results --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

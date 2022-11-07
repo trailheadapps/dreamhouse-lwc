@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>copado__Member__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Member</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Team_Members</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Role__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Analyst</fullName>
+                    <default>false</default>
+                    <label>Analyst</label>
+                </value>
+                <value>
+                    <fullName>Architect</fullName>
+                    <default>false</default>
+                    <label>Architect</label>
+                </value>
+                <value>
+                    <fullName>BSA</fullName>
+                    <default>false</default>
+                    <label>BSA</label>
+                </value>
+                <value>
+                    <fullName>Business Owner</fullName>
+                    <default>false</default>
+                    <label>Business Owner</label>
+                </value>
+                <value>
+                    <fullName>Capacity Planner</fullName>
+                    <default>false</default>
+                    <label>Capacity Planner</label>
+                </value>
+                <value>
+                    <fullName>Data Center Engineer</fullName>
+                    <default>false</default>
+                    <label>Data Center Engineer</label>
+                </value>
+                <value>
+                    <fullName>DBA</fullName>
+                    <default>false</default>
+                    <label>DBA</label>
+                </value>
+                <value>
+                    <fullName>Developer</fullName>
+                    <default>false</default>
+                    <label>Developer</label>
+                </value>
+                <value>
+                    <fullName>Dev Manager</fullName>
+                    <default>false</default>
+                    <label>Dev Manager</label>
+                </value>
+                <value>
+                    <fullName>Doc Editor</fullName>
+                    <default>false</default>
+                    <label>Doc Editor</label>
+                </value>
+                <value>
+                    <fullName>Doc Manager</fullName>
+                    <default>false</default>
+                    <label>Doc Manager</label>
+                </value>
+                <value>
+                    <fullName>Network Engineer</fullName>
+                    <default>false</default>
+                    <label>Network Engineer</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Performance Engineer</fullName>
+                    <default>false</default>
+                    <label>Performance Engineer</label>
+                </value>
+                <value>
+                    <fullName>Product Owner</fullName>
+                    <default>false</default>
+                    <label>Product Owner</label>
+                </value>
+                <value>
+                    <fullName>Program Manager</fullName>
+                    <default>false</default>
+                    <label>Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Provisioning Specialist / Asset Manager</fullName>
+                    <default>false</default>
+                    <label>Provisioning Specialist / Asset Manager</label>
+                </value>
+                <value>
+                    <fullName>QA Engineer</fullName>
+                    <default>false</default>
+                    <label>QA Engineer</label>
+                </value>
+                <value>
+                    <fullName>QA Manager</fullName>
+                    <default>false</default>
+                    <label>QA Manager</label>
+                </value>
+                <value>
+                    <fullName>Release Engineer</fullName>
+                    <default>false</default>
+                    <label>Release Engineer</label>
+                </value>
+                <value>
+                    <fullName>Release Manager</fullName>
+                    <default>false</default>
+                    <label>Release Manager</label>
+                </value>
+                <value>
+                    <fullName>Scrum Master</fullName>
+                    <default>false</default>
+                    <label>Scrum Master</label>
+                </value>
+                <value>
+                    <fullName>Security Engineer</fullName>
+                    <default>false</default>
+                    <label>Security Engineer</label>
+                </value>
+                <value>
+                    <fullName>Site Reliability Engineer</fullName>
+                    <default>false</default>
+                    <label>Site Reliability Engineer</label>
+                </value>
+                <value>
+                    <fullName>SysAdmin</fullName>
+                    <default>false</default>
+                    <label>SysAdmin</label>
+                </value>
+                <value>
+                    <fullName>SysAdmin Linux</fullName>
+                    <default>false</default>
+                    <label>SysAdmin Linux</label>
+                </value>
+                <value>
+                    <fullName>SysAdmin Storage</fullName>
+                    <default>false</default>
+                    <label>SysAdmin Storage</label>
+                </value>
+                <value>
+                    <fullName>SysAdmin Win</fullName>
+                    <default>false</default>
+                    <label>SysAdmin Win</label>
+                </value>
+                <value>
+                    <fullName>Technical Writer</fullName>
+                    <default>false</default>
+                    <label>Technical Writer</label>
+                </value>
+                <value>
+                    <fullName>TechOps Manager</fullName>
+                    <default>false</default>
+                    <label>TechOps Manager</label>
+                </value>
+                <value>
+                    <fullName>Trust Engineer</fullName>
+                    <default>false</default>
+                    <label>Trust Engineer</label>
+                </value>
+                <value>
+                    <fullName>UE</fullName>
+                    <default>false</default>
+                    <label>UE</label>
+                </value>
+                <value>
+                    <fullName>UE Manager</fullName>
+                    <default>false</default>
+                    <label>UE Manager</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Team__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Team</label>
+        <referenceTo>copado__Team__c</referenceTo>
+        <relationshipLabel>Team Members</relationshipLabel>
+        <relationshipName>Team_Members</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Team Member</label>
+    <listViews>
+        <fullName>copado__All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>TM-{0000}</displayFormat>
+        <label>Team Member Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Team Members</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>copado__Member__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>copado__Role__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>copado__Team__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>copado__Member__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>copado__Role__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>copado__Team__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>copado__Member__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>copado__Role__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>copado__Team__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>copado__Member__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>copado__Role__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>copado__Team__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

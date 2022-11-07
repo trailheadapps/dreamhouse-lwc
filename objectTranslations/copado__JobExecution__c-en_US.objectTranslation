@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- In this field, you can define an action to be executed once the function runs. This action must be an Apex class that implements copado.JobExecutionCallback interface. --></help>
+        <label><!-- Callback --></label>
+        <name>copado__Callback__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commit --></label>
+        <name>copado__Commit__c</name>
+        <relationshipLabel><!-- Job Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Context --></label>
+        <name>copado__Context__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field contains the test level for the Delete Metadata step. --></help>
+        <label><!-- DataJson --></label>
+        <name>copado__DataJson__c</name>
+    </fields>
+    <fields>
+        <help><!-- Lookup field to the deployment that triggered the execution. --></help>
+        <label><!-- Deployment --></label>
+        <name>copado__Deployment__c</name>
+        <relationshipLabel><!-- Job Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Name of the destination environment. --></help>
+        <label><!-- Destination --></label>
+        <name>copado__Destination__c</name>
+        <relationshipLabel><!-- Job Executions (Destination) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Description of the error if the job has failed. --></help>
+        <label><!-- Error Message --></label>
+        <name>copado__ErrorMessage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Id(Formula) --></label>
+        <name>copado__ParentId__c</name>
+    </fields>
+    <fields>
+        <help><!-- Id of the parent record linked to the job execution such as, commit job template. --></help>
+        <label><!-- Parent Id --></label>
+        <name>copado__ParentRecord_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Lookup field to the pipeline where this job execution applies. --></help>
+        <label><!-- Pipeline --></label>
+        <name>copado__Pipeline__c</name>
+        <relationshipLabel><!-- Job Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Lookup field to the promotion that triggered the execution. --></help>
+        <label><!-- Promotion --></label>
+        <name>copado__Promotion__c</name>
+        <relationshipLabel><!-- Job Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- It is a full backup of the selected metadata types into a repository/branch. --></help>
+        <label><!-- Snapshot --></label>
+        <name>copado__Snapshot__c</name>
+        <relationshipLabel><!-- Job Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Name of the source environment. --></help>
+        <label><!-- Source --></label>
+        <name>copado__Source__c</name>
+        <relationshipLabel><!-- Job Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Status of the job execution. --></help>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation><!-- Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Successful</masterLabel>
+            <translation><!-- Successful --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The Job Template used in the Job Execution process. --></help>
+        <label><!-- Template --></label>
+        <name>copado__Template__c</name>
+        <relationshipLabel><!-- Job Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field refers to the parent User Story Commit record of the job execution. --></help>
+        <label><!-- User Story Commit --></label>
+        <name>copado__UserStoryCommit__c</name>
+        <relationshipLabel><!-- Job Executions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- In this field, you can introduce a list of JSON options with the configuration for the volumes used in every new job execution. --></help>
+        <label><!-- VolumeOptions --></label>
+        <name>copado__VolumeOptions__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,28 @@
+<apex:page standardController="copado__Selenium_Test_Suite__c" recordSetVar="suites" extensions="copado.MassAddSuitesToGroup" title="{!$Label.copado__SELECT_GROUP_TO_ADD_SUITES}" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    </head>
+    <body>
+        <apex:form id="theForm" styleClass="copado-lightning-container" html-novalidate="true">
+            <apex:pageMessages />
+            <apex:sectionHeader title="{!$ObjectType.copado__Selenium_Test_Group__c.Label}" subtitle="{!$Label.copado__ADD_SUITES_TO_A_GROUP}" description="{!$Label.copado__SELECT_GROUP_TO_ADD_SUITES}"/>
+            <apex:pageBlock mode="edit">
+                <apex:pageblockButtons location="bottom">
+                    <apex:commandButton value="{!$Label.site.cancel}" action="{!cancel}" />
+                    <apex:commandButton value="{!$Label.site.save}" styleClass="btnImportant" action="{!add}" />
+                </apex:pageblockButtons>
+                <apex:pageBlockSection columns="1">
+                    <apex:inputField value="{!dummy.copado__Selenium_Test_Group__c}" required="true"/>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+        <c:CheckFeaturesComponent />
+        <script>
+            ga('send', 'pageview', {
+              'page': '/MassAddSuitesToGroup',
+              'title': 'Mass Add Suites to Group'
+            });
+        </script>
+    </body>
+</apex:page>

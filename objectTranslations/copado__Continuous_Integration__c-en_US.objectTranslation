@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- CustomFields --></label>
+        <name>copado__CustomFields</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Active --></label>
+        <name>copado__Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Branch --></label>
+        <name>copado__Branch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Check Only --></label>
+        <name>copado__Check_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- Destination Credential --></label>
+        <name>copado__Destination_Org_Credential__c</name>
+        <relationshipLabel><!-- Continuous Integrations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- For supported metadata items only. --></help>
+        <label><!-- Files to be deployed --></label>
+        <name>copado__Files_to_be_deployed__c</name>
+        <picklistValues>
+            <masterLabel>Deploy all Files</masterLabel>
+            <translation><!-- Deploy all Files --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deploy only Committed Files</masterLabel>
+            <translation><!-- Deploy only Committed Files --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Git Repository --></label>
+        <name>copado__Git_Repository__c</name>
+        <relationshipLabel><!-- Continuous Integrations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Last Build Task Duration --></label>
+        <name>copado__Last_Build_Task_Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Post Failed Deployment Jobs --></label>
+        <name>copado__Post_Failed_Deployment_Jobs__c</name>
+        <relationshipLabel><!-- Continuous Integrations (Post Failed Deployment Jobs) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Post Success Deployment Jobs --></label>
+        <name>copado__Post_Success_Deployment_Jobs__c</name>
+        <relationshipLabel><!-- Continuous Integrations (Post Success Deployment Jobs) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Pre Deployment Jobs --></label>
+        <name>copado__Pre_Deployment_Jobs__c</name>
+        <relationshipLabel><!-- Continuous Integrations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Pre Deployment Options --></label>
+        <name>copado__Pre_Deployment_Options__c</name>
+        <picklistValues>
+            <masterLabel>Always run build task deployment</masterLabel>
+            <translation><!-- Always run build task deployment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Run build task deployment only if pre deployment job is successful</masterLabel>
+            <translation><!-- Run build task deployment only if pre deployment job is successful --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If this checkbox is checked, all apex tests will be run as part of the build. --></help>
+        <label><!-- Run All Tests --></label>
+        <name>copado__Run_All_Tests__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <sharingReasons>
+        <label><!-- Continuous Integration Permission --></label>
+        <name>copado__ContinuousIntegrationPermission</name>
+    </sharingReasons>
+</CustomObjectTranslation>

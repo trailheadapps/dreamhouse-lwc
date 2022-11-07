@@ -1,0 +1,796 @@
+<apex:page docType="html-5.0" showHeader="true" sidebar="false" standardController="copado__Deployment_Task__c" extensions="copado.DeploymentTaskExtension,copado.Settings,copado.JsRemotingController"
+ standardStylesheets="false" title="{!$Label.copado__EDIT} {!$ObjectType.copado__Deployment_Task__c.Label}">
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="height:100%;">
+
+	<head>
+		<c:GAnalytics />
+		<apex:slds />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<apex:stylesheet value="{!URLFOR($Resource.copado__SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+		<c:IncludeStaticsResourceComponent addJquery="true" addFAcss="true" />
+		<script type="text/javascript">
+			var Copado_Licenses = {!CurrentUserLicenses};
+		</script>
+		<c:IncludeConnectionJsComponent />
+		<c:WizardUtils />
+		<apex:includeScript value="{!URLFOR($Resource.copadoStreamingService) }" />
+		<c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true" />
+		<apex:includeScript value="{!URLFOR($Resource.copado__utils)}" />
+		<script src="{!URLFOR($Resource.metadataGrid2)}" />
+
+		<style type="text/css">
+			.lookupInput input {
+				background-color: rgb(255, 255, 255);
+				border: 1px solid rgb(221, 219, 218);
+				border-radius: .25rem;
+				width: 100%;
+				transition: border .1s linear, background-color .1s linear;
+				display: inline-block;
+				padding: 0 1rem 0 .75rem;
+				line-height: 1.875rem;
+				min-height: calc(1.875rem + (1px * 2));
+			}
+
+			.lookupInput a {
+				position: absolute;
+				height: 22px !important;
+				width: 33px !important;
+				margin-left: -33px;
+				margin-top: 3px;
+				background-image: url(/img/setup/search-icon.png) !important;
+				background-repeat: no-repeat !important;
+				background-position: center !important;
+				display: inline-flex !important;
+			}
+
+			.lookupInput a img,
+			.lookupInput a svg {
+				display: none !important;
+			}
+
+			.slds-col {
+				padding-right: 20px;
+			}
+
+			.slds-section-container {
+				padding: 0 20px 0 20px;
+			}
+
+			.slds-screenlocker p {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-right: -50%;
+				transform: translate(-50%, -50%);
+				padding-top: 15px;
+				padding: 30px;
+				background-color: transparent;
+				z-index: 9999;
+			}
+
+			#screenLockerLightning {
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 100%;
+				z-index: 10000;
+				background-color: rgba(33, 33, 33, 0.2);
+			}
+		</style>
+
+		<script>
+			$copado(document).ready(function () {
+				$copado('[data-id$=performTask]').children()[0].remove();
+				overridePageMessages();
+				if ($copado('[data-id$=ustry]').val() == '') {
+					$copado('[id$=dt-type]').attr('disabled', true);
+				}
+				$copado(document).on('change', $copado('[data-id$=ustry]'), function () {
+					if ($copado('[data-id$=ustry]').val() != null) {
+						console.log($copado('[data-id$=ustry]').val());
+						setUserStory($copado('[data-id$=ustry]').val());
+					}
+
+				});
+				unlock();
+				parseJson();
+			});
+
+			var unlock = function () {
+				$copado('#screenLockerLightning').hide();
+				console.log('un-lock');
+			};
+			var lock = function () {
+				$copado('#screenLockerLightning').show();
+				console.log('lock')
+			};
+
+			function overridePageMessages(cb) {
+				textureEffect = 'slds-theme--alert-texture';
+
+				$copado('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage ' + textureEffect);
+				$copado('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage ' + textureEffect);
+				$copado('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage ' + textureEffect);
+				$copado('.infoM3').addClass('slds-notify slds-notify--toast customMessage ' + textureEffect);
+
+				$copado('.errorM3').removeClass('errorM3');
+				$copado('.confirmM3').removeClass('confirmM3');
+				$copado('.infoM3').removeClass('infoM3');
+				$copado('.warningM3').removeClass('warningM3');
+
+				$copado('.message').css('margin', 0);
+
+				if (cb) cb();
+			}
+
+			var parseJson = function () {
+				var dataJson = "{!JSENCODE(dataJson)}";
+
+				var data = dataJson ? dataJson : false;
+				console.log('data==>', data);
+				if (datasetup.setPreviousData) datasetup.setPreviousData(data);
+			}
+
+			var saveTask = function () {
+
+
+				var data = datasetup.save();
+				if (data) {
+					var newPrevRes = [];
+					var parsed;
+					try {
+						//UCU - if the selected type is apex then the parse crashes, so placed try cache block to solve it
+						parsed = JSON.parse(data);
+					} catch (err) {
+						parsed = {};
+					}
+
+					if (parsed.prevRes) {
+						for (var pr = 0; pr < parsed.prevRes.length; pr++) {
+							if (parsed.prevRes[pr].s) {
+								newPrevRes.push(parsed.prevRes[pr]);
+							}
+						}
+						parsed.prevRes = newPrevRes;
+						data = JSON.stringify(parsed);
+					}
+					lockScreen();
+					saveWithDetails(data);
+
+					return false;
+				} else {
+					return false;
+				}
+			}
+
+			function stopRKey(evt) {
+				var evt = (evt) ? evt : ((event) ? event : null);
+				var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+				if ((evt.keyCode == 13) && (node.type == "text")) { return false; }
+			}
+
+			document.onkeypress = stopRKey;
+
+			var datasetup = datasetup || {};
+			datasetup.config = {
+				sobjects_url: '{!JSENCODE(sobjects_url)}',
+				testquery_url: '{!JSENCODE(testquery_url)}',
+				describe_url: '{!JSENCODE(describe_url)}',
+				custom_settings_url: '{!JSENCODE(custom_settings_url)}',
+				metadata_url: '{!JSENCODE(metadata_url)}'
+			};
+			datasetup.deploymentId = '';
+			datasetup.org__c = '{!JSENCODE(ustry.Org_Credential__c)}';
+			datasetup.selectedNames = [];
+			datasetup.preQuery = '';
+			datasetup.type = '{!JSENCODE(Deployment_Task__c.Type__c)}';
+			datasetup.metadata_init = false;
+			datasetup.metaTypes = new Array();
+			datasetup.isScalable = {!scalableGrid};
+
+
+			var _config = {
+				data: {
+					id: '{!JSENCODE(Deployment_Task__c.id)}',
+					orgId: '{!JSENCODE(ustry.Org_Credential__c)}',
+					envId: '{!JSENCODE(ustry.Org_Credential__c)}'
+				},
+				server: {
+					metadataUrl: '{!JSENCODE(urlBase)}metadata/__ORGID__{!JSENCODE(urlParameters)}&parentId=__ORGID__&dates=format',
+					typesUrl: '{!JSENCODE(urlBase)}gitTypes{!JSENCODE(urlParameters)}'
+				},
+				ns: '{!JSENCODE(namespace)}',
+				attachmentName: 'Delete MetaData',
+				viewType: 0,
+				contextSize: 10,
+				leftContent: '',
+				rightContent: '',
+				gridMode: 'metadataselector'
+			};
+
+			var labels = labels || {};
+
+			labels.config = {
+				loading_label: '{!$Label.copado__LOADING}',
+				req_ext_id_label: '{!SUBSTITUTE($Label.EXTERNAL_ID_REQUIRED,"'","\'")}',
+				req_id_label: '{!SUBSTITUTE($Label.SOQL_HASNOT_ID_ERROR,"'","\'")}',
+				bulk_soql_error: '{!SUBSTITUTE($Label.BULK_SOQL_ERROR,"'","\'")}',
+				malformed_soql_error: '{!SUBSTITUTE($Label.SOQL_MALFORMED_ERROR,"'","\'")}',
+				soql_hasnotext_error: '{!SUBSTITUTE($Label.SOQL_HASNOT_EXTERNALID_ERROR,"'","\'")}',
+				testing: '{!SUBSTITUTE($Label.TESTING,"'","\'")}',
+				successful_testing: '{!SUBSTITUTE($Label.QUERY_TEST_SUCCESSFUL,"'","\'")}',
+				test_query: '{!SUBSTITUTE($Label.TEST_QUERY,"'","\'")}',
+				selected: '{!$Label.SELECTED}',
+				name: '{!$Label.NAME}',
+				type: '{!$Label.Type}',
+				unselectAll: '{!$Label.UNSELECT_ALL}',
+				unselectAll: '{!$Label.SELECT_ALL}',
+				prev_meta_missing: '{!SUBSTITUTE($Label.ERROR_MSG_PREV_META_MISSING,"'","\'")} ',
+				MATCH_OWNER_WARNING: '{!JSENCODE($Label.Match_Owner_Warning)}',
+				MATCH_RECORD_TYPE_WARNING: '{!JSENCODE($Label.Match_Record_Type_Warning)}',
+				SOQL_HASNOT_ID_ERROR: '{!JSENCODE($Label.SOQL_HASNOT_ID_ERROR)}'
+			};
+
+
+
+		</script>
+	</head>
+	<div class="fixedMsg" tyle="display:none;" id="msg"></div>
+
+	<body class="slds-scope" style="{!IF($User.UIThemeDisplayed == 'Theme4d','margin: 12px;background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2),linear-gradient(to top,rgba(32, 92, 159, 0), rgb(32, 92, 159));','')}">
+		<apex:outputPanel layout="none" id="scripts">
+			<script type="text/javascript">
+				var usOp = function () {
+					DeploymentTaskExtension.getUserStory(
+						$copado('[data-id$=ustry]').val(),
+						function (result) {
+							if ($copado('[data-id$=ustry]').val() != null) {
+								if (!result) console.log(result.Org_Credential__c);
+
+								if (!result) {
+									alert('{!$label.DeploymentTask_Alert_ProperUS}');
+								} else if (!result.Org_Credential__c) {
+									alert('{!$label.DeploymentTask_Alert_OrgCred}');
+								} else {
+									_config.data.orgId = result.Org_Credential__c;
+									_config.data.envId = result.Org_Credential__c;
+									$copado('[id$=dt-type]').attr('disabled', false);
+								}
+							}
+						});
+
+				}
+
+			</script>
+		</apex:outputPanel>
+		<apex:form >
+			<c:ScreenLocker msg="{!$Label.copado__LOADING}" />
+
+			<div id="screenLockerLightning" class="slds-screenlocker">
+				<p>
+					<img style="width: 100px;" src="{!URLFOR($Resource.SLDS,'/assets/images/spinners/slds_spinner_brand.gif')}" />
+				</p>
+			</div>
+			<apex:actionFunction name="renderMainPanel" reRender="pmessage" oncomplete="$copado('html, body').animate({scrollTop: $copado(document).height()}, 500);"
+			/>
+			<apex:actionFunction immediate="true" name="setUserStory" reRender="scripts" action="{!populateUserStoryRelation}" oncomplete="usOp();">
+				<apex:param name="ustryName" value="" />
+			</apex:actionFunction>
+
+			<div class="slds-page-header" style="{!IF($User.UIThemeDisplayed == 'Theme4d','background: #fdfdfd;margin-bottom: 12px;border-collapse: collapse;border-radius: 4px;','')}">
+				<div class="slds-grid">
+					<div class="slds-col slds-has-flexi-truncate">
+						<div class="slds-media">
+							<div class="slds-media__figure">
+								<span class="slds-icon_container slds-icon-standard-opportunity">
+									<svg class="slds-icon" aria-hidden="true">
+										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/standard-sprite/svg/symbols.svg#process')}"></use>
+									</svg>
+								</span>
+							</div>
+							<div class="slds-media__body">
+								<p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.copado__Deployment_Task__c.Label}</p>
+								<h1 class="slds-page-header__title slds-truncate slds-align-middle">
+									<apex:outputField value="{!copado__Deployment_Task__c.Name}" />
+								</h1>
+
+							</div>
+						</div>
+					</div>
+					<!-- ACTION BUTTONS -->
+					<div class="slds-col slds-no-flex slds-grid slds-align-top ">
+						<div class="slds-button-group" role="group">
+							<apex:commandButton value="{!$Label.copado__Save}" reRender="pageMessages" onclick="return saveTask();" styleClass="slds-button slds-button--neutral"
+							/>
+							<apex:commandButton value="{!$Label.copado__Cancel}" action="{!cancel}" immediate="true" reRender="dummy" styleClass="slds-button slds-button--neutral"
+							/>
+
+							<apex:actionFunction action="{!saveAction}" name="saveWithDetails" id="svd" reRender="pmessage" oncomplete="unlockScreen();overridePageMessages();">
+								<apex:param name="detail" value="" id="d" />
+							</apex:actionFunction>
+
+						</div>
+					</div>
+					<!-- / ACTION BUTTONS -->
+				</div>
+			</div>
+
+			<apex:outputPanel style="margin-bottom: 12px;" layout="block" id="pageMessages">
+				<apex:pagemessages id="pmessage" />
+			</apex:outputPanel>
+
+			<div style="padding: 12px;background: #fdfdfd;border-collapse: collapse; background: #fdfdfd;border-radius: 4px;">
+				<div class="slds-section-container">
+					<div class="slds-section slds-is-open">
+						<h3 class="slds-section__title slds-theme_shade">
+							<span class="slds-truncate slds-p-horizontal_small" title="{!$Label.copado__DETAIL}">{!$Label.copado__DETAIL}</span>
+						</h3>
+						<div aria-hidden="false" class="slds-section__content">
+							<div class="slds-grid">
+								<div class="slds-col" style="flex:unset;width:50.5%">
+									<c:LightningReadyInputFields sObject="{!copado__Deployment_Task__c}" field="Name" requiredView="True" />
+									<c:LightningReadyInputFields sObject="{!copado__Deployment_Task__c}" field="User_Story__c" requiredView="True" identity="ustry" />
+									<c:LightningReadyInputFields sObject="{!copado__Deployment_Task__c}" field="Perform_Manual_Task__c" requiredView="false" identity="performTask"
+									/>
+								</div>
+								<div class="slds-col">
+									<!--<c:LightningReadyInputFields sObject="{!copado__Deployment_Task__c}" field="Type__c" requiredView="True" rerender="detailPanel"/>-->
+
+									<apex:outputPanel layout="block" styleClass="slds-form-element" id="divPicklist">
+										<label class="slds-form-element__label" for="selPicklist">
+											<apex:outputPanel layout="none">
+												<abbr class="slds-required" title="required">*</abbr>
+											</apex:outputPanel>
+											{!$ObjectType['Deployment_Task__c'].Fields['Type__c'].Label}
+										</label>
+										<div class="slds-form-element__control">
+											<apex:inputField id="dt-type" required="true" value="{!copado__Deployment_Task__c.copado__Type__c}" styleClass="slds-select">
+												<apex:actionSupport event="onchange" onsubmit="lock();" rerender="detailPanel" oncomplete="$copado('html, body').animate({scrollTop: $copado('[Id$=detailPanel]').offset().top-50}, 1200);parseJson();if($copado('[Id$=dt-type]').children().first().first().val() == '') $copado('[Id$=dt-type]').children().first().first().remove();unlock();"
+												/>
+											</apex:inputField>
+
+										</div>
+									</apex:outputPanel>
+
+
+									<c:LightningReadyInputFields sObject="{!copado__Deployment_Task__c}" field="Status__c" requiredView="false" />
+									<c:LightningReadyInputFields sObject="{!copado__Deployment_Task__c}" field="Order__c" requiredView="false" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="slds-section slds-is-open">
+						<h3 class="slds-section__title slds-theme_shade">
+							<span class="slds-truncate slds-p-horizontal_small" title="{!$Label.copado__DETAIL}">{!$Label.copado__DeploymentTask_Task_Details}</span>
+						</h3>
+
+						<apex:outputPanel id="detailPanel" layout="block">
+							<div aria-hidden="false" class="slds-section__content">
+
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == ''}">
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'Manual Task'}">
+									<c:ManualTaskComponent deploymentTask="{!copado__Deployment_Task__c}" isEdit="true" userStoryIdOfDeploymentTask="{!copado__Deployment_Task__c.copado__User_Story__c}"
+									/>
+									<script type="text/javascript">
+										datasetup.save = function () {
+											var manualTask = {};
+											var Perform_in_Source_Org = $copado('[Id$="jsPerformInSource"]').prop('checked');
+											var Perform_in_Destination_Orgs = $copado('[Id$="jsPerformInDestinations"]').prop('checked');
+											var Disable_Task_for_Back_Promotions = $copado('[Id$="jsDisableTaskForBackPromotions"]').prop('checked');
+											var Task_Description = $copado('[Id$="jsTaskDesc"]').val();
+											var Task_Owner = $copado('[Id$="jsTaskOwner_lkid"]').val();
+											var Notify_Task_Owner = $copado('[Id$="jsNotifyTaskOwner"]').val();
+											var Apply_to = $copado('[Id$="jsApplyTo"]').val();
+											var selectedEnvironmentsSelectList = $copado('[Id$="rightList"]')[0];
+											var result = [];
+											var options = selectedEnvironmentsSelectList && selectedEnvironmentsSelectList.options;
+											var opt;
+											if (options) {
+												for (var i = 0, iLen = options.length; i < iLen; i++) {
+													opt = options[i];
+													result.push(opt.value || opt.text);
+												}
+											}
+											manualTask.Perform_in_Source_Org = Perform_in_Source_Org;
+											manualTask.Perform_in_Destination_Orgs = Perform_in_Destination_Orgs;
+											manualTask.Task_Description = Task_Description;
+											manualTask.Task_Owner = Task_Owner;
+											manualTask.Notify_Task_Owner = Notify_Task_Owner;
+											manualTask.Apply_to = Apply_to;
+											manualTask.Disable_Task_for_Back_Promotions = Disable_Task_for_Back_Promotions;
+											manualTask.Selected_Environments = result;
+											return JSON.stringify(manualTask);
+										}
+										datasetup.setPreviousData = function (data) {
+											if (data) {
+												data = JSON.parse(data);
+												$copado('[Id$="jsTaskDesc"]').val(data.Task_Description);
+												$copado('[Id$="jsPerformInSource"]').prop('checked', data.Perform_in_Source_Org);
+												$copado('[Id$="jsPerformInDestinations"]').prop('checked', data.Perform_in_Destination_Orgs);
+												$copado('[Id$="jsDisableTaskForBackPromotions"]').prop('checked', data.Disable_Task_for_Back_Promotions);
+												$copado('[Id$="jsNotifyTaskOwner"]').val(data ? data.Notify_Task_Owner : 'None');
+												$copado('[Id$="jsApplyTo"]').val(data ? data.Apply_to : 'None');
+												$copado('[Id$="jsTaskOwner_lkid"]').val(data ? data.Task_Owner : null);
+
+												if (data.Task_Owner != undefined && data.Task_Owner != '') {
+													sforce.connection.query('SELECT id, FirstName, LastName FROM User WHERE Id = \'' + data.Task_Owner + '\' LIMIT 1', {
+														onSuccess: function (result) {
+															var records = result.getArray("records");
+
+															if (records.length == 1) {
+																var firstname = records[0].FirstName;
+																var lastname = records[0].LastName;
+																$copado('[Id$="jsTaskOwner_lkold"]').val(firstname + ' ' + lastname);
+																$copado('[Id$="jsTaskOwner"]').val(firstname + ' ' + lastname);
+															}
+														},
+														onFailure: function (error) {
+															console.error("An error has occurred " + error);
+														}
+													});
+												}
+
+												var selectedEnvironments = data ? data.Selected_Environments : [];
+												var leftEnvironmentsSelectList = $copado('[Id$="leftList"]')[0];
+												var result = [];
+												var options = leftEnvironmentsSelectList && leftEnvironmentsSelectList.options;
+												var opt;
+												if (options) {
+													for (var i = 0, iLen = options.length; i < iLen; i++) {
+														opt = options[i];
+														opt.selected = selectedEnvironments.includes(opt.value);;
+													}
+													moveSelectedOptions($copado('[Id$="leftList"]')[0].id, $copado('[Id$="rightList"]')[0].id, $copado('[Id$="leftHidden"]')[0].id, $copado('[Id$="rightHidden"]')[0].id);
+												}
+											} else {
+												$copado('[id$=jsTaskOwner]').val(null);
+											}
+										}
+
+									</script>
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'URL Callout'}">
+									<c:URLCalloutComponent isEdit="true" />
+									<script type="text/javascript">
+										//moved methods into urlCallout resource to be able to use them without repeating on Quality gate page
+										datasetup.save = urlCallout.save;
+										datasetup.setPreviousData = urlCallout.setPreviousData;
+									</script>
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'Apex'}">
+									<c:ApexComponent isEdit="true" />
+									<script type="text/javascript">
+										datasetup.save = function () {
+											if ($copado('.js-apex').val().trim().length > 0) {
+												return $copado('.js-apex').val();
+											} else {
+												alert('The Apex Script is Required.');
+												return false;
+											}
+										}
+										datasetup.setPreviousData = function () {
+											console.info('Setting previosly selected data for Apex');
+											var apexVal = dw.u.getSavedData('{!JSENCODE(Deployment_Task__c.id)}', 'Apex', true);
+											if (apexVal)
+												$copado('.js-apex').val(apexVal);
+										}
+
+									</script>
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'Data'}">
+									<c:DataComponent isEdit="true" prequery="" orgId="{!ustry.copado__Org_Credential__c}" stepType="Data" />
+									<script type="text/javascript">
+										datasetup.save = function () {
+
+											if (dw.qb.queryTested) {
+												var obj = {
+													o: dw.qb.objectSelected,
+													q: dw.qb.query,
+													f: dw.qb.externalId,
+													rb: dw.qb.getObjectToRebuild()
+												};
+												obj.iao = dw.qb.ui.attachmentOptions.val();
+												obj.containsOwnerId = dw.qb.ui.matchOwner.prop('checked');
+												obj.containsRecordTypeId = dw.qb.ui.matchRecordType.prop('checked');
+
+												return JSON.stringify(obj);
+											} else {
+												showMessage('WARNING', copadoLabels.MUST_BUILD_VALID_AND_TESTED_QUERY);
+												renderMainPanel();
+												$copado('#qb_js_error').focus();
+												return false;
+											}
+										}
+										datasetup.setPreviousData = function (data) {
+											if (data) {
+												console.info('Setting previosly selected data for Data');
+												var parsed = JSON.parse(data);
+
+												if (parsed.q) dw.qb.preQuery = parsed;
+												else dw.qb.preQuery = '';
+
+											}
+											init(undefined, parsed);
+										}
+
+									</script>
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'Data Template'}">
+									<c:DataTemplateTaskComponent isEdit="true" />
+									<script type="text/javascript">
+										getDataSetDetailsById = function (dataSetId) {
+											let dataSets = sforce.connection.query('SELECT Id, Name, '
+												+ _config.ns + 'Data_Template__c, '
+												+ _config.ns + 'Data_Template__r.Name, '
+												+ _config.ns + 'Description__c FROM ' + _config.ns + 'Data_Set__c WHERE Id = \'' + dataSetId + '\'');
+											let dataSetRecords = dataSets.getArray('records');
+											if (dataSetRecords.length > 0) {
+												let record = dataSetRecords[0];
+												return record;
+											}
+											return null;
+										}
+
+										toggleDataTemplateHtmlElements = function () {
+											let type = $copado('input[name="DataSourceType"]:checked').val();
+											let sourceDataTemplatePanel = document.getElementById('dataTemplateSourcePanel');
+											let sourceDataSetPanel = document.getElementById('dataSetSourcePanel');
+											let dataTemplateRadioOption = document.getElementById('ENVIRONMENT');
+											if (sourceDataTemplatePanel && sourceDataSetPanel && dataTemplateRadioOption) {
+												switch (type) {
+													case 'ENVIRONMENT':
+													case undefined:
+														sourceDataTemplatePanel.style.display = 'block';
+														sourceDataSetPanel.style.display = 'none';
+														dataTemplateRadioOption.checked = true;
+														break;
+													case 'DATASET':
+														sourceDataTemplatePanel.style.display = 'none';
+														sourceDataSetPanel.style.display = 'block';
+														break;
+												}
+											}
+										}
+
+										datasetup.save = function () {
+											var obj = {};
+											let type = $copado('input[name="DataSourceType"]:checked').val();
+											switch (type) {
+												case 'ENVIRONMENT':
+												case undefined:
+													obj = {
+														dataTemplateId: $copado('[id$=SourceDataTemplate_lkid]').val(),
+														dataTemplateName: $copado('[id$=SourceDataTemplate]').val()
+													}
+													break;
+												case 'DATASET':
+													obj = {
+														source: { type: 'DATASET', id: $copado('[id$=SourceDataSet_lkid]').val() },
+														destination: { type: 'ENVIRONMENT' }
+													}
+													break;
+											}
+											return JSON.stringify(obj);
+										}
+
+										datasetup.setPreviousData = function (data) {
+											if (data) {
+												data = JSON.parse(data);
+												let type = data.source ? data.source.type : 'ENVIRONMENT';
+												$copado('#' + type + '[name="DataSourceType"]').prop('checked', true);
+												toggleDataTemplateHtmlElements();
+												switch (type) {
+													case 'ENVIRONMENT':
+													case undefined:
+														$copado('[id$=SourceDataTemplate_lkid]').val(data.dataTemplateId);
+														$copado('[id$=SourceDataTemplate]').val(data.dataTemplateName);
+														break;
+													case 'DATASET':
+														const dataSetRecord = getDataSetDetailsById(data.source.id);
+														$copado('[id$=SourceDataSet_lkid]').val(dataSetRecord.Id);
+														$copado('[id$=SourceDataSet]').val(dataSetRecord.Name);
+														break;
+												}
+											}
+										}
+									</script>
+									<script type="text/javascript">
+										toggleDataTemplateHtmlElements();
+									</script>
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'Bulk Data'}">
+									<c:DataComponent isEdit="true" prequery="" orgId="{!ustry.copado__Org_Credential__c}" stepType="Data" />
+									<script type="text/javascript">
+										datasetup.save = function () {
+
+											if (dw.qb.queryTested) {
+												var obj = {
+													o: dw.qb.objectSelected,
+													q: dw.qb.query,
+													f: dw.qb.externalId,
+													rb: dw.qb.getObjectToRebuild()
+												};
+												obj.iao = dw.qb.ui.attachmentOptions.val();
+												obj.containsOwnerId = dw.qb.ui.matchOwner.prop('checked');
+												obj.containsRecordTypeId = dw.qb.ui.matchRecordType.prop('checked');
+												return JSON.stringify(obj);
+											} else {
+												showMessage('WARNING', copadoLabels.MUST_BUILD_VALID_AND_TESTED_QUERY);
+												renderMainPanel();
+												$copado('#qb_js_error').focus();
+												return false;
+											}
+										}
+										datasetup.setPreviousData = function (data) {
+											if (data) {
+												console.info('Setting previosly selected data for Bulk Data');
+												var parsed = JSON.parse(data);
+												if (parsed.q) dw.qb.preQuery = parsed;
+												else dw.qb.preQuery = '';
+											}
+											init(undefined, parsed);
+										}
+
+									</script>
+								</apex:outputPanel>
+								<apex:outputPanel id="csPanel2Render" layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'Custom Settings'}">
+									<c:CustomSettingComponent isEdit="true" />
+									<script type="text/javascript">
+
+										datasetup.save = function () {
+											var settings = [];
+											var type;
+											var allData = dataAdapter2.records;
+											allData.forEach(function (element) {
+												if (element.s) {
+													if (element.type == 'List') {
+														settings.push(element.Name);
+													} else {
+														settings.push(element.SetupOwnerId);
+													}
+												}
+											});
+											if (settings.length > 0) {
+												var obj = {
+													fromSuffix: $copado('.cs-fromSuffix').val(),
+													toSuffix: $copado('.cs-toSuffix').val(),
+													settings: settings,
+													sco: customSetting.data.completeObjSelected,
+													csName: customSetting.data.objSelected,
+													prevRes: customSetting.data.values
+												};
+												return JSON.stringify(obj);
+											} else {
+												alert(copadoLabels.SPECIFY_AT_LEAST_ONE_ITEM_TO_DEPLOY);
+												return false;
+											}
+										}
+										datasetup.setPreviousData = function (data) {
+											if (data) {
+												try {
+													initCS();
+													console.info('Setting previosly selected data for Custom Settings');
+													var data = dw.u.getSavedData('{!JSENCODE(Deployment_Task__c.id)}', 'Custom Settings', true);
+													console.log('rebuild CS selector', data);
+													data = JSON.parse(data || '{ }');
+													if (Object.keys(data).length === 0) return;
+
+													$copado('.cs-fromSuffix').val(data ? data.fromSuffix : '');
+													$copado('.cs-toSuffix').val(data ? data.toSuffix : '');
+
+													customSetting.data.settings = data.settings;
+													$copado('#objectsCJ').val(data.sco);
+
+													//dw.u.getSavedStepData(type, true);
+													customSetting.data.values = data.prevRes;
+													customSetting.ops.createGrid(customSetting.data.values, customSetting.data.values);
+													//customSetting.ops.onSelectObject(data.csName,data.sco);
+													var res = customSetting.data.values,
+														len = undefined;
+												} catch (err) {
+													console.warn(err);
+												}
+											} else {
+												initCS();
+											}
+										}
+
+									</script>
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'Delete MetaData'}">
+									<c:DeleteMetadataComponent orgId="{!ustry.copado__Org_Credential__c}" stepType="Delete Metadata" filtered="false" isEdit="true" />
+									<script type="text/javascript">
+										metadataTask.init(_config, false, datasetup.isScalable);
+										datasetup.save = function () {
+											return metadataTask.save();
+										}
+										datasetup.setPreviousData = function () {
+											console.info('Setting previosly selected data for Delete Metadata');
+										}
+
+									</script>
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'Salesforce Flow'}">
+									<c:SalesforceFlowComponent isEdit="true" />
+									<script type="text/javascript">
+										//moved methods into salesforceFlow resource to be able to use them without repeating on Quality gate page
+										datasetup.save = salesforceFlow.save;
+										datasetup.setPreviousData = salesforceFlow.setPreviousData;
+									</script>
+								</apex:outputPanel>
+
+								<apex:outputPanel layout="none" rendered="{!copado__Deployment_Task__c.copado__Type__c == 'Function'}">
+									<c:FunctionComponent isEdit="true" deploymentTaskId="{!copado__Deployment_Task__c.Id}"/>
+									<script>
+										datasetup.save = function () {
+											var saveFunction = {};
+											var Function_ApiName = $copado('[Id$="jsFunction_api"]').val();
+											if (!Function_ApiName) {
+												alert('Please Select a Function.');
+												return false;
+											}
+											var divElem = document.querySelectorAll("#js-Function-Param input");
+											var paramArray = [];
+											for (var i = 0; i < divElem.length; i++) {
+												let param_name = document.querySelectorAll("#js-Function-Param span")[i].innerText;
+												let param_val = document.querySelectorAll("#js-Function-Param input")[i].value;
+
+												if(param_name.startsWith("*")) {
+													param_name = param_name.substring(1);
+												}
+												param_name = param_name.trim();
+												paramArray.push({ "name": param_name, "value": param_val });
+											}
+											saveFunction.functionAPIName = Function_ApiName;
+											saveFunction.functionParameters = paramArray;
+											return JSON.stringify(saveFunction);
+										}
+
+										datasetup.setPreviousData = function (data) {
+											if (data) {
+												data = JSON.parse(data);
+												$copado('[Id$="jsFunction_lkold"]').val(data ? data.functionAPIName : null);
+
+												if (data.functionAPIName != undefined && data.functionAPIName != '') {
+													var namespace = '{!JSENCODE(settings.namespace)}';
+													var noNamespaceQuery = 'SELECT Id, Name, API_Name__c, Parameters__c FROM Function__c WHERE API_Name__c = \'' + data.functionAPIName + '\' LIMIT 1';
+													var withNamespaceQuery = 'SELECT Id, Name, copado__API_Name__c, copado__Parameters__c FROM copado__Function__c WHERE copado__API_Name__c = \'' + data.functionAPIName + '\' LIMIT 1';
+													var query = namespace ? withNamespaceQuery : noNamespaceQuery;
+
+													sforce.connection.query(query, {
+														onSuccess: function (result) {
+															var records = result.getArray("records");
+
+															if (records.length == 1) {
+																var recordId = records[0].Id;
+																var recordName = records[0].Name;
+																$copado('[Id$="jsFunction"]').val(recordName);
+																$copado('[Id$="jsFunction_lkid"]').val(recordId);
+																document.getElementById('jsFunction').onchange();
+															}
+														},
+														onFailure: function (error) {
+															console.error("An error has occurred " + error);
+														}
+													});
+												}
+
+
+											} else {
+												$copado('[id$=jsFunction]').val(null);
+											}
+										}
+									</script>
+								</apex:outputPanel>
+							</div>
+						</apex:outputPanel>
+					</div>
+				</div>
+			</div>
+		</apex:form>
+	</body>
+
+	</html>
+</apex:page>

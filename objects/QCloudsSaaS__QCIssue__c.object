@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Salesforce Issue fetched from the Quality Clouds API</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Link_to_Issue__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;/apex/QCloudsSaaS__IssueDetail?id=&quot; &amp;  QCloudsSaaS__ID__c  &amp; &quot;&amp;id_scan=&quot; &amp;  QCloudsSaaS__Scan__r.QCloudsSaaS__ID__c  &amp; &quot;&amp;id_instance=&quot; &amp;  QCloudsSaaS__Scan__r.QCloudsSaaS__Instance__r.QCloudsSaaS__ID__c  , &quot;Link to Issue&quot;, &quot;blank&quot;)</formula>
+        <label>Link to Issue</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Baseline__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Baseline</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Created_By__c</fullName>
+        <deprecated>false</deprecated>
+        <description>User Id who created the affected element</description>
+        <externalId>false</externalId>
+        <inlineHelpText>User Id who created the affected element</inlineHelpText>
+        <label>Created By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Created_On__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Date on which the affected element was created</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date on which the affected element was created</inlineHelpText>
+        <label>Created On</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Documentation__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Documentation URL</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Documentation URL</inlineHelpText>
+        <label>Documentation</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Element_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of the affected element</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of the affected element</inlineHelpText>
+        <label>Element Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Element_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Type of the affected element</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Type of the affected element</inlineHelpText>
+        <label>Element Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__ID__c</fullName>
+        <deprecated>false</deprecated>
+        <description>External ID</description>
+        <externalId>true</externalId>
+        <inlineHelpText>External ID</inlineHelpText>
+        <label>ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Impact_Area__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Impact Area</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Impact Area</inlineHelpText>
+        <label>Impact Area</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>SCALABILITY</fullName>
+                    <default>false</default>
+                    <label>SCALABILITY</label>
+                </value>
+                <value>
+                    <fullName>PERFORMANCE</fullName>
+                    <default>false</default>
+                    <label>PERFORMANCE</label>
+                </value>
+                <value>
+                    <fullName>MANAGEABILITY</fullName>
+                    <default>false</default>
+                    <label>MANAGEABILITY</label>
+                </value>
+                <value>
+                    <fullName>SECURITY</fullName>
+                    <default>false</default>
+                    <label>SECURITY</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Issue__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Issue Type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Issue Type</inlineHelpText>
+        <label>Issue Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Line_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Line number where the issue was detected</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Line number where the issue was detected</inlineHelpText>
+        <label>Line Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Link__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Link from Quality Clouds API</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Link from Quality Clouds API</inlineHelpText>
+        <label>Link</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Link_to_Element__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Go to Element</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Go to Element</inlineHelpText>
+        <label>Link to Element</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Scan__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Scan the issue is part of</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Scan the issue is part of</inlineHelpText>
+        <label>Scan</label>
+        <referenceTo>QCloudsSaaS__Scann__c</referenceTo>
+        <relationshipLabel>QCIssues</relationshipLabel>
+        <relationshipName>QCIssues</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Severity__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Severity</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Severity</inlineHelpText>
+        <label>Severity</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>HIGH</fullName>
+                    <default>false</default>
+                    <label>HIGH</label>
+                </value>
+                <value>
+                    <fullName>MEDIUM</fullName>
+                    <default>false</default>
+                    <label>MEDIUM</label>
+                </value>
+                <value>
+                    <fullName>LOW</fullName>
+                    <default>false</default>
+                    <label>LOW</label>
+                </value>
+                <value>
+                    <fullName>WARNING</fullName>
+                    <default>false</default>
+                    <label>WARNING</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Updated_By__c</fullName>
+        <deprecated>false</deprecated>
+        <description>User Id who last updated the affected element</description>
+        <externalId>false</externalId>
+        <inlineHelpText>User Id who last updated the affected element</inlineHelpText>
+        <label>Updated By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Updated_On__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Date on which the affected element was last updated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date on which the affected element was last updated</inlineHelpText>
+        <label>Updated On</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Write_Off_Request_Description__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Write Off Request Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Write Off Request Description</inlineHelpText>
+        <label>Write Off Request Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Write_Off_Request_Reason__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Write Off Request Reason</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Reason1</fullName>
+                    <default>false</default>
+                    <label>Complex solution, requires refactoring</label>
+                </value>
+                <value>
+                    <fullName>Reason2</fullName>
+                    <default>false</default>
+                    <label>Insufficient time to fix and test</label>
+                </value>
+                <value>
+                    <fullName>Reason3</fullName>
+                    <default>false</default>
+                    <label>Complex to test and validate all situations</label>
+                </value>
+                <value>
+                    <fullName>Reason4</fullName>
+                    <default>false</default>
+                    <label>False positive rule</label>
+                </value>
+                <value>
+                    <fullName>Reason5</fullName>
+                    <default>false</default>
+                    <label>Others</label>
+                </value>
+                <value>
+                    <fullName>Reason6</fullName>
+                    <default>false</default>
+                    <label>Legacy issue</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Write_Off_Requested_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Date/time of write off request.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date/time of write off request.</inlineHelpText>
+        <label>Write Off Requested Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Write_Off_Requester__c</fullName>
+        <deprecated>false</deprecated>
+        <description>User who requested write off</description>
+        <externalId>false</externalId>
+        <inlineHelpText>User who requested write off</inlineHelpText>
+        <label>Write Off Requester</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Write_Off_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Write Off Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Write_Off_Validation_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Write Off Validation Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Write_Off_Validation_Reason__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Write Off Validation Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Write_Off_Validator__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Write Off Validator</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QCloudsSaaS__Write_off__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Write off</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Write off</inlineHelpText>
+        <label>Write off</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>User_Story__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>User Story</label>
+        <referenceTo>copado__User_Story__c</referenceTo>
+        <relationshipLabel>QCIssues</relationshipLabel>
+        <relationshipName>QCIssues</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>QCIssue</label>
+    <nameField>
+        <label>QCIssue Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>QCIssues</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

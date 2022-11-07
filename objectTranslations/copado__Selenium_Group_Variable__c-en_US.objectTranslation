@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Display Value --></label>
+        <name>copado__Display_Value__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select this Checkbox to hide the value in the Test Group related list. --></help>
+        <label><!-- Hide Value --></label>
+        <name>copado__Hide_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selenium Test Group --></label>
+        <name>copado__Selenium_Test_Group__c</name>
+        <relationshipLabel><!-- Selenium Group Variables --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Selenium Group Variable is valid only within this Selenium Group.  On Test Cases, a variable can be referred to as {!Group.VARIABLE_NAME}. --></help>
+        <label><!-- Value --></label>
+        <name>copado__Value__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,126 @@
+<apex:page standardController="copado__Persona_Permission__c" id="thePage" extensions="copado.Settings" lightningStylesheets="true">
+    
+    <head>
+        <c:IncludeConnectionJsComponent />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+	</head>
+    
+    <body>
+        <apex:sectionHeader title="Copado" subtitle="{!$ObjectType.copado__Persona_Permission__c.Label}"/>
+        <apex:form id="theForm" styleClass="copado-lightning-container" html-novalidate="true">
+            <div style="display:none;">
+                <apex:inputField id="if_PermissionSet" value="{!copado__Persona_Permission__c.copado__Permission_Set_Name__c}" required="true"/>
+            </div>
+            
+            <apex:pageBlock id="pb" mode="edit">
+                <apex:pageBlockButtons id="pbbs" location="top">
+                    <button class="{!IF($User.UIThemeDisplayed=='Theme3','','copado-lightning')}" id="btnSave" onclick="copadoAppLogic.save(); return false;" >{!$Label.SAVE}</button>
+                    <apex:commandButton id="btnCancel" value="{!$Label.copado__Cancel}" action="{!cancel}" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection id="pbs" columns="1">
+                	<apex:inputField id="if_Persona" value="{!copado__Persona_Permission__c.copado__Persona__c}"/>
+                    <apex:pageBlockSectionItem id="pbsi">
+                        <apex:outputLabel >Permission Sets</apex:outputLabel>
+                        <select id="selectPermissions">
+                            <option value="">Loading...</option>
+                        </select>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+    			<script type="text/javascript">
+                    function doOption(v, t){
+                        var o = document.createElement('option');
+                        o.value = v;
+                        o.text = t;
+                        return o;
+                    }
+                    
+                    
+                    var copadoUI = {};
+            		copadoUI.messages = {};
+            		copadoUI.messages.PermissionNotSelected = 'Permission Set needs to be selected.';
+            		copadoUI.PermissionDropDown = document.getElementById('selectPermissions');
+            		copadoUI.PERMISSION_SET_NAME = document.getElementById('{!$Component.theForm.if_PermissionSet}');
+            
+            
+            		copadoUI.setPermSetDropDown = function(){
+                    	var _x = copadoAppLogic.data.PermissionSets;
+                        if(_x!=null){
+                        	for(var i=0; i<_x.length; i++){
+                            	var o = doOption('','Select a Permission Set');
+                                copadoUI.PermissionDropDown.add(o);
+                            
+                                for(var i=0; i<_x.length; i++){
+                                    var opt = doOption(_x[i].Name, _x[i].Label+' ('+_x[i].Name+')');
+                                    copadoUI.PermissionDropDown.add(opt);
+                                }
+                                copadoUI.PermissionDropDown.remove(0);
+                            }
+                        }
+                    };
+            		copadoUI.setUIfromData = function(){
+                    	copadoUI.PermissionDropDown.value = copadoAppLogic.data.permissionSetName;
+                    };
+            
+
+            		var copadoAppLogic = {};
+            		copadoAppLogic.data = {};
+            		copadoAppLogic.data.ns = '{!JSENCODE(namespace)}';
+            		copadoAppLogic.data.permissionSetName = '{!JSENCODE(Persona_Permission__c.Permission_Set_Name__c)}';
+            		copadoAppLogic.data.PermissionSets = {};
+            
+            		copadoAppLogic.save = function(){
+                        copadoAppLogic.setDataFromUI();
+                    	console.info('Selected Permission set... '+copadoAppLogic.data.perssionSetName);
+                        if(copadoAppLogic.data.perssionSetName == ''){
+                        	alert(copadoUI.messages.PermissionNotSelected);
+                        }
+                        else{
+                            var _record = new sforce.SObject(copadoAppLogic.data.ns+'Persona_Permission__c');
+                            _record.Id = '{!Persona_Permission__c.Id}';
+                            _record[copadoAppLogic.data.ns+'Permission_Set_Name__c'] = copadoAppLogic.data.perssionSetName;
+                            try{
+                            	if(_record.Id==''){
+                                	_record[copadoAppLogic.data.ns+'Persona__c'] = '{!JSENCODE(Persona_Permission__c.Persona__c)}';
+                                }
+                                result = (_record.Id=='')?sforce.connection.create([_record]) : sforce.connection.update([_record]);
+                                if(result[0].getBoolean("success")){
+                                    console.log("save success " + result[0]);
+                                    if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+                                        sforce.one.navigateToSObject('{!JSENCODE(Persona_Permission__c.Persona__c)}', 'view');//LEX
+                                    } else {
+                                        window.location.href = '/{!JSENCODE(Persona_Permission__c.Persona__c)}';//CLASSIC
+                                    }
+                                }
+                                else{
+                                    console.log("save failed " + result[0]);
+                                }
+                            }
+                            catch(e){
+                            	    alert(e);
+
+                            }
+                        }
+                    };
+            		copadoAppLogic.setDataFromUI = function(){
+                    	console.debug('Getting UI data and setting object data...');
+                        copadoAppLogic.data.perssionSetName = copadoUI.PermissionDropDown.value;
+                        copadoUI.PERMISSION_SET_NAME.value = copadoUI.PermissionDropDown.value;
+                    };
+            		copadoAppLogic.init = function(){
+                        copadoAppLogic.getPermissionSets();
+                    	copadoUI.setUIfromData();
+                    
+                    };
+    				copadoAppLogic.getPermissionSets = function(){
+                        console.debug('Getting permission sets...');
+                        var result = sforce.connection.query("Select Id, Name, Label from PermissionSet where ProfileId='' ORDER BY Name");
+                    	copadoAppLogic.data.PermissionSets = result.getArray('records');
+                        copadoUI.setPermSetDropDown();
+                    };
+            
+            		copadoAppLogic.init();
+                </script>        
+        </apex:form>
+    </body>
+</apex:page>

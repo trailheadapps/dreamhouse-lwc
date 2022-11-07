@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- The artifact record which cannot be installed or managed without the depending artifact --></help>
+        <label><!-- Dependent Package --></label>
+        <name>copado__Dependent_Artifact__c</name>
+        <relationshipLabel><!-- Package Dependencies (Dependent Artifact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The minumum or exact version of depending artifact. This particular version will be used during version creation and installation operations. --></help>
+        <label><!-- Depending Package Version --></label>
+        <lookupFilter>
+            <errorMessage><!-- Value does not exist or does not match filter criteria. Depending version should be selected among the depending artifact&apos;s versions. --></errorMessage>
+        </lookupFilter>
+        <name>copado__Depending_Artifact_Version__c</name>
+        <relationshipLabel><!-- Package Dependencies --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The depending package artifact which contains required dependencies for the dependent package&apos;s metadata --></help>
+        <label><!-- Depending Package --></label>
+        <name>copado__Depending_Artifact__c</name>
+        <relationshipLabel><!-- Package Dependencies (Depending Artifact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If checked, the latest version of the depending artifact will be used for version creation and installation operations --></help>
+        <label><!-- Depends on the latest version --></label>
+        <name>copado__Depends_on_the_latest_version__c</name>
+    </fields>
+</CustomObjectTranslation>

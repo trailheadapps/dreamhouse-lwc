@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Message --></label>
+        <name>copado__Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>copado__Priority__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- For more info, please visit: http://pmd.sourceforge.net/snapshot/pmd-apex/rules/index.html --></help>
+        <label><!-- Rule Name --></label>
+        <name>copado__Rule_Name__c</name>
+        <picklistValues>
+            <masterLabel>ApexBadCrypto</masterLabel>
+            <translation><!-- ApexBadCrypto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexCRUDViolation</masterLabel>
+            <translation><!-- ApexCRUDViolation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexCSRF</masterLabel>
+            <translation><!-- ApexCSRF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexDangerousMethods</masterLabel>
+            <translation><!-- ApexDangerousMethods --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexDoc</masterLabel>
+            <translation><!-- ApexDoc --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexInsecureEndpoint</masterLabel>
+            <translation><!-- ApexInsecureEndpoint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexOpenRedirect</masterLabel>
+            <translation><!-- ApexOpenRedirect --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexSOQLInjection</masterLabel>
+            <translation><!-- ApexSOQLInjection --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexSharingViolations</masterLabel>
+            <translation><!-- ApexSharingViolations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexSuggestUsingNamedCred</masterLabel>
+            <translation><!-- ApexSuggestUsingNamedCred --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexUnitTestClassShouldHaveAsserts</masterLabel>
+            <translation><!-- ApexUnitTestClassShouldHaveAsserts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexUnitTestShouldNotUseSeeAllDataTrue</masterLabel>
+            <translation><!-- ApexUnitTestShouldNotUseSeeAllDataTrue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexXSSFromEscapeFalse</masterLabel>
+            <translation><!-- ApexXSSFromEscapeFalse --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ApexXSSFromURLParam</masterLabel>
+            <translation><!-- ApexXSSFromURLParam --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AvoidDeeplyNestedIfStmts</masterLabel>
+            <translation><!-- AvoidDeeplyNestedIfStmts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AvoidDirectAccessTriggerMap</masterLabel>
+            <translation><!-- AvoidDirectAccessTriggerMap --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AvoidDmlStatementsInLoops</masterLabel>
+            <translation><!-- AvoidDmlStatementsInLoops --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AvoidGlobalModifier</masterLabel>
+            <translation><!-- AvoidGlobalModifier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AvoidHardcodingId</masterLabel>
+            <translation><!-- AvoidHardcodingId --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AvoidLogicInTrigger</masterLabel>
+            <translation><!-- AvoidLogicInTrigger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AvoidNonExistentAnnotations</masterLabel>
+            <translation><!-- AvoidNonExistentAnnotations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AvoidSoqlInLoops</masterLabel>
+            <translation><!-- AvoidSoqlInLoops --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ClassNamingConventions</masterLabel>
+            <translation><!-- ClassNamingConventions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CyclomaticComplexity</masterLabel>
+            <translation><!-- CyclomaticComplexity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EmptyCatchBlock</masterLabel>
+            <translation><!-- EmptyCatchBlock --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EmptyIfStmt</masterLabel>
+            <translation><!-- EmptyIfStmt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EmptyStatementBlock</masterLabel>
+            <translation><!-- EmptyStatementBlock --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EmptyTryOrFinallyBlock</masterLabel>
+            <translation><!-- EmptyTryOrFinallyBlock --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EmptyWhileStmt</masterLabel>
+            <translation><!-- EmptyWhileStmt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ExcessiveClassLength</masterLabel>
+            <translation><!-- ExcessiveClassLength --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ExcessiveParameterList</masterLabel>
+            <translation><!-- ExcessiveParameterList --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ExcessivePublicCount</masterLabel>
+            <translation><!-- ExcessivePublicCount --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ForLoopsMustUseBraces</masterLabel>
+            <translation><!-- ForLoopsMustUseBraces --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IfElseStmtsMustUseBraces</masterLabel>
+            <translation><!-- IfElseStmtsMustUseBraces --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IfStmtsMustUseBraces</masterLabel>
+            <translation><!-- IfStmtsMustUseBraces --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MethodNamingConventions</masterLabel>
+            <translation><!-- MethodNamingConventions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MethodWithSameNameAsEnclosingClass</masterLabel>
+            <translation><!-- MethodWithSameNameAsEnclosingClass --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NcssConstructorCount</masterLabel>
+            <translation><!-- NcssConstructorCount --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NcssMethodCount</masterLabel>
+            <translation><!-- NcssMethodCount --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NcssTypeCount</masterLabel>
+            <translation><!-- NcssTypeCount --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>StdCyclomaticComplexity</masterLabel>
+            <translation><!-- StdCyclomaticComplexity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TooManyFields</masterLabel>
+            <translation><!-- TooManyFields --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VariableNamingConventions</masterLabel>
+            <translation><!-- VariableNamingConventions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WhileLoopsMustUseBraces</masterLabel>
+            <translation><!-- WhileLoopsMustUseBraces --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Rule Reference --></label>
+        <name>copado__Rule_Reference__c</name>
+    </fields>
+    <fields>
+        <label><!-- Static Code Analysis Settings --></label>
+        <name>copado__Static_Code_Analysis_Settings__c</name>
+        <relationshipLabel><!-- Static Code Analysis Rules --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

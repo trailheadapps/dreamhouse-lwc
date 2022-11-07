@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Name used in the user interface where this stage is displayed --></help>
+        <label><!-- Display Name --></label>
+        <name>copado__Display_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Build: stage that contains environments where functionality gets developed
+Test: stage that contains environments where functionality is tested and validated
+Production: stage that contains environments where functionality is made available to end users --></help>
+        <label><!-- Meta Stage --></label>
+        <name>copado__Meta_Stage__c</name>
+    </fields>
+</CustomObjectTranslation>

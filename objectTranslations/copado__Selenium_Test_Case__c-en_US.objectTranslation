@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Open with Copado Recorder --></help>
+        <label><!-- Open with Copado Recorder --></label>
+        <name>copado__Open_with_Copado_Recorder__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previous Version --></label>
+        <name>copado__Previous_Version__c</name>
+        <relationshipLabel><!-- Next Version --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Version --></label>
+        <name>copado__Version__c</name>
+    </fields>
+    <webLinks>
+        <label><!-- New_Version --></label>
+        <name>copado__New_Version</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Promote_Version --></label>
+        <name>copado__Promote_Version</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Quick_Run --></label>
+        <name>copado__Quick_Run</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Rollback_to_Previous_Version --></label>
+        <name>copado__Rollback_to_Previous_Version</name>
+    </webLinks>
+</CustomObjectTranslation>

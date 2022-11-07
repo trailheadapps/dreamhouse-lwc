@@ -1,0 +1,20 @@
+<!--
+ - Created by umitcanuckan on 23/08/2018.
+ -->
+
+<apex:page id="CreatePackageDefinition" standardController="copado__Artifact__c" docType="html-5.0" standardStyleSheets="true" lightningStylesheets="true">
+    <c:GAnalytics />
+    <c:IncludeStaticsResourceComponent addJQuery="true" />
+    <apex:slds />
+    <apex:form >
+        <apex:pageMessages id="pageMsgs"/>
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Package_Namespace__c}"/>
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Package_Id__c}"/>
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Source_Api_Version__c}"/>
+        <apex:inputHidden value="{!copado__Artifact__c.Name}"/>
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Sfdc_Login_Url__c}"/>
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Package_Type__c}"/>
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Artifact_Version__c}"/>
+        <c:ShowAttachmentDetails artifactRecord="{!copado__Artifact__c}" attachmentType="sfdx-project.json"/>
+    </apex:form>
+</apex:page>

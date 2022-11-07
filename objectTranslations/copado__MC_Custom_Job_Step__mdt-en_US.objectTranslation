@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Type of Custom job step --></help>
+        <label><!-- Custom Type --></label>
+        <name>copado__CustomType__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of LWC/Aura component to render while configuring the Custom Job step --></help>
+        <label><!-- LWC Name --></label>
+        <name>copado__LWC_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Platform Name --></help>
+        <label><!-- Platform --></label>
+        <name>copado__Platform__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>DOC_NAME</field>
+    </columns>
+    <columns>
+        <field>DOC_TYPE</field>
+    </columns>
+    <columns>
+        <field>DOC_LENGTH</field>
+    </columns>
+    <columns>
+        <field>DOC_INTERNAL</field>
+    </columns>
+    <columns>
+        <field>DOC_AUTHOR</field>
+    </columns>
+    <columns>
+        <field>DOC_DESC</field>
+    </columns>
+    <description>What documents are in the document library?</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FOLDER_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sample Report: Document Library</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>DocumentList</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>DOC_CREATED</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

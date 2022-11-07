@@ -1,0 +1,29 @@
+<apex:page standardController="copado__Deployment__c" title="Clone {!$ObjectType.copado__Deployment__c.Label}" extensions="copado.cloneDeploymentExtension" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    </head>
+    <body>
+        <apex:form id="theForm" styleClass="copado-lightning-container">
+            <apex:pageMessages />
+            <apex:sectionHeader title="{!$ObjectType.copado__Deployment__c.Label}" subtitle="{!dep.Name}" />
+            <apex:pageBlock id="pb_cloneDeployment"  mode="edit" helpUrl="https://docs.copado.com/" helpTitle="{!$Label.copado__HELP_FOR_THIS_PAGE}">
+                <apex:pageblockButtons location="bottom">
+                    <apex:commandButton value="{!$Label.site.cancel}" action="{!cancel}" />
+                    <apex:commandButton value="{!$Label.copado__NEXT}" styleClass="btnImportant" action="{!doClone}" />
+                </apex:pageblockButtons>
+                <apex:pageBlockSection columns="1">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Step__c.LabelPlural}" for="cs"/>
+                        <apex:inputCheckbox value="{!clone_steps}" id="cs"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Destination_Org__c.LabelPlural}" for="cd"/>
+                        <apex:inputCheckbox value="{!clone_destOrgs}" id="cd"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+    </body>
+
+</apex:page>

@@ -1,0 +1,72 @@
+<apex:page standardController="copado__Selenium_Settings__c" extensions="copado.LicenseHelper" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+    <head>
+        <c:GAnalytics />
+        <script>
+            ga('send', 'pageview', {
+              'page': '/SeleniumSettings',
+              'title': 'Selenium Settings'
+            });
+        </script> 
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    </head>
+
+    <body>
+        <div class="copado-lightning-VF">
+            <!-- check that the feature is enabled, and the user has a license assigned -->
+            <apex:pageMessage severity="WARNING" strength="2" summary="{!HTMLENCODE(possibleCSTErrorMsg)}" rendered="{!AND(!ISNULL(possibleCSTErrorMsg),$User.UIThemeDisplayed != 'Theme4d')}"></apex:pageMessage>
+            <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+
+            <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                <div class="slds-page-header">
+                  <apex:outputPanel layout="block" id="pageMessages">
+                    <apex:pageMessage severity="WARNING" strength="2" summary="{!possibleCSTErrorMsg}" rendered="{!!ISNULL(possibleCSTErrorMsg)},"></apex:pageMessage>
+                    <apex:pagemessages id="msg"/>
+                  </apex:outputPanel>
+                  <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                      <div class="slds-media">
+                          <div class="slds-media__figure">
+                              <span class="slds-icon_container slds-icon-custom-custom79" title="Description of icon when needed">
+                                <svg class="slds-icon" aria-hidden="true">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom79')}"></use>
+                                </svg>
+                              </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.copado__Selenium_Settings__c.Label}</p>
+                              <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.copado__Selenium_Settings__c.Label}"><apex:outputField value="{!copado__Selenium_Settings__c.Name}"/></h1>
+                          </div>
+                      </div>
+                    </div>
+                    <!-- ACTION BUTTONS -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                      <div class="slds-button-group" role="group">
+                        
+                      </div>
+                    </div>
+                    <!-- / ACTION BUTTONS -->
+                  </div>
+                  <div style="background: white; height: 25px;">
+                    <!-- Header details buffer-->
+                  </div>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+                <div class="copado-lightning-chatter">
+                  <chatter:feedWithFollowers entityId="{!copado__Selenium_Settings__c.Id}" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+                </div>
+
+                <apex:outputPanel layout="block" styleClass="copado-lightning-container">
+                    <apex:outputPanel layout="none" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}">
+                    	<apex:detail subject="{!copado__Selenium_Settings__c.Id}" relatedList="true" title="true" showChatter="true" rendered="{!$Setup.copado__Copado_License__c.copado__Enable_CST__c}" />
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                    	<apex:detail subject="{!copado__Selenium_Settings__c.Id}" relatedList="true" title="true" showChatter="false" rendered="{!$Setup.copado__Copado_License__c.copado__Enable_CST__c}" />
+                	</apex:outputPanel>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </div>
+    </body>
+</apex:page>

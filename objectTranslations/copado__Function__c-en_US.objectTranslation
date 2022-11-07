@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Provide a unique API name. --></help>
+        <label><!-- API Name --></label>
+        <name>copado__API_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of the Apex Class. The class must implement the MCCallBack interface. --></help>
+        <label><!-- ApexClass --></label>
+        <name>copado__ApexClass__c</name>
+    </fields>
+    <fields>
+        <help><!-- Type of Callback selected for the function. --></help>
+        <label><!-- Callback Type --></label>
+        <name>copado__Callback_Type__c</name>
+        <picklistValues>
+            <masterLabel>ApexClass</masterLabel>
+            <translation><!-- ApexClass --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flow</masterLabel>
+            <translation><!-- Flow --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Description of the function. --></help>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Handler format: FlowAPIName --></help>
+        <label><!-- FlowHandler --></label>
+        <name>copado__FlowHandler__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of the docker image provided by Copado. Check our documentation site to find all available images. --></help>
+        <label><!-- Image Name --></label>
+        <name>copado__Image_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Define the maxVolume and volumeTTL to be used to run a standalone function with these configurations. --></help>
+        <label><!-- Options --></label>
+        <name>copado__Options__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is used to validate if all required parameters are set before calling the execution. --></help>
+        <label><!-- Parameters --></label>
+        <name>copado__Parameters__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide the script with the commands you would like the function to execute. --></help>
+        <label><!-- Script --></label>
+        <name>copado__Script__c</name>
+    </fields>
+    <fields>
+        <help><!-- The number of minutes after which the function will finish automatically and fail if it doesn&apos;t finish before the given timeout. --></help>
+        <label><!-- Timeout --></label>
+        <name>copado__Timeout__c</name>
+    </fields>
+    <fields>
+        <help><!-- Type of Copado function. --></help>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+        <picklistValues>
+            <masterLabel>Custom</masterLabel>
+            <translation><!-- Custom --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard</masterLabel>
+            <translation><!-- Standard --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Version of the function. --></help>
+        <label><!-- Version --></label>
+        <name>copado__Version__c</name>
+    </fields>
+    <fields>
+        <help><!-- Picklist field that defines the size of the worker. The available options are S, M, L, and XL. --></help>
+        <label><!-- Worker Size --></label>
+        <name>copado__Worker_Size__c</name>
+        <picklistValues>
+            <masterLabel>L</masterLabel>
+            <translation><!-- L --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M</masterLabel>
+            <translation><!-- M --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S</masterLabel>
+            <translation><!-- S --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XL</masterLabel>
+            <translation><!-- XL --></translation>
+        </picklistValues>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Api name can only contain alphanumeric characters and must begin with a letter --></errorMessage>
+        <name>copado__Function_Name_must_Be_Alpha_Numeric</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Script cannot be empty. --></errorMessage>
+        <name>copado__Script_must_contain_a_value</name>
+    </validationRules>
+</CustomObjectTranslation>

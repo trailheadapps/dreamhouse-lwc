@@ -1,0 +1,292 @@
+<apex:page id="thePage" standardController="copado__Deployment__c" extensions="copado.ViewDeploymentExtension" docType="html-5.0">
+    <script type="text/javascript">
+        var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(c){var a="",d,b,f,g,h,e,j=0;for(c=Base64._utf8_encode(c);j<c.length;)d=c.charCodeAt(j++),b=c.charCodeAt(j++),f=c.charCodeAt(j++),g=d>>2,d=(d&3)<<4|b>>4,h=(b&15)<<2|f>>6,e=f&63,isNaN(b)?h=e=64:isNaN(f)&&(e=64),a=a+this._keyStr.charAt(g)+this._keyStr.charAt(d)+this._keyStr.charAt(h)+this._keyStr.charAt(e);return a},decode:function(c){var a="",d,b,f,g,h,e=0;for(c=c.replace(/[^A-Za-z0-9\+\/\=]/g,"");e<c.length;)d=this._keyStr.indexOf(c.charAt(e++)),b=this._keyStr.indexOf(c.charAt(e++)),g=this._keyStr.indexOf(c.charAt(e++)),h=this._keyStr.indexOf(c.charAt(e++)),d=d<<2|b>>4,b=(b&15)<<4|g>>2,f=(g&3)<<6|h,a+=String.fromCharCode(d),64!=g&&(a+=String.fromCharCode(b)),64!=h&&(a+=String.fromCharCode(f));return a=Base64._utf8_decode(a)},_utf8_encode:function(c){c=c.replace(/\r\n/g,"\n");for(var a="",d=0;d<c.length;d++){var b=c.charCodeAt(d);128>b?a+=String.fromCharCode(b):(127<b&&2048>b?a+=String.fromCharCode(b>>6|192):(a+=String.fromCharCode(b>>12|224),a+=String.fromCharCode(b>>6&63|128)),a+=String.fromCharCode(b&63|128))}return a},_utf8_decode:function(c){for(var a="",d=0,b=c1=c2=0;d<c.length;)b=c.charCodeAt(d),128>b?(a+=String.fromCharCode(b),d++):191<b&&224>b?(c2=c.charCodeAt(d+1),a+=String.fromCharCode((b&31)<<6|c2&63),d+=2):(c2=c.charCodeAt(d+1),c3=c.charCodeAt(d+2),a+=String.fromCharCode((b&15)<<12|(c2&63)<<6|c3&63),d+=3);return a}};
+    </script>
+    <c:IncludeStaticsResourceComponent addJQuery="true"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/DataTables-1.10.15/js/jquery.dataTables.min.js')}" />
+    <style type="text/css">
+        @import "{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.css')}";
+    </style>
+    <c:IncludeConnectionJsComponent />
+        
+    <apex:form id="theForm">
+        <apex:outputField value="{!copado__Deployment__c.copado__Status__c}" rendered="false" />
+        <apex:outputField value="{!copado__Deployment__c.copado__Schedule__c}" rendered="false" />
+        <apex:outputField value="{!copado__Deployment__c.copado__From_Org__c}" rendered="false" />
+    
+        <apex:outputPanel id="pnlDetail">
+            <apex:pageMessages />
+            <apex:pageMessage id="msgStarting" severity="INFO" strength="2" summary="{!$Label.copado__DEPLOYMENT_STARTING}" rendered="{!AND(deployment.copado__Status__c=='Scheduled',deployment.copado__Schedule__c=='Deploy now')}" />
+            <c:rateCopado id="rateCopado" rendered="{!deployment.copado__Status__c=='Completed Successfully'}" messageType="DeploymentSuccess" messageTitle="{!$Label.copado__DEPLOYMENT_COMPLETED_SUCCESSFULLY}" />
+            <apex:detail id="detailDeployment" subject="{!copado__Deployment__c.Id}" relatedList="false" title="true" showChatter="true"/>
+        </apex:outputPanel>
+    
+        <apex:pageBlock id="pb1" mode="detail" title="{!$ObjectType.copado__Step__c.LabelPlural}">
+            <apex:actionPoller id="matrixPoller" action="{!buildMatrix}" reRender="msgStarting,pnlDetail,pbtMatrix" interval="5" enabled="{!runPoller}"/>
+            <apex:pageBlockTable id="pbtMatrix" value="{!matrix}" var="m">
+                <apex:column headerValue="{!$ObjectType.copado__Step__c.LabelPlural}">
+                    <apex:commandLink value="{!m.step.Name}" action="{!getStepDetail}" rerender="pb1,pbsStepDetail,pbsStepDataDetail" status="stepDetailStatus">
+                        <apex:param name="selectedStep" assignTo="{!selectedStep}" value="{!m.step.Id}"/>
+                    </apex:commandLink>
+                </apex:column>
+                <apex:column value="{!m.step.copado__Status__c}" />
+                <apex:repeat value="{!$ObjectType.copado__Step__c.FieldSets.copado__ViewDeploymentColumns}" var="f"> 
+                    <apex:column headerValue="{!f.Label}" >
+                        <apex:outputField value="{!m.step[f]}" />
+                    </apex:column>
+                </apex:repeat>
+                
+                <apex:repeat id="rptMatrix" value="{!destinationOrgs}" var="d">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <apex:outputField value="{!d.copado__To_Org__c}" />
+                        </apex:facet>
+                        <apex:outputPanel >
+                            <apex:outputField value="{!mapDeploymentJobsString[m.step.Id+''+d.Id].Status_Flag__c}" />
+                            <apex:outputPanel rendered="{!mapDeploymentJobsString[m.step.Id+''+d.Id].Status__c=='Cancelled'}">&nbsp;</apex:outputPanel>
+                            <apex:outputLabel value="{!mapDeploymentJobsString[m.step.Id+''+d.Id].Status__c}" rendered="{!mapDeploymentJobsString[m.step.Id+''+d.Id].Status__c=='Cancelled'}" />&nbsp;
+                            <apex:outputPanel rendered="{!AND(mapDeploymentJobsString[m.step.Id+''+d.Id].Status__c!='Pending',mapDeploymentJobsString[m.step.Id+''+d.Id].Status__c!='In progress',mapAttachments[mapDeploymentJobsString[m.step.Id+''+d.Id].Id+'.json']==true)}">&nbsp;</apex:outputPanel>
+                            <apex:outputLink value="#" rendered="{!AND(mapDeploymentJobsString[m.step.Id+''+d.Id].Status__c!='Pending',mapDeploymentJobsString[m.step.Id+''+d.Id].Status__c!='In progress',mapAttachments[mapDeploymentJobsString[m.step.Id+''+d.Id].Id+'.json']==true)}" onclick="getResult('{!mapDeploymentJobsString[m.step.Id+''+d.Id].Id}','deployment job');return false;">{!$Label.copado__VIEW_RESULTS}</apex:outputLink>
+                        </apex:outputPanel>
+                        <apex:facet name="footer">
+                            <apex:outputPanel >
+                                <apex:outputField value="{!d.copado__Status__c}" /><br />
+                            </apex:outputPanel>
+                        </apex:facet>
+                    </apex:column>
+                </apex:repeat>
+            </apex:pageBlockTable>
+            
+            <apex:actionStatus id="stepDetailStatus">
+                <apex:facet name="start">
+                    <img class="waitingImage" src="/img/loading.gif" />
+                </apex:facet>
+                <apex:facet name="stop">
+                    <apex:outputPanel >
+                        <apex:pageBlockSection id="pbsStepDataDetail" title="{!step.Name}" collapsible="true" rendered="{!AND(step.Id != null,OR(step.copado__Type__c=='Data',step.copado__Type__c=='Bulk Data'))}" columns="1">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.copado__QUERY}" />
+                                <apex:outputText value="{!dataStepQuery}" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.copado__OBJECT}" />
+                                <apex:outputText value="{!dataStepObject}" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.copado__EXTERNAL_ID}" />
+                                <apex:outputText value="{!dataStepExternalId}" />
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                    
+                        <apex:pageBlockSection id="pbsStepDetail" title="{!step.Name}" collapsible="true" rendered="{!AND(step.Id != null,NOT(OR(step.copado__Type__c=='Data',step.copado__Type__c=='Bulk Data')))}" columns="1">
+				            <apex:pageBlockSectionItem rendered="{!step.copado__Type__c=='Users'}" >
+				                <apex:outputLabel value="{!$Label.copado__FROM_SUFFIX}" for="fromSuffix" />
+				                <apex:outputText id="fromSuffix" />
+				            </apex:pageBlockSectionItem>
+				            <apex:pageBlockSectionItem rendered="{!step.copado__Type__c=='Users'}" >
+				                <apex:outputLabel value="{!$Label.copado__TO_SUFFIX}" for="toSuffix" />
+				                <apex:outputText id="toSuffix" />
+				            </apex:pageBlockSectionItem>
+				            <apex:pageBlockSectionItem rendered="{!step.copado__Type__c=='Users'}" >
+				                <apex:outputLabel value="{!$Label.copado__ACTIVATE_USERS}" for="actives" />
+				                <apex:inputCheckbox id="actives" disabled="true"/>
+				            </apex:pageBlockSectionItem>
+				            <apex:pageBlockSectionItem id="d-useTerritories" rendered="{!step.copado__Type__c=='Users'}" >
+				                <apex:outputLabel value="{!$Label.copado__USER_TERRITORIES}" for="useTerritories" />
+				                <apex:inputCheckbox id="useTerritories" disabled="true"/>
+				            </apex:pageBlockSectionItem>
+                           	<div id="stepDetail" style="padding-bottom:20px;"></div>
+                            <script type="text/javascript">
+                                if('{!JSENCODE(step.Type__c)}'!='Data'){
+                                    var queryString = "SELECT Id, Body, BodyLength, ContentType, Name, ParentId FROM Attachment where ParentId='{!step.Id}' limit 1";
+                                    var result = sforce.connection.query(queryString, {
+                                        onSuccess : success,
+                                        onFailure : failure
+                                    });
+            
+                                    function success(result) {
+                                        var records = result.getArray("records");
+                                        if(records.length > 0){
+                                            try{
+                                                var res = null;
+                                                res = Base64.decode(records[0].Body);
+                                                if('{!JSENCODE(step.Type__c)}'=='MetaData' || '{!JSENCODE(step.Type__c)}'=='Full Profiles'  || '{!JSENCODE(step.Type__c)}'=='Full Permission Sets' || '{!JSENCODE(step.Type__c)}'=='Translations' || '{!JSENCODE(step.Type__c)}'=='Delete MetaData'){
+                                                    drawTableMetaDataTable(res, 'stepDetail');
+                                                }
+                                                else if('{!JSENCODE(step.Type__c)}'=='Users'){
+                                                    var resultUser = sforce.connection.query("SELECT Id, Body, BodyLength, ContentType, Name, ParentId FROM Attachment where ParentId='{!JSENCODE(Deployment__c.From_Org__c)}' and Name ='Users' limit 1", {
+                                                        onSuccess : successUser,
+                                                        onFailure : failureUser
+                                                    });
+            
+                                                    function successUser(result) {
+                                                        var records = result.getArray("records");
+                                                        if(records.length > 0){
+                                                            try{
+                                                                var resUser = null;
+                                                                resUser = Base64.decode(records[0].Body);
+                                                                drawTableUserTable(resUser, 'stepDetail',res);
+                                                            }
+                                                            catch(e){
+                                                                console.error("Exception on parsing ({!JSENCODE(step.Type__c)}): ",e);
+                                                            }
+                                                        }
+                                                    }
+                                                    function failureUser(error) {
+                                                        console.error("An error has occurred with metadata download: " + error);
+                                                    }
+                                                }
+                                            }
+                                            catch(e){
+                                                console.error("Exception on parsing ({!JSENCODE(step.Type__c)}): ",e);
+                                            }
+                                        }
+                                    }
+                                    function failure(error) {
+                                        console.error("An error has occurred with metadata download: " + error);
+                                    }
+                                
+                                    function drawTableMetaDataTable(res, stepDiv){
+                                        var array = JSON.parse(res);
+                                        var array_name = new Array();
+                                        for (var i=0;i<array.length;i++) {
+                                            array_name[i] = new Array(array[i].n, array[i].t);
+                                        }
+                                        $copado('#stepDetail').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="tblstepDetail"></table>' );
+                                        if('{!JSENCODE(step.Type__c)}'=='MetaData' || '{!JSENCODE(step.Type__c)}'=='Full Profiles' || '{!JSENCODE(step.Type__c)}'=='Full Permission Sets' || '{!JSENCODE(step.Type__c)}'=='Translations' || '{!JSENCODE(step.Type__c)}'=='Delete MetaData'){
+                                            oTable = $copado('#tblstepDetail').dataTable( {
+                                                "aaData": array_name,
+                                                "aoColumns": [ { "sTitle": "{!$Label.NAME}" },{ "sTitle": "{!$Label.TYPE}" } ],
+                                                "iDisplayLength": 50,
+                                                "aLengthMenu": [[10, 20, 30, 50, 100, 200, -1], [10, 20, 30, 50, 100, 200, "{!$Label.ALL}"]]
+                                            } );    
+                                        }
+                                    }
+            
+                                    function drawTableUserTable(res, stepDiv,userJson){
+                                        var  stepUsers = JSON.parse(userJson);
+                                        console.log("stepUsers", stepUsers);
+                                        $copado("span[id$='fromSuffix']").text(stepUsers.fromSuffix);
+                                        $copado("span[id$='toSuffix']").text(stepUsers.toSuffix);
+                                        $copado("input[id$='actives']").prop("checked", stepUsers.active);
+                                        $copado("input[id$='useTerritories']").prop("checked", stepUsers.userTerritories);
+                                        
+                                        var sel = {};
+                                        for (var i=0;i<stepUsers.userIds.length;i++) {
+                                            sel[stepUsers.userIds[i]]=stepUsers.userIds[i];
+                                        }
+                                        var array = JSON.parse(res)
+                                        var array_name = new Array();
+                                        var pos = 0;
+                                        for (var i=0;i<array.length;i++) {
+                                            if(array[i].i == sel[array[i].i]){
+                                                array_name[pos++] = new Array(array[i].n, array[i].c, array[i].p, array[i].r, array[i].u, array[i].t);
+                                            }
+                                        }
+                                        $copado('#stepDetail').html( '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="tblstepDetail"></table>' );
+                                        oTable = $copado('#tblstepDetail').dataTable( {
+                                            "aaData": array_name,
+                                            "aoColumns": [ { "sTitle": "{!$Label.NAME}" },{ "sTitle": "{!$ObjectType.User.Fields.Country.Label}" },{ "sTitle": "{!$ObjectType.User.Fields.ProfileId.Label}" },{ "sTitle": "{!$ObjectType.User.Fields.UserRoleId.Label}" },{ "sTitle": "{!$ObjectType.User.Fields.Username.Label}" },{"sTitle": "Territory"}],
+                                            "iDisplayLength": 50,
+                                            "aLengthMenu": [[10, 20, 30, 50, 100, 200, -1], [10, 20, 30, 50, 100, 200, "{!$Label.ALL}"]]
+                                        } );
+                                    }
+                                }
+                            </script>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                </apex:facet>
+            </apex:actionStatus>
+        </apex:pageBlock>           
+
+        <script type="text/javascript">
+            function drawTable(res){
+                var array = JSON.parse(res)
+                var array_name = new Array();
+                for (var i=0;i<array.length;i++) { 
+                    array_name[i] = new Array(array[i].l, array[i].m, array[i].t);  
+                }
+                $copado('#errorsDiv').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="errorsTable"></table>' );
+                oTable = $copado('#errorsTable').dataTable( {
+                    "aaData": array_name,
+                    "aoColumns": [
+                        { "sTitle": "{!$Label.copado__LEVEL}" },
+                        { "sTitle": "{!$Label.copado__MESSAGE}", "sType": "html",  
+                            "mRender": function ( data, type, full ) {
+                                return '<pre style="overflow:hidden; word-wrap:break-word;">'+data+'</pre>';
+                            }
+                        },
+                        { "sTitle": "{!$Label.copado__COPADO_TIP}" }
+                    ],
+                    "bAutoWidth": false,
+                    "iDisplayLength": -1,
+                    "aLengthMenu": [[10, 20, 30, 50, 100, 200, -1], [10, 20, 30, 50, 100, 200, "{!$Label.copado__ALL}"]]
+                } );
+            }
+        
+            function getResult(recordId, objectType){
+                var result = sforce.connection.query("SELECT Id, Body, BodyLength, ContentType, Name, ParentId FROM Attachment where Name = '"+recordId+".json' order by createdDate DESC limit 1", {
+                    onSuccess : success,
+                    onFailure : failure
+                });
+                function success(result) {
+                    var records = result.getArray("records");
+                    if(records.length > 0){
+                        try{
+                            var res = Base64.decode(records[0].Body);
+                            drawTable(res);
+                        }
+                        catch(e){
+                            console.error("Exception on parsing: ",e);
+                        }
+                    }
+                }
+                function failure(error) {
+                    alert('No logs found for this '+objectType+'.');
+                }
+            }
+        </script>
+        
+        <apex:pageBlock title="Deployment log files" mode="detail">
+            <div id="errorsDiv" style="padding-bottom:20px;"></div>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:relatedList list="CombinedAttachments"/>
+    <style>
+		table.dataTable {
+		    font-family: "Arial","Helvetica",sans-serif !important;
+		    border: 1px solid #e0e3e5;
+		    border-top: 1px solid #e0e3e5;
+		}
+		table.dataTable thead tr th {
+		    background-color: #f2f3f3;
+		    border-width: 0 0 1px 1px;
+		    border-color: #e0e3e5;
+		    color: #000;
+		    font-size: 0.9em !important;
+		    font-weight: bold;
+		    padding: 5px 2px 4px 5px;
+		    text-align:left;
+		}
+		table.dataTable tr th,
+		table.dataTable tr td {
+		    border: 1px solid #ededed;
+		    color: #000;
+		}
+		table.dataTable td {
+		    text-align:left;
+		    color:#333;
+		    font-family: Arial,Helvetica,sans-serif;
+		}
+		table.dataTable tr:last-child > th, 
+		table.dataTable tr:last-child > td  {
+		    border-bottom-width: 0px;
+		}
+		table.dataTable td {
+			padding: 4px 2px 4px 5px;
+		}
+	</style>
+
+    <c:CheckFeaturesComponent />
+
+</apex:page>

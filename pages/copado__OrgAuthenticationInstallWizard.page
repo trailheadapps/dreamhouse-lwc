@@ -1,0 +1,42 @@
+<apex:page id="OrgAuthenticationInstallWizard" lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Production Authentication">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__SetupDashboardJS)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__SetupDashboard)}" />
+    <script>
+        var svgButtonsId = [];
+        var svgButtonsClass = ['approvalWizardIcon', 'errorWizardIcon', 'stepCompleted', 'stepError'];
+
+        var svgStruct = [];
+        var setSVGStruct = function(){
+            svgStruct['.approvalWizardIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#check')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.errorWizardIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.stepCompleted'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.stepError'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#error')}",
+                class:'slds-button__icon'
+            };
+        }
+        $copado(document).ready(function(){
+            setSVGStruct();
+            applyRenderSVG(svgButtonsId,svgButtonsClass);
+        });
+    </script>
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <body class="slds-scope">
+    <apex:form >
+        <c:WizardSteps currentStep="1" />
+        <c:OrgAuthentication />
+    </apex:form>
+    </body>
+    </html>
+</apex:page>

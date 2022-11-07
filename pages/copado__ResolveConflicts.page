@@ -1,0 +1,6 @@
+<apex:page title="Copado Conflict Resolution" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" sidebar="false" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <c:ResolveConflict />
+    </html>
+</apex:page>

@@ -1,0 +1,3 @@
+<apex:page standardController="copado__Selenium_Test_Suite__c" extensions="copado.SeleniumTestCaseViewEdit" contentType="application/x-JavaScript; charset=utf-8" showHeader="false" standardStylesheets="false" sidebar="false">
+{!LookupTestCases}
+</apex:page>

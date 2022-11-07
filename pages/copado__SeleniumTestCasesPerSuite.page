@@ -1,0 +1,329 @@
+<apex:page standardController="copado__Selenium_Test_Suite__c" extensions="copado.SeleniumTestCaseViewEdit,copado.LicenseHelper" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+    <head>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+        <c:IncludeStaticsResourceComponent addJquery="true" addUIjs="true"/>
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true" addjqxEBcss="true"/>
+    	<c:GAnalytics />
+        <style>
+            .apexCode {
+                width: 80%;
+            }
+        </style>
+        <script type="text/javascript">
+            var cps = cps || {};
+            function escapeHtml(unsafe) {
+                return unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            var uid_counter = 0;
+            cps.data = cps.data || {};
+            cps.template = cps.template || {};
+            cps.data.jsonSelectedTestCases = '';
+            cps.data.testCaseListElt = '';
+
+            cps.dataAdapter = {};
+
+            cps.pre_save = function() {
+                var saveData = [];
+                for (var i = 0; i < cps.data.jsonSelectedTestCases.length; i++) {
+                    var r = cps.data.jsonSelectedTestCases[i];
+                    saveData.push([r.Id, $copado('#' + r._selectDatasetName).val() || null]);
+                    delete r._selectDatasetName;
+                }
+                console.log('cps.pre_save:', JSON.stringify(saveData));
+                $copado(cps.data.TestCasesPerSuiteSaveElt).val(JSON.stringify(saveData));
+                return true;
+            };
+
+            cps.drawTable = function() {
+                $copado('#resultTable tbody').html('');
+                var items = cps.data.jsonSelectedTestCases;
+                for (var i = 0; i < items.length; i++) {
+                    cps.addRow(items[i].Name, items[i].uid, i, items[i]);
+                }
+                cps.initSortable();
+            };
+            cps.initSortable = function() {
+                $copado('#resultTable tbody').sortable({
+                    placeholder: 'ui-state-highlight',
+                    update: function(event, ui) {
+                        var temp = [],
+                            i, map = {};
+                        for (i = 0; i < cps.data.jsonSelectedTestCases.length; i++) {
+                            map[cps.data.jsonSelectedTestCases[i].uid] = cps.data.jsonSelectedTestCases[i];
+                        }
+                        $copado("#resultTable").find("tbody>tr").each(function() {
+                            var uid = this.getAttribute('id');
+                            temp.push(map[uid]);
+                        });
+                        cps.data.jsonSelectedTestCases = temp;
+                        cps.drawTable();
+                    }
+                });
+                $copado("#tbl_TestScriptSteps").disableSelection();
+            };
+            cps.removeRow = function(rowId) {
+                if ($copado('#' + rowId).length === 1) $copado('#' + rowId).remove();
+                var tcs = cps.data.jsonSelectedTestCases;
+                for (var i = 0; i < tcs.length; i++) {
+                    if (tcs[i].uid === rowId) {
+                        tcs.splice(i, 1);
+                        return;
+                    }
+                }
+            };
+            cps.addRow = function(name, rowId, order, row) {
+                var _row = cps.template.row(name, rowId, order, row);
+                //below line commented out to enable adding same test case more than once
+                //if ($copado('#' + rowId).length > 0) return;
+                $copado('#resultTable tbody').append(_row);
+            };
+
+            cps.template.row = function(name, rowId, order, row) {
+                var j;
+                var selectDatasetName = 'dataset-' + row.Id + '-' + rowId;
+                row._selectDatasetName = selectDatasetName;
+                var options_datasetnames = ['<select id="' + selectDatasetName + '" data-uid="' + rowId + '" onchange="datasetChanged(this)">', '<option value="">{!JSENCODE($Label.NONE_SELECTED)}</option>'];
+                row.datasets = row.datasets || [];
+
+                for (j = 0; j < row.datasets.length; j++) {
+                    var sel = (row.datasets[j] === row.selectedDataset) ? ' selected="selected"' : '';
+                    options_datasetnames.push('<option value="' + escapeHtml(row.datasets[j]) + '"' + sel + '>' + escapeHtml(row.datasets[j]) + '</option>')
+                }
+
+                options_datasetnames.push('</select>');
+
+                var copadoLightningClass = '{!IF($User.UIThemeDisplayed=='Theme3','',' copado-lightning')}';
+
+                return '<tr class="dataRow" data-order="' + order + '" id="' + rowId + '">' +
+                    '<td style="padding-left:1px; padding-right:1px;" class="actionColumn">' +
+                    '<span class="ui-icon ui-icon-arrowthick-2-n-s" style="cursor:move;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
+                    '</td>' +
+                    '<td class="dataCell" id="row' + order + '-col2">' + name + '</td>' +
+                    '<td class="dataCell" id="row' + order + '-col2">' + row.Version + '</td>' +
+                    '<td class="dataCell" id="row' + rowId + '-col3">' + (options_datasetnames.join('\n')) + '</td>' +
+                    '<td class="dataCell"><button id="btnViewEdit-' + order + '" class="btn' + copadoLightningClass + '" onClick="cps.testcaseViewEdit(\'' + rowId + '\');return false;">{!JSENCODE($Label.VIEW)}</button></td>' +
+                    '<td class="dataCell"><button id="btnDeleted-' + order + '" class="btn' + copadoLightningClass + '" onClick="cps.removeRow(\'' + rowId + '\');return false;">{!JSENCODE($Label.REMOVE)}</button></td>' +
+                    '</tr>';
+            };
+
+            cps.testcaseViewEdit = function(rowId) {
+                var tcs = cps.data.jsonSelectedTestCases;
+                for (var i = 0; i < tcs.length; i++) {
+                    if (tcs[i].uid === rowId) {
+                        //openPopup(a, "lookup", 350, 480, "width\x3d" + b + ",height\x3d480,toolbar\x3dno,status\x3dno,directories\x3dno,menubar\x3dno,resizable\x3dyes,scrollable\x3dno", !0)
+                        window.open('{!$Page.SeleniumTestCaseEditor}?id=' + tcs[i].Id + '&popup=1', 'SeleniumTestCaseEditor',
+                            "width=800,height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=yes");
+                        return;
+                    }
+                }
+            }
+
+            function datasetChanged(select) {
+                var dataset = $copado(select).val();
+                var uid = $copado(select).attr('data-uid');
+                var temp = [],
+                    i, map = {};
+                for (i = 0; i < cps.data.jsonSelectedTestCases.length; i++) {
+                    console.log('save', cps.data.jsonSelectedTestCases[i].uid === uid, dataset, cps.data.jsonSelectedTestCases[i].uid, uid)
+                    if (cps.data.jsonSelectedTestCases[i].uid === uid) {
+                        cps.data.jsonSelectedTestCases[i].selectedDataset = dataset;
+                    }
+                }
+
+            }
+
+            cps.data.jsonSelectedTestCases = JSON.parse('{!JSENCODE(LookupTestCases)}');
+
+            $copado.each(cps.data.jsonSelectedTestCases, function(idx, v) {
+                v.uid = 'uid' + (uid_counter++);
+            });
+
+            $copado(document).ready(function() {
+
+                // prepare the data
+                var source = {
+                    datatype: "json",
+                    datafields: [{
+                        name: 'Id'
+                    }, {
+                        name: 'Name'
+                    }, {
+                        name: 'Version'
+                    }, {
+                        name: 'selectedDataset'
+                    }, {
+                        name: 'datasets'
+                    }],
+                    url: "{!URLFOR($Page.SeleniumTestCasePerSuiteJson)}",
+                    data: {}
+                };
+                cps.dataAdapter = new $copado.jqx.dataAdapter(source, {
+                    formatData: function(data) {
+                        //data.name_startsWith = $copado("#searchField").val();
+                        data.q = $copado("#jqxcombobox").val();
+                        console.log('searching for', data.q)
+                        return data;
+                    }
+                });
+
+                $copado("#jqxcombobox").jqxComboBox({
+                    width: "100%",
+                    height: 25,
+                    source: cps.dataAdapter,
+                    remoteAutoComplete: true,
+                    autoDropDownHeight: true,
+                    selectionMode: "dropDownList",
+                    displayMember: "Name",
+                    valueMember: "Id",
+                    renderer: function(index, label, value) {
+                        var item = cps.dataAdapter.records[index];
+                        if (item != null) {
+                            return item.Name;
+                        }
+                        return "";
+                    },
+                    search: function(searchString) {
+                        cps.dataAdapter.dataBind();
+                    }
+                });
+                $copado('#jqxcombobox').on('select', function(event) {
+                    var args = event.args;
+                    if (args) {
+                        var index = args.index;
+                        var item = args.item;
+                        $copado(this).jqxComboBox('unselectItem', item);
+                        if (args.type == 'none') {
+                            console.log('skipping');
+                            return;
+                        }
+                        item.originalItem.uid = 'uid' + (uid_counter++);
+                        cps.data.jsonSelectedTestCases.push(item.originalItem);
+                        cps.drawTable();
+                    }
+                });
+
+
+                cps.drawTable();
+            });
+        </script>
+        <c:IncludeConnectionJsComponent />
+
+        <div style="float: left;" id="testtesttest"></div>
+
+    </head>
+
+    <body>
+        <div class="copado-lightning-VF">
+            <apex:sectionHeader id="theHeader" title="{!$ObjectType.copado__Selenium_Test_Suite__c.Label}" subtitle="{!copado__Selenium_Test_Suite__c.Name}" description="{!$Label.copado__TEST_CASES_PER_SUITE_DESCRIPTION}" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+
+            <!-- check that the feature is enabled, and the user has a license assigned -->
+            <apex:pageMessage severity="WARNING" strength="2" summary="{!HTMLENCODE(possibleCSTErrorMsg)}" rendered="{!AND(!ISNULL(possibleCSTErrorMsg),$User.UIThemeDisplayed != 'Theme4d')}"></apex:pageMessage>
+            <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+
+            <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                <div class="slds-page-header">
+                  <apex:outputPanel layout="block" id="pageMessages">
+                    <apex:pageMessage severity="WARNING" strength="2" summary="{!HTMLENCODE(possibleCSTErrorMsg)}" rendered="{!!ISNULL(possibleCSTErrorMsg)},"></apex:pageMessage>
+                    <apex:pagemessages id="msg"/>
+                  </apex:outputPanel>
+                  <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                      <div class="slds-media">
+                          <div class="slds-media__figure">
+                              <span class="slds-icon_container slds-icon-custom-custom52" title="Description of icon when needed">
+                                <svg class="slds-icon" aria-hidden="true">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom52')}"></use>
+                                </svg>
+                              </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.copado__Selenium_Test_Suite__c.Label}</p>
+                              <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!copado__Selenium_Test_Suite__c.Name}">{!copado__Selenium_Test_Suite__c.Name}</h1>
+                          </div>
+                      </div>
+                    </div>
+                    <!-- ACTION BUTTONS -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                      <div class="slds-button-group" role="group">
+
+                      </div>
+                    </div>
+                    <!-- / ACTION BUTTONS -->
+                  </div>
+                  <div class="slds-grid">
+                    <div class="slds-col slds-align-middle">
+                        <p class="slds-text-body_small">{!$Label.copado__TEST_CASES_PER_SUITE_DESCRIPTION}</p>
+                    </div>
+                  </div>
+                  <div style="background: white; height: 25px;">
+                    <!-- Header details buffer-->
+                  </div>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+                <apex:form id="theForm" rendered="{!$Setup.copado__Copado_License__c.copado__Enable_CST__c}" styleClass="copado-lightning-container" style="padding-top:12px;">
+                    <apex:pageBlock id="pb" title="{!$Label.copado__ADD_REMOVE_TEST_CASE_DESCRIPTION}">
+                        <apex:pageBlockButtons >
+                            <apex:commandButton action="{!saveTestCasesPerSuite}" value="{!$Label.site.save}" onclick="cps.pre_save()" />
+                            <apex:commandButton action="{!cancel}" value="{!$Label.site.cancel}" immediate="true" />
+                        </apex:pageBlockButtons>
+                        <apex:pageBlockSection columns="1">
+                            <apex:outputPanel >
+                                <div id='jqxWidget'>
+                                    <table style="{!IF($User.UIThemeDisplayed=='Theme3','width:100%','')}">
+                                        <tr>
+                                            <td>
+                                                <div style="margin-top: 7px; margin-bottom: 5px;" id="jqxcombobox"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table id="resultTable" border="0" cellspacing="0" cellpadding="0" style="{!IF($User.UIThemeDisplayed=='Theme3','width:100%','')}" class="list">
+                                                    <thead>
+                                                        <tr class="headerRow" scope="col">
+                                                            <th></th>
+                                                            <th>{!$ObjectType.Selenium_Test_Case__c.fields.Name.Label}</th>
+                                                            <th>{!$ObjectType.Selenium_Test_Case__c.fields.Version__c.Label}</th>
+                                                            <th>{!$ObjectType.Selenium_Test_Case_Per_Suite__c.fields.Test_Dataset_Name__c.Label}</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+
+                    </apex:pageBlock>
+                    <apex:inputHidden value="{!TestCasesPerSuiteSave}" id="TestCasesPerSuiteSave" />
+                    <script type="text/javascript">
+                        cps.data.TestCasesPerSuiteSaveElt = document.getElementById('{!$Component.TestCasesPerSuiteSave}');
+                    </script>
+                </apex:form>
+                <link href="{!URLFOR($Resource.CopadoChangeManagement, 'Assets/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css')}" rel="stylesheet" type="text/css" />
+
+                <script>
+                    ga('send', 'pageview', {
+                        'page': '/SeleniumTestCasePerSuite',
+                        'title': 'Selenium Test Case Per Suite'
+                    });
+                </script>
+            </apex:outputPanel>
+        </div>
+    </body>
+</apex:page>

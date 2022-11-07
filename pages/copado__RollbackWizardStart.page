@@ -1,0 +1,108 @@
+<apex:page standardController="copado__Deployment__c" extensions="copado.RollbackWizardStartExt" id="RollbackWizardStart" lightningStylesheets="true"
+    sideBar="false" docType="html-5.0" title="Rollback Start">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+    <apex:includeScript value="{!$Resource.copado__DW_javascript}" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.css')}" />
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+    <c:GAnalytics />
+
+    <script>
+        var globalSldsResourcePath = '{!URLFOR($Asset.SLDS)}';
+        var currentStepValue = '{!currentStepValue}';
+        dataTableId = 'rollbackTable';
+
+        var deploymentType = '{!JSENCODE(deploymentInterface.StepGeneralHeader)}';
+        ga('send', 'pageview', {
+            'page': '/RollbackWizardStart',
+            'title': deploymentType
+        });
+    </script>
+
+    <apex:form >
+        <c:CopadoSpinner />
+
+        <apex:outputPanel layout="block" id="headerComponent">
+            <c:DW_Header currentStep="{!currentStepValue}" stepNameList="{!stepsList}" />
+        </apex:outputPanel>
+
+        <div class="co-dw-container">
+
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_4-of-6">
+                    <h1>{!deploymentInterface.StepGeneralHeader}</h1>
+                    <p class="subtitle">{!$Label.RollbackConfirmMessage}</p>
+
+                    <apex:outputPanel layout="block" id="errorPanel">
+                        <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                            <div id="divToast" class="slds-notify_container slds-is-relative">
+                                <apex:repeat value="{!pageMessagesMap}" var="severity">
+                                    <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                                        <span class="slds-assistive-text"></span>
+                                        <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                            <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                                        </span>
+                                        <div class="slds-notify__content">
+                                            <h2 class="slds-text-heading_small ">{!$Label.RollbackDeploymentCannotStart}</h2>
+                                            <apex:repeat value="{!pageMessagesMap[severity]}" var="messages">
+                                                <apex:repeat value="{!messages}" var="message">
+                                                    <p>{!message}</p>
+                                                </apex:repeat>
+                                            </apex:repeat>
+                                        </div>
+                                        <div class="slds-notify__close">
+                                            <button type="button" class="slds-button slds-button_icon slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                                <span class="slds-icon_container slds-icon__svg--default closeToastIcon"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </apex:repeat>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="block" id="tableContent">
+                        <apex:outputPanel layout="block" styleClass="table" rendered="{!PageMessageSize == 0}">
+                            <table id="rollbackTable" class="stripe">
+                                <thead>
+                                    <tr>
+                                        <th class="no-sort">{!$Label.NAME}</th>
+                                        <th class="no-sort">{!$Label.TYPE}</th>
+                                        <th class="no-sort">{!$Label.STATUS}</th>
+                                        <th class="no-sort">{!$Label.StepAvailable}</th>
+                                        <th class="no-sort">{!$Label.Reason}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!sourceList}" var="rollbackMdt">
+                                        <tr>
+                                            <td>{!rollbackMdt.stepName}</td>
+                                            <td>{!rollbackMdt.stepType}</td>
+                                            <td>{!rollbackMdt.stepStatus}</td>
+                                            <td>
+                                                <apex:inputCheckbox styleClass="slds-checkbox slds-m-left_x-large" disabled="true" value="{!rollbackMdt.rollbackAvailable}" />
+                                            </td>
+                                            <td>{!rollbackMdt.reason}</td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                        </apex:outputPanel>
+
+                        <div class="buttons">
+                            <apex:commandButton styleClass="slds-button slds-button_outline-brand btn-back" onClick="lockScreen();" value="Cancel" action="{!goToDeploymentTab}"
+                                onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel" />
+                            <apex:commandButton oncomplete="dw.checkError();dw.buttonOnComplete();" reRender="headerComponent,errorPanel" styleClass="slds-button slds-button_outline-brand btn-save"
+                                onClick="lockScreen();" action="{!saveAndGoToNextStep}" value="Next" rendered="{!PageMessageSize == 0}"
+                            />
+                        </div>
+                    </apex:outputPanel>
+
+                </div>
+                <div class="slds-col slds-size_1-of-6"></div>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

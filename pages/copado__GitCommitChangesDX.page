@@ -1,0 +1,29 @@
+<apex:page showHeader="false" standardStylesheets="true" sidebar="false" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+    <head>
+        <c:GAnalytics />
+
+        <apex:SLDS />
+        <c:WizardUtils />
+        <c:IncludeStaticsResourceComponent addJQuery="true"/>
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+        <apex:includeScript value="{!URLFOR($Resource.gitCommitDXExtension) }" />
+        <script>
+            __sfdcSessionId = '{!GETSESSIONID()}';
+        </script>
+    </head>
+    <body> 
+        <!-- Main dialgo content -->
+        <br/>
+        <div id="DXArtifact_grid" >
+            <center>
+                <img src="/img/loading.gif" />
+                <i><span id="retry-label">{!$Label.LOADING}</span></i>
+            </center>
+        </div>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick="gitCommit.DXArtifact_submit(this); return false;">Commit</button>
+        </footer>
+    </body>
+</apex:page>

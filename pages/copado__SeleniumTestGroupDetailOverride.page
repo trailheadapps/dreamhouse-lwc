@@ -1,0 +1,21 @@
+<apex:page id="thePage" standardController="copado__Selenium_Test_Group__c" extensions="copado.LicenseHelper" lightningStylesheets="true">
+    <head>
+        <c:ShowWebhook url="webhook/selenium/TestGroupRun" recordId="{!copado__Selenium_Test_Group__c.Id}" />
+        <c:GAnalytics />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    </head>
+    <c:IncludeStaticsResourceComponent addJquery="true"/>
+    <apex:form id="theForm" styleClass="copado-lightning-container">
+    	<apex:detail id="detail" inlineEdit="true" relatedList="true" rendered="{!$Setup.copado__Copado_License__c.copado__Enable_CST__c}"/>
+    </apex:form>
+
+    <!-- check that the feature is enabled, and the user has a license assigned -->
+    <apex:pageMessage severity="WARNING" strength="2" summary="{!possibleCSTErrorMsg}" rendered="{!!ISNULL(possibleCSTErrorMsg)}"/>
+
+    <script>
+        ga('send', 'pageview', {
+            'page': '/SeleniumTestGroupDetailOverride',
+            'title': 'Selenium Test Group Detail Override'
+        });
+    </script>
+</apex:page>

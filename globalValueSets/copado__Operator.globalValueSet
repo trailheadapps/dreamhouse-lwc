@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>All</fullName>
+        <default>true</default>
+        <label>All</label>
+    </customValue>
+    <customValue>
+        <fullName>Equals</fullName>
+        <default>false</default>
+        <label>Equals</label>
+    </customValue>
+    <customValue>
+        <fullName>Starts with</fullName>
+        <default>false</default>
+        <label>Starts with</label>
+    </customValue>
+    <customValue>
+        <fullName>Contains</fullName>
+        <default>false</default>
+        <label>Contains</label>
+    </customValue>
+    <customValue>
+        <fullName>Ends with</fullName>
+        <default>false</default>
+        <label>Ends with</label>
+    </customValue>
+    <customValue>
+        <fullName>Does not contain</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Does not contain</label>
+    </customValue>
+    <customValue>
+        <fullName>Not equal to</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Not equal to</label>
+    </customValue>
+    <masterLabel>Operator</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

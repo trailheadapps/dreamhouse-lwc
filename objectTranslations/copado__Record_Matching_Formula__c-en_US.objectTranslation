@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- The Credential from where Copado retrieves the list of objects and fields available to build the formula. --></help>
+        <label><!-- Configuration Schema Credential --></label>
+        <name>copado__Configuration_Source_Org__c</name>
+        <relationshipLabel><!-- Record Matching Formulas --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- First field in the formula --></help>
+        <label><!-- Field 1 --></label>
+        <name>copado__Field_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Second field in the formula --></help>
+        <label><!-- Field 2 --></label>
+        <name>copado__Field_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Third field in the formula --></help>
+        <label><!-- Field 3 --></label>
+        <name>copado__Field_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Labels --></label>
+        <name>copado__Field_Labels__c</name>
+    </fields>
+    <fields>
+        <help><!-- Hashing the Formula will replace the original value with a unique, fixed-size set of random characters. It will ensure the value will not exceed the External Id field character limit but it will not be readable. --></help>
+        <label><!-- Hash External Id Value --></label>
+        <name>copado__Hash_Formula__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select the object from the dropdown to configure the formula. The fields available for the formula are based on the selected object and source org. --></help>
+        <label><!-- Object --></label>
+        <name>copado__Object__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- You can not change the Configuration Schema Credential once the value is selected. --></errorMessage>
+        <name>copado__RestrictSchemaCredentialModification</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>AdjustedById</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>AdvAcctForecastFactId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>AdvAcctForecastMeasureDefId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Comment</fullName>
+    </fields>
+    <fields>
+        <fullName>InitialValue</fullName>
+    </fields>
+    <fields>
+        <fullName>UpdatedValue</fullName>
+    </fields>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

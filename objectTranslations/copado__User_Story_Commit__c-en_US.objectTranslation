@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Commit Message --></label>
+        <name>copado__CommitMessage__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>copado__External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Job Execution ID --></label>
+        <name>copado__LastJobExecutionId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Snapshot Commit --></label>
+        <name>copado__Snapshot_Commit__c</name>
+        <relationshipLabel><!-- User Story Commits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>copado__User_Story__c</name>
+        <relationshipLabel><!-- User Story Commits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- View in Git --></label>
+        <name>copado__View_in_Git__c</name>
+    </fields>
+</CustomObjectTranslation>

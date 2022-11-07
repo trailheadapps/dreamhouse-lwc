@@ -1,0 +1,50 @@
+<apex:page standardController="copado__User_Story__c" extensions="copado.UserStorySelectCommits" title="User Story Select Commits" lightningStylesheets="true">
+   <head>
+       <script>
+            function checkAll(cb) {
+                var inputElem = document.getElementsByTagName("input");
+                for(var i=0; i<inputElem.length; i++) {
+                    if(inputElem[i].id.indexOf("checkedone")!=-1 && !inputElem[i].disabled && inputElem[i].style.display != 'none'){
+                        inputElem[i].checked = cb.checked;
+                    }
+                }
+            }   
+        </script>
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    </head>
+    <body>
+        <apex:form id="theForm" styleClass="copado-lightning-container">
+
+    	    <apex:sectionHeader title="{!$ObjectType.copado__Git_Org_Commit__c.LabelPlural}" subtitle="{!orgName} ➠ {!repoName} / {!branch}"/>
+    	    <apex:pageMessages />
+    	        
+    	    <apex:pageBlock id="pb_selectGitCommits"  mode="edit" helpUrl="http://docs.copado.com" helpTitle="{!$Label.copado__HELP_FOR_THIS_PAGE}" title="{!$Label.copado__SELECT_COMMITS}">
+
+    		    <apex:pageblockButtons id="pbButtons">
+                    <apex:commandButton value="Previous"  action="{!previous}" disabled="{!!showPrevious}" rendered="{!showPagination}"  reRender="pb_selectGitCommits"/>
+                    <apex:commandButton value="Next"  action="{!Next}" disabled="{!!showNext}"  rendered="{!showPagination}" reRender="pb_selectGitCommits"/>
+    	            <apex:commandButton value="{!$Label.site.save}" action="{!saveSelections}"/>
+    	            <apex:commandButton value="{!$Label.site.cancel}"  action="{!cancel}" immediate="true"/>
+    	        </apex:pageblockButtons>
+                <apex:pageBlockTable value="{!commits}" var="c" id="pbTable">
+                    <apex:column >
+                       <apex:facet name="header">
+                                <apex:inputCheckbox >
+                                    <apex:actionSupport event="onclick" onsubmit="checkAll(this)" immediate="true" rerender="pbButtons"/>
+                                    </apex:inputCheckbox>
+                                </apex:facet>
+                            <apex:inputCheckbox value="{!c.sel}" id="checkedone" disabled="{!c.sel}">
+                        </apex:inputCheckbox>
+                    </apex:column>
+                    <apex:column value="{!c.c.copado__Commit_Date__c}"/>
+                    <apex:column value="{!c.c.copado__Commit_Id__c}"/>
+                    <apex:column value="{!c.c.copado__Commit_Message__c}"/>
+    	        </apex:pageBlockTable>
+    	    </apex:pageBlock>
+
+
+
+
+    	</apex:form>
+    </body>
+</apex:page>

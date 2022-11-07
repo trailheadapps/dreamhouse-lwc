@@ -1,0 +1,189 @@
+<apex:page applyHtmlTag="true" showHeader="true" sidebar="true" standardStylesheets="true" standardController="copado__External_CI_Setting__c" extensions="copado.EditExternalCISetting" title="{!$Label.copado__VIEW} {!$ObjectType.copado__External_CI_Setting__c.Label}" lightningStylesheets="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="height: 100%;">
+        <head>
+            <c:GAnalytics />
+            <apex:slds />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <c:IncludeStaticsResourceComponent addJquery="true"/>
+            <apex:stylesheet value="{!URLFOR($Resource.copado__SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <style type="text/css">
+                .col-right{
+                    margin-left : 15px;
+                }
+                .msgIcon {
+                    display: none!important
+                }
+                .customMessage * {
+                    color: #fff!important
+                }
+                .customMessage {
+                    margin: 5px 0!important;
+                    max-width: 1280px;
+                    opacity: 1!important;
+                    width: 100%;
+                    font-size: 12px;
+                    border: 0px;
+                    padding-left: 10px;
+                }
+                .message {
+                    opacity: 1
+                }
+                .slds-col{
+                    padding-right: 20px;
+                }
+                .title{
+                    text-transform: uppercase;
+                }
+                .slds-has-flexi-truncate{
+                    padding: 4px 0 4px 0;
+                }
+                #overlay {
+                    background-color: black;
+                    position: fixed;
+                    top: 0; right: 0; bottom: 0; left: 0;
+                    opacity: 0.5;
+                    -moz-opacity:0.5;
+                    -khtml-opacity: 0.5;
+                    z-index: 9999;
+                }
+            </style>
+            <script>
+                var j$ = jQuery.noConflict();
+
+                j$(document).ready(function(){
+                   overridePageMessages();    
+                });
+                        
+                function overridePageMessages(){    
+                    
+                    textureEffect = 'slds-theme--alert-texture';
+                                 
+                    j$('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);          
+                    j$('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);    
+                    j$('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+                    j$('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);    
+                                     
+                    j$('.errorM3').removeClass('errorM3'); 
+                    j$('.confirmM3').removeClass('confirmM3'); 
+                    j$('.infoM3').removeClass('infoM3');   
+                    j$('.warningM3').removeClass('warningM3');  
+                }
+            </script>
+            
+        </head>
+        <body class="slds-scope" style="{!IF($User.UIThemeDisplayed == 'Theme4d','margin: 12px;background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2),linear-gradient(to top,rgba(32, 92, 159, 0), rgb(32, 92, 159));','')}">
+            <apex:form id="form">
+                
+            <div class="slds-page-header" style="{!IF($User.UIThemeDisplayed == 'Theme4d','background: #fdfdfd;margin-bottom: 12px;border-collapse: collapse;border-radius: 4px;','')}">
+                <apex:outputPanel layout="block" id="pageMessages">
+                    <apex:pagemessages id="pmessage"/>
+                </apex:outputPanel>
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+                                    <svg class="slds-icon" aria-hidden="true">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/standard-sprite/svg/symbols.svg#custom')}"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.External_CI_Setting__c.Label}</p>
+                                <h1 class="slds-page-header__title slds-truncate slds-align-middle" >
+                                    {!IF(ISBLANK(externalCISetting.ID),'' ,externalCISetting.Name)}
+                                </h1>
+                                
+                            </div>
+                       </div>
+                    </div>
+                    <!-- ACTION BUTTONS -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                        <div class="slds-button-group" role="group">
+                            <apex:commandButton value="{!$Label.copado__EDIT}" action="{!edit}" styleClass="slds-button slds-button--neutral" />
+                            <apex:outputLink value="{!URLFOR($Action.copado__External_CI_Setting__c.Clone,externalCISetting.Id)}" styleClass="slds-button slds-button--neutral">
+                                <span class="slds-truncate" title="Menu Item One">{!$Label.copado__CLONE}</span>
+                            </apex:outputLink>
+                            <apex:commandButton value="{!$Label.copado__DELETE}" action="{!externalCIsettingListView}" styleClass="slds-button slds-button--neutral" reRender="pageMessages" oncomplete="overridePageMessages()"/>
+                            <apex:commandButton value="{!$Label.copado__VALIDATE_EXTERNAL_CI}" status="status" action="{!validate}" styleClass="slds-button slds-button--neutral" reRender="pageMessages" oncomplete="overridePageMessages()"/>
+                        </div>
+                    </div>
+                    <!-- / ACTION BUTTONS -->
+                </div>
+                <!-- HEADER DETAIL ROW-->
+                <ul class="slds-grid slds-page-header__detail-row">
+                    <li class="slds-page-header__detail-block">
+                        <c:LightningReadyOutputFields dividerBottom="false" SObject="{!externalCISetting}" Field="Name" />
+                    </li>
+                    <li class="slds-page-header__detail-block">
+                        <c:LightningReadyOutputFields dividerBottom="false" SObject="{!externalCISetting}" Field="CI_Tool__c" />
+                    </li>
+                </ul>
+            </div>
+            </apex:form>
+
+            <div style="background: #fdfdfd;border-collapse: collapse; background: #fdfdfd;border-radius: 4px;">
+                <div class="slds-tabs_default" style="padding: 24px;">
+                    <ul class="slds-tabs_default__nav" role="tablist">
+                        <li class="slds-tabs_default__item " title="{!$Label.RELATED_LIST}" role="presentation">
+                            <a class="slds-tabs_default__link slds-text-heading--small" href="javascript:void(0);" role="tab" tabindex="=1" aria-selected="false" aria-controls="related" id="relatedList">{!$Label.RELATED_LIST}</a>
+                        </li>
+                        <li class="slds-tabs_default__item slds-is-active" title="{!$Label.DETAIL}" role="presentation">
+                            <a class="slds-tabs_default__link slds-text-heading--small" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="Information" id="detailInfo">{!$Label.DETAIL}</a>
+                        </li>
+                        
+                    </ul>
+                    <div id="Information" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="detailInfo">
+                        
+                            <form class="slds-form--stacked">
+                                <div class="slds-grid">
+                                    <div class="slds-col" >
+                                        <c:LightningReadyOutputFields SObject="{!externalCISetting}" Field="Name" />
+                                        <c:LightningReadyOutputFields SObject="{!externalCISetting}" Field="CI_Tool__c" />
+                                        <c:LightningReadyOutputFields SObject="{!externalCISetting}" Field="Endpoint__c" />
+                                    </div>
+                                </div>
+                            </form>         
+                       
+                    </div>
+                    <div id="related" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="relatedList">
+                        
+                            <form class="slds-form--stacked">
+                                <div class="slds-grid">
+                                    <div class="slds-col" >
+                                        <apex:relatedList list="External_CI_Jobs__r"/>
+                                    </div>
+                                </div>
+                            </form>         
+                        
+                    </div>
+                    <script type="text/javascript">
+                        j$('.slds-tabs_default__item').on('click', function(){
+                            j$(this).addClass('slds-is-active');
+                            j$(this).find('a').attr('aria-selected', true);
+                            var j$contentToShow = j$('#'+j$(this).find('a').attr('aria-controls'));
+                            j$contentToShow.removeClass('slds-hide');
+                            j$contentToShow.addClass('slds-show');
+
+                            j$(this).siblings().removeClass('slds-is-active');
+                            j$(this).siblings().find('a').attr('aria-selected', false);
+                            j$contentToShow.siblings('.slds-tabs_default__content').removeClass('slds-show');
+                            j$contentToShow.siblings('.slds-tabs_default__content').addClass('slds-hide');
+                        });                    
+                    </script>
+                </div>
+                <apex:actionStatus id="status" styleClass="overlay" style="align:center;" >
+                    <apex:facet name="start" >
+                        <div id="overlay" style="height: 100%;">
+                          <div role="status" class="slds-spinner slds-spinner_medium">
+                            <span class="slds-assistive-text">Loading</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                          </div>
+                        </div>                      
+                    </apex:facet>
+                </apex:actionStatus>
+            </div>
+        </body>
+    </html>
+</apex:page>
