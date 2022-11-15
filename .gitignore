@@ -38,3 +38,6 @@ $RECYCLE.BIN/
 # VS Code project settings
 .vscode/*
 !.vscode/extensions.json
+
+# sf CLI deploy options
+deploy-options.json
