@@ -2,9 +2,13 @@ import { LightningElement } from 'lwc';
 import { getContactsService } from 'lightning/mobileCapabilities';
 
 export default class ListContactsFromDevice extends LightningElement {
+    contactsService;
+    deviceContacts;
+    error;
+
     async connectedCallback() {
-        const myContactsService = getContactsService();
-        if (myContactsService.isAvailable()) {
+        this.contactsService = getContactsService();
+        if (this.contactsService.isAvailable()) {
             await this.retrieveDeviceContacts();
         } else {
             this.error = { message: 'Contact service not available' };
@@ -18,7 +22,7 @@ export default class ListContactsFromDevice extends LightningElement {
         };
 
         try {
-            this.deviceContacts = await this.myContactsService.getContacts(
+            this.deviceContacts = await this.contactsService.getContacts(
                 options
             );
         } catch (error) {
