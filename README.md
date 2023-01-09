@@ -104,7 +104,7 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 
 1. Log in to your org
 
-1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3h000004mB2TAAU) to install the Dreamhouse unlocked package in your org.
+1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3h000004mBEHAA2) to install the Dreamhouse unlocked package in your org.
 
 1. Select **Install for All Users**
 
@@ -182,6 +182,9 @@ This repository contains several files that are relevant if you want to integrat
 ### Code formatting
 
 [Prettier](https://prettier.io 'https://prettier.io/') is a code formatter used to ensure consistent formatting across your code base. To use Prettier with Visual Studio Code, install [this extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) from the Visual Studio Code Marketplace. The [.prettierignore](/.prettierignore) and [.prettierrc](/.prettierrc) files are provided as part of this repository to control the behavior of the Prettier formatter.
+
+> **Warning**
+> The current Apex Prettier plugin version requires that you install Java 11 or above.
 
 ### Code linting
 
