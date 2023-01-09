@@ -1,7 +1,7 @@
 import { LightningElement } from 'lwc';
 import { getContactsService } from 'lightning/mobileCapabilities';
 
-export default class ImportContactsFromDevice extends LightningElement {
+export default class ListContactsFromDevice extends LightningElement {
     async connectedCallback() {
         const myContactsService = getContactsService();
         if (myContactsService.isAvailable()) {
