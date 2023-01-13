@@ -1,6 +1,6 @@
 <template>
     <lightning-card icon-name="custom:custom85">
-        <template if:true={property.data}>
+        <template lwc:if={property.data}>
             <span slot="title">{propertyName}</span>
             <lightning-button-icon
                 icon-name="utility:expand_alt"
@@ -24,12 +24,12 @@
                 </lightning-record-form>
             </div>
         </template>
-        <template if:false={propertyId}>
+        <template lwc:if={hasNoPropertyId}>
             <c-error-panel
                 friendly-message="Select a property to see details"
             ></c-error-panel>
         </template>
-        <template if:true={property.error}>
+        <template lwc:if={property.error}>
             <c-error-panel
                 friendly-message="Error retrieving data"
                 errors={property.error}

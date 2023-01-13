@@ -27,6 +27,10 @@ export default class PropertyLocation extends LightningElement {
         }
     }
 
+    get hasNoErrors() {
+        return this.error === undefined;
+    }
+
     async connectedCallback() {
         this.deviceLocationService = getLocationService();
         if (this.deviceLocationService.isAvailable()) {

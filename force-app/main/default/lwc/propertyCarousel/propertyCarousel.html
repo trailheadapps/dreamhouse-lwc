@@ -1,9 +1,9 @@
 <template>
     <lightning-card icon-name="custom:custom38">
-        <template if:true={property.data}>
+        <template lwc:if={property.data}>
             <span slot="title">{address}</span>
             <div class="slds-var-m-around_medium">
-                <template if:true={urls}>
+                <template lwc:if={urls}>
                     <lightning-carousel>
                         <template for:each={urls} for:item="url">
                             <lightning-carousel-image
@@ -33,7 +33,7 @@
                 ></lightning-file-upload>
             </div>
         </template>
-        <template if:true={errors}>
+        <template lwc:if={errors}>
             <c-error-panel
                 friendly-message="Error retrieving pictures"
                 errors={errors}

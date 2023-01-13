@@ -37,6 +37,10 @@ export default class PropertySummary extends NavigationMixin(LightningElement) {
         this.propertyId = propertyId;
     }
 
+    get hasNoPropertyId() {
+        return this.propertyId === undefined;
+    }
+
     get propertyName() {
         return getFieldValue(this.property.data, NAME_FIELD);
     }
