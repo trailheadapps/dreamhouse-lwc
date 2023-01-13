@@ -50,7 +50,7 @@ private with sharing class GeocodingServiceTest {
 
         // THEN
         Assert.areEqual(computedCoordinates.size(), 1);
-        Assert.areEqual(computedCoordinates[0].lat, null);
+        Assert.isNull(computedCoordinates[0].lat);
         Assert.areEqual(computedCoordinates[0].lon, null);
     }
     @isTest
