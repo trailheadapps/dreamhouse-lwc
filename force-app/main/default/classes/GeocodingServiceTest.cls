@@ -51,7 +51,7 @@ private with sharing class GeocodingServiceTest {
         // THEN
         Assert.areEqual(computedCoordinates.size(), 1);
         Assert.isNull(computedCoordinates[0].lat);
-        Assert.areEqual(computedCoordinates[0].lon, null);
+        Assert.isNull(computedCoordinates[0].lon);
     }
     @isTest
     static void errorResponse() {
