@@ -29,19 +29,9 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        Assert.areEqual(
-            computedCoordinates.size(),
-            1,
-            'Expected 1 pair of coordinates were returned'
-        );
-        Assert.areEqual(
-            computedCoordinates[0].lat == LATITUDE,
-            'Expected mock lat was returned'
-        );
-        Assert.areEqual(
-            computedCoordinates[0].lon == LONGITUDE,
-            'Expected mock lon was returned'
-        );
+        Assert.areEqual(computedCoordinates.size(), 1);
+        Assert.areEqual(computedCoordinates[0].lat, LATITUDE);
+        Assert.areEqual(computedCoordinates[0].lon, LONGITUDE);
     }
     @isTest
     static void blankAddress() {
@@ -59,19 +49,9 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        Assert.areEqual(
-            computedCoordinates.size(),
-            1,
-            'Expected 1 pair of coordinates were returned'
-        );
-        Assert.areEqual(
-            computedCoordinates[0].lat == null,
-            'Expected null lat was returned'
-        );
-        Assert.areEqual(
-            computedCoordinates[0].lon == null,
-            'Expected null long was returned'
-        );
+        Assert.areEqual(computedCoordinates.size(), 1);
+        Assert.areEqual(computedCoordinates[0].lat, null);
+        Assert.areEqual(computedCoordinates[0].lon, null);
     }
     @isTest
     static void errorResponse() {
@@ -94,19 +74,9 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        Assert.areEqual(
-            computedCoordinates.size(),
-            1,
-            'Expected 1 pair of coordinates were returned'
-        );
-        Assert.areEqual(
-            computedCoordinates[0].lat == null,
-            'Expected null lat was returned'
-        );
-        Assert.areEqual(
-            computedCoordinates[0].lon == null,
-            'Expected null long was returned'
-        );
+        Assert.areEqual(computedCoordinates.size(), 1);
+        Assert.areEqual(computedCoordinates[0].lat, null);
+        Assert.areEqual(computedCoordinates[0].lon, null);
     }
 
     public class OpenStreetMapHttpCalloutMockImpl implements HttpCalloutMock {
