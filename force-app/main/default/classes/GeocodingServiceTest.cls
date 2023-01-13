@@ -29,9 +29,9 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        Assert.areEqual(computedCoordinates.size(), 1);
-        Assert.areEqual(computedCoordinates[0].lat, LATITUDE);
-        Assert.areEqual(computedCoordinates[0].lon, LONGITUDE);
+        Assert.areEqual(1, computedCoordinates.size());
+        Assert.areEqual(LATITUDE, computedCoordinates[0].lat);
+        Assert.areEqual(LONGITUDE, computedCoordinates[0].lon);
     }
     @isTest
     static void blankAddress() {
@@ -49,7 +49,7 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        Assert.areEqual(computedCoordinates.size(), 1);
+        Assert.areEqual(1, computedCoordinates.size());
         Assert.isNull(computedCoordinates[0].lat);
         Assert.isNull(computedCoordinates[0].lon);
     }
@@ -74,7 +74,7 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        Assert.areEqual(computedCoordinates.size(), 1);
+        Assert.areEqual(1, computedCoordinates.size());
         Assert.isNull(computedCoordinates[0].lat);
         Assert.isNull(computedCoordinates[0].lon);
     }
