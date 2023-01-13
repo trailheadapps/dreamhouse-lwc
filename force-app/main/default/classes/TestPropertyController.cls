@@ -67,7 +67,7 @@ private class TestPropertyController {
                 1
             );
             Test.stopTest();
-            Assert.areEqual¡(5, result.records.size());
+            Assert.areEqual(5, result.records.size());
         }
     }
 
@@ -82,7 +82,7 @@ private class TestPropertyController {
         );
         Test.stopTest();
 
-        Assert.areEqual¡(null, items);
+        Assert.areEqual(null, items);
     }
 
     @isTest
@@ -115,7 +115,7 @@ private class TestPropertyController {
         );
         Test.stopTest();
 
-        Assert.areEqual¡(1, items.size());
-        Assert.areEqual¡(MOCK_PICTURE_NAME, items[0].Title);
+        Assert.areEqual(1, items.size());
+        Assert.areEqual(MOCK_PICTURE_NAME, items[0].Title);
     }
 }
