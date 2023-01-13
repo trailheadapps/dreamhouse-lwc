@@ -29,15 +29,16 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        Assert.isTrue(
-            computedCoordinates.size() == 1,
+        Assert.areEqual(
+            computedCoordinates.size(),
+            1,
             'Expected 1 pair of coordinates were returned'
         );
-        Assert.isTrue(
+        Assert.areEqual(
             computedCoordinates[0].lat == LATITUDE,
             'Expected mock lat was returned'
         );
-        Assert.isTrue(
+        Assert.areEqual(
             computedCoordinates[0].lon == LONGITUDE,
             'Expected mock lon was returned'
         );
@@ -58,17 +59,18 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        Assert.isTrue(
-            computedCoordinates.size() == 1,
+        Assert.areEqual(
+            computedCoordinates.size(),
+            1,
             'Expected 1 pair of coordinates were returned'
         );
-        Assert.isTrue(
+        Assert.areEqual(
             computedCoordinates[0].lat == null,
             'Expected null lat was returned'
         );
-        Assert.isTrue(
+        Assert.areEqual(
             computedCoordinates[0].lon == null,
-            'Expected null lon was returned'
+            'Expected null long was returned'
         );
     }
     @isTest
@@ -92,17 +94,18 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        Assert.isTrue(
-            computedCoordinates.size() == 1,
+        Assert.areEqual(
+            computedCoordinates.size(),
+            1,
             'Expected 1 pair of coordinates were returned'
         );
-        Assert.isTrue(
+        Assert.areEqual(
             computedCoordinates[0].lat == null,
             'Expected null lat was returned'
         );
-        Assert.isTrue(
+        Assert.areEqual(
             computedCoordinates[0].lon == null,
-            'Expected null lon was returned'
+            'Expected null long was returned'
         );
     }
 
