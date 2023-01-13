@@ -82,7 +82,7 @@ private class TestPropertyController {
         );
         Test.stopTest();
 
-        Assert.isNull(null);
+        Assert.isNull(items);
     }
 
     @isTest
