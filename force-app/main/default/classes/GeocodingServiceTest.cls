@@ -29,15 +29,15 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        System.assert(
+        Assert.isTrue(
             computedCoordinates.size() == 1,
             'Expected 1 pair of coordinates were returned'
         );
-        System.assert(
+        Assert.isTrue(
             computedCoordinates[0].lat == LATITUDE,
             'Expected mock lat was returned'
         );
-        System.assert(
+        Assert.isTrue(
             computedCoordinates[0].lon == LONGITUDE,
             'Expected mock lon was returned'
         );
@@ -58,15 +58,15 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        System.assert(
+        Assert.isTrue(
             computedCoordinates.size() == 1,
             'Expected 1 pair of coordinates were returned'
         );
-        System.assert(
+        Assert.isTrue(
             computedCoordinates[0].lat == null,
             'Expected null lat was returned'
         );
-        System.assert(
+        Assert.isTrue(
             computedCoordinates[0].lon == null,
             'Expected null lon was returned'
         );
@@ -92,15 +92,15 @@ private with sharing class GeocodingServiceTest {
         );
 
         // THEN
-        System.assert(
+        Assert.isTrue(
             computedCoordinates.size() == 1,
             'Expected 1 pair of coordinates were returned'
         );
-        System.assert(
+        Assert.isTrue(
             computedCoordinates[0].lat == null,
             'Expected null lat was returned'
         );
-        System.assert(
+        Assert.isTrue(
             computedCoordinates[0].lon == null,
             'Expected null lon was returned'
         );
