@@ -76,7 +76,7 @@ private with sharing class GeocodingServiceTest {
         // THEN
         Assert.areEqual(computedCoordinates.size(), 1);
         Assert.areEqual(computedCoordinates[0].lat, null);
-        Assert.areEqual(computedCoordinates[0].lon, null);
+        Assert.isNull(computedCoordinates[0].lon);
     }
 
     public class OpenStreetMapHttpCalloutMockImpl implements HttpCalloutMock {
