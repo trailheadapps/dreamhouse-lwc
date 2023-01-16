@@ -3,7 +3,13 @@
         title="Distance to the Property"
         icon-name="standard:location"
     >
-        <template lwc:if={hasNoErrors}>
+        <template lwc:if={error}>
+            <c-error-panel
+                friendly-message="Error computing location."
+                errors={error}
+            ></c-error-panel>
+        </template>
+        <template lwc:else>
             <template lwc:if={distance}>
                 <div class="slds-var-m-around_medium location">
                     <div class="slds-text-heading_small">
@@ -29,12 +35,6 @@
                 <lightning-spinner alternative-text="Loading..." size="small">
                 </lightning-spinner>
             </template>
-        </template>
-        <template lwc:else>
-            <c-error-panel
-                friendly-message="Error computing location."
-                errors={error}
-            ></c-error-panel>
         </template>
     </lightning-card>
 </template>
