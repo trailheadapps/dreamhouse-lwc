@@ -1,11 +1,11 @@
 <template>
     <lightning-card title={address} icon-name="custom:custom106">
-        <template if:true={markers}>
+        <template lwc:if={markers}>
             <lightning-map
                 map-markers={markers}
                 zoom-level={zoomLevel}
             ></lightning-map>
-            <template if:true={error}>
+            <template lwc:if={error}>
                 <c-error-panel
                     friendly-message="Error retrieving map"
                     errors={error}

@@ -1,7 +1,7 @@
 <template>
     <lightning-layout vertical-align="center" class="slds-var-m-top_x-small">
         <lightning-layout-item size="2">
-            <template if:false={isFirstPage}>
+            <template lwc:if={isNotFirstPage}>
                 <lightning-button-icon
                     class="left-button-icon"
                     icon-name="utility:chevronleft"
@@ -15,7 +15,7 @@
             {totalItemCount} items • page {currentPageNumber} of {totalPages}
         </lightning-layout-item>
         <lightning-layout-item size="2" class="nav-next slds-text-align_right">
-            <template if:false={isLastPage}>
+            <template lwc:if={isNotLastPage}>
                 <lightning-button-icon
                     class="right-button-icon"
                     icon-name="utility:chevronright"

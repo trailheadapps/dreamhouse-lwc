@@ -1,6 +1,6 @@
 <template>
     <lightning-card title="Broker" icon-name="standard:contact">
-        <template if:true={property.data}>
+        <template lwc:if={property.data}>
             <lightning-button-icon
                 icon-name="utility:expand_alt"
                 slot="actions"
@@ -17,7 +17,7 @@
                 ></lightning-record-form>
             </div>
         </template>
-        <template if:true={property.error}>
+        <template lwc:if={property.error}>
             <c-error-panel
                 friendly-message="Error retrieving data"
                 errors={property.error}
