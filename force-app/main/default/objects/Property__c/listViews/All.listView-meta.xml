@@ -5,6 +5,7 @@
     <columns>City__c</columns>
     <columns>Beds__c</columns>
     <columns>Price__c</columns>
+    <columns>Status__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
