@@ -19,7 +19,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house01sq.jpg",
             "Tags__c": "victorian",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@CarolineBrookerRef"
+            "Broker__c": "@CarolineBrookerRef",
+            "Status__c": "Available"
         },
         {
             "attributes": {
@@ -40,7 +41,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house02sq.jpg",
             "Tags__c": "colonial",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@MichaelJonesRef"
+            "Broker__c": "@MichaelJonesRef",
+            "Status__c": "Contracted"
         },
         {
             "attributes": {
@@ -48,7 +50,7 @@
                 "referenceId": "72FrancisStRef"
             },
             "Name": "Modern City Living",
-            "Address__c": "72 Francis st",
+            "Address__c": "72 Francis St",
             "City__c": "Boston",
             "State__c": "MA",
             "Zip__c": "02420",
@@ -61,7 +63,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house03sq.jpg",
             "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@JonathanBradleyRef"
+            "Broker__c": "@JonathanBradleyRef",
+            "Status__c": "Pre Market"
         },
         {
             "attributes": {
@@ -69,7 +72,7 @@
                 "referenceId": "32PrinceStRef"
             },
             "Name": "Stunning Colonial",
-            "Address__c": "32 Prince st",
+            "Address__c": "32 Prince St",
             "City__c": "Cambridge",
             "State__c": "MA",
             "Zip__c": "02420",
@@ -82,7 +85,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house04sq.jpg",
             "Tags__c": "colonial",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@JenniferWuRef"
+            "Broker__c": "@JenniferWuRef",
+            "Status__c": "Available"
         },
         {
             "attributes": {
@@ -103,7 +107,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house05sq.jpg",
             "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@OliviaGreenRef"
+            "Broker__c": "@OliviaGreenRef",
+            "Status__c": "Closed"
         },
         {
             "attributes": {
@@ -124,7 +129,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house06sq.jpg",
             "Tags__c": "colonial",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@MiriamAupontRef"
+            "Broker__c": "@MiriamAupontRef",
+            "Status__c": "Contracted"
         },
         {
             "attributes": {
@@ -145,7 +151,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house07sq.jpg",
             "Tags__c": "colonial",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@MichelleLambertRef"
+            "Broker__c": "@MichelleLambertRef",
+            "Status__c": "Available"
         },
         {
             "attributes": {
@@ -153,7 +160,7 @@
                 "referenceId": "48BrattleStRef"
             },
             "Name": "Heart of Harvard Square",
-            "Address__c": "48 Brattle st",
+            "Address__c": "48 Brattle St",
             "City__c": "Cambridge",
             "State__c": "MA",
             "Zip__c": "02420",
@@ -166,7 +173,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house10sq.jpg",
             "Tags__c": "victorian",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@VictorOchoaRef"
+            "Broker__c": "@VictorOchoaRef",
+            "Status__c": "Under Agreement"
         },
         {
             "attributes": {
@@ -187,7 +195,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house09sq.jpg",
             "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@CarolineBrookerRef"
+            "Broker__c": "@CarolineBrookerRef",
+            "Status__c": "Available"
         },
         {
             "attributes": {
@@ -208,7 +217,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house08sq.jpg",
             "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@MichaelJonesRef"
+            "Broker__c": "@MichaelJonesRef",
+            "Status__c": "Available"
         },
         {
             "attributes": {
@@ -229,7 +239,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house11sq.jpg",
             "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@JonathanBradleyRef"
+            "Broker__c": "@JonathanBradleyRef",
+            "Status__c": "Available"
         },
         {
             "attributes": {
@@ -250,7 +261,8 @@
             "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house12sq.jpg",
             "Tags__c": "contemporary",
             "Description__c": "Lorem ipsum dolor sit amet",
-            "Broker__c": "@JenniferWuRef"
+            "Broker__c": "@JenniferWuRef",
+            "Status__c": "Available"
         }
     ]
 }

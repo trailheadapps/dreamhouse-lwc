@@ -1,7 +1,7 @@
 [
     {
         "Name": "Stunning Victorian",
-        "Address__c": "18 Henry st",
+        "Address__c": "18 Henry St",
         "City__c": "Cambridge",
         "State__c": "MA",
         "Zip__c": "01742",
@@ -16,11 +16,12 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 1
-        }
+        },
+        "Status__c": "Available"
     },
     {
         "Name": "Ultimate Sophistication",
-        "Address__c": "24 Pearl st",
+        "Address__c": "24 Pearl St",
         "City__c": "Cambridge",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -35,11 +36,12 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 2
-        }
+        },
+        "Status__c": "Contracted"
     },
     {
         "Name": "Modern City Living",
-        "Address__c": "72 Francis st",
+        "Address__c": "72 Francis St",
         "City__c": "Boston",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -54,11 +56,12 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 3
-        }
+        },
+        "Status__c": "Pre Market"
     },
     {
         "Name": "Stunning Colonial",
-        "Address__c": "32 Prince st",
+        "Address__c": "32 Prince St",
         "City__c": "Cambridge",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -73,10 +76,11 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 4
-        }
+        },
+        "Status__c": "Available"
     },
     {
-        "Name": "Waterfront in the city",
+        "Name": "Waterfront in the City",
         "Address__c": "110 Baxter Street",
         "City__c": "Boston",
         "State__c": "MA",
@@ -92,11 +96,12 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 5
-        }
+        },
+        "Status__c": "Closed"
     },
     {
         "Name": "Quiet Retreat",
-        "Address__c": "448 Hanover st",
+        "Address__c": "448 Hanover St",
         "City__c": "Boston",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -111,7 +116,8 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 6
-        }
+        },
+        "Status__c": "Contracted"
     },
     {
         "Name": "City Living",
@@ -130,11 +136,12 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 7
-        }
+        },
+        "Status__c": "Available"
     },
     {
         "Name": "Heart of Harvard Square",
-        "Address__c": "48 Brattle st",
+        "Address__c": "48 Brattle St",
         "City__c": "Cambridge",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -149,7 +156,8 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 8
-        }
+        },
+        "Status__c": "Under Agreement"
     },
     {
         "Name": "Seaport District Retreat",
@@ -168,7 +176,8 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 1
-        }
+        },
+        "Status__c": "Available"
     },
     {
         "Name": "Contemporary City Living",
@@ -187,11 +196,12 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 2
-        }
+        },
+        "Status__c": "Available"
     },
     {
         "Name": "Architectural Details",
-        "Address__c": "95 Gloucester st",
+        "Address__c": "95 Gloucester St",
         "City__c": "Boston",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -206,11 +216,12 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 3
-        }
+        },
+        "Status__c": "Available"
     },
     {
         "Name": "Contemporary Luxury",
-        "Address__c": "145 Commonwealth ave",
+        "Address__c": "145 Commonwealth Ave",
         "City__c": "Boston",
         "State__c": "MA",
         "Zip__c": "02420",
@@ -225,6 +236,7 @@
         "Description__c": "Lorem ipsum dolor sit amet",
         "Broker__r": {
             "Broker_Id__c": 4
-        }
+        },
+        "Status__c": "Available"
     }
 ]
