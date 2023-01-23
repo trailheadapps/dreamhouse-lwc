@@ -122,7 +122,7 @@ jobs:
 
             # Checkout the source code
             - name: 'Checkout source code'
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             # Store secret for dev hub
             - name: 'Populate auth file with DEVHUB_SFDX_URL secret'
@@ -193,7 +193,7 @@ jobs:
                   if [ $(echo "$changedPaths" | grep -c '^force-app') == 1 ]; then
                       hasChanges='true'
                   fi
-                  echo "::set-output name=hasChanges::$hasChanges"
+                  echo "hasChanges=$hasChanges" >> $GITHUB_OUTPUT
 
             # Trigger packaging PR workflow
             - name: 'Trigger packaging PR workflow if needed'

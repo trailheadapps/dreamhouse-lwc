@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Contracted</fullName>
+        <default>false</default>
+        <label>Contracted</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre Market</fullName>
+        <default>false</default>
+        <label>Pre Market</label>
+    </customValue>
+    <customValue>
+        <fullName>Available</fullName>
+        <default>false</default>
+        <label>Available</label>
+    </customValue>
+    <customValue>
+        <fullName>Under Agreement</fullName>
+        <default>false</default>
+        <label>Under Agreement</label>
+    </customValue>
+    <customValue>
+        <fullName>Closed</fullName>
+        <default>false</default>
+        <label>Closed</label>
+    </customValue>
+    <masterLabel>Property Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
