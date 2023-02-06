@@ -1,6 +1,7 @@
 import { createElement } from 'lwc';
 import PropertyCarousel from 'c/propertyCarousel';
 import { getRecord } from 'lightning/uiRecordApi';
+import { processImage } from 'lightning/mediaUtils';
 import getPictures from '@salesforce/apex/PropertyController.getPictures';
 
 // Realistic data with multiple records
@@ -61,6 +62,30 @@ describe('c-property-carousel', () => {
                 'lightning-carousel-image'
             );
             expect(carouselImageEls.length).toBe(mockGetPictures.length);
+        });
+
+        it('calls processImage when a picture is uploaded', async () => {
+            const element = createElement('c-property-carousel', {
+                is: PropertyCarousel
+            });
+            document.body.appendChild(element);
+
+            // Emit mock property
+            getRecord.emit(mockGetPropertyRecord);
+
+            // Wait for any asynchronous DOM updates
+            await flushPromises();
+
+            // Simulate input click
+            const lightningInputEl =
+                element.shadowRoot.querySelector('lightning-input');
+            lightningInputEl.files = [
+                new File(['1234'], 'test.jpg', { type: 'image/jpeg' })
+            ];
+            lightningInputEl.dispatchEvent(new CustomEvent('change'));
+
+            // Assertions
+            expect(processImage).toHaveBeenCalled();
         });
 
         it('renders no pictures message when property but no pictures returned', async () => {

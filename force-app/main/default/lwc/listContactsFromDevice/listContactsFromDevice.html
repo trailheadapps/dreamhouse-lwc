@@ -1,7 +1,13 @@
 <template>
     <lightning-card title="Contacts" icon-name="standard:people">
-        <template if:false={error}>
-            <template if:true={deviceContacts}>
+        <template lwc:if={error}>
+            <c-error-panel
+                friendly-message="Error accessing device contacts"
+                errors={error}
+            ></c-error-panel>
+        </template>
+        <template lwc:else>
+            <template lwc:if={deviceContacts}>
                 <ul class="slds-var-m-around_large">
                     <template
                         for:each={deviceContacts}
@@ -25,16 +31,10 @@
                     </template>
                 </ul>
             </template>
-            <template if:false={deviceContacts}>
+            <template lwc:else>
                 <lightning-spinner alternative-text="Loading..." size="small">
                 </lightning-spinner>
             </template>
-        </template>
-        <template if:true={error}>
-            <c-error-panel
-                friendly-message="Error accessing device contacts"
-                errors={error}
-            ></c-error-panel>
         </template>
     </lightning-card>
 </template>

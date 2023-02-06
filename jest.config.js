@@ -13,7 +13,9 @@ module.exports = {
         '^lightning/messageService$':
             '<rootDir>/force-app/test/jest-mocks/lightning/messageService',
         '^lightning/mobileCapabilities$':
-            '<rootDir>/force-app/test/jest-mocks/lightning/mobileCapabilities'
+            '<rootDir>/force-app/test/jest-mocks/lightning/mobileCapabilities',
+        '^lightning/mediaUtils$':
+            '<rootDir>/force-app/test/jest-mocks/lightning/mediaUtils'
     },
     setupFilesAfterEnv
 };
