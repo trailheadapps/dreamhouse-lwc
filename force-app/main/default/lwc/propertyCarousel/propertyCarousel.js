@@ -60,7 +60,7 @@ export default class PropertyCarousel extends LightningElement {
     // If you don't need compression, use lightning-file-upload instead
     async handleFilesSelected(event) {
         try {
-            let options = {
+            const options = {
                 resizeMode: 'fill',
                 resizeStrategy: 'reduce',
                 targetWidth: 500,
