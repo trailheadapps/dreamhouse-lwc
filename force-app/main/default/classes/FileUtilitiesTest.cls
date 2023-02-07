@@ -35,10 +35,10 @@ private with sharing class FileUtilitiesTest {
                 fileName,
                 recordId
             );
-            Assert.fail();
+            Assert.fail('Expected an AuraHandledException');
         } catch (Exception e) {
             // THEN
-            Assert.isTrue(e instanceof AuraHandledException);
+            Assert.isInstanceOfType(e, AuraHandledException.class);
         }
     }
 
@@ -59,10 +59,10 @@ private with sharing class FileUtilitiesTest {
                 fileName,
                 recordId
             );
-            Assert.fail();
+            Assert.fail('Expected an AuraHandledException');
         } catch (Exception e) {
             // THEN
-            Assert.isTrue(e instanceof AuraHandledException);
+            Assert.isInstanceOfType(e, AuraHandledException.class);
         }
     }
 
@@ -83,10 +83,10 @@ private with sharing class FileUtilitiesTest {
                 fileName,
                 recordId
             );
-            Assert.fail();
+            Assert.fail('Expected an AuraHandledException');
         } catch (Exception e) {
             // THEN
-            Assert.isTrue(e instanceof AuraHandledException);
+            Assert.isInstanceOfType(e, AuraHandledException.class);
         }
     }
 }

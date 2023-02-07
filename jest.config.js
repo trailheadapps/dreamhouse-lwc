@@ -15,7 +15,8 @@ module.exports = {
         '^lightning/mobileCapabilities$':
             '<rootDir>/force-app/test/jest-mocks/lightning/mobileCapabilities',
         '^lightning/mediaUtils$':
-            '<rootDir>/force-app/test/jest-mocks/lightning/mediaUtils'
+            '<rootDir>/force-app/test/jest-mocks/lightning/mediaUtils',
+        '^@salesforce/apex$': '<rootDir>/force-app/test/jest-mocks/apex'
     },
     setupFilesAfterEnv
 };

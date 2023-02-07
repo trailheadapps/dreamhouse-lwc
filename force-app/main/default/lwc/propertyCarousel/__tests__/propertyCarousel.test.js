@@ -2,7 +2,9 @@ import { createElement } from 'lwc';
 import PropertyCarousel from 'c/propertyCarousel';
 import { getRecord } from 'lightning/uiRecordApi';
 import { processImage } from 'lightning/mediaUtils';
+//import { refreshApex } from '@salesforce/apex';
 import getPictures from '@salesforce/apex/PropertyController.getPictures';
+import createFile from '@salesforce/apex/FileUtilities.createFile';
 
 // Realistic data with multiple records
 const mockGetPictures = require('./data/getPictures.json');
@@ -19,6 +21,17 @@ jest.mock(
         } = require('@salesforce/sfdx-lwc-jest');
         return {
             default: createApexTestWireAdapter(jest.fn())
+        };
+    },
+    { virtual: true }
+);
+
+// Mocking createFile imperative Apex method call
+jest.mock(
+    '@salesforce/apex/FileUtilities.createFile',
+    () => {
+        return {
+            default: jest.fn()
         };
     },
     { virtual: true }
@@ -73,6 +86,9 @@ describe('c-property-carousel', () => {
             // Emit mock property
             getRecord.emit(mockGetPropertyRecord);
 
+            // Emit mock createFile
+            createFile.mockResolvedValue('A00012345678');
+
             // Wait for any asynchronous DOM updates
             await flushPromises();
 
@@ -86,6 +102,8 @@ describe('c-property-carousel', () => {
 
             // Assertions
             expect(processImage).toHaveBeenCalled();
+            //expect(createFile).toHaveBeenCalled();
+            //expect(refreshApex).toHaveBeenCalled();
         });
 
         it('renders no pictures message when property but no pictures returned', async () => {
