@@ -1,1 +1,1 @@
-export const processImage = jest.fn(() => new Blob());
+export const processImage = jest.fn(() => Promise.resolve(new Blob()));
