@@ -12,7 +12,7 @@
                 ></c-error-panel>
             </template>
         </template>
-        <template if:false={markers}>
+        <template lwc:else>
             <c-error-panel
                 friendly-message="Select a property to see its location"
             ></c-error-panel>

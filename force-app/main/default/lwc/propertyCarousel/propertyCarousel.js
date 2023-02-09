@@ -1,7 +1,9 @@
 import { LightningElement, wire, api } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { processImage } from 'lightning/mediaUtils';
 import { refreshApex } from '@salesforce/apex';
 import getPictures from '@salesforce/apex/PropertyController.getPictures';
+import createFile from '@salesforce/apex/FileUtilities.createFile';
 
 import ADDRESS_FIELD from '@salesforce/schema/Property__c.Address__c';
 import CITY_FIELD from '@salesforce/schema/Property__c.City__c';
@@ -11,9 +13,7 @@ const FIELDS = [ADDRESS_FIELD, CITY_FIELD, DESCRIPTION_FIELD];
 
 export default class PropertyCarousel extends LightningElement {
     @api recordId;
-
-    urls;
-
+    carouselItems;
     pictures;
 
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
@@ -25,12 +25,14 @@ export default class PropertyCarousel extends LightningElement {
         if (pictures.data) {
             const files = pictures.data;
             if (Array.isArray(files) && files.length) {
-                this.urls = files.map(
-                    (file) =>
-                        '/sfc/servlet.shepherd/version/download/' + file.Id
-                );
+                this.carouselItems = files.map((file) => {
+                    return {
+                        title: file.Title,
+                        url: `/sfc/servlet.shepherd/version/download/${file.Id}`
+                    };
+                });
             } else {
-                this.urls = null;
+                this.carouselItems = null;
             }
         }
     }
@@ -54,7 +56,50 @@ export default class PropertyCarousel extends LightningElement {
         return errors.length ? errors : null;
     }
 
-    handleUploadFinished() {
-        refreshApex(this.pictures);
+    // As this app is accessible on mobile, let's resize/compress the images for a better UX
+    // If you don't need compression, use lightning-file-upload instead
+    async handleFilesSelected(event) {
+        try {
+            const options = {
+                resizeMode: 'fill',
+                resizeStrategy: 'reduce',
+                targetWidth: 500,
+                targetHeight: 500,
+                compressionQuality: 0.75,
+                imageSmoothingEnabled: true,
+                preserveTransparency: false,
+                backgroundColor: 'white'
+            };
+
+            // Process each file individually to allow partial uploads succeed
+            /* eslint-disable no-await-in-loop */
+            for (const file of event.target.files) {
+                // Compress and resize image
+                const blob = await processImage(file, options);
+
+                // Convert to base64
+                const base64data = await this.blobToBase64(blob);
+
+                // Create file attached to record
+                await createFile({
+                    base64data: base64data,
+                    filename: file.name,
+                    recordId: this.recordId
+                });
+
+                // Refresh pictures to incorporate uploaded file
+                refreshApex(this.pictures);
+            }
+        } catch (error) {
+            console.error('Error compressing and creating file: ', error);
+        }
+    }
+
+    async blobToBase64(blob) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]); // Remove Data-URL declaration
+            reader.readAsDataURL(blob);
+        });
     }
 }

@@ -86,7 +86,7 @@ public with sharing class PropertyController {
     @AuraEnabled(cacheable=true scope='global')
     public static List<ContentVersion> getPictures(Id propertyId) {
         List<ContentDocumentLink> links = [
-            SELECT Id, LinkedEntityId, ContentDocumentId
+            SELECT Id, LinkedEntityId, ContentDocument.Title
             FROM ContentDocumentLink
             WHERE
                 LinkedEntityId = :propertyId
