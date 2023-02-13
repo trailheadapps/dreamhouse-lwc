@@ -1,6 +1,6 @@
 <template>
     <div class="slds-card slds-var-p-around_x-small">
-        <template if:true={daysOnMarket}>
+        <template lwc:if={daysOnMarket}>
             <div class="slds-grid">
                 <div class={badgeClass}>
                     <div class="slds-text-heading_large days">
@@ -28,12 +28,12 @@
                 </div>
             </div>
         </template>
-        <template if:false={propertyId}>
+        <template lwc:if={hasNoPropertyId}>
             <c-error-panel
                 friendly-message="Select a property to see days on the market"
             ></c-error-panel>
         </template>
-        <template if:true={error}>
+        <template lwc:if={error}>
             <c-error-panel
                 friendly-message="Error retrieving data"
                 errors={error}

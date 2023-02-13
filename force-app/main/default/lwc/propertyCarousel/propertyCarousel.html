@@ -1,20 +1,23 @@
 <template>
     <lightning-card icon-name="custom:custom38">
-        <template if:true={property.data}>
+        <template lwc:if={property.data}>
             <span slot="title">{address}</span>
             <div class="slds-var-m-around_medium">
-                <template if:true={urls}>
+                <template lwc:if={carouselItems}>
                     <lightning-carousel>
-                        <template for:each={urls} for:item="url">
+                        <template
+                            for:each={carouselItems}
+                            for:item="carouselItem"
+                        >
                             <lightning-carousel-image
-                                key={url}
-                                src={url}
-                                description={description}
+                                key={carouselItem.url}
+                                src={carouselItem.url}
+                                description={carouselItem.title}
                             ></lightning-carousel-image>
                         </template>
                     </lightning-carousel>
                 </template>
-                <template if:false={urls}>
+                <template lwc:else>
                     <lightning-icon
                         icon-name="utility:photo"
                         size="medium"
@@ -24,16 +27,17 @@
                         There are currently no pictures for this property.
                     </p>
                 </template>
-                <lightning-file-upload
+                <lightning-input
+                    type="file"
                     label="Add picture"
-                    multiple
                     accept=".jpg,.png,.gif"
-                    record-id={recordId}
-                    onuploadfinished={handleUploadFinished}
-                ></lightning-file-upload>
+                    onchange={handleFilesSelected}
+                    multiple
+                >
+                </lightning-input>
             </div>
         </template>
-        <template if:true={errors}>
+        <template lwc:if={errors}>
             <c-error-panel
                 friendly-message="Error retrieving pictures"
                 errors={errors}

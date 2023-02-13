@@ -1,6 +1,6 @@
 <template>
     <div class="slds-card slds-var-p-around_small">
-        <template if:true={properties.data}>
+        <template lwc:if={properties.data}>
             <div class="slds-grid slds-wrap">
                 <template
                     for:each={properties.data.records}
@@ -22,7 +22,7 @@
                 onnext={handleNextPage}
             ></c-paginator>
         </template>
-        <template if:true={properties.error}>
+        <template lwc:if={properties.error}>
             <c-error-panel
                 friendly-message="Error retrieving data"
                 errors={properties.error}

@@ -56,6 +56,10 @@ export default class DaysOnMarket extends LightningElement {
         this.propertyId = propertyId;
     }
 
+    get hasNoPropertyId() {
+        return this.propertyId === undefined;
+    }
+
     get badgeClass() {
         return 'badge ' + this.status;
     }

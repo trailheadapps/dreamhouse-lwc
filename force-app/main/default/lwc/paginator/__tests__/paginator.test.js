@@ -20,6 +20,10 @@ describe('c-paginator', () => {
         const element = createElement('c-paginator', {
             is: Paginator
         });
+        // Simulate we are on first page
+        element.pageNumber = 1;
+        element.pageSize = 10;
+        element.totalItemCount = 100;
         document.body.appendChild(element);
 
         // Mock handlers for child events
@@ -38,6 +42,11 @@ describe('c-paginator', () => {
 
         // Validate if mocked events got fired
         expect(handlerNext.mock.calls.length).toBe(1);
+
+        // Validate previous button is hidden
+        const prevButtonEl =
+            element.shadowRoot.querySelector('.left-button-icon');
+        expect(prevButtonEl).toBeNull();
     });
 
     it('sends "previous" event on button click', async () => {
@@ -45,6 +54,10 @@ describe('c-paginator', () => {
         const element = createElement('c-paginator', {
             is: Paginator
         });
+        // Simulate we are on last page
+        element.pageNumber = 10;
+        element.pageSize = 10;
+        element.totalItemCount = 100;
         document.body.appendChild(element);
 
         // Mock handlers for child events
@@ -63,6 +76,11 @@ describe('c-paginator', () => {
 
         // Validate if mocked events got fired
         expect(handlerPrevious.mock.calls.length).toBe(1);
+
+        // Validate next button is hidden
+        const nextButtonEl =
+            element.shadowRoot.querySelector('.right-button-icon');
+        expect(nextButtonEl).toBeNull();
     });
 
     it('displays total item count, page number, and number of pages with zero items', () => {

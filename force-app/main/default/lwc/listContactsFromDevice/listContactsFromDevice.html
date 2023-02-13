@@ -1,0 +1,40 @@
+<template>
+    <lightning-card title="Contacts" icon-name="standard:people">
+        <template lwc:if={error}>
+            <c-error-panel
+                friendly-message="Error accessing device contacts"
+                errors={error}
+            ></c-error-panel>
+        </template>
+        <template lwc:else>
+            <template lwc:if={deviceContacts}>
+                <ul class="slds-var-m-around_large">
+                    <template
+                        for:each={deviceContacts}
+                        for:item="deviceContact"
+                    >
+                        <li key={deviceContact.Id}>
+                            {deviceContact.name.givenName}
+                            {deviceContact.name.familyName}
+                            <ul class="slds-var-m-around_medium">
+                                <template
+                                    for:each={deviceContact.phoneNumbers}
+                                    for:item="phoneNumber"
+                                >
+                                    <li key={phoneNumber.value}>
+                                        {phoneNumber.value}
+                                        ({phoneNumber.label})
+                                    </li>
+                                </template>
+                            </ul>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template lwc:else>
+                <lightning-spinner alternative-text="Loading..." size="small">
+                </lightning-spinner>
+            </template>
+        </template>
+    </lightning-card>
+</template>
