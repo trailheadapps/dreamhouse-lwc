@@ -10,6 +10,33 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Property_Status</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+                <label>Contracted</label>
+            </value>
+            <value>
+                <fullName>Pre Market</fullName>
+                <default>false</default>
+                <label>Pre Market</label>
+            </value>
+            <value>
+                <fullName>Available</fullName>
+                <default>false</default>
+                <label>Available</label>
+            </value>
+            <value>
+                <fullName>Under Agreement</fullName>
+                <default>false</default>
+                <label>Under Agreement</label>
+            </value>
+            <value>
+                <fullName>Closed</fullName>
+                <default>false</default>
+                <label>Closed</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>
