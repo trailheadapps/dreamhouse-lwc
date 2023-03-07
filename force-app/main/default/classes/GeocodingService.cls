@@ -1,4 +1,5 @@
-public with sharing class GeocodingService {
+public class GeocodingService {
+    
     private static final String BASE_URL = 'https://nominatim.openstreetmap.org/search?format=json';
 
     @InvocableMethod(callout=true label='Geocode address')
@@ -6,7 +7,6 @@ public with sharing class GeocodingService {
         List<GeocodingAddress> addresses
     ) {
         List<Coordinates> computedCoordinates = new List<Coordinates>();
-
         for (GeocodingAddress address : addresses) {
             String geocodingUrl = BASE_URL;
             geocodingUrl += (String.isNotBlank(address.street))
@@ -48,6 +48,27 @@ public with sharing class GeocodingService {
             computedCoordinates.add(coords);
         }
         return computedCoordinates;
+    }
+    
+    @AuraEnabled
+    public static String createFile(String base64data, String filename, String recordId) {
+        try {
+            ContentVersion contentVersion = new ContentVersion();
+            contentVersion.VersionData = EncodingUtil.base64Decode(base64data);
+            contentVersion.Title = filename;
+            contentVersion.PathOnClient = filename;
+            insert contentVersion;
+            String soql = 'SELECT ContentDocumentId FROM ContentVersion WHERE Id = ' + recordId + ';';
+            contentVersion = Database.query(soql);
+            ContentDocumentLink contentDocumentLink = new ContentDocumentLink();
+            contentDocumentLink.ContentDocumentId = contentVersion.ContentDocumentId;
+            contentDocumentLink.LinkedEntityId = recordId;
+            contentDocumentLink.ShareType = 'V';
+            insert contentDocumentLink;
+            return contentDocumentLink.Id;
+        } catch (Exception e) {
+            throw new AuraHandledException('Error creating file: ' + e);
+        }
     }
 
     public class GeocodingAddress {
