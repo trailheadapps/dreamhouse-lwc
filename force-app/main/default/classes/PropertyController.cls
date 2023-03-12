@@ -91,7 +91,7 @@ public with sharing class PropertyController {
             WHERE
                 LinkedEntityId = :propertyId
                 AND ContentDocument.FileType IN ('PNG', 'JPG', 'GIF')
-            WITH USER_MODE
+            WITH SECURITY_ENFORCED WITH USER_MODE
         ];
 
         if (links.isEmpty()) {
@@ -108,7 +108,7 @@ public with sharing class PropertyController {
             SELECT Id, Title
             FROM ContentVersion
             WHERE ContentDocumentId IN :contentIds AND IsLatest = TRUE
-            WITH USER_MODE
+            WITH SECURITY_ENFORCED WITH USER_MODE
             ORDER BY CreatedDate
         ];
     }
