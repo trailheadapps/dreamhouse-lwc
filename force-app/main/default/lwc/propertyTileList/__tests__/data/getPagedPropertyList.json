@@ -11,7 +11,7 @@
             "Price__c": 450000,
             "Baths__c": 1,
             "Beds__c": 3,
-            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house07sq.jpg"
+            "Thumbnail__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/realty/house07sq.jpg"
         },
         {
             "Id": "a012F000009ovH2QAI",
@@ -22,7 +22,7 @@
             "Price__c": 450000,
             "Baths__c": 4,
             "Beds__c": 5,
-            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house10sq.jpg"
+            "Thumbnail__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/realty/house10sq.jpg"
         },
         {
             "Id": "a012F000009ovH3QAI",
@@ -33,7 +33,7 @@
             "Price__c": 450000,
             "Baths__c": 3,
             "Beds__c": 3,
-            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house09sq.jpg"
+            "Thumbnail__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/realty/house09sq.jpg"
         },
         {
             "Id": "a012F000009ovH4QAI",
@@ -44,7 +44,7 @@
             "Price__c": 650000,
             "Baths__c": 2,
             "Beds__c": 2,
-            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house08sq.jpg"
+            "Thumbnail__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/realty/house08sq.jpg"
         },
         {
             "Id": "a012F000009ovH5QAI",
@@ -55,7 +55,7 @@
             "Price__c": 690000,
             "Baths__c": 3,
             "Beds__c": 3,
-            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house11sq.jpg"
+            "Thumbnail__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/realty/house11sq.jpg"
         },
         {
             "Id": "a012F000009ovH0QAI",
@@ -66,7 +66,7 @@
             "Price__c": 725000,
             "Baths__c": 2,
             "Beds__c": 4,
-            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house06sq.jpg"
+            "Thumbnail__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/realty/house06sq.jpg"
         },
         {
             "Id": "a012F000009ovGxQAI",
@@ -77,7 +77,7 @@
             "Price__c": 825000,
             "Baths__c": 4,
             "Beds__c": 5,
-            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house03sq.jpg"
+            "Thumbnail__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/realty/house03sq.jpg"
         },
         {
             "Id": "a012F000009ovH6QAI",
@@ -88,7 +88,7 @@
             "Price__c": 845000,
             "Baths__c": 3,
             "Beds__c": 4,
-            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house12sq.jpg"
+            "Thumbnail__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/realty/house12sq.jpg"
         },
         {
             "Id": "a012F000009ovGzQAI",
@@ -99,7 +99,7 @@
             "Price__c": 850000,
             "Baths__c": 2,
             "Beds__c": 3,
-            "Thumbnail__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/realty/house05sq.jpg"
+            "Thumbnail__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/realty/house05sq.jpg"
         }
     ],
     "totalItemCount": 12

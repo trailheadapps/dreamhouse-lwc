@@ -10,7 +10,7 @@
             "Phone__c": "617-244-3672",
             "Mobile_Phone__c": "617-244-3672",
             "Email__c": "caroline@dreamhouse.demo",
-            "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/caroline_kingsley.jpg"
+            "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/caroline_kingsley.jpg"
         },
         {
             "attributes": {
@@ -22,7 +22,7 @@
             "Phone__c": "617-244-3672",
             "Mobile_Phone__c": "617-244-3672",
             "Email__c": "michael@dreamhouse.demo",
-            "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/michael_jones.jpg"
+            "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/michael_jones.jpg"
         },
         {
             "attributes": {
@@ -34,7 +34,7 @@
             "Phone__c": "617-244-3672",
             "Mobile_Phone__c": "617-244-3672",
             "Email__c": "jonathan@dreamhouse.demo",
-            "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/jonathan_bradley.jpg"
+            "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/jonathan_bradley.jpg"
         },
         {
             "attributes": {
@@ -46,7 +46,7 @@
             "Phone__c": "617-244-3672",
             "Mobile_Phone__c": "617-244-3672",
             "Email__c": "jen@dreamhouse.demo",
-            "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/jennifer_wu.jpg"
+            "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/jennifer_wu.jpg"
         },
         {
             "attributes": {
@@ -58,7 +58,7 @@
             "Phone__c": "617-244-3672",
             "Mobile_Phone__c": "617-244-3672",
             "Email__c": "olivia@dreamhouse.demo",
-            "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/olivia_green.jpg"
+            "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/olivia_green.jpg"
         },
         {
             "attributes": {
@@ -70,7 +70,7 @@
             "Phone__c": "617-244-3672",
             "Mobile_Phone__c": "617-244-3672",
             "Email__c": "miriam@dreamhouse.demo",
-            "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/miriam_aupont.jpg"
+            "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/miriam_aupont.jpg"
         },
         {
             "attributes": {
@@ -82,7 +82,7 @@
             "Phone__c": "617-244-3672",
             "Mobile_Phone__c": "617-244-3672",
             "Email__c": "michelle@dreamhouse.demo",
-            "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/michelle_lambert.jpg"
+            "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/michelle_lambert.jpg"
         },
         {
             "attributes": {
@@ -94,7 +94,7 @@
             "Phone__c": "617-244-3672",
             "Mobile_Phone__c": "617-244-3672",
             "Email__c": "victor@dreamhouse.demo",
-            "Picture__c": "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/victor_ochoa.jpg"
+            "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/victor_ochoa.jpg"
         }
     ]
 }
