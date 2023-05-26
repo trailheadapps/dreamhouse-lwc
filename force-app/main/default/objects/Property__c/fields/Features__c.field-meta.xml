@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Features__c</fullName>
+    <externalId>false</externalId>
+    <label>Features</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Air conditioning</fullName>
+                <default>false</default>
+                <label>Air conditioning</label>
+            </value>
+            <value>
+                <fullName>Carport/Garage</fullName>
+                <default>false</default>
+                <label>Carport/Garage</label>
+            </value>
+            <value>
+                <fullName>Garden/Backyard</fullName>
+                <default>false</default>
+                <label>Garden/Backyard</label>
+            </value>
+            <value>
+                <fullName>Solar panels</fullName>
+                <default>false</default>
+                <label>Solar panels</label>
+            </value>
+            <value>
+                <fullName>Deck/Pergola Dishwasher</fullName>
+                <default>false</default>
+                <label>Deck/Pergola Dishwasher</label>
+            </value>
+            <value>
+                <fullName>Swimming pool</fullName>
+                <default>false</default>
+                <label>Swimming pool</label>
+            </value>
+            <value>
+                <fullName>Built-in barbecue</fullName>
+                <default>false</default>
+                <label>Built-in barbecue</label>
+            </value>
+            <value>
+                <fullName>Water feature</fullName>
+                <default>false</default>
+                <label>Water feature</label>
+            </value>
+            <value>
+                <fullName>Garden gnomes</fullName>
+                <default>false</default>
+                <label>Garden gnomes</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

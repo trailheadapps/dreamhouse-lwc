@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
         <application>Dreamhouse</application>
@@ -118,12 +118,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Property__c.Location__c</field>
+        <field>Property__c.Features__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Property__c.Name</field>
+        <field>Property__c.Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
