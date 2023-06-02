@@ -44,7 +44,7 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 1. If you haven't already done so, authorize your hub org and provide it with an alias (**myhuborg** in the command below):
 
     ```
-    sfdx auth:web:login -d -a myhuborg
+    sf org login web -d -a myhuborg
     ```
 
 1. Clone this repository:
@@ -57,19 +57,19 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 1. Create a scratch org and provide it with an alias (**dreamhouse** in the command below):
 
     ```
-    sfdx force:org:create -s -f config/project-scratch-def.json -a dreamhouse
+    sf org create scratch -d -f config/project-scratch-def.json -a dreamhouse
     ```
 
 1. Push the app to your scratch org:
 
     ```
-    sfdx force:source:push
+    sf project deploy start
     ```
 
 1. Assign the **dreamhouse** permission set to the default user:
 
     ```
-    sfdx force:user:permset:assign -n dreamhouse
+    sf org assign permset -n dreamhouse
     ```
 
 1. (Optional) Assign the `Walkthroughs` permission set to the default user.
@@ -77,19 +77,19 @@ DreamHouse is a sample application that demonstrates the unique value propositio
     > Note: this will enable your user to use In-App Guidance Walkthroughs, allowing you to be taken through a guided tour of the sample app. The Walkthroughs permission set gets auto-created with In-App guidance activation.
 
     ```
-    sfdx force:user:permset:assign -n Walkthroughs
+    sf org assign permset -n Walkthroughs
     ```
 
 1. Import sample data:
 
     ```
-    sfdx force:data:tree:import -p data/sample-data-plan.json
+    sf data tree import -p data/sample-data-plan.json
     ```
 
 1. Open the scratch org:
 
     ```
-    sfdx force:org:open
+    sf org open
     ```
 
 1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
@@ -140,31 +140,31 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 1. Authorize your Trailhead Playground or Developer org and provide it with an alias (**mydevorg** in the command below):
 
     ```
-    sfdx auth:web:login -s -a mydevorg
+    sf org login web -s -a mydevorg
     ```
 
 1. Run this command in a terminal to deploy the app.
 
     ```
-    sfdx force:source:deploy -p force-app
+    sf project deploy start -d force-app
     ```
 
 1. Assign the `dreamhouse` permission set to the default user.
 
     ```
-    sfdx force:user:permset:assign -n dreamhouse
+    sf org assign permset -n dreamhouse
     ```
 
 1. Import some sample data.
 
     ```
-    sfdx force:data:tree:import -p ./data/sample-data-plan.json
+    sf data tree import -p ./data/sample-data-plan.json
     ```
 
 1. If your org isn't already open, open it now:
 
     ```
-    sfdx force:org:open -u mydevorg
+    sf org open -o mydevorg
     ```
 
 1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
