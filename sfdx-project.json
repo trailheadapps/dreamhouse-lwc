@@ -11,8 +11,6 @@
   "namespace": "",
   "sourceApiVersion": "58.0",
   "packageAliases": {
-    "DreamhouseLWC": "0Ho3h000000PBghCAG",
-    "DreamhouseLWC@57.0.0-2": "04t3h000004mBmjAAE",
-    "DreamhouseLWC@57.0.0-3": "04t3h000004mBpiAAE"
+    "DreamhouseLWC": "0Ho3h000000PBghCAG"
   }
 }
