@@ -1,0 +1,14 @@
+{
+    "orgName": "User Story",
+    "edition": "Enterprise",
+    "features": ["Walkthroughs", "EnableSetPasswordInApi"],
+    "settings": {
+          "accountSettings": {
+              "enableRelateContactToMultipleAccounts": true,
+              "enableAccountTeams": true
+          },
+          "quoteSettings": {
+            "enableQuote" : true
+          }
+    }
+}

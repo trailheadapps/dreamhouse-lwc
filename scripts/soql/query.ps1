@@ -1,0 +1,1 @@
+sf data query --file .\scripts\soql\$args.soql

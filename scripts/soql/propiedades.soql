@@ -1,0 +1,2 @@
+SELECT  id, Name, Address__c, Broker__r.Name, Beds__c, City__c, Description__c
+FROM Property__c

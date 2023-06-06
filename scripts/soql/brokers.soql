@@ -1,0 +1,5 @@
+SELECT
+    id, name, Mobile_Phone__c, Picture__c, Picture_IMG__c, Title__c, Broker_Id__c, 
+    (SELECT id, Name, Status__c
+        FROM Properties__r) 
+FROM Broker__c
