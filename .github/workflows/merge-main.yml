@@ -4,7 +4,7 @@ on:
         types:
             - closed
 jobs:
-    deploy-to-prod:
+    static-code-analysis:
         if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         steps:
@@ -12,7 +12,44 @@ jobs:
               uses: actions/checkout@v3
               with:
                   fetch-depth: 0
+
+            - name: cache dependancies
+              uses: actions/cache@v3
+              with:
+                  path: ~/.npm
+                  key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+
             - name: install dependancies
               run: npm ci
             - name: lint code
               run: npm run lint
+            - name: run jest tests
+              run: npm run test
+    check-deployment:
+        needs: static-code-analysis
+        runs-on: ubuntu-latest
+        steps:
+            - name: cache dependancies
+              uses: actions/cache@v3
+              with:
+                  path: ~/.npm
+                  key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+            - name: install dependancies
+              run: npm ci
+
+            - name: 'Install Salesforce CLI'
+              run: |
+                  wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+                  mkdir ~/sfdx
+                  tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+                  echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+                  ~/sfdx/bin/sfdx version
+
+            - name: Populate text file with prod url
+              shell: bash
+              run: |
+                  echo ${{ secrets.SFDX_PROD_URL }} > ./SFDX_PROD_URL.txt
+
+            - name: Authenticate into production org
+              run: sfdx auth:sfdxurl:store -f ./SFDX_PROD_URL.txt -s -a prod
