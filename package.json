@@ -47,7 +47,6 @@
         "prettier": "^2.8.8",
         "prettier-plugin-apex": "^1.13.0"
     },
-    "dependencies": {},
     "volta": {
         "node": "16.19.0",
         "npm": "9.2.0"
