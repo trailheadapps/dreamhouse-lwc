@@ -29,7 +29,5 @@ jobs:
         uses: qualityclouds/action-full-scan@1.0.1
         with:
           mode: cloud
-          version: testing
           token: ${{ secrets.QC_TOKEN_DEV }}
-          api_url: "https://api-development.qualityclouds.com"
           url_id: 315
