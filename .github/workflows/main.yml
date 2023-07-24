@@ -31,4 +31,3 @@ jobs:
           mode: cloud
           token: ${{ secrets.QC_TOKEN_DEV }}
           version: latest
-          url_id: 315
