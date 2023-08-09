@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>No Test Run</fullName>
+        <default>false</default>
+        <label>No Test Run</label>
+    </customValue>
+    <customValue>
+        <fullName>Run Specified Tests</fullName>
+        <default>false</default>
+        <label>Run Specified Tests</label>
+    </customValue>
+    <customValue>
+        <fullName>Run Local Tests</fullName>
+        <default>false</default>
+        <label>Run Local Tests</label>
+    </customValue>
+    <customValue>
+        <fullName>Run All Tests In Org</fullName>
+        <default>false</default>
+        <label>Run All Tests In Org</label>
+    </customValue>
+    <masterLabel>Test Level</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

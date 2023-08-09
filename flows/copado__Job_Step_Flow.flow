@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <formulas>
+        <name>topicUri</name>
+        <dataType>String</dataType>
+        <expression>&apos;/events/copado/v1/step-result/&apos; + {!resultId}</expression>
+    </formulas>
+    <interviewLabel>Job Step Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <isTemplate>true</isTemplate>
+    <label>Job Step Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Publish_Done_event</name>
+        <label>Publish Done event</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <inputAssignments>
+            <field>copado__Payload__c</field>
+            <value>
+                <elementReference>payload</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>copado__Topic_Uri__c</field>
+            <value>
+                <elementReference>topicUri</elementReference>
+            </value>
+        </inputAssignments>
+        <object>copado__Event__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Publish_Done_event</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>payload</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+  &quot;isSuccess&quot;: true
+}</text>
+    </textTemplates>
+    <variables>
+        <name>resultId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

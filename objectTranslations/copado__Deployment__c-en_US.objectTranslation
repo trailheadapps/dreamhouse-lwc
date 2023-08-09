@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Copado Header Fields --></label>
+        <name>copado__Copado_Header_Fields</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- CustomFields --></label>
+        <name>copado__CustomFields</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- Pipeline Deployment Modal --></label>
+        <name>copado__Pipeline_Deployment_Modal</name>
+    </fieldSets>
+    <fields>
+        <help><!-- Only Active Templates are available when searching for them, for example in deployment steps --></help>
+        <label><!-- Active --></label>
+        <name>copado__Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is a mandatory field if you intend to publish your automation template as copado extension package --></help>
+        <label><!-- Api Name --></label>
+        <name>copado__ApiName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attach Deployment File --></label>
+        <name>copado__Attach_Deployment_File__c</name>
+    </fields>
+    <fields>
+        <label><!-- Build Task --></label>
+        <name>copado__Build_Task__c</name>
+        <relationshipLabel><!-- Deployments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- % Completed --></label>
+        <name>copado__Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Compliance Status --></label>
+        <name>copado__Compliance_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- # Completed --></label>
+        <name>copado__Count_Completed__c</name>
+    </fields>
+    <fields>
+        <help><!-- When this need to be deployed --></help>
+        <label><!-- Date --></label>
+        <name>copado__Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Deployed --></label>
+        <name>copado__Deployed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deployment Completed email sent --></label>
+        <name>copado__Deployment_Completed_email_sent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deployment Jobs Count --></label>
+        <name>copado__Deployment_Jobs_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deployment Last Step --></label>
+        <name>copado__Deployment_Last_Step__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deployment Source Type --></label>
+        <name>copado__Deployment_Source_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deployment Type --></label>
+        <name>copado__Deployment_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deployment command sent --></label>
+        <name>copado__Deployment_command_sent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Do Not Update Promotion --></label>
+        <name>copado__Do_Not_Update_Promotion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Execution Context --></label>
+        <name>copado__Execution_Context__c</name>
+        <picklistValues>
+            <masterLabel>Deployment</masterLabel>
+            <translation><!-- Deployment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Flag Status --></label>
+        <name>copado__Flag_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Credential --></label>
+        <name>copado__From_Org__c</name>
+        <relationshipLabel><!-- Deployments (From Credential) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Git Repository --></label>
+        <name>copado__Git_Repository__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Compliance Scan Date --></label>
+        <name>copado__Last_Compliance_Scan_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Deployment Execution Id --></label>
+        <name>copado__Last_Deployment_Execution_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Deployment --></label>
+        <name>copado__Parent_Deployment__c</name>
+        <relationshipLabel><!-- Deployments (Parent Deployment) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field is auto populated when a manual task is pending on deployment. --></help>
+        <label><!-- Paused --></label>
+        <name>copado__Paused__c</name>
+    </fields>
+    <fields>
+        <label><!-- Platform --></label>
+        <name>copado__Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- Promotion --></label>
+        <name>copado__Promotion__c</name>
+        <relationshipLabel><!-- Deployments --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Identifies the original deployment that was rolled back for reporting purposes --></help>
+        <label><!-- Rolled back Deployment --></label>
+        <name>copado__Rolled_back_Deployment__c</name>
+        <relationshipLabel><!-- Deployments (Rolled back Deployment) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SUM Deployed --></label>
+        <name>copado__SUM_Deployed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Schedule --></label>
+        <name>copado__Schedule__c</name>
+        <picklistValues>
+            <masterLabel>Deploy later</masterLabel>
+            <translation><!-- Deploy later --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deploy now</masterLabel>
+            <translation><!-- Deploy now --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- When the deployment completes an email will be sent to the owner of the deployment informing them of the status. Uncheck this checkbox to not receive such an email. --></help>
+        <label><!-- Send Deployment Complete email --></label>
+        <name>copado__Send_Deployment_Complete_email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Server_URL --></label>
+        <name>copado__Server_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Environment --></label>
+        <name>copado__Source_Environment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed Successfully</masterLabel>
+            <translation><!-- Completed Successfully --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed with Errors</masterLabel>
+            <translation><!-- Completed with Errors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merge Conflict</masterLabel>
+            <translation><!-- Merge Conflict --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled</masterLabel>
+            <translation><!-- Scheduled --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The automation template that defined the steps of this deployment. --></help>
+        <label><!-- Template --></label>
+        <name>copado__Template__c</name>
+        <relationshipLabel><!-- Template Execution --></relationshipLabel>
+    </fields>
+    <recordTypes>
+        <description><!-- Create multiple types of deployment steps. (Technical knowledge needed) --></description>
+        <label><!-- Advanced (multi-step) --></label>
+        <name>copado__Advanced_multi_step</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Group of steps to be executed in the future. --></description>
+        <label><!-- Automation Template --></label>
+        <name>copado__Automation_Template</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Select a Data Template to be deployed in a point and click process. --></description>
+        <label><!-- Data Deployment --></label>
+        <name>copado__Data_Deployment</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Select the metadata manually to be deployed in a point and click process. --></description>
+        <label><!-- Metadata Deployment --></label>
+        <name>copado__Metadata_Deployment</name>
+    </recordTypes>
+    <webLinks>
+        <label><!-- Cancel_Deployment --></label>
+        <name>copado__Cancel_Deployment</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Deploy --></label>
+        <name>copado__Deploy</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Import_Template --></label>
+        <name>copado__Import_Template</name>
+    </webLinks>
+</CustomObjectTranslation>

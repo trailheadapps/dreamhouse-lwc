@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Criteria Page Fields --></label>
+        <name>copado__Criteria_Page_Fields</name>
+    </fieldSets>
+    <fields>
+        <help><!-- Action to be performed automatically by Copado --></help>
+        <label><!-- Action --></label>
+        <name>copado__Action__c</name>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>copado__Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- The message that will be displayed when this rule is triggered. --></help>
+        <label><!-- Error Message --></label>
+        <name>copado__Error_Message__c</name>
+    </fields>
+    <fields>
+        <help><!-- Criteria filter query --></help>
+        <label><!-- Filter Criteria --></label>
+        <name>copado__Filter_Criteria__c</name>
+    </fields>
+    <fields>
+        <help><!-- Automatically updated by copado when saving managing criteria --></help>
+        <label><!-- Is Valid --></label>
+        <name>copado__Is_Valid__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Validation Date/time --></label>
+        <name>copado__Last_Validation_Date_time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Validation Status Message --></label>
+        <name>copado__Last_Validation_Status_Message__c</name>
+    </fields>
+    <fields>
+        <help><!-- Operator between Record Count Criteria and Record Count --></help>
+        <label><!-- Matching Criteria --></label>
+        <name>copado__Matching_Criteria__c</name>
+        <picklistValues>
+            <masterLabel>Equals</masterLabel>
+            <translation><!-- Equals --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greater Than</masterLabel>
+            <translation><!-- Greater Than --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greater or Equal</masterLabel>
+            <translation><!-- Greater or Equal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Less Than</masterLabel>
+            <translation><!-- Less Than --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Less or Equal</masterLabel>
+            <translation><!-- Less or Equal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Equals</masterLabel>
+            <translation><!-- Not Equals --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Metadata Type --></label>
+        <name>copado__Metadata_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Count Criteria --></label>
+        <name>copado__Record_Count_Criteria__c</name>
+        <picklistValues>
+            <masterLabel>Number of groups</masterLabel>
+            <translation><!-- Number of groups --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Number of returned values to assert. --></help>
+        <label><!-- Record Count --></label>
+        <name>copado__Record_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Risk Details --></label>
+        <name>copado__Risk_Details__c</name>
+    </fields>
+    <fields>
+        <help><!-- Field to report on the Lightning Platform, Copado Doesn&apos;t action over this field --></help>
+        <label><!-- Severity --></label>
+        <name>copado__Severity__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Use this record type to define scan rules run by Copado. --></description>
+        <label><!-- Copado --></label>
+        <name>copado__Copado</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Use this record type to define scan rules for 3rd party systems. --></description>
+        <label><!-- Other --></label>
+        <name>copado__Other</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Matching Criteria, Record Count and Record Count Criteria are required fields. --></errorMessage>
+        <name>copado__Required_Criteria_Fields</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Manage_Criteria --></label>
+        <name>copado__Manage_Criteria</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,25 @@
+<!--
+ - Created by ferhatozsavran on 2/22/18.
+ -->
+
+<apex:page id="NewScratchOrgProjectTemplate" standardController="copado__Scratch_Org_Project_Template__c" extensions="copado.ScratchOrgProjectTemplateController" lightningStyleSheets="true" sidebar="false" applyBodyTag="false" applyHtmlTag="true" showHeader="true" docType="html-5.0">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <title>New Scratch Org Project Template</title>
+        <c:WizardUtils />
+        <c:IncludeStaticsResourceComponent addJQuery="true" />
+        <c:IncludeConnectionJsComponent />
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true" addJqxEBcss="true"/>
+        <apex:includeScript value="{!URLFOR($Resource.metadataGrid2) }"/>
+        <apex:includeScript value="{!URLFOR($Resource.copado__JsRemoting)}"/>
+        <apex:includeScript value="{!URLFOR($Resource.copado__ScratchOrg)}"/>
+    </head>
+    <body>
+    <apex:form style="height:700px">
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}"/>
+        <c:ScratchOrgMetadata parentPageController="{!this}" componentName="ScratchOrgMetadata" showActionButtons="false" mode="{!componentMode}" showAllTemplateButtons="true"/>
+    </apex:form>
+    </body>
+    </html>
+</apex:page>

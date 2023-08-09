@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Copado Header Fields --></label>
+        <name>copado__Copado_Header_Fields</name>
+    </fieldSets>
+    <fields>
+        <help><!-- If a value is entered only modification after this date (inclusive) will be added in the Diff --></help>
+        <label><!-- From Date --></label>
+        <name>copado__From_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select the Source Credential for which you would like to compare the Metadata. This Credential will be the Credential from which you would like to migrate Metadata. --></help>
+        <label><!-- Source Credential --></label>
+        <name>copado__From_Org__c</name>
+        <relationshipLabel><!-- Org Differences (Source Credential) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- If a value is entered, only modifications from this user will be included in the Diff. Use the user Full Name --></help>
+        <label><!-- Last Modified By Name --></label>
+        <name>copado__Last_Modified_By_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Empty means all types. Select one or more types to limit the Org Difference only to selected items. --></help>
+        <label><!-- Metadata Types --></label>
+        <name>copado__Metadata_Types__c</name>
+    </fields>
+    <fields>
+        <help><!-- If a value is entered only modification before this date (inclusive) will be added in the Diff --></help>
+        <label><!-- To Date --></label>
+        <name>copado__To_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select the Destination Credential for which you would like to compare the Metadata and would like to migrate Metadata to. The resulting grid will show a list of differences with &apos;create&apos;, &apos;update&apos; and &apos;delete&apos; which apply to this Credential. --></help>
+        <label><!-- Destination Credential --></label>
+        <name>copado__To_Org__c</name>
+        <relationshipLabel><!-- Org Differences (Destination Credential) --></relationshipLabel>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- The Org&apos;s to be compared can not be the same. --></errorMessage>
+        <name>copado__Should_be_differents</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,452 @@
+<apex:page controller="QCloudsSaaS.DashboardController" lightningStyleSheets="true" title="Dashboard" showHeader="false" standardStylesheets="false"
+           sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <apex:form >
+        
+        <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+            
+            <head>
+                <meta charset="utf-8" />
+                <meta http-equiv="x-ua-compatible" content="ie=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <apex:stylesheet value="{!$Resource.QCloudsSaaS__DashboardCSS}" />
+                <apex:includeScript value="{!$Resource.QCloudsSaaS__Chartjs321}" />
+                <apex:includeScript value="{!$Resource.QCloudsSaaS__momentjs2291}" />
+                <apex:includeScript value="{!$Resource.QCloudsSaaS__chartjsadaptermoment100}" />
+                <apex:slds />
+            </head>
+            
+            <body>  
+                <script>
+                Chart.defaults.backgroundColor = 'rgba(11,111,206,1)';
+                Chart.defaults.hoverBackgroundColor = 'rgba(28,135,237,0.5)';
+                Chart.defaults.plugins.legend.display = false;
+                function arrayIfNull (value){
+                    if (value){
+                        return value;
+                    } else {
+                        return [];
+                    }
+                }
+                
+                function removeBackslash (arr){
+                    var arrayLength = arr.length;
+                    for (var i = 0; i < arrayLength; i++) {
+                        arr[i] = arr[i].replace(/\\'/g, "'").replace(/\\\\/g, "\\");
+                    }
+                    return arr;
+                }
+                
+                window.onload = function () {
+                    
+                    try {                
+                        var qocNumber = '{! data.numbers.QoC__c}' ? '{! data.numbers.QoC__c}' : 0;               
+                        
+                        var ctx = document.getElementById("quality-of-cloud").getContext("2d");
+                        
+                        var gradient = ctx.createLinearGradient(140, 0, 280, 140);
+                        gradient.addColorStop(0, '#d45643');
+                        gradient.addColorStop(1, '#D49F43');
+                        
+                        var gradient1 = ctx.createLinearGradient(280, 140, 140, 280);
+                        gradient1.addColorStop(0, '#D49F43');
+                        gradient1.addColorStop(1, '#f6cd38');
+                        
+                        var gradient2 = ctx.createLinearGradient(140, 280, 0, 140);
+                        gradient2.addColorStop(0, '#f6cd38');
+                        gradient2.addColorStop(1, '#259125');
+                        
+                        var count = qocNumber;
+                        var d = [];
+                        var total = 100;
+                        var threshold = -1;
+                        while(total > 0) {
+                            threshold = threshold + 1;
+                            if (count >= 25) {
+                                d.push(25);
+                                total = total - 25;
+                                count = count - 25;
+                            }
+                            else if (threshold === 3) {
+                                d.pop()
+                                d.push(count + 25);
+                                d.push(total - count);
+                                total = 0;
+                            }
+                                else {
+                                    d.push(count);
+                                    d.push(total - count);
+                                    total = 0;
+                                }
+                        }
+                        var i;
+                        var bg = [gradient, gradient1, gradient2, 'rgba(0,0,0,0.1)'];
+                        for(i = 0; i < 4; ++i) {
+                            if (i > threshold) {
+                                bg[i] = 'rgba(0,0,0,0.1)';
+                            }
+                        }
+                        window.myChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                datasets: [{
+                                    borderRadius: 0,
+                                    data: d,                            
+                                    backgroundColor: bg,
+                                    borderWidth: 0
+                                }]
+                            },
+                            options: {
+                                cutout: '80%',
+                                responsive: true,
+                                events: [],
+                                animation: { onComplete: function (chart) 
+                                            {
+                                                var width = chart.chart.width,
+                                                    height = chart.chart.height,
+                                                    ctx = chart.chart.ctx;
+                                                var fontSize = (height / 70).toFixed(2);
+                                                ctx.font = fontSize + "em Arial";
+                                                ctx.fillStyle = "#16325C";
+                                                ctx.textBaseline = "middle";
+                                                var text = qocNumber + "%",
+                                                    textX = Math.round((width - ctx.measureText(text).width) / 2),
+                                                    textY = height / 2;
+                                                ctx.fillText(text, textX, textY);
+                                            }
+                                           }
+                            }
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    } 
+                    
+                    
+                    try {
+                        window.myChart = new Chart(document.getElementById("evolution-of-issues").getContext("2d"), {
+                            type: 'line',
+                            data: {
+                                labels:  removeBackslash({! data.evolutionOfIssuesData[0].lables}),
+                                datasets: [
+                                    {
+                                        backgroundColor: 'rgb(75, 192, 192)',
+                                        borderColor: 'rgb(75, 192, 192)',
+                                        data : '{!  data.evolutionOfIssuesData[0].values}' ? '{! data.evolutionOfIssuesData[0].values}': [],                        
+                                        data : arrayIfNull({! data.evolutionOfIssuesData[0].values}),                        
+                                        label: 'Issues',
+                                        yAxisID: 'left-y-axis'
+                                    },
+                                    {
+                                        backgroundColor: 'rgb(75, 102, 192)',
+                                        borderColor: 'rgb(75, 102, 192)',
+                                        data: arrayIfNull({! data.evolutionOfIssuesData[1].values}),                   
+                                        label: 'Technical Debt, h',
+                                        yAxisID: 'right-y-axis'
+                                    }
+                                ]
+                            },
+                            options: {
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                    }
+                                },
+                                scales: {
+                                    'left-y-axis': {
+                                        type: 'linear',
+                                        position: 'left',
+                                        title: {
+                                            color: 'rgb(75, 192, 192)',
+                                            display: true,
+                                            text: 'Issues'
+                                        }
+                                    },
+                                    'right-y-axis': {
+                                        type: 'linear',
+                                        position: 'right',
+                                        title: {
+                                            color: 'rgb(75, 102, 192)',
+                                            display: true,
+                                            text: 'Technical Debt, h'
+                                        }
+                                    },
+                                    x: {
+                                        type: 'time',                            
+                                        title: {
+                                            display: true,
+                                            text: 'Scan Date'
+                                        }
+                                    }
+                                }
+                            }
+                        }); 
+                    } catch (error) {
+                        console.log(error);
+                    }  
+                    
+                    try {
+                        window.myChart = new Chart(document.getElementById("issues-data-privacy").getContext("2d"), {
+                            type: 'bar',
+                            data: {
+                                labels: removeBackslash({! data.issuesDataPrivacyData.lables}),
+                                datasets: [{
+                                    data: arrayIfNull({! data.issuesDataPrivacyData.values}),
+                                }]
+                            },
+                            options: {
+                                indexAxis: 'y'
+                            }
+                        });                 
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    
+                    try {
+                        window.myChart = new Chart(document.getElementById("configuration-elements").getContext("2d"), {
+                            type: 'bar',
+                            data: {
+                                labels: removeBackslash({! data.configurationElementsData.lables}),
+                                datasets: [{
+                                    data: arrayIfNull( {! data.configurationElementsData.values}),
+                                }]
+                            },
+                            options: {
+                                indexAxis: 'y'
+                            }
+                        });                
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    
+                    try {
+                        window.myChart = new Chart(document.getElementById("issues-by-severity").getContext("2d"), {
+                            type: 'bar',
+                            data: {
+                                labels: removeBackslash({! data.issuesBySeverityData.lables}),
+                                datasets: [{
+                                    data: arrayIfNull({! data.issuesBySeverityData.values}),
+                                }]
+                            },
+                            options: {
+                                indexAxis: 'y'
+                            }
+                        });                     
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    
+                    try {
+                        window.myChart = new Chart(document.getElementById("issues-by-impact-area").getContext("2d"), {
+                            type: 'bar',
+                            data: {
+                                labels: removeBackslash({! data.issuesByImpactAreaData[0].lables}),                        
+                                datasets: [{                       
+                                    data: arrayIfNull({! data.issuesByImpactAreaData[0].values}),
+                                }]
+                            },
+                            options: {
+                                indexAxis: 'y',                    
+                                }
+                            });   
+                    } catch (error) {
+                        console.log(error);
+                    }
+                                           
+                    try {
+                            window.myChart = new Chart(document.getElementById("number-of-best-practices").getContext("2d"), {
+                                           type: 'bar',
+                                           data: {
+                                           labels: removeBackslash({! data.issuesByBestPracticesData.lables}),
+                                           datasets: [{
+                                           data: arrayIfNull({! data.issuesByBestPracticesData.values}),
+                                           }]
+                            },
+                            options: {
+                                indexAxis: 'y'
+                            }
+                        });                  
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    
+                };
+                </script>
+                
+                <center> 
+                    <apex:pageMessage rendered="{! !checkIfTokenValid}" summary="{! msgInvalidToken}" severity="error" strength="3" />
+                    <apex:pageMessage rendered="{! !checkIfOrgConnected}" summary="{! msgOrgIsNotConnected}" severity="error" strength="3" />
+                    <apex:outputPanel rendered="{! checkIfTokenValid}">
+                        <div class="slds-scope" >
+                            <div class="slds-page-header" style="width: 1300px" >
+                                <apex:pageMessages />
+                                <apex:pageMessage rendered="{! message_type != null}" summary="{! message}" severity="{! message_type}" strength="3" />
+                                
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact">
+                                                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#sales_value')}"></use>
+                                                </svg>
+                                            </div>
+                                            <div class="slds-media__body" style="text-align: left">
+                                                <p class="slds-text-title_caps slds-line-height_reset">QualityClouds for Salesforce</p>
+                                                <h1 class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate">Executive Dashboard</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                                        <div class="slds-button-group" role="group">                                
+                                            <apex:commandButton styleclass="slds-button slds-button_brand" value="Update" action="{!updateDataFromPortal}" /> 
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <ul class="slds-grid slds-page-header__detail-row">
+                                    <li class="slds-page-header__detail-block">
+                                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small">Environment:</p>
+                                        <p class="slds-text-body_regular slds-truncate">{! data.numbers.Environment__c }</p>
+                                    </li>
+                                    <li class="slds-page-header__detail-block">
+                                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small">Edition:</p>
+                                        <p class="slds-text-body_regular slds-truncate">{! data.numbers.Org_Edition__c }</p>
+                                    </li>
+                                    <li class="slds-page-header__detail-block slds-truncate_container_33">
+                                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small">URL:</p>
+                                        <p class="slds-text-body_regular slds-truncate">
+                                            <a href="{! data.numbers.Org_URL__c }">{! data.numbers.Org_URL__c }</a>
+                                        </p>
+                                    </li>
+                                    <li class="slds-page-header__detail-block">
+                                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small">Org ID:</p>
+                                        <p class="slds-text-body_regular slds-truncate">{! data.numbers.Org_Id__c }</p>
+                                    </li>
+                                    <li class="slds-page-header__detail-block">
+                                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small">Dashboard Updated On:</p>
+                                        <apex:outputField value="{!data.numbers.CreatedDate}" />
+                                    </li>
+                                    <li class="slds-page-header__detail-block">
+                                        <p class="slds-text-title slds-truncate slds-m-bottom_xx-small">Scan Date:</p>
+                                        <apex:outputField value="{!data.numbers.QCloudsSaaS__Scan_Date__c}" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </apex:outputPanel>    
+                    <apex:panelGrid columns="4" rendered="{!IF(data.numbers!=null, true, false)}" >
+                        <apex:panelGroup >
+                            <div class="numberCard">
+                                <div class="chartHeader">
+                                    <apex:outputText value="Issues" />
+                                </div>
+                                <div class="numberBlock">
+                                    <div class="bigNumber">{! data.numbers.Total_Issues__c }</div>
+                                    <font color="{!if(data.numbers.Total_Issues_Variation__c > 0,'#ff0000','#008e60')}">
+                                        <div class="prevScan">
+                                            {! IF(data.numbers.Total_Issues_Variation__c == 0, '', IF(data.numbers.Total_Issues_Variation__c > 0,'↑ ' ,'↓ '))}{!data.numbers.Total_Issues_Variation__c}%
+                                        </div>
+                                    </font>
+                                </div>
+                            </div>
+                        </apex:panelGroup>
+                        <apex:panelGroup >
+                            <div class="numberCard">
+                                <div class="chartHeader">
+                                    <apex:outputText value="Technical Debt" />
+                                </div>
+                                <div class="numberBlock">
+                                    <div class="bigNumber">{! data.numbers.Technical_Debt__c }h</div>
+                                    <font color="{!if(data.numbers.Technical_Debt_Variation__c > 0,'#ff0000','#008e60')}">
+                                        <div class="prevScan">
+                                            {! IF(data.numbers.Technical_Debt_Variation__c == 0, '', IF(data.numbers.Technical_Debt_Variation__c > 0,'↑ ' ,'↓ '))}{! data.numbers.Technical_Debt_Variation__c}%
+                                        </div>
+                                    </font>
+                                </div>
+                            </div>
+                        </apex:panelGroup>
+                        <apex:panelGroup >
+                            <div class="numberCard">
+                                <div class="chartHeader">
+                                    <apex:outputText value="Customization Ratio" />
+                                </div>
+                                <div class="numberBlock">
+                                    <div class="bigNumber">{! data.numbers.Customization_Ratio__c }%</div>
+                                </div>
+                            </div>
+                        </apex:panelGroup>
+                        <apex:panelGroup >
+                            <div class="numberCard">
+                                <div class="chartHeader">
+                                    <apex:outputText value="Code Changes Issues Ratio" />
+                                </div>
+                                <div class="numberBlock">
+                                    <div class="bigNumber">{! data.numbers.Code_Changes_Issues_Ratio__c }%</div>
+                                </div>
+                            </div>
+                        </apex:panelGroup>
+                    </apex:panelGrid>
+                    
+                    <apex:panelGrid columns="2" rendered="{!IF(data.numbers!=null, true, false)}">
+                        <apex:panelGroup >
+                            <div class="chartHeader">
+                                <apex:outputText value="Quality Of Cloud" />
+                            </div>
+                            <div class="qoc">
+                                <canvas id="quality-of-cloud" width="280" height="280" style="margin-left:auto;margin-right:auto;" />
+                                <font color="{!if(data.numbers.QoC_Variation__c < 0,'#ff0000','#008e60')}">
+                                    <div class="prevScan" style="margin-left:40px;">
+                                        {! IF(data.numbers.QoC_Variation__c == 0, '', IF(data.numbers.QoC_Variation__c > 0,'↑ ' ,'↓ '))}{! data.numbers.QoC_Variation__c}%
+                                    </div>
+                                </font>
+                            </div>
+                        </apex:panelGroup>
+                        <apex:panelGroup >
+                            <div class="chartHeader">
+                                <apex:outputText value="Evolution Of Issues" />
+                            </div>
+                            <canvas id="evolution-of-issues" width="960" height="400"></canvas>
+                        </apex:panelGroup>
+                    </apex:panelGrid>
+                    
+                    <apex:panelGrid columns="2" rendered="{!IF(data.numbers!=null, true, false)}">
+                        <apex:panelGroup >
+                            <div class="chartHeader">
+                                <apex:outputText value="Issues by Best Practices" />
+                            </div>
+                            <canvas id="number-of-best-practices" width="640" height="300" />
+                        </apex:panelGroup>
+                        <apex:panelGroup >
+                            <div class="chartHeader">
+                                <apex:outputText value="Issues by Impact Area" />
+                            </div>
+                            <canvas id="issues-by-impact-area" width="640" height="300" />
+                        </apex:panelGroup>
+                        
+                    </apex:panelGrid>
+                    
+                    <apex:panelGrid columns="3" rendered="{!IF(data.numbers!=null, true, false)}">
+                        <apex:panelGroup >
+                            <div class="chartHeader">
+                                <apex:outputText value="Issues Data Privacy" />
+                            </div>
+                            <canvas id="issues-data-privacy" width="420" height="300" />
+                        </apex:panelGroup>
+                        <apex:panelGroup >
+                            <div class="chartHeader">
+                                <apex:outputText value="Issues by Severity" />
+                            </div>
+                            <canvas id="issues-by-severity" width="420" height="300"></canvas>
+                        </apex:panelGroup>
+                        <apex:panelGroup >
+                            <div class="chartHeader">
+                                <apex:outputText value="Configuration Elements" />
+                            </div>
+                            <canvas id="configuration-elements" width="420" height="300"></canvas>
+                        </apex:panelGroup>
+                    </apex:panelGrid>
+                    
+                </center>
+            </body>
+            
+        </html>
+    </apex:form>  
+</apex:page>

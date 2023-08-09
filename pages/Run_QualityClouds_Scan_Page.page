@@ -1,0 +1,33 @@
+<apex:page standardController="copado__User_Story__c" extensions="Run_QualityClouds_Scan_Page_Controller" action="{!doScan}">
+  <apex:image url="{!$Resource.QualityCloudsLogo}" />
+  <br/>
+  <br/>
+
+  <h1>Quality Clouds Scan</h1>
+  <p>{! message}</p>
+  <A HREF="#" onClick="testCloseTab();goBack();return false">Click here to close this tab/go back</A>
+
+  <apex:includeScript value="/support/console/48.0/integration.js" />
+  <script type="text/javascript">
+    var callback = function () {
+      if (result.error) {
+        alert("Error message is " + result.error);
+      }
+    };
+    function testCloseTab() {
+      //First find the ID of the current tab to close it
+      sforce.console.getEnclosingTabId(closeSubtab);
+    }
+    function goBack() {
+      window.history.back();
+    }
+
+    var closeSubtab = function closeSubtab(result) {
+      //Now that we have the tab ID, we can close it
+      var tabId = result.id;
+      sforce.console.closeTab(tabId, callback);
+    };
+    setTimeout(testCloseTab, 5000);
+    setTimeout(goBack, 5500);
+  </script>
+</apex:page>

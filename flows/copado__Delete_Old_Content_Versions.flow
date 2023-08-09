@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <description>Given a record Id, this flow deletes all the ContentVersion records but the last one from related Files. Due to Salesforce limitation, original Files are deleted and new Files with only one version are created.</description>
+    <label>Delete Old Content Versions</label>
+    <processType>Flow</processType>
+    <runInMode>DefaultMode</runInMode>
+</Flow>

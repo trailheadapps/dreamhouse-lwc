@@ -1,0 +1,110 @@
+<apex:page showHeader="false" sidebar="false" standardController="copado__Compliance_Finding__c">
+
+		<c:WizardUtils id="cmpWizardUtilities" />
+	    <c:IncludeStaticsResourceComponent addJQuery="true" />
+		<c:IncludeConnectionJsComponent />
+		<apex:includeScript value="{!URLFOR($Resource.copado__JsRemoting)}" />
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+        
+		<div id="jqxgrid" style="width:99%;"></div>
+
+
+	<script type="text/javascript">
+	 	var loadingHTML = '<center><img src="/img/loading.gif" /> <i>{!$Label.LOADING}<span id="retry-label"></span></i></center>';
+        $copado('#jqxgrid').html(loadingHTML);
+
+		var prepareGrid = function(){
+			var att = dw.u.getDecodedAttach("{!JSENCODE(Compliance_Finding__c.Id)}","FindingMetadata.json");
+            if(att){
+    			var body = att.Body;
+                try{			
+        			var metadataRecords = JSON.parse(body);
+        			startGrid(metadataRecords);
+                } catch(e){
+                    console.error(e);
+                    var noDataHtml = '<center>{!JSENCODE($Label.NODATATODISPLAY)}</center>';
+                    $copado('#jqxgrid').html(noDataHtml);
+                }
+            } else {
+                var noDataHtml = '<center>{!JSENCODE($Label.NODATATODISPLAY)}</center>';
+                $copado('#jqxgrid').html(noDataHtml);
+            }
+		}
+
+		var setColumns = function(columnNames){
+			var columns = [];
+
+			for(var c = 0; c < columnNames.length; c++){
+				var columnObj = {};
+				columnObj.text = columnNames[c];
+				columnObj.filtertype = 'textbox';
+				columnObj.filtercondition = 'contains';
+				columnObj.editable = false;
+				columnObj.datafield = columnNames[c];
+            	columns.push(columnObj);
+			}
+			return columns;
+		}
+		var startGrid = function (data) {
+			try{
+                //normalize data
+                var len = data.length;
+                
+                var columnNames = Object.keys(data[0]);
+                var _datafields = [];
+                console.log("columnNames",columnNames);
+                for(var c = 0; c < columnNames.length; c++ ){
+                	var df = {};
+                	df.name = columnNames[c];
+                	df.type = 'string';
+                	_datafields.push(df);
+    			}
+    			console.log('_datafields',_datafields);
+    			console.log('setColm',setColumns(columnNames));
+                var theme = 'base',
+                source = {
+                    localdata: data,
+                    datafields: _datafields,
+                    datatype: "array",
+                    updaterow: function (rowid, rowdata, commit) {
+                        
+                        data[rowid] = rowdata;
+                        commit(true);
+                    }
+                },    
+                //adapter wrapper
+                dataAdapter = new $copado.jqx.dataAdapter(source),
+                
+                //keep jquery pointer for performance query
+                $grid = $copado('<div>');
+                
+                $copado("#jqxgrid").html($grid);
+                
+                $grid.jqxGrid({
+                    width: '100%',
+                    source: dataAdapter,
+                    showfilterrow: true,
+                    filterable: true,
+                    theme: theme,
+                    editable: false, 
+                    selectionmode: 'none',
+                    enablebrowserselection: true,
+                    pageable: true,
+                    pagesizeoptions: ['10', '20', '50','100','500'],
+                    pagesize: 20,
+                    sortable: true,
+                    columnsresize: true,
+                    localization: localizationobj,
+                    columns: setColumns(columnNames)
+                });
+            } catch(e){
+                console.error('error',e);
+                var noDataHtml = '<center>{!JSENCODE($Label.NODATATODISPLAY)}</center>';
+                $copado('#jqxgrid').html(noDataHtml);
+            }               
+                           
+         };
+         $copado(prepareGrid);
+	</script>
+</apex:page>

@@ -1,0 +1,214 @@
+<apex:page standardController="copado__Deployment__c" extensions="copado.DW_SourceExtension" id="DW_Source" lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Deployment Source">
+
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+    <apex:includeScript value="{!$Resource.copado__DW_javascript}" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.css')}" />
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+    <c:GAnalytics />
+
+    <script>
+        var globalSldsResourcePath = '{!URLFOR($Asset.SLDS)}';
+        var currentStepValue = '{!currentStepValue}';
+        var selectedSourceType = '{!JSENCODE(selectedSourceType)}';
+        var deploymentId = '{!deployment.Id}';
+        $copado(document).ready(() => {
+            if(selectedSourceType.length > 0){
+                $copado(`[for="${selectedSourceType}"]>span`).click();
+            }
+        });
+
+        var deploymentType = '{!JSENCODE(deploymentInterface.StepGeneralHeader)}';
+        ga('send', 'pageview', {
+            'page': '/DeploymentWizardSource',
+            'title': deploymentType
+        });
+    </script>
+
+    <apex:form >
+        <c:CopadoSpinner />
+
+        <apex:outputPanel layout="block" id="headerComponent">
+            <c:DW_Header currentStep="{!currentStepValue}" stepNameList="{!stepsList}"/>
+        </apex:outputPanel>
+
+        <div class="co-dw-container">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_4-of-6">
+                    <div class="name-source">
+                        <h1>{!deploymentInterface.StepGeneralHeader}</h1>
+                        <p class="subtitle">{!$Label.Add_Name_Source}</p>
+
+                        <apex:outputPanel layout="block" id="errorPanel">
+                            <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                                <div id="divToast" class="slds-notify_container slds-is-relative">
+                                    <apex:repeat value="{!pageMessagesMap}" var="severity">
+                                        <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                                            <span class="slds-assistive-text"></span>
+                                            <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                                <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                                            </span>
+                                            <div class="slds-notify__content">
+                                                <apex:repeat value="{!pageMessagesMap[severity]}" var="messages">
+                                                    <h2 class="slds-text-heading_small ">{!messages}</h2>
+                                                </apex:repeat>
+                                            </div>
+                                            <div class="slds-notify__close">
+                                                <button type="button" class="slds-button slds-button_icon slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                                    <span class="slds-icon_container slds-icon__svg--default closeToastIcon"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </apex:repeat>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="deploymentName">
+                                <abbr class="slds-required" title="required">*</abbr>
+                                {!$Label.copado__Give_Your_Deployment_a_Name}
+                            </label>
+                            <div class="slds-form-element__control">
+                                <apex:inputField id="deploymentName" value="{!deployment.Name}" styleClass="slds-input" html-placeholder="{!$Label.copado__Your_Deployment_Name}" />
+                            </div>
+                        </div>
+
+                        <apex:outputPanel layout="none" rendered="{!possibleSourceTypesList.size > 1}">
+                            <fieldset class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="source">{!$Label.copado__Select_Source}</label>
+                                        <div class="visual-options">
+                                            <apex:repeat value="{!sourceTypeList}" var="sType">
+                                                <div class="slds-visual-picker slds-visual-picker_medium">
+                                                    <input type="radio" id="{!sType.sourceType}" value="{!sType.sourceType}" name="performanceType" onclick="lockScreen();dw.changeValue(this,'{!$Component.RadioButtonValue}');renderTables();" />
+                                                    <label for="{!sType.sourceType}">
+                                                        <span class="slds-visual-picker__figure slds-visual-picker__icon">
+                                                            <span class="slds-is-selected">
+                                                                <div class="slds-media slds-media_center slds-p-left_medium">
+                                                                    <div class="slds-media__figure">
+                                                                        <apex:image value="{!URLFOR($Resource.copado__DW_images,sType.imageName)}" />
+                                                                        <span class="slds-icon_container" title="{!sType.sourceTypeLabel}">
+                                                                            <span class="slds-assistive-text">{!sType.sourceTypeLabel}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div><span>{!sType.sourceTypeLabel}</span></div>
+                                                                </div>
+                                                            </span>
+                                                            <span class="slds-is-not-selected">
+                                                                <div class="slds-media slds-media_center slds-p-left_medium">
+                                                                    <div class="slds-media__figure">
+                                                                        <apex:image value="{!URLFOR($Resource.copado__DW_images,sType.imageName)}" />
+                                                                        <span class="slds-icon_container" title="{!sType.sourceTypeLabel}">
+                                                                            <span class="slds-assistive-text">{!sType.sourceTypeLabel}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div><span>{!sType.sourceTypeLabel}</span></div>
+                                                                </div>
+                                                            </span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </apex:repeat>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <apex:inputHidden value="{!selectedSourceType}" id="RadioButtonValue" />
+                        </apex:outputPanel>
+                    </div>
+
+                    <apex:actionFunction name="renderTables" action="{!populateNecessaryData}" onComplete="dw.startDataTables();dw.clickDatatableHandler();dw.checkDisable(true);unlockScreen();" reRender="tablePanels,buttonsPanel" />
+
+
+                    <apex:outputPanel layout="block" id="tablePanels">
+                        <div class="orgtable-wrapper">
+                            <apex:outputPanel layout="none" rendered="{!deploymentInterface.StepGeneralHeader == $Label.copado__New_Data_Deployment}">
+                                <label class="slds-form-element__label" for="source">{!$Label.copado__Select_Source}</label>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!selectedSourceType == 'org'}">
+                                <div class="table">
+                                    <table id="orgTable" class="stripe slds-hidden">
+                                        <thead>
+                                            <tr>
+                                                <th class="no-sort"></th>
+                                                <th class="no-sort">{!$ObjectType.Org__c.fields.Name.Label}</th>
+                                                <th class="no-sort">{!$ObjectType.Org__c.fields.Username__c.Label}</th>
+                                                <th class="no-sort">{!$ObjectType.Org__c.fields.Environment__c.Label}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!sourceList}" var="orgs">
+                                                <tr>
+                                                    <td>
+                                                        <apex:inputCheckbox styleClass="slds-checkbox" html-recordId="{!orgs.orgRecord.Id}" value="{!orgs.isSelected}" />
+                                                    </td>
+                                                    <td>{!orgs.orgRecord.Name}</td>
+                                                    <td>{!orgs.orgRecord.copado__Username__c}</td>
+                                                    <td>{!orgs.orgRecord.Environment__r.Name}</td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+
+                        <apex:outputPanel layout="none" rendered="{!selectedSourceType == 'git'}">
+                            <div class="table">
+                                <table id="gitTable" class="stripe slds-hidden">
+                                    <thead>
+                                        <tr>
+                                            <th class="no-sort"></th>
+                                            <th class="no-sort">{!$Label.Commit_Id}</th>
+                                            <th class="no-sort">{!$Label.Commit_Message}</th>
+                                            <th class="no-sort">{!$Label.Commit_Date}</th>
+                                            <th class="no-sort">{!$Label.BRANCH}</th>
+                                            <th class="no-sort">{!$Label.Repository}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!sourceList}" var="gitCommit">
+                                            <tr>
+                                                <td>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" html-recordId="{!gitCommit.commitName}" value="{!gitCommit.isSelected}" />
+                                                </td>
+                                                <td>{!gitCommit.commitId}</td>
+                                                <td>{!gitCommit.commitMessage}</td>
+                                                <td>{!gitCommit.commitDate}</td>
+                                                <td>{!gitCommit.branchName}</td>
+                                                <td>{!gitCommit.gitRepositoryName}</td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="block" styleClass="buttons" id="buttonsPanel">
+                        <apex:commandButton styleClass="slds-button slds-button_outline-brand btn-back" onClick="lockScreen();" value="{!$Label.copado__BACK}" action="{!goToDeploymentTab}" onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel" />
+                        <apex:commandButton styleClass="slds-button slds-button_outline-brand btn-save" onClick="lockScreen();" value="{!$Label.copado__SAVE_AND_CLOSE}" action="{!configureSource}" onComplete="validateOrgSaveAndClose();" />
+                        <apex:outputPanel layout="none" rendered="{!selectedSourceType != ''}">
+                            <input type="button" class="slds-button slds-button_brand btn-confirm disabled disabled-Buttons" onClick="lockScreen();configureSource('nextStep',dw.selection);" value="{!IF(selectedSourceType == 'org',$Label.Confirm_Source,$Label.Confirm_Git_Commit)}" />
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <apex:actionFunction name="configureSource" action="{!configureSource}" onComplete="validateOrgNextStep();" >
+                        <apex:param name="buttonAction" value="" />
+                        <apex:param name="selection" value="" />
+                    </apex:actionFunction>
+                    <apex:actionFunction name="validateOrgNextStep" action="{!validateOrg}" onComplete="nextStep();" />
+                    <apex:actionFunction name="validateOrgSaveAndClose" action="{!validateOrg}" onComplete="saveClose();" />
+                    <apex:actionFunction name="saveClose" action="{!goToDeploymentTab}" onComplete="dw.buttonOnComplete();unlockScreen();" reRender="headerComponent,errorPanel" />
+                    <apex:actionFunction name="nextStep" action="{!goToNextStep}" onComplete="dw.checkError();dw.buttonOnComplete();" reRender="headerComponent,errorPanel" />
+
+                </div>
+                <div class="slds-col slds-size_1-of-6"></div>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

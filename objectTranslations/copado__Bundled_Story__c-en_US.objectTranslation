@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Bundle --></label>
+        <name>copado__Bundle</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Package Version --></label>
+        <name>copado__Package_Version__c</name>
+        <relationshipLabel><!-- Bundled Stories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>copado__User_Story__c</name>
+        <relationshipLabel><!-- Bundled Stories --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

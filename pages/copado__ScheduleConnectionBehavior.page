@@ -1,0 +1,66 @@
+<apex:page id="ScheduleConnectionBehavior" controller="copado.ScheduleConnectionBehaviorController" lightningStylesheets="true" docType="html-5.0">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJquery="true" addUIjs="true"/>
+    <script type="text/javascript" src="{!URLFOR($Resource.cronExpression)}"></script>
+    <c:GAnalytics />
+    <c:CopadoSpinner />
+
+    <style>
+    .slds-scope {
+        padding: 0 .3rem;
+    }
+
+    .slds-scope .slds-page-header {
+        background-color: #F7F9FB;
+    }
+    </style>
+    <script>
+        lockScreen();
+
+        $copado(document).ready(function() {
+            unlockScreen();
+        });
+
+        ga('send', 'pageview', {
+            'page': '/ScheduleConnectionBehavior',
+            'title': 'Schedule a Connection Behavior'
+        });
+    </script>
+    <div class="slds-scope">
+        <div class="slds-page-header slds-page-header_record-home slds-m-bottom_small">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <apex:image value="{!URLFOR($Resource.copado__DTS_images, 'app_icon.png')}" />
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta">{!thisConnectionBehavior.Name}</p>
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate">{!$ObjectType.copado__Connection_Behavior__c.Label}</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <c:ScheduleCronExpression recordId="{!thisConnectionBehavior.Id}" promotionType="{!promotionType}"
+                                  cronExpression="{!IF(
+                                                        NOT(ISBLANK(promotionType)),
+                                                        IF(
+                                                            promotionType == 'Promotion',
+                                                            thisConnectionBehavior.Promotion_Schedule__c,
+                                                            IF(
+                                                                promotionType == 'Back_Promotion',
+                                                                thisConnectionBehavior.Back_Promotion_Schedule__c,
+                                                                ''
+                                                            )
+                                                        ),
+                                                        ''
+                                                    )}"/>
+    </div>
+</apex:page>

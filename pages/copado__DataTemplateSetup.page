@@ -1,0 +1,1241 @@
+<apex:page standardController="copado__Data_Template__c" extensions="copado.DataTemplateSetupExtension" id="DataTemplateSetup"
+           lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Data Template Setup">
+    <apex:slds />
+    <apex:includeLightning />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" addUIcss="true" />
+    <c:IncludeConnectionJsComponent />
+    <apex:includeScript value="{!$Resource.copado__DataTemplateSetup_javascript}" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.css')}" />
+    <apex:stylesheet value="{!$Resource.copado__DataTemplateSetup_custom_css}" />
+    <c:GAnalytics />
+
+    <script>
+        var globalSldsResourcePath = '{!URLFOR($Asset.SLDS)}';
+        ga('send', 'pageview', {
+            'page': '/DataTemplateSetup',
+            'title': 'Data Template Setup'
+        });
+    </script>
+
+    <apex:form >
+        <c:CheckFeaturesComponent />
+        <c:CopadoSpinner />
+        <div class="co-dts-container ">
+            <!--  Header  -->
+            <div class="slds-page-header slds-page-header_record-home">
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <apex:image value="{!URLFOR($Resource.copado__DTS_images, 'app_icon.png')}" />
+                            </div>
+                            <div class="slds-media__body">
+                                <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                        <h1>
+                                            <span>{!$Label.copado__Data_Template}</span>
+                                            <span class="slds-page-header__title">
+                                                <apex:outputPanel layout="none" rendered="{!template.Id == null}">
+                                                    {!$Label.copado__NEW} {!$Label.copado__Data_Template}
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!template.Id != null}">
+                                                    {!template.Name}
+                                                </apex:outputPanel>
+                                            </span>
+                                        </h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                            <div class="slds-page-header__control buttons slds-button-group" role="group">
+                                <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                                    value="{!$Label.copado__Show_Relationship_Diagram}"
+                                                    onClick="dts.onClickFunction();dts.redirectToRelationalDiagramLWC('{!template.Id}','{!JSENCODE(currentNamespace)}');"
+                                                    onComplete="dts.onCompleteFunctionToreRender();"
+                                                    rendered="{!AND(template.Id != null,$User.UiThemeDisplayed == 'Theme4d',enableADD,$ObjectType.copado__Data_Template__c.Createable,$ObjectType.copado__Data_Template__c.Updateable)}"
+                                                    reRender="objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,errorPanel,gnrMessages,mainObjectFiltersTab,filterLogicPanel,sampleContainer,generalWarningContainer,newTemplateContainer,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel"/>
+                                <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                                    value="{!$Label.copado__Clone_Template}" action="{!saveCloneTemplate}"
+                                                    onClick="dts.onClickFunction();"
+                                                    onComplete="dts.onCompleteFunctionToreRender();"
+                                                    rendered="{!AND(template.Id != null,enableADD,hasOrgAccess,$ObjectType.copado__Data_Template__c.Createable,$ObjectType.copado__Data_Template__c.Updateable)}"
+                                                    reRender="objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,errorPanel,gnrMessages,mainObjectFiltersTab,filterLogicPanel,sampleContainer,generalWarningContainer,newTemplateContainer,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel" />
+                                <apex:commandButton styleClass="slds-button slds-button_neutral"
+                                                    value="{!$Label.copado__Export_Template}"
+                                                    onClick="dts.exportTemplate(['{!template.Id}'],'{!JSENCODE(template.Name)}');"
+                                                    rendered="{!template.Id != null}"
+                                                    reRender="noRender" />
+                                <apex:commandButton styleClass="slds-button slds-button_brand"
+                                                    value="{!$Label.copado__Save_Template}" action="{!saveMainTemplate}"
+                                                    onClick="dts.onClickFunction();"
+                                                    onComplete="dts.onCompleteFunctionToreRender();"
+                                                    rendered="{!AND(enableADD,hasOrgAccess,$ObjectType.copado__Data_Template__c.Createable,$ObjectType.copado__Data_Template__c.Updateable)}" reRender="objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,errorPanel,gnrMessages,mainObjectFiltersTab,filterLogicPanel,sampleContainer,generalWarningContainer,newTemplateContainer,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <apex:outputPanel layout="block" styleClass="slds-page-header__row slds-page-header__row_gutters" id="headerInformation">
+                    <div class="slds-page-header__col-details">
+                        <ul class="slds-page-header__detail-row">
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title">{!$ObjectType.copado__Data_Template__c.fields.Name.Label}</div>
+                                <div class="value slds-truncate">{!template.Name}</div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title">
+                                    {!$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Label}
+                                </div>
+                                <div class="value slds-truncate">
+                                    <apex:outputField value="{!template.copado__Main_Object__c}" />
+                                </div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title">{!$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Label}
+                                </div>
+                                <div class="value slds-truncate">
+                                    <apex:outputPanel layout="none" rendered="{!!template.copado__Active__c}">
+                                        {!$Label.copado__NO}
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!template.copado__Active__c}">
+                                        {!$Label.copado__YES}
+                                    </apex:outputPanel>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel layout="block" id="errorPanel">
+                    <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                        <div id="divToast" class="slds-notify_container slds-is-relative">
+                            <apex:repeat value="{!pageMessagesMap}" var="severity">
+                                <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                                    <span class="slds-assistive-text"></span>
+                                    <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                        <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                                    </span>
+                                    <div class="slds-notify__content">
+                                        <apex:repeat value="{!pageMessagesMap[severity]}" var="messages">
+                                            <h2 class="slds-text-heading_small ">{!messages}</h2>
+                                        </apex:repeat>
+                                    </div>
+                                    <div class="slds-notify__close">
+                                        <button type="button"
+                                                class="slds-button slds-button_icon slds-button_icon-inverse"
+                                                title="{!$Label.CLOSE}"
+                                                onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                            <span class="slds-icon_container slds-icon__svg--default closeToastIcon"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </apex:repeat>
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </div>
+
+            <!-- Container -->
+            <div class="slds-tabs_default slds-tabs_card slds-m-top_medium bundle-tabs slds-tabs_medium slds-grid slds-grid_vertical slds-grow example-selected">
+                <!--  General Warnings  -->
+                <apex:outputPanel layout="block" id="gnrMessages">
+                    <apex:outputPanel layout="none" rendered="{!GeneralMessageSize != 0}">
+                        <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light general-messages custom-{!GeneralMessageSeverity}"
+                             role="status">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-utility-info" title="information">
+                                    <apex:image width="20px" value="{!URLFOR($Resource.copado__DTS_images,GeneralMessageSeverity + '.png')}" />
+                                </span>
+                            </div>
+                            <div class="slds-media__body {!GeneralMessageSeverity}-message-body">
+                                <p>
+                                    {!$Label.copado__ADD_General_Template_Warnings}
+                                    <apex:commandLink value=" {!$Label.copado__Please_click} {!$Label.copado__Here} {!$Label.copado__ADD_List_Of_Warnings}"
+                                                      onclick="lockScreen();dts.openModals('GeneralWarning');"
+                                                      onComplete="unlockScreen();" reRender="noneedrender"
+                                                      styleClass="{!GeneralMessageSeverity}-link"/>
+                                </p>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+
+                <!--  Tabs  -->
+                <div class="slds-tabs_default tabs">
+                    <ul class="slds-tabs_default__nav slds-is-active" role="tablist">
+                        <li class="slds-tabs_default__item " title="{!$Label.Template_Details}" role="presentation">
+                            <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0"
+                               aria-selected="false" aria-controls="{!$Label.Template_Details}" id="template-details">{!$Label.Template_Details}</a>
+                        </li>
+                        <li class="slds-tabs_default__item" title="{!$Label.Object_Fields}" role="presentation">
+                            <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="1"
+                               aria-selected="false" aria-controls="{!$Label.Object_Fields}" id="object-fields">{!$Label.Object_Fields}</a>
+                        </li>
+                        <li class="slds-tabs_default__item" title="{!$Label.Parent_Objects}" role="presentation">
+                            <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="2"
+                               aria-selected="false" aria-controls="{!$Label.Parent_Objects}"
+                               id="related-parent-objects">{!$Label.Parent_Objects}</a>
+                        </li>
+                        <li class="slds-tabs_default__item" title="{!$Label.Child_Objects}" role="presentation">
+                            <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="3"
+                               aria-selected="false" aria-controls="{!$Label.Child_Objects}" id="related-child-objects">{!$Label.Child_Objects}</a>
+                        </li>
+                        <li class="slds-tabs_default__item" title="{!$Label.Main_Object_Filter}" role="presentation">
+                            <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="4"
+                               aria-selected="false" aria-controls="{!$Label.Main_Object_Filter}"
+                               id="main-object-filter">{!$Label.Main_Object_Filter}</a>
+                        </li>
+                    </ul>
+
+                    <!-- Template Details Tab -->
+                    <div id="template-details-content" class="slds-tabs_default__content" role="tabpanel" aria-labelledby="template-details">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="form-wrapper">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="dataTemplateName">
+                                            {!$ObjectType.Data_Template__c.fields.Name.Label}
+                                            <apex:image value="{!URLFOR($Resource.copado__DTS_images,'asterisk.png')}" />
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputField value="{!template.Name}"
+                                                             id="dataTemplateName"
+                                                             styleClass="slds-input"
+                                                             rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.Name.Createable,$ObjectType.copado__Data_Template__c.fields.Name.Updateable)}"
+                                                             onChange="dts.handleActiveCheckbox();" />
+                                            <apex:outputField value="{!template.Name}"
+                                                              styleClass="slds-input"
+                                                              rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.Name.Accessible,!$ObjectType.copado__Data_Template__c.fields.Name.Createable,!$ObjectType.copado__Data_Template__c.fields.Name.Updateable))}" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="description">{!$ObjectType.copado__Data_Template__c.fields.copado__Description__c.Label}</label>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputField value="{!template.copado__Description__c}"
+                                                             id="description"
+                                                             rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Description__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Description__c.Updateable)}"
+                                                             styleClass="slds-textarea" />
+                                            <apex:outputField value="{!template.copado__Description__c}"
+                                                              rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.copado__Description__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Description__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Description__c.Updateable))}"
+                                                              styleClass="slds-textarea" />
+                                        </div>
+                                    </div>
+                                    <apex:outputPanel layout="block" styleClass="slds-form-element" id="sourceOrgPanel">
+                                        <label class="slds-form-element__label" for="schemaOrg">
+                                            {!$ObjectType.copado__Data_Template__c.fields.copado__Template_Source_Org__c.Label}
+                                            <apex:image value="{!URLFOR($Resource.copado__DTS_images,'asterisk.png')}" />
+                                            <span class="info-wrapper info-icon copado-tooltip" tooltip-text="{!$Label.Template_Source_Org_Tooltip}"></span>
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-combobox_container">
+                                                <apex:inputField value="{!template.copado__Template_Source_Org__c}"
+                                                                 id="schemaOrg"
+                                                                 styleClass="slds-input lookup-adjustment"
+                                                                 rendered="{!AND(enableADD,OR(template.Id == null,template.copado__Template_Source_Org__c == null),$ObjectType.copado__Data_Template__c.fields.copado__Template_Source_Org__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Template_Source_Org__c.Updateable)}">
+                                                    <apex:actionSupport event="onchange"
+                                                                        onSubmit="dts.onClickFunction();"
+                                                                        onComplete="dts.createAutocomplete('mainObject', 'selectedMainObject');dts.onCompleteFunctionToreRender();"
+                                                                        reRender="objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,mainObjectFiltersTab,errorPanel,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObj,sourceOrgPanel,sampleContainer,generalWarningContainer,newTemplateContainer" />
+                                                </apex:inputField>
+                                                <apex:outputField id="orgOutput"
+                                                                  value="{!template.copado__Template_Source_Org__c}"
+                                                                  rendered="{!OR(!enableADD,OR(AND(template.Id != null,template.copado__Template_Source_Org__c != null,$ObjectType.copado__Data_Template__c.fields.copado__Template_Source_Org__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Template_Source_Org__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Template_Source_Org__c.Updateable),AND(template.Id != null,template.copado__Template_Source_Org__c != null,$ObjectType.copado__Data_Template__c.fields.copado__Template_Source_Org__c.Accessible,$ObjectType.copado__Data_Template__c.fields.copado__Template_Source_Org__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Template_Source_Org__c.Updateable)))}" />
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="slds-form-element" id="mainObj">
+                                        <apex:outputPanel layout="none" rendered="{!template.copado__Template_Source_Org__c != null}">
+                                            <label class="slds-form-element__label" for="mainObject">
+                                                {!$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Label}
+                                                <apex:image value="{!URLFOR($Resource.copado__DTS_images,'asterisk.png')}" />
+                                                <span id="mainObjectTooltip" class="info-wrapper info-icon copado-tooltip" tooltip-text="{!$Label.Main_Object_Tooltip}"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <apex:outputPanel layout="none" rendered="{!AND(enableADD,OR(template.Id == null,template.copado__Main_Object__c == null),$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Updateable)}">
+                                                    <apex:inputHidden value="{!template.copado__Main_Object__c}" id="selectedMainObject" />
+                                                    <div class="ui-widget">
+                                                        <select id="mainObject">
+                                                            <apex:repeat value="{!AllObjects}" var="obj">
+                                                                <option value="{!obj.value}">{!obj.label}</option>
+                                                            </apex:repeat>
+                                                        </select>
+                                                    </div>
+                                                    <apex:actionFunction name="renderTabsAfterObjectSelection"
+                                                                         action="{!populateSelectedObjectFields}"
+                                                                         onComplete="dts.handleActiveCheckbox();dts.onCompleteFunctionToreRender();"
+                                                                         reRender="objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,mainObjectFiltersTab,errorPanel,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel,sampleContainer,generalWarningContainer,newTemplateContainer,matchOwnerCheckbox,recordTypeCheckbox" />
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!OR(!enableADD,OR(AND(template.Id != null,template.copado__Main_Object__c != null,$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Updateable),AND(template.Id != null,template.copado__Main_Object__c != null,$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Accessible,$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Updateable)))}">
+                                                    <apex:outputField id="mainObjOutput" value="{!template.copado__Main_Object__c}" />
+                                                </apex:outputPanel>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" id="activeCheckboxBlock" styleClass="slds-form-element">
+                                        <label class="slds-form-element__label" for="activeTemplate">
+                                            {!$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Label}
+                                            <apex:outputPanel layout="none" rendered="{!OR(template.copado__Main_Object__c == null, template.Name == null)}">
+                                                <span class="info-wrapper info-icon copado-tooltip" tooltip-text="{!$Label.Data_Template_Active_Tooltip}"></span>
+                                            </apex:outputPanel>
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                              <span class="slds-checkbox slds-checkbox_standalone">
+                                                  <apex:inputField value="{!template.copado__Active__c}"
+                                                                   id="activeTemplate"
+                                                                   rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Updateable)}" />
+                                                  <apex:outputField value="{!template.copado__Active__c}"
+                                                                    rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.copado__Active__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Updateable))}" />
+                                                  <apex:outputPanel layout="none" rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Updateable)}">
+                                                      <span class="slds-checkbox_faux"></span>
+                                                  </apex:outputPanel>
+                                              </span>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="form-wrapper">
+                                    <div id="advanceDeploymentSettings">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="continueOnError">{!$ObjectType.copado__Data_Template__c.fields.copado__Continue_on_Error__c.Label}</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField value="{!template.copado__Continue_on_Error__c}"
+                                                                 id="continueOnError"
+                                                                 styleClass="slds-input"
+                                                                 rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Continue_on_Error__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Continue_on_Error__c.Updateable)}" />
+                                                <apex:outputField value="{!template.copado__Continue_on_Error__c}"
+                                                                  styleClass="slds-input"
+                                                                  rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.copado__Continue_on_Error__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Continue_on_Error__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Continue_on_Error__c.Updateable))}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-form-element">
+                                            <legend class="slds-form-element__label">{!$Label.copado__Select_Attachment_Type}</legend>
+                                            <div class="slds-form-element__control">
+                                                <apex:selectRadio value="{!selectedAttachmentType}">
+                                                    <apex:selectOptions value="{!AttachmentTypes}"/>
+                                                </apex:selectRadio>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="attachementOptions">
+                                                {!$ObjectType.Data_Template__c.fields.Attachment_Options__c.Label}
+                                                <span id="attachmentOptionsBlock" class="info-wrapper info-icon copado-tooltip" tooltip-text="{!$Label.Attachment_Options_Tooltip}"></span>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField value="{!template.copado__Attachment_Options__c}"
+                                                                 id="attachementOptions"
+                                                                 styleClass="slds-input"
+                                                                 rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Attachment_Options__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Attachment_Options__c.Updateable)}" />
+                                                <apex:outputField value="{!template.copado__Attachment_Options__c}"
+                                                                  styleClass="slds-input"
+                                                                  rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.copado__Attachment_Options__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Attachment_Options__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Attachment_Options__c.Updateable))}" />
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="matchOwners">
+                                                {!$ObjectType.Data_Template__c.fields.Match_Owners__c.Label}
+                                                <span id="matchOwnerBlock" class="info-wrapper info-icon copado-tooltip" tooltip-text="{!$Label.Match_Owner_Tooltip}"></span>
+                                            </label>
+                                            <apex:outputPanel layout="block" styleClass="slds-form-element__control" id="matchOwnerCheckbox">
+                                                <span class="slds-checkbox slds-checkbox_standalone">
+                                                    <apex:outputPanel layout="none" rendered="{!OwnerIdField}">
+                                                        <apex:inputField value="{!template.copado__Match_Owners__c}"
+                                                                         rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Match_Owners__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Match_Owners__c.Updateable)}" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!!OwnerIdField}">
+                                                        <apex:inputField value="{!template.copado__Match_Owners__c}"
+                                                                         html-disabled="true"
+                                                                         rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Match_Owners__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Match_Owners__c.Updateable)}" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputField value="{!template.copado__Match_Owners__c}"
+                                                                      rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.copado__Match_Owners__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Match_Owners__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Match_Owners__c.Updateable))}" />
+                                                    <apex:outputPanel layout="none" rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Updateable)}">
+                                                      <span class="slds-checkbox_faux"></span>
+                                                  </apex:outputPanel>
+                                                </span>
+                                            </apex:outputPanel>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="matchRecordType">
+                                                {!$ObjectType.Data_Template__c.fields.Match_Record_Type__c.Label}
+                                                <span id="matchRecordTypeBlock" class="info-wrapper info-icon copado-tooltip" tooltip-text="{!$Label.Match_Record_Type_Info}"></span>
+                                            </label>
+                                            <apex:outputPanel layout="block" styleClass="slds-form-element__control" id="recordTypeCheckbox">
+                                                <span class="slds-checkbox slds-checkbox_standalone">
+                                                    <apex:outputPanel layout="none" rendered="{!RecordTypeIdField}">
+                                                        <apex:inputField value="{!template.copado__Match_Record_Type__c}"
+                                                                         rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Match_Record_Type__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Match_Record_Type__c.Updateable)}" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!!RecordTypeIdField}">
+                                                        <apex:inputField value="{!template.copado__Match_Record_Type__c}"
+                                                                         html-disabled="true"
+                                                                         rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Match_Record_Type__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Match_Record_Type__c.Updateable)}" />
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputField value="{!template.copado__Match_Record_Type__c}"
+                                                                      rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.copado__Match_Record_Type__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Match_Record_Type__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Match_Record_Type__c.Updateable))}" />
+                                                    <apex:outputPanel layout="none" rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Active__c.Updateable)}">
+                                                      <span class="slds-checkbox_faux"></span>
+                                                  </apex:outputPanel>
+                                                </span>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Object Fields Tabs -->
+                    <div id="object-fields-content" class="slds-tabs_default__content" role="tabpanel"
+                         aria-labelledby="object-fields">
+                        <apex:outputPanel layout="block" styleClass="table-wrapper" id="objectFieldsTab">
+                            <div class="table">
+                                <apex:outputPanel layout="block" id="objectRefresh" styleClass="refresh-link">
+                                    <apex:commandLink styleClass="refreshIcon" action="{!refreshGlobalDescribe}" value=" {!$Label.copado__REFRESH}" onClick="dts.onClickFunction();" onComplete="describeSobjectCallout();" rendered="{!template.copado__Template_Source_Org__c != null}" />
+                                </apex:outputPanel>
+
+                                <apex:outputPanel layout="block" id="objectFieldTable">
+                                <table id="objectsTable" class="stripe">
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox" class="slds-checkbox" id="objectsSelectAll" checked="checked" onchange="lockScreen();dts.expandDataTable('objectsTable');dts.selectUnselectAll('objectsTable', this.id);reloadObjectFieldsTab();"/></th>
+                                        <th>{!$Label.SF_Att}</th>
+                                        <th>{!$Label.Field_Label}</th>
+                                        <th>{!$Label.API_Name}</th>
+                                        <th>{!$Label.Data_Type}</th>
+                                        <th>
+                                            {!$Label.Use_as_External_ID}
+                                            <apex:image value="{!URLFOR($Resource.copado__DTS_images,'asterisk.png')}" />
+                                        </th>
+                                        <th>{!$Label.Field_Content_Update}</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <apex:repeat value="{!desResponse.fields}" var="obl">
+                                        <apex:outputPanel layout="none" rendered="{!AND(LOWER(obl.name) != 'id',LOWER(obl.name) != 'ownerid',obl.referenceTo == null,obl.type != 'address',obl.type != 'location')}">
+                                            <tr>
+                                                <td>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox row-select"
+                                                                        value="{!selectableFieldsMap[obl.name].isSelected}"
+                                                                        disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                        <apex:actionSupport event="onchange" onSubmit="lockScreen();dts.expandDataTable('objectsTable');" onComplete="dts.changeSelectAll('objectsTable','objectsSelectAll');dts.startDataTable('objectsTable');dts.contractDataTable('objectsTable');unlockScreen();" reRender="objectFieldTable" />
+                                                    </apex:inputCheckbox>
+                                                </td>
+                                                <td>
+                                                    <apex:outputPanel layout="none" rendered="{!obl.externalId}">
+                                                        <span class="external-ids">{!$Label.copado__XID}</span>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!AND(!obl.nillable,obl.type != 'boolean')}">
+                                                        <span class="hide-ordering">_</span>
+                                                        <apex:image value="{!URLFOR($Resource.copado__DTS_images,'asterisk.png')}" />
+                                                    </apex:outputPanel>
+                                                </td>
+                                                <td>{!obl.label}</td>
+                                                <td>{!obl.name}</td>
+                                                <td>{!obl.type}</td>
+                                                <td>
+                                                    <apex:outputPanel layout="none" rendered="{!AND(selectableFieldsMap[obl.name].isSelected,obl.externalId)}">
+                                                        <apex:inputCheckbox styleClass="slds-checkbox"
+                                                                            value="{!selectableFieldsMap[obl.name].useAsExternalId}"
+                                                                            disabled="{!OR(!obl.externalId,!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                            <apex:actionSupport event="onchange" onSubmit="lockScreen();dts.expandDataTable('objectsTable');" onComplete="dts.startDataTable('objectsTable');dts.contractDataTable('objectsTable');unlockScreen();" reRender="objectFieldTable" />
+                                                        </apex:inputCheckbox>
+                                                    </apex:outputPanel>
+                                                </td>
+
+                                                <td>
+                                                    <apex:outputPanel layout="none" rendered="{!AND(selectableFieldsMap[obl.name].isSelected,!obl.autonumber,!obl.calculated,!obl.unique,!selectableFieldsMap[obl.name].useAsExternalId)}">
+                                                        <div class="slds-select_container">
+                                                            <apex:selectList value="{!selectableFieldsMap[obl.name].fieldContentUpdate}"
+                                                                             multiSelect="false" size="1"
+                                                                             styleClass="slds-select"
+                                                                             disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                                <apex:selectOption itemValue="none" itemLabel="None" />
+                                                                <apex:selectOptions value="{!selectableFieldsMap[obl.name].contentValueUpdateValues}" />
+                                                                <apex:actionSupport event="onchange" onSubmit="lockScreen();dts.expandDataTable('objectsTable');" onComplete="dts.startDataTable('objectsTable');dts.contractDataTable('objectsTable');unlockScreen();" reRender="objectFieldTable" />
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel layout="none" rendered="{!AND(selectableFieldsMap[obl.name].isSelected,!obl.autonumber,!obl.calculated,selectableFieldsMap[obl.name].useAsExternalId)}">
+                                                        <div class="slds-select_container">
+                                                            <apex:selectList value="{!selectableFieldsMap[obl.name].fieldContentUpdate}"
+                                                                             multiSelect="false" size="1"
+                                                                             styleClass="slds-select"
+                                                                             disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                                <apex:selectOption itemValue="none" itemLabel="None" />
+                                                                <apex:selectOptions value="{!selectableFieldsMap[obl.name].contentValueUpdateValues}" />
+                                                                <apex:actionSupport disableDefault="true" event="onchange" onSubmit="lockScreen();dts.expandDataTable('objectsTable');" onComplete="dts.startDataTable('objectsTable');dts.contractDataTable('objectsTable');dts.openModals('RecordMatching','{!JSENCODE(selectableFieldsMap[obl.name].fieldContentUpdate)}');unlockScreen();" reRender="objectFieldTable,recordMatchingContainer" />
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </apex:outputPanel>
+
+                                                </td>
+                                                <td>
+                                                    <apex:outputPanel layout="none" rendered="{!AND(selectableFieldsMap[obl.name].isSelected,selectableFieldsMap[obl.name].fieldContentUpdate == 'recordMatching')}">
+                                                        <apex:image styleClass="custom-cursor" width="20px" value="{!URLFOR($Resource.copado__DTS_images,'lookup.png')}" onclick="lockScreen();dts.openModals('RecordMatching','{!JSENCODE(selectableFieldsMap[obl.name].fieldContentUpdate)}');renderRecordMatchingModalContent();" />
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!AND(selectableFieldsMap[obl.name].isSelected,selectableFieldsMap[obl.name].fieldContentUpdate == 'replace')}">
+                                                        <div class="form-action">
+                                                            <apex:input styleClass="slds-input"
+                                                                        rendered="{!OR(obl.type == 'string', obl.type == 'address', obl.type == 'phone', obl.type == 'picklist', obl.type == 'textarea', obl.type == 'id', obl.type == 'base64binary', obl.type == 'time', obl.type == 'url')}"
+                                                                        value="{!selectableFieldsMap[obl.name].replaceValue}" type="text"
+                                                                        disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}" />
+                                                            <apex:input styleClass="slds-input"
+                                                                        rendered="{!obl.type == 'date'}"
+                                                                        value="{!obl.replaceValueDate}" type="date"
+                                                                        disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}" />
+                                                            <apex:input styleClass="slds-input"
+                                                                        rendered="{!obl.type == 'datetime'}"
+                                                                        value="{!obl.replaceValueDatetime}"
+                                                                        type="datetime-local"
+                                                                        disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}" />
+                                                            <apex:input styleClass="slds-input"
+                                                                        rendered="{!OR(obl.type == 'integer', obl.type == 'double',obl.type == 'int',obl.type == 'percent', obl.type == 'currency')}"
+                                                                        value="{!obl.replaceValueNumber}"
+                                                                        type="number"
+                                                                        disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}" />
+                                                            <apex:inputCheckbox rendered="{!obl.type == 'boolean'}"
+                                                                                value="{!selectableFieldsMap[obl.name].replaceValue}"
+                                                                                disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}" />
+                                                        </div>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel layout="none" rendered="{!AND(obl.type != 'boolean', !obl.nillable,!selectableFieldsMap[obl.name].isSelected)}">
+                                                        <apex:image width="20px"
+                                                                    value="{!URLFOR($Resource.copado__DTS_images,'warning.png')}"
+                                                                    title="{!$Label.copado__Warning_DTS}" />
+                                                    </apex:outputPanel>
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                    </tbody>
+                                </table>
+                                </apex:outputPanel>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+
+                    <!-- Related Parent Objects Tab -->
+                    <div id="related-parent-objects-content" class="slds-tabs_default__content" role="tabpanel"
+                         aria-labelledby="related-parent-objects">
+                        <apex:outputPanel layout="block" styleClass="table-wrapper" id="parentObjectFieldsTab">
+                            <div class="table">
+                                <apex:outputPanel layout="block" id="parentObjectRefresh" styleClass="refresh-link">
+                                    <apex:commandLink styleClass="refreshIcon" action="{!refreshGlobalDescribe}" value=" {!$Label.copado__REFRESH}" onClick="lockScreen();" onComplete="describeSobjectCallout();" rendered="{!template.copado__Template_Source_Org__c != null}" />
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="block" id="relatedParentObjectsPanel">
+                                <table id="relatedParentObjectsTable" class="stripe">
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox" style="slds-checkbox" id="relatedParentSelectAll" checked="checked" onchange="lockScreen();dts.expandDataTable('relatedParentObjectsTable');dts.selectUnselectAll('relatedParentObjectsTable', this.id);reloadRelatedParentObjectsTable();"/></th>
+                                        <th>{!$Label.SF_Att}</th>
+                                        <th>{!$Label.Field_Label}</th>
+                                        <th>{!$Label.Field_API_Name}</th>
+                                        <th>{!$Label.Object_Label}</th>
+                                        <th>{!$Label.Object_API_Name}</th>
+                                        <th>
+                                            {!$Label.Deployment_Template}
+                                            <apex:image value="{!URLFOR($Resource.copado__DTS_images,'asterisk.png')}" />
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <apex:repeat value="{!desResponse.fields}" var="pofl">
+                                        <apex:outputPanel layout="none" rendered="{!AND(pofl.referenceTo != null,NOT(CONTAINS(InvalidFieldsForTemplate,pofl.name)))}">
+                                            <apex:repeat value="{!pofl.referenceTo}" var="refTo">
+                                                <apex:outputPanel layout="none" rendered="{!NOT(CONTAINS(NotValidParent,refTo))}">
+                                                    <tr>
+                                                        <td>
+                                                            <apex:inputCheckbox styleClass="slds-checkbox row-select"
+                                                                                value="{!selectableFieldsMap[pofl.name].isSelected}"
+                                                                                disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                                <apex:actionSupport event="onchange" reRender="deploymentTemplateTd,parentLookup,warningActionTd" onComplete="dts.expandDataTable('relatedParentObjectsTable');dts.changeSelectAll('relatedParentObjectsTable','relatedParentSelectAll');dts.contractDataTable('relatedParentObjectsTable');" />
+                                                            </apex:inputCheckbox>
+                                                        </td>
+                                                        <td>
+                                                            <apex:outputPanel layout="none" rendered="{!!pofl.nillable}">
+                                                                <span class="hide-ordering">_</span>
+                                                                <apex:image value="{!URLFOR($Resource.copado__DTS_images,'asterisk.png')}" />
+                                                            </apex:outputPanel>
+                                                        </td>
+                                                        <td>{!pofl.label}</td>
+                                                        <td>{!pofl.name}</td>
+                                                        <td>{!selectableFieldsMap[pofl.name].parentObjectApiNameMap[refTo]}</td>
+                                                        <td>{!refTo}</td>
+                                                        <td>
+                                                            <apex:outputPanel layout="block" id="deploymentTemplateTd" styleClass="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click relation-picklist">
+                                                                <apex:outputPanel layout="none" rendered="{!OR(!enableADD,AND(selectableFieldsMap[pofl.name].isSelected,refTo!='User',$ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                                    <apex:outputPanel layout="none" rendered="{!selectableFieldsMap[pofl.name].deploymentTemplate != null}">
+                                                                        {!selectableFieldsMap[pofl.name].deploymentTemplate}
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel layout="none" rendered="{!AND(selectableFieldsMap[pofl.name].isSelected,enableADD,refTo!='User',$ObjectType.copado__Data_Template__c.Createable,$ObjectType.copado__Data_Template__c.Updateable)}">
+                                                                    <apex:inputHidden value="{!selectableFieldsMap[pofl.name].deploymentTemplate}" />
+                                                                    <button type="button"
+                                                                            class="slds-button slds-button--neutral slds-picklist__label"
+                                                                            aria-haspopup="true"
+                                                                            onclick="dts.handlePicklist(event)">
+                                                                        <span class="slds-truncate picklist-label" title="{!$Label.Select_Template}">
+                                                                            <apex:outputPanel layout="none" rendered="{!selectableFieldsMap[pofl.name].deploymentTemplate != null}">
+                                                                                {!selectableFieldsMap[pofl.name].deploymentTemplate}
+                                                                            </apex:outputPanel>
+                                                                        </span>
+                                                                        <apex:image styleClass="dropdown-arrows" value="{!URLFOR($Resource.copado__DTS_images,'dropdown_arrows.png')}" />
+                                                                    </button>
+                                                                    <div class="slds-dropdown slds-dropdown--left">
+                                                                        <ul class="slds-dropdown__list slds-dropdown--length-5" role="menu">
+                                                                            <apex:repeat value="{!selectableFieldsMap[pofl.name].deploymentTemplateNameMap}" var="dt">
+                                                                                <li class="slds-dropdown__item" role="presentation">
+                                                                                    <a href="javascript:void(0);" role="menuitemcheckbox">
+                                                                                        <span data-recordId="{!dt}" class="slds-truncate">{!selectableFieldsMap[pofl.name].deploymentTemplateNameMap[dt]}</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </apex:repeat>
+                                                                            <li class="link">
+                                                                                 <span class="slds-truncate">
+                                                                                    <apex:commandLink action="{!resetRelationTemplate}"
+                                                                                            value="{!$Label.copado__Create_new_Data_Template}"
+                                                                                            onClick="unlockScreen();"
+                                                                                            onComplete="dts.openModals('NewTemplate');unlockScreen();"
+                                                                                            reRender="newTemplateContent">
+                                                                                        <apex:param name="newObjName" value="{!refTo}" />
+                                                                                        <apex:param name="fldApiName" value="{!pofl.name}" />
+                                                                                    </apex:commandLink>
+                                                                                </span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </apex:outputPanel>
+                                                            </apex:outputPanel>
+
+                                                            <apex:outputPanel layout="block" id="parentLookup" styleClass="lookup-images">
+                                                                <apex:outputPanel layout="none" rendered="{!AND(selectableFieldsMap[pofl.name].isSelected, selectableFieldsMap[pofl.name].deploymentTemplate != null)}">
+                                                                    <apex:repeat value="{!selectableFieldsMap[pofl.name].deploymentTemplateNameMap}" var="dtParent">
+                                                                        <apex:outputPanel layout="none" rendered="{!selectableFieldsMap[pofl.name].deploymentTemplateNameMap[dtParent] == selectableFieldsMap[pofl.name].deploymentTemplate}">
+                                                                            <apex:commandLink action="{!openRelationTemplate}" target="_blank">
+                                                                                <apex:image value="{!URLFOR($Resource.copado__DTS_images,'lookup.png')}" />
+                                                                                <apex:param name="relTemplateId" value="{!dtParent}" />
+                                                                            </apex:commandLink>
+                                                                        </apex:outputPanel>
+                                                                    </apex:repeat>
+                                                                </apex:outputPanel>
+                                                            </apex:outputPanel>
+                                                        </td>
+                                                        <td>
+                                                            <apex:outputPanel layout="block" id="warningActionTd">
+                                                                <apex:outputPanel layout="none" rendered="{!AND(!pofl.nillable,!selectableFieldsMap[pofl.name].isSelected)}">
+                                                                    <apex:image width="20px"
+                                                                                value="{!URLFOR($Resource.copado__DTS_images,'warning.png')}"
+                                                                                title="{!$Label.copado__Warning_DTS}" />
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel layout="none" rendered="{!AND(selectableFieldsMap[pofl.name].isSelected,refTo=='User')}">
+                                                                    <apex:image width="20px"
+                                                                                value="{!URLFOR($Resource.copado__DTS_images,'warning.png')}"
+                                                                                title="{!$Label.copado__User_Lookup_Warnings}" />
+                                                                </apex:outputPanel>
+                                                            </apex:outputPanel>
+                                                        </td>
+                                                    </tr>
+                                                </apex:outputPanel>
+                                            </apex:repeat>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                    </tbody>
+                                </table>
+                                </apex:outputPanel>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+
+                    <!-- Child Objects Tab -->
+                    <div id="related-child-objects-content" class="slds-tabs_default__content" role="tabpanel" aria-labelledby="related-child-objects">
+                        <apex:outputPanel layout="block" styleClass="table-wrapper" id="childrenObjectFieldsTab">
+                            <div class="table">
+                                <apex:outputPanel layout="block" id="childObjectRefresh" styleClass="refresh-link">
+                                    <apex:commandLink styleClass="refreshIcon" action="{!refreshGlobalDescribe}" value=" {!$Label.copado__REFRESH}" onClick="lockScreen();" onComplete="describeSobjectCallout();" rendered="{!template.copado__Template_Source_Org__c != null}" />
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="block" id="relatedChildObjectsPanel">
+                                <table id="relatedChildObjectsTable" class="stripe">
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox" style="slds-checkbox" id="relatedChildSelectAll" checked="checked" onchange="lockScreen();dts.expandDataTable('relatedChildObjectsTable');dts.selectUnselectAll('relatedChildObjectsTable', this.id);reloadRelatedChildObjectsTable();"/></th>
+                                        <th>{!$Label.Object_Label}</th>
+                                        <th>{!$Label.Object_API_Name}</th>
+                                        <th>{!$Label.Relationship_Name}</th>
+                                        <th class="no-sort">
+                                            {!$Label.Deployment_Template}
+                                            <apex:image value="{!URLFOR($Resource.copado__DTS_images,'asterisk.png')}" />
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <apex:repeat value="{!desResponse.childRelationshipsList}" var="outerCofl">
+                                        <apex:repeat value="{!outerCofl}" var="cofl">
+                                            <apex:outputPanel layout="none" rendered="{!AND(cofl.relationshipName != null,NOT(CONTAINS(NotValidChild,cofl.relationshipName)))}">
+                                                <tr>
+                                                    <td>
+                                                        <apex:inputCheckbox styleClass="slds-checkbox row-select"
+                                                                            value="{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].isSelected}"
+                                                                            disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                            <apex:actionSupport event="onchange" reRender="childDeploymentTemplateTd,childLookup" onComplete="dts.expandDataTable('relatedChildObjectsTable');dts.changeSelectAll('relatedChildObjectsTable','relatedChildSelectAll');dts.contractDataTable('relatedChildObjectsTable');"/>
+                                                        </apex:inputCheckbox>
+                                                    </td>
+                                                    <td>
+                                                        <apex:repeat value="{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].objectApiNameMap}" var="relObj">
+                                                            <apex:outputPanel layout="none" rendered="{!relObj == cofl.childSObject}">
+                                                                {!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].objectApiNameMap[relObj]}
+                                                            </apex:outputPanel>
+                                                        </apex:repeat>
+                                                    </td>
+                                                    <td>
+                                                        <apex:repeat value="{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].objectApiNameMap}" var="relObj">
+                                                            <apex:outputPanel layout="none" rendered="{!relObj == cofl.childSObject}">
+                                                                {!relObj}
+                                                            </apex:outputPanel>
+                                                        </apex:repeat>
+                                                    </td>
+                                                    <td>{!cofl.relationshipName}</td>
+                                                    <td>
+                                                        <apex:outputPanel layout="block" id="childDeploymentTemplateTd" styleClass="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click relation-picklist">
+                                                            <apex:outputPanel layout="none" rendered="{!OR(!enableADD,AND(selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].isSelected,$ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                                <apex:outputPanel layout="none" rendered="{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplate != null}">
+                                                                    {!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplate}
+                                                                </apex:outputPanel>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel layout="none" rendered="{!AND(selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].isSelected,enableADD,$ObjectType.copado__Data_Template__c.Createable,$ObjectType.copado__Data_Template__c.Updateable)}">
+                                                                <apex:inputHidden value="{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplate}" />
+                                                                <button type="button"
+                                                                        class="slds-button slds-button--neutral slds-picklist__label"
+                                                                        aria-haspopup="true"
+                                                                        onclick="dts.handlePicklist(event)">
+                                                                    <span class="slds-truncate picklist-label" title="{!$Label.Select_Template}">
+                                                                        <apex:outputPanel layout="none" rendered="{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplate != null}">
+                                                                            {!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplate}
+                                                                        </apex:outputPanel>
+                                                                    </span>
+                                                                    <apex:image styleClass="dropdown-arrows" value="{!URLFOR($Resource.copado__DTS_images,'dropdown_arrows.png')}" />
+                                                                </button>
+                                                                <div class="slds-dropdown slds-dropdown--left">
+                                                                    <ul class="slds-dropdown__list slds-dropdown--length-5" role="menu">
+                                                                        <apex:repeat value="{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplateNameMap}" var="dtChild">
+                                                                            <li class="slds-dropdown__item" role="presentation">
+                                                                                <a href="javascript:void(0);" role="menuitemcheckbox">
+                                                                                    <span class="slds-truncate">{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplateNameMap[dtChild]}</span>
+                                                                                </a>
+                                                                            </li>
+                                                                        </apex:repeat>
+                                                                        <li class="link">
+                                                                             <span class="slds-truncate">
+                                                                                <apex:commandLink action="{!resetRelationTemplate}"
+                                                                                        value="{!$Label.copado__Create_new_Data_Template}"
+                                                                                        onClick="unlockScreen();"
+                                                                                        onComplete="dts.openModals('NewTemplate');unlockScreen();"
+                                                                                        reRender="newTemplateContent">
+                                                                                    <apex:param name="newObjName" value="{!cofl.childSObject}" />
+                                                                                    <apex:param name="fldApiName" value="{!cofl.relationshipName}" />
+                                                                                </apex:commandLink>
+                                                                            </span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </apex:outputPanel>
+                                                        </apex:outputPanel>
+
+                                                        <apex:outputPanel layout="block" id="childLookup" styleClass="lookup-images">
+                                                            <apex:outputPanel layout="none" rendered="{!AND(selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].isSelected, selectableChildRelationsMap[cofl.field +  '-'+ cofl.relationshipName].deploymentTemplate != null)}">
+                                                                <apex:repeat value="{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplateNameMap}" var="dtChild">
+                                                                    <apex:outputPanel layout="none" rendered="{!selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplateNameMap[dtChild] == selectableChildRelationsMap[cofl.field + '-' + cofl.relationshipName].deploymentTemplate}">
+                                                                        <apex:commandLink action="{!openRelationTemplate}" target="_blank">
+                                                                            <apex:image value="{!URLFOR($Resource.copado__DTS_images,'lookup.png')}" />
+                                                                            <apex:param name="relTemplateId" value="{!dtChild}" />
+                                                                        </apex:commandLink>
+                                                                    </apex:outputPanel>
+                                                                </apex:repeat>
+                                                            </apex:outputPanel>
+                                                        </apex:outputPanel>
+                                                    </td>
+                                                </tr>
+                                            </apex:outputPanel>
+                                        </apex:repeat>
+                                    </apex:repeat>
+                                    </tbody>
+                                </table>
+                                </apex:outputPanel>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+
+                    <!-- Main Object Filter Tab -->
+                    <div id="main-object-filter-content" class="slds-tabs_default__content" role="tabpanel"
+                         aria-labelledby="main-object-filter">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_8-of-12">
+                                <apex:outputPanel layout="block" styleClass="form-wrapper" id="mainObjectFiltersTab">
+                                    <div class="filter-main-object">
+                                        <ol>
+                                            <apex:repeat value="{!criteriaWrapperList}" var="criteria">
+                                                <li>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_3-of-12">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-select_container">
+                                                                        <apex:selectList styleClass="slds-select"
+                                                                                         value="{!criteria.fieldName}"
+                                                                                         size="1" multiselect="false"
+                                                                                         disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                                            <apex:selectOptions value="{!AllFieldsAPIName}" />
+                                                                            <apex:actionSupport action="{!getFieldOperators}"
+                                                                                    event="onchange"
+                                                                                    reRender="objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,mainObjectFiltersTab,filterLogicPanel,sampleContainer,generalWarningContainer,newTemplateContainer,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel"
+                                                                                    onSubmit="dts.onClickFunction();"
+                                                                                    onComplete="dts.onCompleteFunctionToreRender();">
+                                                                                <apex:param name="cro" value="{!criteria.order}" />
+                                                                            </apex:actionSupport>
+                                                                        </apex:selectList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <apex:outputPanel layout="block" styleClass="slds-col slds-size_2-of-12" rendered="{!criteria.fieldName != 'Custom Filter'}">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-select_container">
+                                                                        <apex:selectList styleClass="slds-select"
+                                                                                         value="{!criteria.operator}"
+                                                                                         size="1" multiselect="false"
+                                                                                         disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                                            <apex:selectOptions value="{!criteria.operatorSet}" />
+                                                                        </apex:selectList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel layout="block" styleClass="slds-col slds-size_3-of-12" rendered="{!criteria.fieldName != 'Custom Filter'}">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:input styleClass="slds-input"
+                                                                                    rendered="{!OR(criteria.fieldType='STRING', criteria.fieldType='REFERENCE', criteria.fieldType='PICKLIST', criteria.fieldType='TEXTAREA', criteria.fieldType='ID', criteria.fieldType='BASE64BINARY', criteria.fieldType='TIME', criteria.fieldType='URL', criteria.fieldType='EMAIL', criteria.fieldType='PHONE', criteria.fieldType='ADDRESS', criteria.fieldType='MULTIPICKLIST')}"
+                                                                                    value="{!criteria.input}" type="text"
+                                                                                    disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}"/>
+                                                                    <apex:outputPanel layout="block" styleClass="slds-select_container" rendered="{!OR(criteria.fieldType='DATE',criteria.fieldType='DATETIME')}">
+                                                                        <apex:selectList styleClass="slds-select" value="{!criteria.input}" size="1" multiSelect="false" disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}">
+                                                                            <apex:selectOption itemValue="YESTERDAY" itemLabel="Yesterday"/>
+                                                                            <apex:selectOption itemValue="TODAY" itemLabel="Today"/>
+                                                                            <apex:selectOption itemValue="TOMORROW" itemLabel="Tomorrow"/>
+                                                                            <apex:selectOption itemValue="LAST_WEEK" itemLabel="Last Week"/>
+                                                                            <apex:selectOption itemValue="THIS_WEEK" itemLabel="This Week"/>
+                                                                            <apex:selectOption itemValue="NEXT_WEEK" itemLabel="Next Week"/>
+                                                                            <apex:selectOption itemValue="LAST_MONTH" itemLabel="Last Month"/>
+                                                                            <apex:selectOption itemValue="THIS_MONTH" itemLabel="This Month"/>
+                                                                            <apex:selectOption itemValue="NEXT_MONTH" itemLabel="Next Month"/>
+                                                                            <apex:selectOption itemValue="LAST_N_DAYS:n" itemLabel="Last N Days"/>
+                                                                            <apex:selectOption itemValue="NEXT_N_DAYS:n" itemLabel="Next N Days"/>
+                                                                            <apex:selectOption itemValue="LAST_N_WEEKS:n" itemLabel="Last N Weeks"/>
+                                                                            <apex:selectOption itemValue="NEXT_N_WEEKS:n" itemLabel="Next N Weeks"/>
+                                                                            <apex:selectOption itemValue="THIS_QUARTER" itemLabel="This Quarter"/>
+                                                                            <apex:selectOption itemValue="LAST_QUARTER" itemLabel="Last Quarter"/>
+                                                                            <apex:selectOption itemValue="NEXT_QUARTER" itemLabel="Next Quarter"/>
+                                                                            <apex:selectOption itemValue="LAST_N_QUARTERS:n" itemLabel="Last N Quarters"/>
+                                                                            <apex:selectOption itemValue="NEXT_N_QUARTERS:n" itemLabel="Next N Quarters"/>
+                                                                            <apex:selectOption itemValue="THIS_YEAR" itemLabel="This Year"/>
+                                                                            <apex:selectOption itemValue="LAST_YEAR" itemLabel="Last Year"/>
+                                                                            <apex:selectOption itemValue="NEXT_YEAR" itemLabel="Next Year"/>
+                                                                            <apex:selectOption itemValue="LAST_N_YEARS:n" itemLabel="Last N Years"/>
+                                                                            <apex:selectOption itemValue="NEXT_N_YEARS:n" itemLabel="Next N Years"/>
+                                                                            <apex:selectOption itemValue="THIS_FISCAL_QUARTER" itemLabel="This Fiscal Quarter"/>
+                                                                            <apex:selectOption itemValue="LAST_FISCAL_QUARTER" itemLabel="Last Fiscal Quarter"/>
+                                                                            <apex:selectOption itemValue="NEXT_FISCAL_QUARTER" itemLabel="Next Fiscal Quarter"/>
+                                                                            <apex:selectOption itemValue="LAST_N_FISCAL_QUARTERS:n" itemLabel="Last N Fiscal Quarters"/>
+                                                                            <apex:selectOption itemValue="NEXT_N_FISCAL_QUARTERS:n" itemLabel="Next N Fiscal Quarters"/>
+                                                                            <apex:selectOption itemValue="THIS_FISCAL_YEAR" itemLabel="This Fiscal Year"/>
+                                                                            <apex:selectOption itemValue="LAST_FISCAL_YEAR" itemLabel="Last Fiscal Year"/>
+                                                                            <apex:selectOption itemValue="NEXT_FISCAL_YEAR" itemLabel="Next Fiscal Year"/>
+                                                                            <apex:selectOption itemValue="LAST_N_FISCAL_YEARS:n" itemLabel="Last N Fiscal Years"/>
+                                                                            <apex:selectOption itemValue="NEXT_N_FISCAL_YEARS:n" itemLabel="Next N Fiscal Years"/>
+                                                                            <apex:selectOption itemValue="customDate" itemLabel="Custom Date (Time)"/>
+                                                                            <apex:actionSupport event="onchange"
+                                                                                                onSubmit="dts.onClickFunction();"
+                                                                                                reRender="objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,mainObjectFiltersTab,filterLogicPanel,sampleContainer,generalWarningContainer,newTemplateContainer,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel"
+                                                                                                onComplete="dts.onCompleteFunctionToreRender();" />
+                                                                        </apex:selectList>
+                                                                    </apex:outputPanel>
+                                                                    <apex:input styleClass="slds-input"
+                                                                                    rendered="{!OR(criteria.fieldType='INTEGER', criteria.fieldType='DOUBLE',criteria.fieldType='INT',criteria.fieldType='PERCENT',criteria.fieldType='CURRENCY')}"
+                                                                                    value="{!criteria.numberInput}"
+                                                                                    type="number"
+                                                                                    disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}"/>
+
+                                                                    <apex:inputCheckbox style="font-size: x-large;"
+                                                                                        rendered="{!criteria.fieldType='BOOLEAN'}"
+                                                                                        value="{!criteria.input}"
+                                                                                        disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}"/>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel layout="block" styleClass="slds-col slds-size_4-of-12" rendered="{!criteria.fieldName != 'Custom Filter'}">
+                                                            <div class="slds-form-element filter-value">
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:input styleClass="slds-input"
+                                                                                rendered="{!AND(CONTAINS(criteria.input,':n'),OR(criteria.fieldType='DATE',criteria.fieldType='DATETIME'))}"
+                                                                                value="{!criteria.numberInput}"
+                                                                                type="number"
+                                                                                disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}"/>
+                                                                    <apex:input styleClass="slds-input"
+                                                                                rendered="{!AND(criteria.input='customDate',criteria.fieldType='DATE')}"
+                                                                                value="{!criteria.dateInput}"
+                                                                                type="date"
+                                                                                disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}"/>
+                                                                    <apex:input styleClass="slds-input"
+                                                                                rendered="{!AND(criteria.input='customDate',criteria.fieldType='DATETIME')}"
+                                                                                value="{!criteria.dateTimeInput}"
+                                                                                type="datetime-local"
+                                                                                disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}"/>
+                                                                </div>
+                                                                <div class="delete-icon">
+                                                                    <apex:outputPanel layout="none" rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.Accessible,$ObjectType.copado__Data_Template__c.Createable,$ObjectType.copado__Data_Template__c.Updateable,$ObjectType.copado__Data_Template__c.Deletable)}">
+                                                                        <span class="deleteIcon" onclick="dts.onClickFunction();removeCriteria({!criteria.order});"></span>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel layout="block" styleClass="slds-col slds-size_9-of-12" rendered="{!criteria.fieldName == 'Custom Filter'}">
+                                                            <div class="slds-form-element filter-value">
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:inputTextarea styleClass="slds-input" value="{!criteria.input}" html-placeholder="Account.Name = 'ABC'" disabled="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.Accessible,!$ObjectType.copado__Data_Template__c.Createable,!$ObjectType.copado__Data_Template__c.Updateable))}"/>
+                                                                </div>
+                                                                <div class="delete-icon">
+                                                                    <apex:outputPanel layout="none" rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.Accessible,$ObjectType.copado__Data_Template__c.Createable,$ObjectType.copado__Data_Template__c.Updateable,$ObjectType.copado__Data_Template__c.Deletable)}">
+                                                                        <span class="deleteIcon" onclick="dts.onClickFunction();removeCriteria({!criteria.order});"></span>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                    <hr />
+                                                </li>
+                                            </apex:repeat>
+                                        </ol>
+
+                                        <p class="actions">
+                                            <apex:commandLink id="addRow" action="{!addNewCriteria}"
+                                                              reRender="objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,mainObjectFiltersTab,filterLogicPanel,sampleContainer,generalWarningContainer,newTemplateContainer,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel"
+                                                              value="{!$Label.copado__Add_new_parameter}"
+                                                              onClick="dts.onClickFunction();"
+                                                              onComplete="dts.onCompleteFunctionToreRender();"
+                                                              rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.Accessible,$ObjectType.copado__Data_Template__c.Createable,$ObjectType.copado__Data_Template__c.Updateable)}"/>
+                                        </p>
+
+                                        <apex:outputPanel layout="block" id="filterLogicPanel" styleClass="slds-form-element">
+                                            <label class="slds-form-element__label" for="filterLogic">{!$ObjectType.copado__Data_Template__c.fields.copado__Filter_Logic__c.Label}</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField value="{!template.copado__Filter_Logic__c}"
+                                                                 styleClass="slds-input"
+                                                                 rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Filter_Logic__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Filter_Logic__c.Updateable)}" />
+                                                <apex:outputField value="{!template.copado__Filter_Logic__c}"
+                                                                  styleClass="slds-input"
+                                                                  rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.copado__Filter_Logic__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Filter_Logic__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Filter_Logic__c.Updateable))}"/>
+                                            </div>
+                                        </apex:outputPanel>
+
+                                        <!--<div class="buttons sample-button">
+                                            <apex:commandButton styleClass="slds-button slds-button_outline-brand"
+                                                                action="{!generateSample}" reRender="sampleContent"
+                                                                value="{!$Label.Validate_and_Show_Query}"
+                                                                onClick="lockScreen();"
+                                                                onComplete="dts.openModals('SampleRecord');unlockScreen();"
+                                                                rendered="{!AND($ObjectType.Data_Template__c.Accessible,$ObjectType.Data_Template__c.Createable,$ObjectType.Data_Template__c.Updateable)}"/>
+                                        </div>-->
+
+                                        <hr />
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="queryLimit">{!$ObjectType.Data_Template__c.fields.Max_Record_Limit__c.Label}</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField html-placeholder="Unlimited"
+                                                                 value="{!template.copado__Max_Record_Limit__c}"
+                                                                 styleClass="slds-input"
+                                                                 rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Max_Record_Limit__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Max_Record_Limit__c.Updateable)}" />
+                                                <apex:outputField value="{!template.copado__Max_Record_Limit__c}"
+                                                                  styleClass="slds-input"
+                                                                  rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.copado__Max_Record_Limit__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Max_Record_Limit__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Max_Record_Limit__c.Updateable))}" />
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="batchSize">{!$ObjectType.copado__Data_Template__c.fields.copado__Batch_Size__c.Label}</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField value="{!template.copado__Batch_Size__c}"
+                                                                 styleClass="slds-input"
+                                                                 rendered="{!AND(enableADD,$ObjectType.copado__Data_Template__c.fields.copado__Batch_Size__c.Createable,$ObjectType.copado__Data_Template__c.fields.copado__Batch_Size__c.Updateable)}" />
+                                                <apex:outputField value="{!template.copado__Batch_Size__c}"
+                                                                  styleClass="slds-input"
+                                                                  rendered="{!OR(!enableADD,AND($ObjectType.copado__Data_Template__c.fields.copado__Batch_Size__c.Accessible,!$ObjectType.copado__Data_Template__c.fields.copado__Batch_Size__c.Createable,!$ObjectType.copado__Data_Template__c.fields.copado__Batch_Size__c.Updateable))}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                            <div class="slds-col slds-size_4-of-12">
+                                <div class="form-wrapper">
+                                    <div class="copado-query-tips">
+                                        <p>{!$Label.copado__Copado_Pro_Query_Tips}</p>
+                                        <ol>
+                                            <li>{!$Label.copado__Data_Template_Query_Tip_1}</li>
+                                            <li>{!$Label.copado__Data_Template_Query_Tip_2}</li>
+                                            <li>{!$Label.copado__Data_Template_Query_Tip_3}</li>
+                                            <li>{!$Label.copado__Data_Template_Query_Tip_4}</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <apex:actionFunction name="removeCriteria" action="{!removeCriteria}"
+                                             onComplete="dts.onCompleteFunctionToreRender();"
+                                             reRender="objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,mainObjectFiltersTab,filterLogicPanel,sampleContainer,newTemplateContainer,generalWarningContainer,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel">
+                            <apex:param name="criteriaOrder" value="" />
+                        </apex:actionFunction>
+
+                    </div>
+
+                    <!-- Action Functions -->
+                    <apex:actionFunction name="reloadRelatedChildObjectsTable" reRender="relatedChildObjectsPanel" onComplete="dts.startDataTable('relatedChildObjectsTable');dts.changeSelectAll('relatedChildObjectsTable','relatedChildSelectAll');dts.contractDataTable('relatedChildObjectsTable');unlockScreen();"/>
+                    <apex:actionFunction name="reloadObjectFieldsTab" reRender="objectFieldTable" onComplete="dts.startDataTable('objectsTable');dts.changeSelectAll('objectsTable','objectsSelectAll');dts.contractDataTable('objectsTable');unlockScreen();"/>
+                    <apex:actionFunction name="reloadRelatedParentObjectsTable" reRender="relatedParentObjectsPanel" onComplete="dts.startDataTable('relatedParentObjectsTable');dts.changeSelectAll('relatedParentObjectsTable','relatedParentSelectAll');dts.contractDataTable('relatedParentObjectsTable');unlockScreen();"/>
+                    <apex:actionFunction name="renderRelationAction" reRender="parentLookup,childLookup" />
+                </div>
+
+            </div>
+
+
+            <!--  Sample Record Modal  -->
+            <section id="modalSampleRecord" role="dialog" tabindex="-1"
+                     class="slds-modal slds-fade-in-open slds-modal_large hide" aria-labelledby="sampleHeading"
+                     aria-modal="true" aria-describedby="sampleContent">
+                <apex:outputPanel layout="block" styleClass="slds-modal__container" id="sampleContainer">
+                    <header class="slds-modal__header">
+                        <button type="button"
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse closeToastIcon"
+                                title="{!$Label.Close_Sample}" onclick="dts.closeModals('SampleRecord');"></button>
+                        <h2 id="sampleHeading" class="slds-text-heading_medium slds-hyphenate">
+                            <span class="modal-title slds-text-heading_medium">{!$Label.Date_Template_Sample}</span>
+                        </h2>
+                    </header>
+                    <apex:outputPanel layout="block" styleClass="slds-modal__content slds-p-around_medium modal-content"
+                                      id="sampleContent">
+                        <div>
+                            {!$ObjectType.copado__Data_Template__c.fields.copado__Main_Object__c.Label}:
+                            <span class="slds-text-title_bold">{!template.copado__Main_Object__c}</span>
+                        </div>
+
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped static-table">
+                            <thead>
+                            <tr class="slds-line-height_reset">
+                                <apex:repeat value="{!fieldLabelList}" var="sobjLabel">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">{!fieldLabelList[sobjLabel]}</div>
+                                    </th>
+                                </apex:repeat>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <apex:repeat value="{!sObjectList}" var="sobjVal">
+                                <tr class="slds-hint-parent">
+                                    <apex:repeat value="{!fieldLabelList}" var="sobjLabel">
+                                        <td scope="row">
+                                            <div class="slds-truncate">
+                                                {!sobjVal[sobjLabel]}
+                                            </div>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:repeat>
+                            </tbody>
+                        </table>
+
+                    </apex:outputPanel>
+                    <footer class="slds-modal__footer">
+                        <div class="buttons modal-button">
+                            <button type="button" class="slds-button slds-button_brand"
+                                    onclick="dts.closeModals('SampleRecord');">{!$Label.Close_Sample}
+                            </button>
+                        </div>
+                    </footer>
+                </apex:outputPanel>
+            </section>
+            <div id="backDropSampleRecord" class="slds-backdrop slds-backdrop_open hide"></div>
+
+
+            <!--  General Warning Modal  -->
+            <section id="modalGeneralWarning" role="dialog" tabindex="-1"
+                     class="slds-modal slds-fade-in-open slds-modal_large hide" aria-labelledby="generalWarningHeading"
+                     aria-modal="true" aria-describedby="generalWarningContent">
+                <apex:outputPanel layout="block" styleClass="slds-modal__container" id="generalWarningContainer">
+                    <header class="slds-modal__header">
+                        <button type="button"
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse closeToastIcon"
+                                title="{!$Label.Close_Warnings}" onclick="dts.closeModals('GeneralWarning');"></button>
+                        <h2 id="generalWarningHeading" class="slds-text-heading_medium slds-hyphenate">
+                            <span class="modal-title slds-text-heading_medium">{!$Label.Warnings} ({!GeneralMessageSize})</span>
+                        </h2>
+                    </header>
+                    <apex:outputPanel layout="block" styleClass="slds-modal__content slds-p-around_medium modal-content"
+                                      id="generalWarningContent">
+                        <apex:repeat value="{!generalMessagesMap}" var="svrt">
+                            <apex:repeat value="{!generalMessagesMap[svrt]}" var="msgs">
+                                <div>
+                                    <span class="slds-icon_container slds-icon__svg--default {!svrt}ToastIcon {!svrt}-icon"></span>
+                                    {!msgs}
+                                    <br />
+                                </div>
+                                <hr />
+                            </apex:repeat>
+                        </apex:repeat>
+                    </apex:outputPanel>
+                    <footer class="slds-modal__footer">
+                        <div class="buttons modal-button">
+                            <button type="button" class="slds-button slds-button_brand"
+                                    onclick="dts.closeModals('GeneralWarning');">{!$Label.Close_Warnings}
+                            </button>
+                        </div>
+                    </footer>
+                </apex:outputPanel>
+            </section>
+            <div id="backDropGeneralWarning" class="slds-backdrop slds-backdrop_open hide"></div>
+
+
+            <!--  New Template Modal  -->
+            <section id="modalNewTemplate" role="dialog" tabindex="-1"
+                     class="slds-modal slds-fade-in-open slds-medium hide" aria-labelledby="newTemplateHeading"
+                     aria-modal="true" aria-describedby="newTemplateContent">
+                <apex:outputPanel layout="block" styleClass="slds-modal__container" id="newTemplateContainer">
+                    <header class="slds-modal__header">
+                        <button type="button"
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse closeToastIcon"
+                                title="{!$Label.Cancel}" onclick="dts.closeModals('NewTemplate');"></button>
+                        <h2 id="newTemplateHeading" class="slds-text-heading_medium slds-hyphenate">
+                            <span class="modal-title slds-text-heading_medium">{!$Label.Quick_create_new_Date_Template}</span>
+                        </h2>
+                    </header>
+                    <apex:outputPanel layout="block" styleClass="slds-modal__content slds-p-around_medium modal-content"
+                                      id="newTemplateContent">
+                        <div class="quick-create-info">
+                            {!$Label.copado__Add_Info_Relation_Modal}
+                        </div>
+
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="dataTemplateName">
+                                {!$ObjectType.copado__Data_Template__c.fields.Name.Label}
+                                <apex:image value="{!URLFOR($Resource.copado__DTS_images,'asterisk.png')}" />
+                            </label>
+                            <div class="slds-form-element__control">
+                                <apex:inputField value="{!relationTemplate.Name}" styleClass="slds-input" />
+                            </div>
+                        </div>
+
+                        <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light modal-warning"
+                             role="status">
+                            <div class="slds-media__figure"></div>
+                            <div class="slds-media__body">
+                                <p>
+                                    {!$Label.ADD_Relation_Template_Warning}
+                                </p>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    <footer class="slds-modal__footer">
+                        <div class="buttons modal-button">
+                            <button type="button" class="slds-button slds-button_outline-brand"
+                                    onclick="dts.closeModals('NewTemplate');">{!$Label.Cancel}</button>
+                            <apex:commandButton action="{!createNewDataTemplateAndGo}"
+                                                value="{!$Label.copado__Create_new_Data_Template}"
+                                                styleClass="slds-button slds-button_brand" onClick="dts.onClickFunction();"
+                                                onComplete="dts.closeModals('NewTemplate');dts.onCompleteFunctionToreRender();"
+                                                reRender="errorPanel,mainObjectFiltersTab,objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,filterLogicPanel,sampleContainer,generalWarningContainer,newTemplateContainer,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel" />
+                        </div>
+                    </footer>
+                </apex:outputPanel>
+            </section>
+            <div id="backDropNewTemplate" class="slds-backdrop slds-backdrop_open hide"></div>
+
+
+            <!--  Record Matching Modal  -->
+            <section id="modalRecordMatching" role="dialog" tabindex="-1"
+                     class="slds-modal slds-fade-in-open slds-medium hide" aria-labelledby="recordMatchingHeading"
+                     aria-modal="true" aria-describedby="recordMatchingContent">
+                <apex:outputPanel layout="block" styleClass="slds-modal__container" id="recordMatchingContainer">
+                    <apex:outputPanel layout="none" rendered="{!template.copado__Main_Object__c != null}">
+                        <header class="slds-modal__header">
+                            <button type="button"
+                                    class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse closeToastIcon"
+                                    title="{!$Label.Cancel}" onclick="dts.closeModals('RecordMatching');"></button>
+                            <h2 id="recordMatchingHeading" class="slds-text-heading_medium slds-hyphenate">
+                                <span class="modal-title slds-text-heading_medium">{!$Label.Configure_Record_Matching_Formula}</span>
+                            </h2>
+                        </header>
+                        <apex:outputPanel layout="block" styleClass="slds-modal__content slds-p-around_medium modal-content"
+                                        id="recordMatchingContent">
+                            <div class="quick-create-info">
+                                {!RecordMatchingFormulaModalDescription}
+                            </div>
+
+                            <apex:outputPanel layout="none" rendered="{!RecordMatchingFormulasForTemplateObject}">
+                                <div class="record-matching-modal-container">
+                                    <div class="slds-media__figure">{!$Label.copado__Record_Matching_Formula}</div>
+                                    <div class="slds-media__body">
+                                        <p>
+                                            <apex:repeat value="{!RecordMatchingFormula}" var="recordMatchingRecord">
+                                                <apex:outputPanel layout="none" rendered="{!recordMatchingRecord.copado__Field_1__c != null}">
+                                                    <span class="slds-badge_inverse custom-badge-inverse">{!recordMatchingRecord.copado__Field_1__c}</span> 
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!recordMatchingRecord.copado__Field_2__c != null}">
+                                                    <span class="slds-badge_inverse custom-badge-inverse">{!recordMatchingRecord.copado__Field_2__c}</span> 
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!recordMatchingRecord.copado__Field_3__c != null}">
+                                                    <span class="slds-badge_inverse custom-badge-inverse">{!recordMatchingRecord.copado__Field_3__c}</span> 
+                                                </apex:outputPanel>
+                                            </apex:repeat>
+                                        </p>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <footer class="slds-modal__footer">
+                            <div class="buttons modal-button">
+                                <button type="button" class="slds-button slds-button_outline-brand"
+                                        onclick="dts.closeModals('RecordMatching');">{!$Label.Cancel}</button>
+                                <apex:commandLink action="{!createRecordMatchingFormulaAndRedirect}"
+                                                    value="{!$Label.copado__Configure_Formula}"
+                                                    styleClass="slds-button slds-button_brand" rendered="{!!RecordMatchingFormulasForTemplateObject}"
+                                                    target="_blank" onClick="dts.closeModals('RecordMatching');"/>
+                                <apex:outputPanel layout="none" rendered="{!RecordMatchingFormulasForTemplateObject}">
+                                    <apex:commandLink action="{!editCurrentRecordMatchingFormula}"
+                                                    value="{!$Label.copado__Edit_Formula}"
+                                                    styleClass="slds-button slds-button_outline-brand" target="_blank"/>
+                                    <button type="button" class="slds-button slds-button_brand"
+                                        onclick="dts.closeModals('RecordMatching');">{!$Label.Confirm_Formula}</button>
+                                </apex:outputPanel>                    
+                            </div>
+                        </footer>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </section>
+            <div id="backDropRecordMatching" class="slds-backdrop slds-backdrop_open hide"></div>
+
+
+            <apex:actionFunction name="renderRecordMatchingModalContent" onComplete="unlockScreen();" reRender="recordMatchingContainer" />
+            <apex:actionFunction name="describeSobjectCallout" action="{!refreshGlobalSObject}" onComplete="dts.onCompleteFunctionToreRender();" reRender="errorPanel,mainObjectFiltersTab,objectFieldsTab,parentObjectFieldsTab,childrenObjectFieldsTab,filterLogicPanel,sampleContainer,generalWarningContainer,newTemplateContainer,recordMatchingContainer,activeCheckboxBlock,matchOwnerBlock,attachmentOptionsBlock,matchRecordTypeBlock,mainObjectTooltip,sourceOrgPanel" />
+        </div>
+    </apex:form>
+</apex:page>

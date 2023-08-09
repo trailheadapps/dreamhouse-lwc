@@ -1,0 +1,28 @@
+<apex:page standardController="copado__Selenium_Test_Case__c" tabStyle="copado__Selenium_Test_Case__c" extensions="copado.CloneSeleniumTestCaseExtension" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    </head>
+    <body>
+        <apex:form styleClass="copado-lightning-container">
+            <apex:sectionHeader title="{!$ObjectType.copado__Selenium_Test_Case__c.Label}" subtitle="{!$Label.copado__TEST_CASE_NEW_VERSION} {!tc.Name}"/>
+            <apex:pageBlock mode="edit" id="pb_edit" title="{!$Label.copado__PLEASE_ENTER_A_NEW_NAME}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton action="{!doClone}" value="{!$Label.site.save}" />
+                    <apex:commandButton action="{!cancel}" value="{!$Label.site.cancel}" immediate="true"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="1">
+                    <apex:inputField id="if_name" required="true" value="{!clonedTC.Name}" style="min-width: 600px"/>
+                    <apex:outputField id="if_version" value="{!clonedTC.copado__Version__c}"/>
+                    <apex:outputField id="if_previousversion" value="{!clonedTC.copado__Previous_Version__c}"/>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+        <script>
+            ga('send', 'pageview', {
+                'page': '/CloneSeleniumTestCase',
+                'title': 'Clone Selenium Test Case'
+            });
+        </script>
+        </body>
+</apex:page>

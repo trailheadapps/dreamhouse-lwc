@@ -1,0 +1,55 @@
+<!--
+ - Created by ferhatozsavran on 3/15/18.
+ -->
+
+<apex:page id="MergeVersion" standardController="copado__Artifact_Version__c" extensions="copado.MergeVersionController">
+    <apex:slds />
+    <head>
+        <title>{!$Label.EDIT} {!$ObjectType.Artifact_Version__c.Label} {!Artifact_Version__c.Name} | Copado</title>
+
+        <c:IncludeStaticsResourceComponent addJQuery="true" />
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+
+        <script>
+            document.onreadystatechange = function(){
+                if(document.readyState === 'complete'){
+                    showApplyTagReleaseButton();
+                }
+            }
+
+            var showApplyTagReleaseButton = function(){
+                var mergeVersionButton = $copado('<input id="mergeVersion" type="button" class="btn" value="{!JSENCODE($Label.copado__Merge_Version)}" onclick="mergeVerisions();"/>');
+                mergeVersionButton.appendTo($copado('[Id^="topButtonRow"]'));
+            }
+        </script>
+    </head>
+
+    <apex:form >
+        <apex:pageMessages id="dxOperationErrors"/>
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}" useJobsManager="true" possibleRunningJobs=",DxArtifactMergeReleaseJob,,true;"/>
+        <script>
+                    window.addEventListener('copadoJobsManagerFinished', function (evt) {
+                        for(var i=0 ; i < evt.detail.length ; i++ ) {
+                            var jobFinished = evt.detail[i].isFinished;
+                            var jobSuccess = evt.detail[i].isSuccess;
+                            var jobMessage = evt.detail[i].message;
+                            var jobType = evt.detail[i].type;
+                            console.debug("Job Success: ", jobSuccess);
+                            console.debug("Job Finished: ", jobFinished);
+                            console.debug("Job Message: ", jobMessage);
+                            console.debug("Job Type: ", jobType);
+                            jobstatus(jobFinished,jobSuccess,jobMessage,jobType);
+                        }
+                    }, false);
+                </script>
+        <apex:detail subject="{!copado__Artifact_Version__c.Id}" relatedList="true" title="true" inlineEdit="true" showChatter="true"/>
+        <apex:actionFunction name="mergeVerisions" action="{!udpdateVersion}" reRender="dxOperationErrors"/>
+        <apex:actionFunction name="jobstatus" action="{!jobStatusNotification}" reRender="dxOperationErrors">
+            <apex:param value="" name="jobFinished"/>
+            <apex:param value="" name="jobSuccess"/>
+            <apex:param value="" name="jobMessage"/>
+            <apex:param value="" name="jobType"/>
+        </apex:actionFunction>
+
+    </apex:form>
+</apex:page>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Prompt xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>License Manager WalkthroughDeactivated</masterLabel>
+    <promptVersions>
+        <actionButtonLabel>License Manager Article</actionButtonLabel>
+        <actionButtonLink>https://docs.copado.com/category/ycqzgzqz6d-license-manager</actionButtonLink>
+        <body>Please ignore this prompt</body>
+        <customApplication>copado__Copado_Plan_Lightning</customApplication>
+        <delayDays>1</delayDays>
+        <dismissButtonLabel>Dismiss</dismissButtonLabel>
+        <displayPosition>MiddleCenter</displayPosition>
+        <displayType>FloatingPanel</displayType>
+        <endDate>2021-07-01</endDate>
+        <isPublished>false</isPublished>
+        <masterLabel>License Manager WalkthroughDeactivated Step 1</masterLabel>
+        <shouldDisplayActionButton>true</shouldDisplayActionButton>
+        <shouldIgnoreGlobalDelay>false</shouldIgnoreGlobalDelay>
+        <startDate>2021-05-02</startDate>
+        <stepNumber>1</stepNumber>
+        <targetPageKey1>copado__Kanban_Board__c</targetPageKey1>
+        <targetPageKey2>list</targetPageKey2>
+        <targetPageType>standard__objectPage</targetPageType>
+        <timesToDisplay>1</timesToDisplay>
+        <title>Deactivated</title>
+        <uiFormulaRule>
+            <criteria>
+                <leftValue>{!$Permission.StandardPermission.ManageUsers}</leftValue>
+                <operator>EQUAL</operator>
+                <rightValue>TRUE</rightValue>
+            </criteria>
+        </uiFormulaRule>
+        <userAccess>SpecificPermissions</userAccess>
+        <userProfileAccess>Everyone</userProfileAccess>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+</Prompt>

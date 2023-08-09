@@ -1,0 +1,13 @@
+<!--
+ - Created by ferhatozsavran on 3/14/18.
+ -->
+
+<apex:page id="DXTestOrgIntermediary" standardController="copado__Test_Run__c" extensions="copado.DXTestOrgIntermediaryController" action="{!redirectPage}" 
+    lightningStylesheets="true">
+    <apex:outputPanel layout="block" rendered="{!showLicenseError}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+    <apex:outputPanel rendered="{!!showLicenseError}">    
+        <apex:pageMessages id="errorMessage"/>
+    </apex:outputPanel>
+</apex:page>

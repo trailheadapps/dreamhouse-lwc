@@ -1,0 +1,166 @@
+<apex:page standardController="copado__Test_Run__c" extensions="copado.ExecuteTestRunExtension" sidebar="false" id="thePage" title="Test Run Execution" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+    
+    <head>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    </head>
+
+    <body>
+        <apex:outputPanel layout="block" rendered="{!showLicenseError}" style="{!IF($User.UIThemeDisplayed == 'Theme4d','padding: .75rem .75rem 0;','')}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!showLicenseError}">
+            <div class="copado-lightning-VF">
+                
+                <apex:sectionHeader id="sectionHeader" title="Test Run Execution" subtitle="{!copado__Test_Run__c.Test_Script__r.copado__Test_Title__c}" description="This page executes the test run. The Save button may be pressed when finished." rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+                <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+
+                <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                    <div class="slds-page-header">
+                    <apex:outputPanel layout="block" id="pageMessages">
+                        <apex:pagemessages id="msg"/>
+                    </apex:outputPanel>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-custom-custom27" title="Description of icon when needed">
+                                    <svg class="slds-icon" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom27')}"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-heading--label slds-line-height--reset">Test Run Execution</p>
+                                <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!copado__Test_Run__c.Test_Script__r.copado__Test_Title__c}">{!copado__Test_Run__c.Test_Script__r.copado__Test_Title__c}</h1>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- ACTION BUTTONS -->
+                        <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                        <div class="slds-button-group" role="group">
+                            
+                        </div>
+                        </div>
+                        <!-- / ACTION BUTTONS -->
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-align-middle">
+                            <p class="slds-text-body_small">This page executes the test run. The Save button may be pressed when finished.</p>
+                        </div>
+                    </div>
+                    <div style="background: white; height: 25px;">
+                        <!-- Header details buffer-->
+                    </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+                    <apex:form id="theForm" styleClass="copado-lightning-container" style="padding-top:12px;" html-novalidate="true">
+                        <apex:pageBlock id="pbRun" mode="edit" title="Test Run Information">
+                            <apex:pageBlockButtons >
+                                <apex:commandButton id="btnSaveRun" value="{!$Label.site.save}" action="{!save}" />
+                                <apex:commandButton id="btnCancelRun" value="{!$Label.site.cancel}" action="{!cancel}" />
+                            </apex:pageBlockButtons>
+                            <apex:pageBlockSection id="pbsRun" columns="1" >
+                                <apex:repeat id="rpt_outputFields" value="{!$ObjectType.copado__Test_Run__c.FieldSets.copado__OutputFields}" var="field">
+                                    <apex:outputField value="{!copado__Test_Run__c[field]}" />
+                                </apex:repeat>
+                            </apex:pageBlockSection>
+                            <apex:pageBlockSection id="pbs_run2" columns="1">
+                                <apex:repeat id="rpt_inputFields" value="{!$ObjectType.copado__Test_Run__c.FieldSets.copado__InputFields}" var="field">
+                                    <apex:inputField value="{!copado__Test_Run__c[field]}" style="min-width:300px;" />
+                                </apex:repeat>
+                            </apex:pageBlockSection>
+                            <apex:pageBlockSection title="Accessibility">
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Test Steps Status column" />
+                                    <apex:outputPanel >
+                                        <apex:selectList id="sl_StatusColumn" size="1" value="{!access_statusColumn}" onchange="setStatusColumn()">
+                                            <apex:selectOption itemValue="dropdown" itemLabel="Dropdown box"/>
+                                            <apex:selectOption itemValue="images" itemLabel="Image buttons"/>
+                                        </apex:selectList>
+                                        <apex:actionStatus id="actionStatus">
+                                            <apex:facet name="start">
+                                                <img src="/img/loading.gif" />
+                                            </apex:facet>
+                                        </apex:actionStatus>
+                                        <apex:actionFunction name="setStatusColumn" action="{!updateAccess_statusColumn}" rerender="pbSteps,pbRun" status="actionStatus">
+                                            <apex:param name="s" value="{!access_statusColumn}" />
+                                        </apex:actionFunction>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                            </apex:pageBlockSection>
+                        </apex:pageBlock>
+                        
+                        <apex:pageBlock id="pbSteps" title="Test Steps" mode="edit">
+                            <apex:pageBlockButtons id="pbsSteps" >
+                                <apex:commandButton id="btnSaveProgress" value="Save Progress" action="{!saveProgress}" rendered="{!showPicklist}" rerender="nothing" status="statusSaveProgress"/>
+                                <apex:actionStatus id="statusSaveProgress">
+                                    <apex:facet name="start"><img src="/img/loading.gif"/></apex:facet>
+                                    <apex:facet name="stop"></apex:facet>
+                                </apex:actionStatus>
+                            </apex:pageBlockButtons>
+                            <apex:pageBlockTable id="pbtSteps" value="{!steps}" var="s">
+                                <apex:column id="colActionDescription">
+                                    <apex:facet name="header">{!$ObjectType.copado__Test_Run_Step__c.Fields.copado__Action_Description__c.Label}</apex:facet>
+                                    <apex:outputText id="ot_ActionDescription" value="{!s.copado__Action_Description__c}" />
+                                </apex:column>
+                                <apex:column id="colExpectedResult">
+                                    <apex:facet name="header">{!$ObjectType.copado__Test_Run_Step__c.Fields.copado__Expected_Result__c.Label}</apex:facet>
+                                    <apex:outputText id="ot_ExpectedResult" value="{!s.copado__Expected_Result__c}" />
+                                </apex:column>
+                                <apex:column id="colGuidanceNotes" >
+                                    <apex:facet name="header">{!$ObjectType.copado__Test_Run_Step__c.Fields.copado__Guidance_notes__c.Label}</apex:facet>
+                                    <apex:outputText id="ot_GuidanceNotes" value="{!s.copado__Guidance_notes__c}" />
+                                </apex:column>
+                                <apex:repeat value="{!$ObjectType.copado__Test_Run_Step__c.FieldSets.copado__TestRunExecutionFieldSet}" var="ifsm">
+                                    <apex:column id="colActualResult" width="200">
+                                        <apex:facet name="header">{!ifsm.Label}</apex:facet>
+                                        <apex:inputField value="{!s[ifsm.fieldPath]}" style="width:99%;height:100%;" />
+                                    </apex:column>
+                                </apex:repeat>
+                                <apex:column id="colButtons" rendered="{!showButtons}" width="100">
+                                    <apex:facet name="header">{!$Label.copado__BUTTONS}</apex:facet>
+                                    <apex:actionStatus id="statusButtons">
+                                        <apex:facet name="start"><img src="/img/loading.gif"/></apex:facet>
+                                        <apex:facet name="stop">
+                                            <apex:outputPanel id="pnlButtons" layout="block">
+                                                <apex:commandLink id="cl_Confirm" action="{!updateTestRunStatus}" rerender="pbSteps,pbRun" status="statusButtons">
+                                                    <apex:param name="thisStepId" assignTo="{!thisStepId}" value="{!s.Id}" />
+                                                    <apex:param name="thisStepStatus" assignTo="{!thisStepStatus}" value="Passed" />
+                                                    <img src="/img/msg_icons/confirm24.png" alt="Step passed" />
+                                                </apex:commandLink>&nbsp;
+                                                <apex:commandLink id="cl_Warning" action="{!updateTestRunStatus}" rerender="pbSteps,pbRun" status="statusButtons">
+                                                    <apex:param name="thisStepId" assignTo="{!thisStepId}" value="{!s.Id}" />
+                                                    <apex:param name="thisStepStatus" assignTo="{!thisStepStatus}" value="Passed with comments" /><img src="/img/msg_icons/warning24.png" alt="Step passed with comments" /></apex:commandLink>&nbsp;
+                                                <apex:commandLink id="cl_Error" action="{!updateTestRunStatus}" rerender="pbSteps,pbRun" status="statusButtons">
+                                                    <apex:param name="thisStepId" assignTo="{!thisStepId}" value="{!s.Id}" />
+                                                    <apex:param name="thisStepStatus" assignTo="{!thisStepStatus}" value="Failed" /><img src="/img/msg_icons/error24.png" alt="Step failed" /></apex:commandLink>
+                                            </apex:outputPanel>
+                                        </apex:facet>
+                                    </apex:actionStatus>
+                                </apex:column>
+                                <apex:column id="colOTstatus" rendered="{!showButtons}" width="100">
+                                    <apex:facet name="header">{!$ObjectType.copado__Test_Run_Step__c.Fields.copado__Status__c.Label}</apex:facet>
+                                    <apex:outputText id="otStatus" value="{!s.copado__Status__c}" />
+                                </apex:column>
+                                <apex:column id="colPicklist" rendered="{!showPicklist}">
+                                    <apex:facet name="header">{!$ObjectType.copado__Test_Run_Step__c.Fields.copado__Status__c.Label}</apex:facet>
+                                    <apex:inputField id="if_Status" value="{!s.copado__Status__c}" />
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlock>
+                    </apex:form>
+                    <c:GAnalytics />
+                    <script>
+                        ga('send', 'pageview', {
+                        'page': '/executeTestRun',
+                        'title': 'Execute Test Run'
+                        });
+                    </script>
+                </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+    </body>
+</apex:page>

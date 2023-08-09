@@ -1,0 +1,71 @@
+<apex:page showHeader="true" sidebar="true" standardController="copado__Deployment_Flow__c" extensions="copado.ManageEnvVarsExt" action="{!createMissingVars}" id="thePage" lightningStylesheets="true">
+    <head>
+        <c:IncludeStaticsResourceComponent addEVMcss="true" />
+        <c:WizardUtils />
+        <c:GAnalytics />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <script type="text/javascript">
+        function promptVarName() {
+            var envVar = prompt(copadoLabels.ENTER_VAR_NAME, 'VAR_NAME');
+            if (envVar != null) {
+                generateNewVar(envVar);
+            }
+        }
+        function deleteByName(varName) {
+            if (confirm(copadoLabels.ARE_YOU_SURE)) {
+                doDelete(varName);
+            }
+        }
+        </script>
+    </head>
+    <body>
+    <apex:pageMessages id="pmessages" escape="false" />
+    <apex:form id="theForm" styleClass="copado-lightning-container">
+        <apex:actionFunction name="generateNewVar" action="{!newVar}" reRender="theForm">
+            <apex:param id="envVar" name="envVar" value="" assignTo="{!newEnvVarName}" />
+        </apex:actionFunction>
+        <apex:actionFunction name="doDelete" immediate="true" action="{!doDelete}" reRender="theForm">
+            <apex:param id="varName" name="varName" value="" assignTo="{!deleteVarName}" />
+        </apex:actionFunction>
+        <apex:sectionHeader title="{!$ObjectType.copado__Environmental_Variable__c.LabelPlural}" subtitle="{!copado__Deployment_Flow__c.Name}" />
+
+        <apex:pageBlock id="pbEnvVars" title="{!$Label.copado__Environment_Variables}">
+            <apex:pageBlockButtons id="pbButtons">
+                <apex:commandLink onclick="promptVarName(); return false;" style="text-decoration: none; {!IF($User.UIThemeDisplayed!='Theme3','margin-right: 8px;','')}" reRender="dummyRenderForNew">
+                    <apex:commandButton value="{!$Label.copado__NEW}" disabled="{!editing}" />
+                </apex:commandLink>
+                <apex:commandButton action="{!editModeOn}" value="{!$Label.copado__EDIT}" reRender="theForm" rendered="{!NOT(editing)}" />
+                <apex:commandButton immediate="true" action="{!cancel}" value="{!$Label.copado__Cancel}" reRender="theForm" rendered="{!editing}" />
+                <apex:commandButton action="{!save}" value="{!$Label.copado__Save}" disabled="{!NOT(editing)}" />
+            </apex:pageBlockButtons>
+            <table class="full-width list" id="tblData" border="0" cellspacing="0" cellpadding="0">
+                <tr class="headerRow">
+                    <th style="{!IF($User.UIThemeDisplayed=='Theme3','width: 30px;','')}">{!$Label.Action}</th>
+                    <apex:repeat id="variableNames" value="{!EnvNames}" var="envname">
+                        <th class="{!IF(envname='Name', '', IF(CONTAINS(envname, ' - CI'),'env CI','env'))}">{!envname}</th>
+                    </apex:repeat>
+                </tr>
+                <apex:repeat id="variablesValues" value="{!managedEnvVarsList}" var="mev">
+                    <tr class="dataRow">
+                        <td class="actionColumn">
+                            <apex:commandLink id="delete" onclick="deleteByName('{!JSENCODE(mev.meName)}'); return false;" styleClass="actionLink">
+                                {!$Label.copado__Del}
+                            </apex:commandLink>
+                        </td>
+                        <td class="dataCell">
+                            <apex:inputText id="name" value="{!mev.meName}" styleClass="full-width" rendered="{!editing}" />
+                            <apex:outputText value="{!mev.meName}" styleClass="full-width" rendered="{!NOT(editing)}" />
+                        </td>
+                        <apex:repeat value="{!mev.managedEnvVarList}" var="itemVar">
+                            <td class="dataCell">
+                                <apex:inputField id="value" value="{!itemVar.copado__Value__c}" styleClass="full-width" rendered="{!editing}" required="true" />
+                                <apex:outputField value="{!itemVar.copado__Value__c}" styleClass="full-width" rendered="{!NOT(editing)}" />
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+    </apex:form>
+    </body>
+</apex:page>

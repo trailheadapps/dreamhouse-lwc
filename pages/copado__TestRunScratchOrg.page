@@ -1,0 +1,63 @@
+<!--
+ - Created by mertyalti on 01/02/2018.
+ -->
+
+<apex:page id="TestRunScratchOrg" standardController="copado__Test_Run__c" extensions="copado.DynamicScratchOrgController"
+           lightningStylesheets="true" sideBar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false">
+
+    <apex:slds />
+    <html>
+    <header>
+        <title>Scratch Org for {!copado__Test_Run__c.Name}</title>
+        <c:IncludeStaticsResourceComponent addJquery="true"/>
+        <c:IncludeConnectionJsComponent />
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}"/>
+    </header>
+    <body>
+    <apex:form >
+        <apex:outputPanel layout="block" rendered="{!showLicenseError}" style="{!IF($User.UIThemeDisplayed == 'Theme4d','padding: .75rem .75rem 0;','')}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!showLicenseError}">
+            <apex:pageMessage severity="info" strength="3" detail="{!initialPageMessage}" rendered="{!showInitialPageMessage}"/>
+            <apex:outputPanel layout="block" >
+                <apex:pageMessages id="pmes"/>
+                <c:ScratchOrgCompletion id="soc" parentPageController="{!this}" componentName="ScratchOrgCompletion"
+                                        showActionButtons="true" mode="wizard" tr="{!testRun}" rendered="{!showComponent}"/>
+                <apex:actionFunction name="loadReviewData" action="{!loadReviewData}" reRender="soc"/>
+                <script type="application/javascript">
+                    (function () {
+                        setTimeout(
+                            function () {
+                                loadReviewData()
+                            }
+                            , 100
+                        )
+                    })();
+                </script>
+            </apex:outputPanel>
+            <c:ScreenLocker msg="{!$Label.copado__LOADING}" useJobsManager="true" possibleRunningJobs=",DxCreateFullScratchOrgJob,,true;"/>
+            <script>
+                window.addEventListener('copadoJobsManagerFinished', function (evt) {
+                    for(var i=0 ; i < evt.detail.length ; i++ ) {
+                        var jobFinished = evt.detail[i].isFinished;
+                        var jobSuccess = evt.detail[i].isSuccess;
+                        var jobMessage = evt.detail[i].message;
+                        var jobType = evt.detail[i].type;
+                        jobstatus(jobFinished,jobSuccess,jobMessage,jobType);
+                    }
+                }, false);
+            </script>
+            <apex:actionFunction name="jobstatus" action="{!jobStatusNotification}" reRender="pmes" onComplete="prepareGrid();">
+                <apex:param value="" name="jobFinished"/>
+                <apex:param value="" name="jobSuccess"/>
+                <apex:param value="" name="jobMessage"/>
+                <apex:param value="" name="jobType"/>
+            </apex:actionFunction>
+        </apex:outputPanel>
+    </apex:form>
+    </body>
+    </html>
+
+
+</apex:page>

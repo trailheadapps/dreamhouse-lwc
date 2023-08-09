@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <description>User Story Commit outdates latest Validation</description>
+    <label>User Story Commit outdates latest Validation</label>
+    <processType>Workflow</processType>
+</Flow>

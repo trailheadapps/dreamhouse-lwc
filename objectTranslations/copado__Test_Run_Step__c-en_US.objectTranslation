@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- TestRunExecutionFieldSet --></label>
+        <name>copado__TestRunExecutionFieldSet</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Action/Description --></label>
+        <name>copado__Action_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Actual Result --></label>
+        <name>copado__Actual_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expected Result --></label>
+        <name>copado__Expected_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Guidance notes --></label>
+        <name>copado__Guidance_notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>copado__Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Script Step --></label>
+        <name>copado__Script_Step__c</name>
+        <relationshipLabel><!-- Test Run Steps --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passed</masterLabel>
+            <translation><!-- Passed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passed with comments</masterLabel>
+            <translation><!-- Passed with comments --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Test Run --></label>
+        <name>copado__Test_Run__c</name>
+        <relationshipLabel><!-- Test Run Steps --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

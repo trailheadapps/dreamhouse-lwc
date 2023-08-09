@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Copado Header Fields --></label>
+        <name>copado__Copado_Header_Fields</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- Custom Fields --></label>
+        <name>copado__CustomFields</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ManageBranchesDialog --></label>
+        <name>copado__ManageBranchesDialog</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- Pipeline Manager --></label>
+        <name>copado__Pipeline_Manager</name>
+    </fieldSets>
+    <fields>
+        <help><!-- Select this checkbox if you are promoting from a higher to a lower environment in the pipeline. --></help>
+        <label><!-- Is Back-Promotion --></label>
+        <name>copado__Back_Promotion__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field is checked by Copado once the promotion is merged and deployed successfully for multi-cloud platform. --></help>
+        <label><!-- Completed --></label>
+        <name>copado__Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Connection Behavior --></label>
+        <name>copado__Connection_Behavior__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select this checkbox if you wish to move added profiles to a Full Profiles step. Doing this will remove the profiles from the Metadata step. --></help>
+        <label><!-- Create Full Permission Sets Step --></label>
+        <name>copado__Create_Full_Permission_Sets_Step__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select this checkbox if you wish to move added permission sets to a Full Permission Sets step. Doing this will remove the permission sets from the Metadata step. --></help>
+        <label><!-- Create Full Profiles Step --></label>
+        <name>copado__Create_Full_Profiles_Step__c</name>
+    </fields>
+    <fields>
+        <label><!-- Destination Environment --></label>
+        <name>copado__Destination_Environment__c</name>
+        <relationshipLabel><!-- Promotions (Destination Environment) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The destination credential that will be used when creating the deployment. This credential is auto-populated based on the pipeline linked to the project. --></help>
+        <label><!-- Destination Credential --></label>
+        <name>copado__Destination_Org_Credential__c</name>
+        <relationshipLabel><!-- Promotions (Destination Credential) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Select the metadata types that you want to manually resolve when a conflict occurs while merging the feature branch into the promotion branch. --></help>
+        <label><!-- Exclude From Auto Resolve --></label>
+        <name>copado__Exclude_From_Auto_Resolve__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Rolled Back? --></label>
+        <name>copado__Is_Rolled_Back__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Deployment Execution Id --></label>
+        <name>copado__Last_Deployment_Execution_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Promotion Execution Id --></label>
+        <name>copado__Last_Promotion_Execution_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates that this promotion includes a manual conflict resolution. --></help>
+        <label><!-- Merge Conflict --></label>
+        <name>copado__Merge_Conflict__c</name>
+    </fields>
+    <fields>
+        <help><!-- Populate this field if you want to set an ascending or descending merge order for the selected user stories in a deployment. For example, status__c asc --></help>
+        <label><!-- Order User Stories by --></label>
+        <name>copado__Order_by__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field auto-populates and displays the pipeline platform. --></help>
+        <label><!-- Platform --></label>
+        <name>copado__Platform__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select a project linked to an active pipeline. --></help>
+        <label><!-- Project --></label>
+        <name>copado__Project__c</name>
+        <relationshipLabel><!-- Promotions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Release --></label>
+        <name>copado__Release__c</name>
+        <relationshipLabel><!-- Promotions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Select this checkbox if you want the promotion owner to receive an email notification when the promotion is complete. --></help>
+        <label><!-- Notify When Complete --></label>
+        <name>copado__Send_Deployment_Complete_email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Environment --></label>
+        <name>copado__Source_Environment__c</name>
+        <relationshipLabel><!-- Promotions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The source credential that will be used when creating the deployment. This credential is auto-populated based on the pipeline linked to the project. --></help>
+        <label><!-- Source Credential --></label>
+        <name>copado__Source_Org_Credential__c</name>
+        <relationshipLabel><!-- Promotions (Source Credential) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed with errors</masterLabel>
+            <translation><!-- Completed with errors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Conflicts Resolved</masterLabel>
+            <translation><!-- Conflicts Resolved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Merge Conflict</masterLabel>
+            <translation><!-- Merge Conflict --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled</masterLabel>
+            <translation><!-- Scheduled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validated</masterLabel>
+            <translation><!-- Validated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validation failed</masterLabel>
+            <translation><!-- Validation failed --></translation>
+        </picklistValues>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Back Promotions to Scratch Orgs are not allowed --></errorMessage>
+        <name>copado__Scratch_Orgs_Disabled_for_Back_Promoting</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Rollback --></label>
+        <name>copado__Rollback</name>
+    </webLinks>
+</CustomObjectTranslation>

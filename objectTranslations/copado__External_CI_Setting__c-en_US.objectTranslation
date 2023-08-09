@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CI Tool --></label>
+        <name>copado__CI_Tool__c</name>
+        <picklistValues>
+            <masterLabel>Bamboo</masterLabel>
+            <translation><!-- Bamboo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jenkins</masterLabel>
+            <translation><!-- Jenkins --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Team City</masterLabel>
+            <translation><!-- Team City --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Credential Validated --></label>
+        <name>copado__Credential_Validated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Endpoint --></label>
+        <name>copado__Endpoint__c</name>
+    </fields>
+</CustomObjectTranslation>

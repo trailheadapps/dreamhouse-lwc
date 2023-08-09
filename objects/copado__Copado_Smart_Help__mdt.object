@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>copado__Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Active</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Base_Page__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Base Page</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GitCommitMain</fullName>
+                    <default>true</default>
+                    <label>GitCommitMain</label>
+                </value>
+                <value>
+                    <fullName>GitCommitChanges</fullName>
+                    <default>false</default>
+                    <label>GitCommitChanges</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Help_Text_Url__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Enter a URL of a documentation page or article to help your users understand more about this tip. Please, enter the URL with full https:// format. Example https://www.copado.com/</inlineHelpText>
+        <label>Help Text Url</label>
+        <required>false</required>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>copado__Help_Text__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>This is the text that will appear in the Tip pop-up message. Try to be assertive and clear with your tip.</inlineHelpText>
+        <label>Help Text</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>copado__Triggering_Action__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Select if you want the tip to be display immediately or only when the triggering action is met</inlineHelpText>
+        <label>Triggering Action</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Copado Metadata Grid selection</fullName>
+                    <default>true</default>
+                    <label>Copado Metadata Grid selection</label>
+                </value>
+                <value>
+                    <fullName>Always show</fullName>
+                    <default>false</default>
+                    <label>Always show</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Triggering_Metadata_Items__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>This is a non-mandatory field. You can use it to complement the Triggering Metadata Type in case you want specific Metadata items to trigger the tips. The Metadata items can be separated by &quot;;&quot;. Example standard-Account;standard-AppLauncher.</inlineHelpText>
+        <label>Triggering Metadata Items</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>copado__Triggering_Value__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <inlineHelpText>Specify the Metadata Type that will trigger the tip to be displayed</inlineHelpText>
+        <label>Triggering Metadata Type</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Copado Smart Help</label>
+    <pluralLabel>Copado Smart Helps</pluralLabel>
+    <validationRules>
+        <fullName>copado__Validate_triggering_metadata_type</fullName>
+        <active>true</active>
+        <description>Triggering Metadata Items should not be populated in case Triggering Metadata Type is blank</description>
+        <errorConditionFormula>AND(
+  NOT( ISBLANK( copado__Triggering_Metadata_Items__c ) ),
+  ISBLANK( copado__Triggering_Value__c )  
+)</errorConditionFormula>
+        <errorDisplayField>copado__Triggering_Value__c</errorDisplayField>
+        <errorMessage>Please enter Triggering Metadata Type to populate Triggering Metadata Items</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

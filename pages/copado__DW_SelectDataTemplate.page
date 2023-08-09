@@ -1,0 +1,147 @@
+<apex:page standardController="copado__Deployment__c" extensions="copado.DW_SelectDataTemplateExtension" id="DW_SelectDataTemplate" lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Data Template selection">
+
+    <apex:slds />
+    <c:WizardUtils />
+    <apex:includeScript value="{!URLFOR($Resource.utilsV2) }" />
+    <c:IncludeStaticsResourceComponent addJquery="true" addJSON2js="true" addCometdjs="true" addJcometdjs="true" addJSzipjs="true" />
+    <apex:includeScript value="{!$Resource.copado__DW_javascript}" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.css')}" />
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+
+    <script>
+        var globalSldsResourcePath = '{!URLFOR($Asset.SLDS)}';
+        var currentStepValue = '{!currentStepValue}';
+        dataTableId = 'dataTemplateTable';
+
+         $copado(document).ready(() => {
+            dw.checkDisable();
+        });
+    </script>
+
+    <apex:form >
+        <c:CopadoSpinner />
+
+        <apex:outputPanel layout="block" id="headerComponent">
+            <c:DW_Header currentStep="{!currentStepValue}" stepNameList="{!stepsList}" />
+        </apex:outputPanel>
+
+
+        <div class="co-dw-container">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_3-of-12"></div>
+                <div class="slds-col slds-size_6-of-12">
+
+                    <h1>{!deploymentInterface.StepGeneralHeader}</h1>
+                    <p class="subtitle">{!$Label.SelectDataTemplate}</p>
+
+                    <div class="deployment-flow-step">
+                        <div class="wrapper">
+                            <div class="source">
+                                <article class="slds-card pill source">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__body">
+                                                <h2 class="slds-card__header-title">
+                                                    <span>{!$Label.Source}</span>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                    </div>
+                                </article>
+
+                                <div class="text-wrapper">
+                                    <span>
+                                        <apex:outputField value="{!deployment.copado__From_Org__c}" />
+                                    </span>
+                                </div>
+                            </div>
+                            <apex:outputPanel layout="block" styleClass="icon" id="chevronRightPanel">
+                                <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_left chevronright"></span>
+                            </apex:outputPanel>
+                            <div class="target">
+                                <div class="text-wrapper">
+                                    <span>
+                                        <apex:outputField value="{!DestinationOrg.copado__To_Org__c}" />
+                                    </span>
+                                </div>
+
+                                <article class="slds-card pill target">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__body">
+                                                <h2 class="slds-card__header-title">
+                                                    <span>{!$Label.TARGET}</span>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-m-bottom_xx-large"></div>
+
+                    <div class="table">
+
+                        <apex:outputPanel layout="block" id="errorPanel">
+                            <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                                <div id="divToast" class="slds-notify_container slds-is-relative">
+                                    <apex:repeat value="{!pageMessagesMap}" var="severity">
+                                        <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                                            <span class="slds-assistive-text"></span>
+                                            <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                            <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                                        </span>
+                                            <div class="slds-notify__content">
+                                                <apex:repeat value="{!pageMessagesMap[severity]}" var="messages">
+                                                    <h2 class="slds-text-heading_small ">{!messages}</h2>
+                                                </apex:repeat>
+                                            </div>
+                                            <div class="slds-notify__close">
+                                                <button type="button" class="slds-button slds-button_icon slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                                    <span class="slds-icon_container slds-icon__svg--default closeToastIcon"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </apex:repeat>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+
+                        <table id="dataTemplateTable" class="stripe">
+                            <thead>
+                            <tr>
+                                <th class="no-sort"></th>
+                                <th class="no-sort">{!$ObjectType.Data_Template__c.fields.Name.Label}</th>
+                                <th class="no-sort">{!$ObjectType.Data_Template__c.fields.Description__c.Label}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <apex:repeat value="{!sourceList}" var="dTemplate">
+                                <tr>
+                                    <td>
+                                        <apex:inputCheckbox styleClass="slds-checkbox" html-recordId="{!dTemplate.template.Id}" value="{!dTemplate.isSelected}" />
+                                    </td>
+                                    <td>{!dTemplate.template.Name}</td>
+                                    <td class="description"><span title="{!dTemplate.template.copado__Description__c}">{!dTemplate.template.copado__Description__c}</span></td>
+                                </tr>
+                            </apex:repeat>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="buttons">
+                        <apex:commandButton styleClass="slds-button slds-button_outline-brand" onClick="lockScreen();" value="{!$Label.copado__BACK}" action="{!goToPreviousStep}"  onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent,chevronRightPanel" />
+                        <apex:commandButton styleClass="slds-button slds-button_outline-brand" onClick="lockScreen();" value="{!$Label.copado__SAVE_AND_CLOSE}" action="{!saveStepAndClose}" onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent,chevronRightPanel" />
+                        <apex:commandButton styleClass="slds-button slds-button_outline-brand" onClick="lockScreen();" value="Review Filters" action="{!confirmAndGoNextStep}" onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent,chevronRightPanel" />
+                        <apex:commandButton styleClass="slds-button slds-button_brand" onClick="lockScreen();" value="{!$Label.copado__Confirm_Selection}" action="{!confirmAndGoOverride}" onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent,chevronRightPanel" />
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12"></div>
+            </div>
+        </div>
+
+    </apex:form>
+</apex:page>

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Created test script for your saved case !!!</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>copado__Base_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Optional Base URL where this test will be run, if Credentials are not specified.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Optional Base URL where this test will be run, if Credentials are not specified.</inlineHelpText>
+        <label>Base URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>copado__Batch_No__c</fullName>
+        <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Batch No.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Environment__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>copado__Org_Credential__r.copado__Environment__r.Name</formula>
+        <label>Environment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__External_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <externalId>true</externalId>
+        <label>External ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Last_Status_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Last Status Date</label>
+        <summarizedField>copado__Selenium_Test_Result__c.LastModifiedDate</summarizedField>
+        <summaryForeignKey>copado__Selenium_Test_Result__c.copado__Selenium_Test_Run__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>copado__Last_Status_Icon__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IMAGE( 
+CASE(TEXT(copado__Last_Status__c), 
+
+&apos;Completed with errors&apos;, &apos;/resource/&apos; &amp; IF($Setup.copado__Settings__c.copado__Namespace__c!=&apos;none&apos;,&apos;copado__&apos;, &apos;&apos;) &amp; &apos;Statics/img/icons/warning16.png&apos;,
+
+&apos;Completed successfully&apos;, &apos;/resource/&apos; &amp; IF($Setup.copado__Settings__c.copado__Namespace__c!=&apos;none&apos;,&apos;copado__&apos;, &apos;&apos;) &amp; &apos;Statics/img/icons/confirm16.png&apos;,
+
+&apos;Completed with warnings&apos;, &apos;/resource/&apos; &amp; IF($Setup.copado__Settings__c.copado__Namespace__c!=&apos;none&apos;,&apos;copado__&apos;, &apos;&apos;) &amp; &apos;Statics/img/icons/confirm16.png&apos;,
+
+
+&apos;In Progress&apos;, &apos;/resource/&apos; &amp; IF($Setup.copado__Settings__c.copado__Namespace__c!=&apos;none&apos;,&apos;copado__&apos;, &apos;&apos;) &amp; &apos;Statics/img/icons/loading.gif&apos;,
+
+&apos;Queued&apos;, &apos;/resource/&apos; &amp; IF($Setup.copado__Settings__c.copado__Namespace__c!=&apos;none&apos;,&apos;copado__&apos;, &apos;&apos;) &amp; &apos;Statics/img/icons/loading.gif&apos;,
+
+&apos;/s.gif&apos;),
+
+TEXT(copado__Last_Status__c) 
+)</formula>
+        <label>Last Status Icon</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Last_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Last Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Queued</fullName>
+                    <color>#BBBBBB</color>
+                    <default>true</default>
+                    <label>Queued</label>
+                </value>
+                <value>
+                    <fullName>Starting</fullName>
+                    <color>#999999</color>
+                    <default>false</default>
+                    <label>Starting</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <color>#0B6FCE</color>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Completed successfully</fullName>
+                    <color>#009900</color>
+                    <default>false</default>
+                    <label>Completed successfully</label>
+                </value>
+                <value>
+                    <fullName>Completed with errors</fullName>
+                    <color>#CC0000</color>
+                    <default>false</default>
+                    <label>Completed with errors</label>
+                </value>
+                <value>
+                    <fullName>Provider Failure</fullName>
+                    <color>#FF6666</color>
+                    <default>false</default>
+                    <label>Provider Failure</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Org_Credential__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Copado will log in to Salesforce using this Credential.  There is no need to record username and password of the Salesforce login page.</inlineHelpText>
+        <label>Credential</label>
+        <referenceTo>copado__Org__c</referenceTo>
+        <relationshipLabel>Selenium Test Runs</relationshipLabel>
+        <relationshipName>SeleniumTestRuns</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Selenium_Settings__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Copado will run the Test Suites for each of the selected Platforms in these Settings.</inlineHelpText>
+        <label>Selenium Settings</label>
+        <referenceTo>copado__Selenium_Settings__c</referenceTo>
+        <relationshipLabel>Selenium Test Runs</relationshipLabel>
+        <relationshipName>Selenium_Test_Runs</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Selenium_Test_Group__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>This field should not be populated.  The value is automatically maintained.</inlineHelpText>
+        <label>Selenium Test Group</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>copado__Selenium_Test_Group__c.copado__Manage_Test_Runs_manually__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>copado__Selenium_Test_Group__c</referenceTo>
+        <relationshipLabel>Selenium Test Runs</relationshipLabel>
+        <relationshipName>Selenium_Test_Runs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Selenium_Test_Suite__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Selenium Test Suite</label>
+        <referenceTo>copado__Selenium_Test_Suite__c</referenceTo>
+        <relationshipLabel>Selenium Test Runs</relationshipLabel>
+        <relationshipName>Selenium_Test_Runs</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Selenium Test Run</label>
+    <listViews>
+        <fullName>copado__All</fullName>
+        <columns>NAME</columns>
+        <columns>copado__Selenium_Test_Suite__c</columns>
+        <columns>copado__Org_Credential__c</columns>
+        <columns>copado__Selenium_Settings__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>copado__Last_Status_Icon__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Selenium Test Run Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Selenium Test Runs</pluralLabel>
+    <recordTypes>
+        <fullName>copado__Generic_Web_Application</fullName>
+        <active>true</active>
+        <description>Test a generic web application</description>
+        <label>Generic Web Application</label>
+        <picklistValues>
+            <picklist>copado__Last_Status__c</picklist>
+            <values>
+                <fullName>Completed successfully</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed with errors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provider Failure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Queued</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Starting</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>copado__Salesforce</fullName>
+        <active>true</active>
+        <description>Test a Salesforce Org using OAuth Authentication</description>
+        <label>Salesforce</label>
+        <picklistValues>
+            <picklist>copado__Last_Status__c</picklist>
+            <values>
+                <fullName>Completed successfully</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed with errors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provider Failure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Queued</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Starting</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>copado__Selenium_Test_Suite__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>copado__Org_Credential__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>copado__Selenium_Settings__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>copado__Last_Status_Icon__c</customTabListAdditionalFields>
+        <listViewButtons>copado__Add_Selection_to_a_Test_Group</listViewButtons>
+        <searchResultsCustomButtons>copado__Add_Selection_to_a_Test_Group</searchResultsCustomButtons>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>copado__Credentials_or_BaseURL</fullName>
+        <active>true</active>
+        <description>Base url cannot be set if credentials is defined</description>
+        <errorConditionFormula>NOT(ISBLANK(copado__Org_Credential__c)) &amp;&amp; NOT(ISBLANK(copado__Base_URL__c))</errorConditionFormula>
+        <errorMessage>Base URL cannot be populated if Credentials were selected.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>copado__Add_Selection_to_a_Test_Group</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>page</linkType>
+        <masterLabel>Add Selection to a Test Group</masterLabel>
+        <openType>replace</openType>
+        <page>copado__MassAddRunsToGroup</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+    <webLinks>
+        <fullName>copado__Quick_Run</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Run Test</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/{!IF(CONTAINS($Action.copado__User_Story__c.New, &apos;copado__&apos;), &apos;copado__&apos;, &apos;&apos;)}SeleniumTestQuickRun?runId={!copado__Selenium_Test_Run__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>copado__Refresh_Results</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Refresh Results</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>document.location.reload(true);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>copado__Show_Hook_URL</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Show Hook URL</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>showWebhook();</url>
+    </webLinks>
+</CustomObject>

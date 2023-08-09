@@ -1,0 +1,39 @@
+<apex:page standardController="copado__Selenium_Test_Case__c" extensions="copado.LicenseHelper,copado.SeleniumTestCaseViewEdit"  tabStyle="copado__Selenium_Test_Case__c" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+
+    <c:GAnalytics />
+    <div style="display: none">
+        <apex:outputText value="{!APIKey}" id="api_key"/>
+        <script type="text/javascript">
+          var copado_api_key = document.getElementById('{!$Component.api_key}').innerText;
+        </script>
+    </div>
+    <script>
+    var _copadoIsView= (location.search||'').indexOf('&popup')>-1 ||
+      (window.frameElement? (window.frameElement.getAttribute('title')==='SeleniumTestCaseEditor') : false);
+    window.CopadoParams = {isView: _copadoIsView,
+        apiKey: copado_api_key,
+        apiEndpoint: "{!JSEncode(APIEndpoint)}",
+        apiSessionId: "{!$Api.Session_ID}",
+        testCaseIds: ['{!JSEncode(copado__Selenium_Test_Case__c.Id)}'],
+        testcases: '{!URLENCODE(jsonTestCases)}'
+    };
+    </script>
+
+    <apex:stylesheet value="{!JSEncode($Setup.copado__Settings__c.copado__Server_URL__c)}/selenium-ide/handsontable.full.css"/>
+    <apex:stylesheet value="{!JSEncode($Setup.copado__Settings__c.copado__Server_URL__c)}/selenium-ide/copado-ide.css"/>
+    <apex:includeScript value="{!JSEncode($Setup.copado__Settings__c.copado__Server_URL__c)}/selenium-ide/copado-ide-all.js"/>
+
+    <!-- check that the feature is enabled, and the user has a license assigned -->
+    <apex:pageMessage severity="WARNING" strength="2" summary="{!possibleCSTErrorMsg}" rendered="{!!ISNULL(possibleCSTErrorMsg)}"></apex:pageMessage>
+
+    <div id="CopadoRecorderBody">
+    </div>
+
+    <script>
+        ga('send', 'pageview', {
+            'page': '/SeleniumTestCaseEditor',
+            'title': 'Selenium Test Case Editor'
+        });
+    </script> 
+</apex:page>

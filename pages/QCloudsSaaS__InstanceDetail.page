@@ -1,0 +1,56 @@
+<apex:page controller="QCloudsSaaS.instanceDetailController">
+    <apex:stylesheet value="{!$Resource.QCloudsSaaS__listtable}" />
+    <apex:pageMessage rendered="{! message_type != null}" summary="{! message}" severity="{! message_type}" strength="3" />
+    <apex:pageMessages />
+    <apex:form >
+        <apex:pageBlock title="Instance Details">
+            <apex:pageBlockSection >
+                <apex:outputField value="{! instance.Description__c }" />
+                <apex:outputField value="{! instance.url__c }" />
+                <apex:outputField value="{! instance.Environment_Type__c }" />
+                <apex:outputField value="{! instance.Instance_Type__c }" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:commandButton action="{! go_back }" value="Go to instances" />
+        <apex:pageBlock title="Trigger a Scan">
+            <apex:pageBlockSection rendered="{! instance.Is_Featured_Banch__c == true}">
+                    <apex:pageBlockSectionItem ><apex:outputLabel value="Git Branch" for="git_branch"/><apex:inputText value="{! git_branch }" id="git_branch"/></apex:pageBlockSectionItem>
+                    <apex:commandButton action="{! execute_scann }" value="Trigger Scan" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection rendered="{! instance.Is_Featured_Banch__c == false}" columns="1">
+                    <apex:commandButton action="{! execute_scann_full }" value="Trigger Scan" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock title="Scans">
+            <apex:pageBlockSection columns="1">
+                <apex:dataTable value="{! scanns}" var="scann" id="theTable" styleClass="v-table" rowClasses="odd,even" width="100%">
+                    <apex:column >
+                        <apex:facet name="header">Scan Date</apex:facet>
+                        <apex:outputText value="{!scann.QCloudsSaaS__Date__c}" />
+                    </apex:column>
+                    <apex:column rendered="{! instance.Is_Featured_Banch__c == true}">
+                        <apex:facet name="header">Branch</apex:facet>
+                        <apex:outputText value="{!scann.QCloudsSaaS__Branch_Name__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">State</apex:facet>
+                        <apex:outputText value="{!scann.QCloudsSaaS__State__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"></apex:facet>
+                        <apex:commandlink rendered="{! scann.State__c == 'RUNNING'}"  action="{! update_scanns }" >
+                            <apex:param name="idscan" value="{! scann.ID__c}" assignTo="{! id_scan}" />
+                            <apex:commandbutton value="Update"/>
+                        </apex:commandlink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">View Detail</apex:facet>
+                        <apex:commandLink action="{! openDetail }" value="View">
+                            <apex:param name="idscan" value="{! scann.ID__c}" assignTo="{! id_scan}" />
+                        </apex:commandLink>
+                    </apex:column>
+                </apex:dataTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

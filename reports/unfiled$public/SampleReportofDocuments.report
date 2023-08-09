@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>DOC_NAME</field>
+    </columns>
+    <columns>
+        <field>DOC_TYPE</field>
+    </columns>
+    <columns>
+        <field>DOC_LENGTH</field>
+    </columns>
+    <columns>
+        <field>DOC_DESC</field>
+    </columns>
+    <columns>
+        <field>DOC_KEYWORDS</field>
+    </columns>
+    <columns>
+        <field>DOC_INTERNAL</field>
+    </columns>
+    <columns>
+        <field>DOC_CREATEDBY</field>
+    </columns>
+    <columns>
+        <field>DOC_LASTUPDATEBY</field>
+    </columns>
+    <columns>
+        <field>DOC_LASTUPDATE</field>
+    </columns>
+    <columns>
+        <field>DOC_AUTHOR</field>
+    </columns>
+    <columns>
+        <field>FOLDER_NAME</field>
+    </columns>
+    <description>How many documents have been added to Salesforce?</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>DOC_CREATED</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sample Report: # of Documents</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>DocumentList</reportType>
+    <scope>all</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>DOC_CREATED</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

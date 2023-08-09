@@ -1,0 +1,223 @@
+<apex:page standardController="copado__Git_Repository__c" extensions="copado.EditGit" action="{!validate}" title="{!$Label.copado__VIEW} {!$ObjectType.copado__Git_Repository__c.Label}" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" sidebar="{!$User.UIThemeDisplayed=='Theme3'}" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds />
+    <head>
+        <title>Git Repository {!copado__Git_Repository__c.Name} | Copado</title>
+        <c:GAnalytics />
+        <c:IncludeStaticsResourceComponent addJquery="true" />
+        <script type="text/javascript">
+            function submitRetrieveCommitsModal(){
+                $branchName = $copado('#branchName');
+                var branchName = $branchName.val();
+                closeModal();
+                doRetrieve(branchName);
+            }
+
+            function openBranchNameModal(){
+                $copado('#backdrop').addClass('slds-backdrop--open');
+                $copado('#modal').addClass('slds-fade-in-open');
+                return null;
+            }
+
+            //Modal Close
+            function closeModal(){
+                $copado('#modal').removeClass('slds-fade-in-open');
+                $copado('#backdrop').removeClass('slds-backdrop--open');
+            }
+
+            $copado(document).ready(function(){
+                //Buttons To middle No PBtitle
+                if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+                    var mTitle = $copado('.pbTitle')[0];
+                    if(mTitle){
+                        mTitle.remove();
+                        var tdrow = $copado($copado('.pbButton')[0]);
+                        if(tdrow){
+                            tdrow.css( "text-align", "center" );
+                        }
+                    }
+                }
+            });
+
+        </script>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    </head>
+    <body>
+    <div class="copado-lightning-VF">
+        <apex:sectionHeader title="{!$ObjectType.copado__Git_Repository__c.Label}" subtitle="{!git.Name}" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+        <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+        <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+
+            <div class="slds-page-header">
+                <apex:outputPanel layout="block" id="pageMessages">
+                    <apex:pagemessages id="msg" />
+                </apex:outputPanel>
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                              <span class="slds-icon_container slds-icon-custom-custom87" title="Description of icon when needed">
+                                <svg class="slds-icon" aria-hidden="true">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom87')}"></use>
+                                </svg>
+                              </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.copado__Git_Repository__c.Label}</p>
+                                <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.copado__Git_Repository__c.Label}">
+                                    <apex:outputField value="{!copado__Git_Repository__c.Name}" />
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ACTION BUTTONS -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                        <div class="slds-button-group" role="group">
+
+                        </div>
+                    </div>
+                    <!-- / ACTION BUTTONS -->
+                </div>
+                <apex:outputPanel layout="block" style="background: white;" id="headerFields">
+                    <ul class="slds-grid slds-page-header__detail-row">
+                        <apex:variable value="{!1}" var="rowNum" />
+                        <apex:repeat value="{!$ObjectType.copado__Git_Repository__c.FieldSets.copado__Copado_Header_Fields}" var="f">
+                            <apex:outputPanel layout="block" rendered="{!rowNum < 8}">
+                                <li class="slds-page-header__detail-block slds-truncate" style="padding-right: 2em; padding-left: 2em;">
+                                    <c:LightningReadyOutputFields dividerBottom="false" SObject="{!copado__Git_Repository__c}" Field="{!f}" />
+                                </li>
+                            </apex:outputPanel>
+                            <apex:variable var="rowNum" value="{!rowNum + 1}" />
+                        </apex:repeat>
+                    </ul>
+                </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+
+            <apex:form id="theForm" rendered="{!AND(showOptions,!showError)}" styleClass="copado-lightning-container" style="padding-top:12px;">
+                <apex:actionFunction name="doRetrieve" action="{!retrieveCommits}" reRender="pmessage,pageMessages ">
+                    <apex:param name="branch" value="" />
+                </apex:actionFunction>
+
+                <apex:pageBlock id="pb_createGit" mode="detail" helpUrl="https://docs.copado.com/git-repository/git-repository-overview" helpTitle="{!$Label.copado__HELP_FOR_THIS_PAGE}" title="{!$Label.copado__DETAILS}">
+                    <apex:pageblockButtons >
+                        <apex:commandButton value="{!$Label.site.edit}" action="{!edit}" />
+                        <apex:commandButton value="{!$Label.copado__DELETE}" action="{!deleteGitRepository}" />
+                        <apex:commandButton value="{!$Label.copado__SHARE}" action="{!URLFOR($Action.Git_Repository__c.Share,Git_Repository__c.Id)}" rendered="{!isShareable}" />
+                        <apex:commandButton value="{!$Label.copado__CREATE_SSH_KEYS}" action="{!createSSHKey}" rendered="{!isSSHauthentication}" />
+                        <apex:commandButton value="{!$Label.copado__CREATE_DEPLOYMENT}" action="{!deployCommits}" />
+                        <apex:commandButton value="Retrieve Commits" onclick="openBranchNameModal();" rerender="theMessages" />
+                        <apex:commandButton value="{!$Label.copado__MANAGE_GIT_BRANCHES}" action="{!goToManageGITBranches}" rendered="{!AND(showOptions,!showError)}" />
+                    </apex:pageblockButtons>
+                    <apex:pageBlockSection columns="1">
+                        <apex:outputField id="of_name" value="{!git.Name}" />
+                        <apex:outputField id="sourceFormat" value="{!git.copado__Source_Format__c}" />
+                        <apex:outputField id="of_uri" value="{!git.copado__URI__c}" />
+                        <apex:pageBlockSectionItem rendered="{!!isSSHauthentication}">
+                            {!$Label.copado__USERNAME}
+                            <apex:outputText id="of_username" value="{!c_username}" />
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection columns="1" title="{!$Label.copado__OTHER_INFORMATION}" rendered="{!showOtherInformation}">
+                        <apex:repeat value="{!$ObjectType.copado__Git_Repository__c.FieldSets.copado__CustomFields}" var="field">
+                            <apex:outputField value="{!copado__Git_Repository__c[field]}" />
+                        </apex:repeat>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection title="{!$Label.copado__CURRENT_KEYS}" rendered="{!hasKeys}" columns="1">
+                        <apex:pageBlockTable id="tblKeys" value="{!attachments}" var="att">
+                            <apex:column id="col1">
+                                <apex:facet name="header">
+                                    <apex:outputLabel >{!$Label.copado__ACTION_COLUMN_HEADER}</apex:outputLabel>
+                                </apex:facet>
+                                <apex:outputPanel >
+                                    <apex:commandLink action="{!viewKey}">{!$Label.copado__VIEW}
+                                        <apex:param assignTo="{!selectedKeyId}" value="{!att.Id}" name="selectedKeyId" />
+                                    </apex:commandLink>&nbsp;|&nbsp;
+                                    <apex:commandLink action="{!deleteKey}">{!$Label.copado__DELETE}
+                                        <apex:param assignTo="{!selectedKeyId}" value="{!att.Id}" name="selectedKeyId" />
+                                    </apex:commandLink>
+                                </apex:outputPanel>
+                            </apex:column>
+                            <apex:column id="col2">
+                                <apex:facet name="header">
+                                    <apex:outputLabel >{!$ObjectType.Attachment.Fields.Name.Label}</apex:outputLabel>
+                                </apex:facet>
+                                <apex:outputLabel >{!att.Name}</apex:outputLabel>
+                            </apex:column>
+                            <apex:column id="col3">
+                                <apex:facet name="header">
+                                    <apex:outputLabel >{!$ObjectType.Attachment.Fields.LastModifiedDate.Label}</apex:outputLabel>
+                                </apex:facet>
+                                <apex:outputField value="{!att.LastModifiedDate}" />
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection id="pbsViewKey" columns="1" rendered="{!keyVisible}" title="{!$Label.copado__KEY_CONTENT}" collapsible="false">
+                        <textarea id="wrap" readonly="true" cols="150" rows="10" wrap="hard">{!selectedKeyContent}</textarea>
+                        <apex:commandButton id="btnHideKey" value="{!$Label.copado__HIDE_KEY}" action="{!hideSSHkey}" />
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection columns="1" title="Latest Commits">
+                        <apex:pageBlockTable var="cm" value="{!commits}">
+                            <apex:column >
+                                <apex:outputText value="{!cm.id}" />
+                                <apex:facet name="header">{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Id__c.Label}</apex:facet>
+                            </apex:column>
+                            <apex:column >
+                                <apex:outputText value="{!cm.branch}" />
+                                <apex:facet name="header">{!$ObjectType.copado__Git_Commit__c.fields.copado__Branch__c.Label}</apex:facet>
+                            </apex:column>
+                            <apex:column >
+                                <apex:outputText value="{0,date,yyyy-MM-dd}">
+                                    <apex:param value="{!cm.cdate}" />
+                                </apex:outputText>
+                                <apex:facet name="header">{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Date__c.Label}</apex:facet>
+                            </apex:column>
+                            <apex:column >
+                                <apex:outputText value="{!cm.message}" />
+                                <apex:facet name="header">{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Message__c.Label}</apex:facet>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:form>
+            <apex:outputPanel layout="block" styleClass="copado-lightning-container">
+                <apex:relatedList list="Git_Backups__r" rendered="{!AND(showOptions,!showError)}" />
+            </apex:outputPanel>
+
+            <apex:form id="theForm2">
+                <div class="slds-scope">
+                    <div class="slds-modal" aria-hidden="false" role="dialog" id="modal">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="closeModal(); return false;">
+                                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">{!$Label.CLOSE}</span>
+                                </button>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.Retrieve_Commits}</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <div class="slds-form slds-form_horizontal">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="input-id-01">{!$Label.Branch_Name}</label>
+                                        <div class="slds-form-element__control">
+                                            <input type="text" id="branchName" class="slds-input" value="master" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <button class="slds-button slds-button_neutral" onclick="closeModal(); return false;">{!$Label.Cancel}</button>
+                                <button class="slds-button slds-button_brand" onclick="submitRetrieveCommitsModal(); return false;">{!$LAbel.Submit}</button>
+                            </footer>
+                        </div>
+                    </div>
+                    <div class="slds-backdrop" id="backdrop"></div>
+                </div>
+            </apex:form>
+        </apex:outputPanel>
+    </div>
+    </body>
+</apex:page>

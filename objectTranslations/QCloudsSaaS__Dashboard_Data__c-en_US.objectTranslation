@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Code Changes Issues Ratio --></help>
+        <label><!-- Code Changes Issues Ratio --></label>
+        <name>QCloudsSaaS__Code_Changes_Issues_Ratio__c</name>
+    </fields>
+    <fields>
+        <help><!-- Customization Ratio --></help>
+        <label><!-- Customization Ratio --></label>
+        <name>QCloudsSaaS__Customization_Ratio__c</name>
+    </fields>
+    <fields>
+        <help><!-- Environment --></help>
+        <label><!-- Environment --></label>
+        <name>QCloudsSaaS__Environment__c</name>
+    </fields>
+    <fields>
+        <help><!-- Instance Description --></help>
+        <label><!-- Instance Description --></label>
+        <name>QCloudsSaaS__Instance_Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Org Edition --></help>
+        <label><!-- Org Edition --></label>
+        <name>QCloudsSaaS__Org_Edition__c</name>
+    </fields>
+    <fields>
+        <help><!-- Org Id --></help>
+        <label><!-- Org Id --></label>
+        <name>QCloudsSaaS__Org_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Org URL --></help>
+        <label><!-- Org URL --></label>
+        <name>QCloudsSaaS__Org_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- QoC Variation --></help>
+        <label><!-- QoC Variation --></label>
+        <name>QCloudsSaaS__QoC_Variation__c</name>
+    </fields>
+    <fields>
+        <help><!-- QoC --></help>
+        <label><!-- QoC --></label>
+        <name>QCloudsSaaS__QoC__c</name>
+    </fields>
+    <fields>
+        <help><!-- Scan Date --></help>
+        <label><!-- Scan Date --></label>
+        <name>QCloudsSaaS__Scan_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Scan ID External --></help>
+        <label><!-- Scan ID External --></label>
+        <name>QCloudsSaaS__Scan_ID_External__c</name>
+    </fields>
+    <fields>
+        <help><!-- Technical Debt Variation --></help>
+        <label><!-- Technical Debt Variation --></label>
+        <name>QCloudsSaaS__Technical_Debt_Variation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Technical Debt --></help>
+        <label><!-- Technical Debt --></label>
+        <name>QCloudsSaaS__Technical_Debt__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Issues Variation --></help>
+        <label><!-- Total Issues Variation --></label>
+        <name>QCloudsSaaS__Total_Issues_Variation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total Issues --></help>
+        <label><!-- Total Issues --></label>
+        <name>QCloudsSaaS__Total_Issues__c</name>
+    </fields>
+</CustomObjectTranslation>

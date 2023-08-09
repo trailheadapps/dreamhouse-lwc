@@ -1,0 +1,142 @@
+<apex:page id="GitCommitMain" controller="copado.GitCommit_MainPageController" lightningStylesheets="true" sideBar="false" docType="html-5.0" title="{!$Label.copado__GIT_COMMIT_PAGE}">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+    <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true" />
+    <script>
+        var svgButtonsId = [];
+        var svgButtonsClass = ['editIcon', 'refreshIcon', 'fullSizeIcon', 'informationIcon', 'approvalIcon', 'errorIcon', 'pinIcon', 'warningIcon', 'warningToastIcon', 'successToastIcon', 'errorToastIcon', 'closeToastIcon'];
+
+        var svgStruct = [];
+        var setSVGStruct = function(){
+            svgStruct['.editIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#edit')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.refreshIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#refresh')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.fullSizeIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#expand_alt')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.informationIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#info')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.approvalIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#check')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.errorIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.pinIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#check')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.warningIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.warningToastIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.successToastIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.errorToastIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#error')}",
+                class:'slds-button__icon'
+            };
+            svgStruct['.closeToastIcon'] = {
+                imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}",
+                class:'slds-button__icon'
+            };
+        }
+        $copado(document).ready(function(){
+            setSVGStruct();
+            applyRenderSVG(svgButtonsId,svgButtonsClass);
+        });
+        //TODO: move to common resource
+        function applyRenderSVG(listIdArray,listClassArray){
+            if(listIdArray){
+                listIdArray.forEach(function(element){
+                    renderSVG('#'+element);
+                });
+            }
+
+            if(listClassArray) {
+                listClassArray.forEach(function(element){
+                    renderSVG('.'+element);
+                });
+            }
+        }
+        //TODO move to common resource
+        function renderSVG(elemId){
+            var elem = $copado(elemId);
+            var struct = svgStruct[elemId];
+            var imageURL = struct.imageURL;
+            var SVG = $copado('<svg/>', {
+               class: struct.class,
+            });
+
+            var SVGUse = $copado('<use/>');
+            SVGUse.attr('xlink:href',imageURL);
+            elem.prepend(SVG.append(SVGUse));
+            elem.html(elem.html());
+        }
+        //TODO move to common resource
+        function toggleDiv() {
+            var advancedComponentDiv = document.getElementById("advancedDiv");
+            if (advancedComponentDiv.style.display === "none") {
+                advancedComponentDiv.style.display = "flex";
+            } else {
+                advancedComponentDiv.style.display = "none";
+            }
+        }
+
+    </script>
+    <style>
+        .approvalIcon {
+            color: green;
+            margin-right: 5px;
+        }
+
+        .pinIcon {
+            color: #3593c6;
+            margin-right: 5px;
+        }
+
+        .errorIcon {
+            color: red;
+            margin-right: 5px;
+        }
+
+        .warningIcon {
+            color: orange;
+            margin-right: 5px;
+        }
+
+    </style>
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <body class="slds-scope">
+    <apex:form style="padding: 5px 20px 5px 20px;" id="gitcommit_header_form">
+        <c:CopadoSpinner />
+
+        <apex:outputPanel layout="block" styleClass="slds-scope">
+            <c:CopadoSmartHelpComponent />
+        </apex:outputPanel>
+
+        <!-- GIT COMMIT MAIN -->
+        <c:GitCommit_Main pController="{!this}" />
+        <!-- / GIT COMMIT MAIN -->
+
+        <apex:actionFunction name="returnToRecord" action="{!returnToRecord}" />
+    </apex:form>
+    </body>
+    </html>
+</apex:page>

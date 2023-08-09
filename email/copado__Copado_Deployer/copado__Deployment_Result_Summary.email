@@ -1,0 +1,13 @@
+<messaging:emailTemplate subject="Deployment {!relatedTo.copado__Status__c} - {!relatedTo.Name}" recipientType="User" relatedToType="copado__Deployment__c">
+    <messaging:htmlEmailBody >
+        <style>
+            body { font-family: Arial,Helvetica,sans-serif; color:#222;font-size: 75%;}
+        </style>
+        <img height="25px" width="25px" src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}"/>
+        <br/>
+        Deployment: {!relatedTo.Name}<br />
+        Status: {!relatedTo.Status__c}<br />
+
+        <c:DeploymentEmail dpId="{!relatedTo.Id}"/>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,211 @@
+<apex:page id="ViewRelease" standardController="copado__Release__c" extensions="copado.ReleaseExt" title="{!$Label.copado__EDIT} {!$ObjectType.copado__Release__c.Label}" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" sidebar="{!$User.UIThemeDisplayed=='Theme3'}" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds />
+    <head>
+        <title>{!$Label.copado__EDIT} {!$ObjectType.copado__Release__c.Label} {!IF(!showLicenseError, Release__c.Name,'')}  | Copado</title>
+        <c:IncludeStaticsResourceComponent addJquery="true"/>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+
+        <script>
+            var j$ = jQuery.noConflict();
+
+            var showApplyTagReleaseButton = function(){
+                var tagReleaseButton = $copado('<input id="customTagReleaseButton" type="button" class="btn" value="{!JSENCODE($Label.copado__SET_VERSION)}" onclick="openTagReleaseModal();"/>');
+                if({!renderSetVersionButton} == true){
+                    tagReleaseButton.appendTo($copado('[Id^="topButtonRow"]'));
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <apex:outputPanel layout="block" rendered="{!showLicenseError}" style="{!IF($User.UIThemeDisplayed == 'Theme4d','padding: .75rem .75rem 0;','')}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!showLicenseError}">
+            <div class="copado-lightning-VF">
+                <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+                <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                    <div class="slds-page-header">
+                        <apex:outputPanel layout="block" id="pageMessages">
+                            <apex:pagemessages id="msg"/>
+                        </apex:outputPanel>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media">
+                                    <div class="slds-media__figure">
+                                            <span class="slds-icon_container slds-icon-custom-custom87" title="">
+                                                <svg class="slds-icon" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom87')}"></use>
+                                                </svg>
+                                            </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.Release__c.Label}</p>
+                                        <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.Release__c.Label}">{!$Label.NEW} {!$ObjectType.Release__c.Label}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ACTION BUTTONS -->
+                            <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                                <div class="slds-button-group" role="group">
+
+                                </div>
+                            </div>
+                            <!-- / ACTION BUTTONS -->
+                        </div>
+                        <apex:outputPanel layout="block" style="background: white;" id="headerFields">
+                            <ul class="slds-grid slds-page-header__detail-row">
+                                <apex:variable value="{!1}" var="rowNum"/>
+                                <apex:repeat value="{!$ObjectType.copado__Release__c.FieldSets.copado__Copado_Header_Fields}" var="f">
+                                    <apex:outputPanel layout="block" rendered="{!rowNum < 8}">
+                                        <li class="slds-page-header__detail-block slds-truncate" style="padding-right: 2em; padding-left: 2em;">
+                                            <c:LightningReadyOutputFields dividerBottom="false" SObject="{!copado__Release__c}" Field="{!f}"></c:LightningReadyOutputFields>
+                                        </li>
+                                    </apex:outputPanel>
+                                    <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                                </apex:repeat>
+                            </ul>
+                        </apex:outputPanel>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container copado-lightning-radius" style="background:white;">
+
+                    <apex:form id="theForm" style="padding-top:12px;" styleClass="copado-lightning-container">
+                        <!-- RELEASE HELP SECTION -->
+                        <c:CopadoHelp sectionText="{!$Label.copado__RELEASE_HELP}" sectionLink="https://docs.copado.com/release/release-overview" />
+                        <!-- / RELEASE HELP SECTION -->
+
+                        <!-- APEX DETAIL -->
+                        <apex:outputPanel layout="none">
+                            <apex:detail subject="{!copado__Release__c.Id}" relatedList="true" showChatter="true" inlineEdit="true" relatedListHover="true" onComplete="showApplyTagReleaseButton();"/>
+                        </apex:outputPanel>
+                        <!-- / APEX DETAIL -->
+
+                        <!-- TAG RELEASE MODAL -->
+                        <div class="slds-modal" aria-hidden="false" role="dialog" id="tagReleaseModal">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="closeTagReleaseModal(); return false;">
+                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">{!$Label.CLOSE}</span>
+                                    </button>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.SET_VERSION}</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                                    <!-- RELEASE VERSION HELP SECTION -->
+                                    <c:CopadoHelp sectionText="{!$Label.copado__RELEASE_VERSION_HELP}" sectionLink="https://git-scm.com/book/en/v2/Git-Basics-Tagging" />
+                                    <!-- / RELEASE VERSION HELP SECTION -->
+
+                                    <div class="slds-form slds-form_horizontal">
+                                        <div class="slds-form-element" >
+                                            <label class="slds-form-element__label" for="input-unique-id">Previous {!$ObjectType.Release__c.Label}</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField value="{!lookupAux.copado__Release__c}" onchange="changePreviousRelease();" />&nbsp;
+                                            </div>
+                                            <apex:actionFunction name="changePreviousRelease" action="{!getPreviousRelease}" reRender="previousRelease,previousReleaseVersion,releaseVersionOptions,releaseVersionSript" />
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="previousReleaseVersion">Previous {!$Label.copado__RELEASE_VERSION}</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:outputText value="{!previousRelease.copado__Version__c}" id="previousReleaseVersion" />
+                                                <apex:outputText id="previousRelease" value="{!IF(previousRelease==null,$Label.copado__RELEASE_NOT_FOUND,'')}" />
+                                            </div>
+                                        </div>
+
+                                        <apex:outputPanel id="releaseVersionOptions">
+                                            <fieldset class="slds-form-element" style="padding: 5px 0 5px 0;">
+                                                <legend class="slds-form-element__legend slds-form-element__label">{!$Label.OPTIONS}</legend>
+                                                <div class="slds-form-element__control">
+                                                            <span class="slds-radio">
+                                                            <input type="radio" id="major" name="options" value="on" onclick="updateNewReleaseVersion('major');" />
+                                                            <label class="slds-radio__label" for="major">
+                                                                <span class="slds-radio_faux"></span>
+                                                                <span class="slds-form-element__label">Major: {!JSENCODE(versionWrapper.major)}</span>
+                                                            </label>
+                                                            </span>
+
+                                                    <span class="slds-radio">
+                                                            <input type="radio" id="minor" name="options" value="on" onclick="updateNewReleaseVersion('minor');" />
+                                                            <label class="slds-radio__label" for="minor">
+                                                                <span class="slds-radio_faux"></span>
+                                                                <span class="slds-form-element__label">Minor: {!JSENCODE(versionWrapper.minor)}</span>
+                                                            </label>
+                                                            </span>
+
+                                                    <span class="slds-radio">
+                                                            <input type="radio" id="patch" name="options" value="on" onclick="updateNewReleaseVersion('patch');" />
+                                                            <label class="slds-radio__label" for="patch">
+                                                                <span class="slds-radio_faux"></span>
+                                                                <span class="slds-form-element__label">Patch: {!JSENCODE(versionWrapper.patch)}</span>
+                                                            </label>
+                                                            </span>
+                                                </div>
+                                            </fieldset>
+                                        </apex:outputPanel>
+
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="newReleaseVersion" id="newReleaseVersionLabel"><apex:outputText value="{!$Label.copado__NEW} {!$Label.copado__RELEASE_VERSION}"/> </label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputText id="newReleaseVersion" styleClass="slds-input" value="{!versionWrapper.newVersion}"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <button class="slds-button slds-button_neutral" onclick="closeTagReleaseModal(); return false;">{!$Label.CANCEL}</button>
+                                    <button class="slds-button slds-button_brand" onclick="updateRelease();closeTagReleaseModal();return false;">{!$Label.SAVE}</button>
+                                </footer>
+                            </div>
+                        </div>
+                        <div class="slds-backdrop slds-scope" id="tagReleaseBackdrop"></div>
+                        <!-- / TAG RELEASE MODAL -->
+
+                        <apex:actionFunction name="updateRelease" action="{!updateRelease}" reRender="pmessage,msg" />
+
+                        <apex:outputPanel id="releaseVersionSript" >
+                            <script>
+                                var updateNewReleaseVersion = function(version) {
+                                    if(version==='major') {
+                                        j$("[id$='{!$Component.newReleaseVersion}']").val('{!JSENCODE(versionWrapper.prefix + versionWrapper.major + versionWrapper.suffix)}');
+                                        j$('#newReleaseVersionLabel').text('{!$Label.copado__NEW} {!$Label.copado__MAJOR} {!$Label.copado__RELEASE_VERSION}');
+                                    } else if(version==='minor') {
+                                        j$("[id$='{!$Component.newReleaseVersion}']").val('{!JSENCODE(versionWrapper.prefix + versionWrapper.minor + versionWrapper.suffix)}');
+                                        j$('#newReleaseVersionLabel').text('{!$Label.copado__NEW} {!$Label.copado__MINOR} {!$Label.copado__RELEASE_VERSION}');
+                                    } else if(version==='patch') {
+                                        j$("[id$='{!$Component.newReleaseVersion}']").val('{!JSENCODE(versionWrapper.prefix + versionWrapper.patch + versionWrapper.suffix)}');
+                                        j$('#newReleaseVersionLabel').text('{!$Label.copado__NEW} {!$Label.copado__PATCH} {!$Label.copado__RELEASE_VERSION}');
+                                    }
+                                }
+                            </script>
+                        </apex:outputPanel>
+
+                        <script>
+                            // Document On Ready
+                            document.onreadystatechange = function(){
+                                if(document.readyState === 'complete'){
+                                    showApplyTagReleaseButton();
+                                }
+                            }
+
+                            function openTagReleaseModal(){
+                                j$('#tagReleaseBackdrop').addClass('slds-backdrop--open');
+                                j$('#tagReleaseModal').addClass('slds-fade-in-open');
+                                return null;
+                            }
+
+                            function closeTagReleaseModal(){
+                                j$('#tagReleaseModal').removeClass('slds-fade-in-open');
+                                j$('#tagReleaseBackdrop').removeClass('slds-backdrop--open');
+                            }
+                        </script>
+
+                    </apex:form>
+                </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+    </body>
+</apex:page>

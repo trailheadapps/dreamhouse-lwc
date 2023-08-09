@@ -1,0 +1,401 @@
+<apex:page id="thePage" standardController="copado__User_Story_Metadata__c" extensions="copado.UserStoryMetadataExt" doctype="html-5.0"
+    applyBodyTag="false" sideBar="false">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="height:100%;">
+
+    <head>
+        <c:GAnalytics />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+        <c:IncludeStaticsResourceComponent addJQuery="true" addFAcss="true" />
+        <apex:includeScript value="{!URLFOR($Resource.copado__pullRequest)}" />
+        <style type="text/css">
+            .col-right {
+                margin-left: 15px;
+            }
+
+            .msgIcon {
+                display: none!important
+            }
+
+            .customMessage * {
+                color: #fff!important
+            }
+
+            .customMessage {
+                margin: 5px 0!important;
+                max-width: 1280px;
+                opacity: 1!important;
+                width: 100%;
+                font-size: 12px;
+                border: 0px;
+                padding-left: 10px;
+            }
+
+            .message {
+                opacity: 1
+            }
+
+            .slds-col {
+                padding-right: 20px;
+            }
+
+            .title {
+                text-transform: uppercase;
+            }
+        </style>
+        <script>
+            $copado(document).ready(function () {
+                overridePageMessages();
+            });
+
+            function overridePageMessages() {
+                textureEffect = 'slds-theme--alert-texture';
+
+                $copado('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage ' + textureEffect);
+                $copado('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage ' + textureEffect);
+                $copado('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage ' + textureEffect);
+                $copado('.infoM3').addClass('slds-notify slds-notify--toast customMessage ' + textureEffect);
+
+                $copado('.errorM3').removeClass('errorM3');
+                $copado('.confirmM3').removeClass('confirmM3');
+                $copado('.infoM3').removeClass('infoM3');
+                $copado('.warningM3').removeClass('warningM3');
+            }
+        </script>
+    </head>
+
+    <body class="slds-scope">
+        <apex:form id="content">
+            <div>
+                <apex:outputPanel layout="block" id="pageMessages">
+                    <apex:pagemessages id="pmessage" />
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" styleClass="slds-page-header" rendered="{!!isMultiCloud}" style="{!IF($User.UIThemeDisplayed == 'Theme4d','background: #fdfdfd;margin-bottom: 12px;border-collapse: collapse;border-radius: 4px;','')}">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <div class="slds-media">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container slds-icon-standard-file" title="Description of icon when needed">
+                                        <svg class="slds-icon" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#file')}"></use>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.User_Story_Metadata__c.Label}</p>
+                                    <h1 class=" slds-page-header__title slds-truncate slds-align-middle">
+                                        {!IF(ISBLANK(usMetadata.ID),'' ,usMetadata.Name)}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ACTION BUTTONS -->
+                        <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                            <div class="slds-button-group" role="group">
+                                <apex:commandButton value="{!$Label.copado__DELETE}" action="{!deleteJob}" styleClass="slds-button slds-button--neutral" reRender="pageMessages"
+                                    oncomplete="overridePageMessages()" />
+                                <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last" id="statusDropdown">
+                                    <button class="slds-button slds-button_neutral actionButton" aria-haspopup="true" title="Show More" onclick="ToggleDropDown(this,event); return false">{!$Label.MarkAllAs}
+                                        <svg class="slds-button__icon" aria-hidden="true">
+                                            <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">{!$Label.MarkAllAs}</span>
+                                    </button>
+                                    <div class="slds-dropdown slds-dropdown_right">
+                                        <ul class="slds-dropdown__list" role="menu">
+                                            <apex:repeat value="{!statuses}" var="s">
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="#" role="menuitem" tabindex="0" onclick="markAllAs('{!JSINHTMLENCODE(s.value)}');">
+                                                        <span class="slds-truncate" title="Status" value="{!s.value}">{!s.label}</span>
+                                                    </a>
+                                                </li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    ToggleDropDown = function (elem, e) {
+                                        e.stopPropagation();
+                                        var item = $copado(elem).parent();
+                                        var isOpen = item.hasClass("slds-is-open");
+                                        if (isOpen) {
+                                            item.removeClass("slds-is-open");
+                                        } else {
+                                            item.addClass("slds-is-open");
+                                        }
+                                    }
+
+                                    $copado(function () {
+                                        $copado(document).click(function () {
+                                            $copado('button.actionButton').each(function () {
+                                                var item = $copado(this).parent();
+                                                var isOpen = item.hasClass("slds-is-open");
+                                                if (isOpen) {
+                                                    item.removeClass("slds-is-open");
+                                                }
+                                            });
+                                        });
+                                    });
+
+                                    function reloadPage() {
+                                        if ($copado("[Id$='pmessage']").text() == '') window.location.reload();
+                                    }
+                                    var initPullRequest = function (compare) {
+                                        preparePullRequest(compare);
+                                    }
+                                    var callPullRequest = function (type, url, base, compare) {
+                                        if (type != null && type != '' && url != null && url != '') {
+                                            var config = {};
+                                            config.type = type;
+                                            config.url = url;
+                                            config.base = base;
+                                            config.compare = compare;
+                                            var pullRequest = new PullRequest(config);
+                                            var win = window.open(pullRequest.URL);
+                                            if (win) {
+                                                //Browser has allowed it to be opened
+                                                win.focus();
+                                            } else {
+                                                //Browser has blocked it
+                                                alert('{!JSENCODE($Label.POPUP_BLOCKER_MESSAGE)}');
+                                            }
+                                        }
+                                        overridePageMessages();
+                                    }
+                                    var overridePageMessages = function (cb) {
+                                        textureEffect = 'slds-theme--alert-texture';
+
+                                        $copado('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage ' + textureEffect);
+                                        $copado('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage ' + textureEffect);
+                                        $copado('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage ' + textureEffect);
+                                        $copado('.infoM3').addClass('slds-notify slds-notify--toast customMessage ' + textureEffect);
+
+                                        $copado('.errorM3').removeClass('errorM3');
+                                        $copado('.confirmM3').removeClass('confirmM3');
+                                        $copado('.infoM3').removeClass('infoM3');
+                                        $copado('.warningM3').removeClass('warningM3');
+
+                                        $copado('.message').css('margin', 0);
+                                        $copado('.message').on('click', function () { $copado('.message').hide() });
+                                        $copado('.message').css('margin-top', 10);
+                                        $copado('.message').css('font-size', '11pt');
+
+                                        if (cb) cb();
+                                    }
+
+                                    var mStart = mStart || '';
+                                    var oWidth = oWidth || '';
+
+                                    CalculateWidth = function (elem, e) {
+                                        var childObj = $copado(elem).children().first();
+                                        var parObj = childObj.parents().first();
+                                        var count = 1;
+                                        while (parObj.prop("tagName") != 'TH') {
+                                            parObj = parObj.parents().first();
+                                            count++;
+                                        }
+
+                                        var mouseStart = e.clientX;
+                                        mStart = mouseStart;
+                                        oWidth = parObj.outerWidth();
+                                    };
+
+                                    SetNewWidth = function (elem, e) {
+                                        var childObj = $copado(elem).children().first();
+                                        var parObj = childObj.parents().first();
+                                        var count = 1;
+
+                                        while (parObj.prop("tagName") != 'TH') {
+                                            parObj = parObj.parents().first();
+                                            count++;
+                                        }
+
+                                        var mouseStart = mStart;
+                                        var oldWidth = oWidth
+
+                                        if (e.clientX > 0) {
+                                            var newWidth = e.clientX - parseFloat(mouseStart) + parseFloat(oldWidth);
+                                            parObj.width(newWidth);
+                                        }
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <!-- / ACTION BUTTONS -->
+                    </div>
+                    <!-- HEADER DETAIL ROW-->
+                    <ul class="slds-grid slds-page-header__detail-row">
+                        <li class="slds-page-header__detail-block slds-truncate">
+                            <c:LightningReadyOutputFields dividerBottom="false" SObject="{!usMetadata}" Field="Metadata_API_Name__c" />
+                        </li>
+                        <li class="slds-page-header__detail-block slds-truncate">
+                            <c:LightningReadyOutputFields dividerBottom="false" SObject="{!usMetadata}" Field="User_Story__c" />
+                        </li>
+                        <li class="slds-page-header__detail-block slds-truncate">
+                            <c:LightningReadyOutputFields dividerBottom="false" SObject="{!usMetadata}" Field="Status__c" id="usmStatus" />
+                        </li>
+                        <li class="slds-page-header__detail-block slds-truncate">
+                            <c:LightningReadyOutputFields dividerBottom="false" SObject="{!usMetadata}" Field="Status_Icon__c" id="usmIcon" />
+                        </li>
+                        <li class="slds-page-header__detail-block slds-truncate">
+                            <c:LightningReadyOutputFields dividerBottom="false" SObject="{!usMetadata}" Field="LastModifiedDate" />
+                        </li>
+                        <li class="slds-page-header__detail-block slds-truncate">
+                            <c:LightningReadyOutputFields dividerBottom="false" SObject="{!usMetadata}" Field="Last_Commit_Date__c" />
+                        </li>
+                        <li>
+                            <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last" id="statusDropdown{!usMetadata.Id}">
+                                <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small actionButton" aria-haspopup="true"
+                                    title="Mark As" onclick="ToggleDropDown(this,event); return false;">
+                                    <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_small" aria-hidden="true">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Mark As</span>
+                                </button>
+                                <div class="slds-dropdown slds-dropdown_right">
+                                    <ul class="slds-dropdown__list" role="menu">
+                                        <apex:repeat value="{!statuses}" var="sts">
+                                            <li class="slds-dropdown__item" role="presentation">
+                                                <a href="#" role="menuitem" tabindex="0" onclick="markAs('{!usMetadata.Id}','{!JSINHTMLENCODE(sts.value)}');">
+                                                    <span class="slds-truncate" title="Status" value="{!HTMLENCODE(sts.value)}">{!sts.label}</span>
+                                                </a>
+                                            </li>
+                                        </apex:repeat>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" id="relatedUserStoryMetadataPanel">
+                    <c:ScreenLocker msg="{!$Label.copado__LOADING}" />
+                    <apex:actionStatus id="screenlocker" onstart="lockScreen();" onstop="unlockScreen();" />
+                    <apex:inputHidden value="{!offset}" />
+                    <div style="padding:12px;background: #fdfdfd;border-collapse: collapse; background: #fdfdfd;border-radius: 4px;">
+                        <!-- User Story Table -->
+                        <div class="slds-text-heading_small slds-p-around_medium">{!$Label.RelatedUserStoryMetadata}</div>
+                        <apex:actionFunction id="pull_ac" name="preparePullRequest" action="{!preparePullRequest}" reRender="pageMessages" oncomplete="setTimeout(function(){callPullRequest('{!JSINHTMLENCODE(latestPull.gitType)}','{!JSINHTMLENCODE(latestPull.pullURL)}','{!JSINHTMLENCODE(latestPull.base)}','{!JSINHTMLENCODE(latestPull.compare)}');},250)">
+                            <apex:param name="compareUS" value="" />
+                        </apex:actionFunction>
+                        <div class="slds-align_absolute-center">
+                            <apex:commandButton value="{!$Label.copado__Previous}" action="{!previousUserStoryMetadatas}" reRender="relatedUserStoryMetadataPanel"
+                                disabled="{!disablePrevious}" styleClass="slds-button slds-button_neutral slds-m-around_x-small"
+                                status="screenlocker" />
+                            <apex:commandButton value="{!$Label.copado__NEXT}" action="{!nextUserStoryMetadatas}" reRender="relatedUserStoryMetadataPanel" disabled="{!disableNext}"
+                                styleClass="slds-button slds-button_neutral slds-m-around_x-small" status="screenlocker" />
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static" style="min-height:32px;">
+                                    <apex:selectList styleClass="slds-select" value="{!selectedOption}" multiselect="false" size="1">
+                                        <apex:selectOptions value="{!dataOptions}" />
+                                        <apex:actionSupport event="onchange" status="screenlocker" action="{!changeUserStoryMetadata}" reRender="relatedUserStoryMetadataPanel"
+                                        />
+                                    </apex:selectList>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="asd" class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout slds-table_cell-buffer slds-table_striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="slds-cell-buffer_right" style="width:30px;">
+                                        <div class="slds-truncate slds-p-top_medium slds-p-bottom_medium" title="{!$Label.MetadataIndex}"></div>
+                                    </th>
+                                    <apex:repeat value="{!$ObjectType.copado__User_Story_Metadata__c.FieldSets.copado__Copado_User_Story_Metadata_Columns}" var="cusmc">
+                                        <th scope="col" class="slds-cell-buffer_right">
+                                            <div class="slds-truncate slds-p-top_medium slds-p-bottom_medium" title="{!cusmc.Label}">{!cusmc.Label}</div>
+                                            <div class="slds-resizable">
+                                                <input type="range" min="50" max="500" class="slds-resizable__input slds-assistive-text" tabindex="0" />
+                                                <span class="slds-resizable__handle" draggable="true" onmousedown="CalculateWidth(this, event)" ondrag="SetNewWidth(this, event)"
+                                                    ondragend="return false;">
+                                                    <span class="slds-resizable__divider"></span>
+                                                </span>
+                                            </div>
+                                        </th>
+                                    </apex:repeat>
+                                    <apex:outputPanel layout="none" rendered="{!!isMultiCloud}">
+                                        <th scope="col" class="slds-cell-buffer_right">
+                                            <div class="slds-truncate slds-p-top_medium slds-p-bottom_medium" title="Compare">{!$Label.Compare}</div>
+                                            <div class="slds-resizable">
+                                                <input type="range" min="75" max="150" class="slds-resizable__input slds-assistive-text" tabindex="0" />
+                                                <span class="slds-resizable__handle" draggable="true" onmousedown="CalculateWidth(this, event)" ondrag="SetNewWidth(this, event)"
+                                                    ondragend="return false;">
+                                                    <span class="slds-resizable__divider"></span>
+                                                </span>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="slds-cell-buffer_right" style="width:40px;"></th>
+                                    </apex:outputPanel>
+                                </tr>
+                            </thead>
+                            <tbody id="usMetadataTableBody">
+                                <apex:repeat id="usMetadataRepeat" value="{!usMetadataList}" var="usm">
+                                    <tr>
+                                        <td data-label="{!$ObjectType.copado__User_Story__c.Label} {!$Label.copado__MetadataIndex}">
+                                            <div class="slds-media__figure" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                <a href="{!URLFOR($Action.User_Story_Metadata__c.View, usm.Id)}">
+                                                    <span class="slds-icon_container slds-icon-standard-file" title="{!$Label.UserStoryMetadataIndexLink}">
+                                                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                            <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#file')}"></use>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <apex:repeat value="{!$ObjectType.copado__User_Story_Metadata__c.FieldSets.copado__Copado_User_Story_Metadata_Columns}" var="cusmc">
+                                            <td data-label="{!cusmc.Label}" class="slds-cell-buffer_right">
+                                                <div class="slds-truncate" title="{!usm[cusmc]}">
+                                                    <apex:outputField value="{!usm[cusmc]}" />
+                                                </div>
+                                            </td>
+                                        </apex:repeat>
+                                        <apex:outputPanel layout="none" rendered="{!!isMultiCloud}">
+                                            <td data-label="Pull Request" class="slds-cell-buffer_right">
+                                                <div class="slds-truncate" title="Compare">
+                                                    <a tabindex="0" onclick="initPullRequest('{!usm.Id}');">
+                                                        <span class="slds-truncate" title="Compare" value="{!usm.User_Story__c}">{!JSENCODE($Label.Create_Pull_Request)}</span>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td data-label="Mark As" height="41px" class="slds-cell-buffer_right">
+                                                <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last" id="statusDropdown{!usm.Id}" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                    <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small actionButton" aria-haspopup="true"
+                                                        title="Mark As" onclick="ToggleDropDown(this,event); return false;">
+                                                        <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_small" aria-hidden="true">
+                                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                                        </svg>
+                                                        <span class="slds-assistive-text">Mark As</span>
+                                                    </button>
+                                                    <div class="slds-dropdown slds-dropdown_right">
+                                                        <ul class="slds-dropdown__list" role="menu">
+                                                            <apex:repeat value="{!statuses}" var="sts">
+                                                                <li class="slds-dropdown__item" role="presentation">
+                                                                    <a href="#" role="menuitem" tabindex="0" onclick="markAs('{!usm.Id}','{!JSINHTMLENCODE(sts.value)}');">
+                                                                        <span class="slds-truncate" title="Status" value="{!HTMLENCODE(sts.value)}">{!sts.label}</span>
+                                                                    </a>
+                                                                </li>
+                                                            </apex:repeat>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </apex:outputPanel>
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                        <apex:actionFunction action="{!updateStatus}" name="markAs" rerender="pageMessages" onComplete="reloadPage();">
+                            <apex:param name="metadataId" value="" />
+                            <apex:param name="Status" value="" />
+                        </apex:actionFunction>
+                        <apex:actionFunction action="{!updateStatuses}" name="markAllAs" rerender="pageMessages" onComplete="reloadPage();">
+                            <apex:param name="Status" value="" />
+                        </apex:actionFunction>
+                    </div>
+                </apex:outputPanel>
+            </div>
+        </apex:form>
+    </body>
+
+    </html>
+</apex:page>

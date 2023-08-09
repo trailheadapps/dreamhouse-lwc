@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Developer Hub Org --></label>
+        <lookupFilter>
+            <errorMessage><!-- Value does not exist or does not match filter criteria. --></errorMessage>
+            <informationalMessage><!-- Only developer hub credentials can be selected --></informationalMessage>
+        </lookupFilter>
+        <name>copado__Developer_Hub_Org__c</name>
+        <relationshipLabel><!-- Scratch Org Definitions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Duration in days --></label>
+        <name>copado__Duration_in_days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Scratch Org Definition JSON --></label>
+        <name>copado__Scratch_Org_Definition_JSON__c</name>
+    </fields>
+</CustomObjectTranslation>

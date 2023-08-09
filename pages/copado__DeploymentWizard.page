@@ -1,0 +1,175 @@
+<apex:page standardController="copado__Deployment__c" title="{!$ObjectType.copado__Deployment__c.Label} wizard" extensions="copado.DeploymentWizardExtension" id="thePage" lightningStylesheets="true">
+    <apex:slds />
+    <head>
+        <title>Deployment Wizard {!Deployment__c.Name} | Copado</title>
+        <c:GAnalytics />
+        <c:IncludeStaticsResourceComponent addJquery="true" addCometdjs="true" addJcometdjs="true"/>
+        <script type="text/javascript">
+            ga('send', 'pageview', {
+                'page': '/wizardStep4',
+                'title': 'Wizard - Schedule'
+            });
+
+            const updateDeployment = () => {
+                setTimeout(confirmDeployment, 3000);
+            };
+        </script>
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <style>
+            .col1commands {width:50px; }
+            .col2style {width:400px; font-color:inherit; font-weight:bold; font-style:inherit; text-align:right; }
+            .col3style {width:100px; font-color:inherit; font-weight:normal; font-style:inherit; text-align:right; }
+        </style>
+    </head>
+
+    <body>
+        <apex:form id="theForm" styleClass="copado-lightning-container">
+            <c:CopadoSpinner />
+            <apex:sectionHeader title="{!$ObjectType.copado__Deployment__c.LabelPlural}" />
+            <apex:outputPanel layout="block" id="messagesPanel">
+                <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                    <div id="divToast" class="slds-notify_container slds-is-relative">
+                        <apex:repeat value="{!pageMessagesByMessageSeverity}" var="severity">
+                            <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                                <span class="slds-assistive-text"></span>
+                                <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                    <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                                </span>
+                                <div class="slds-notify__content">
+                                    <apex:repeat value="{!pageMessagesByMessageSeverity[severity]}" var="messages">
+                                        <h2 class="slds-text-heading_small ">{!messages}</h2>
+                                    </apex:repeat>
+                                </div>
+                                <div class="slds-notify__close">
+                                    <button type="button"
+                                            class="slds-button slds-button_icon slds-button_icon-inverse"
+                                            title="{!$Label.copado__CLOSE}"
+                                            onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                        <span class="slds-icon_container slds-icon__svg--default closeToastIcon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </apex:repeat>
+                    </div>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" ></apex:outputPanel>  
+            <c:credits id="cmp_credits" />
+            
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure"></div>
+                        <div class="slds-media__body"></div>
+                        <div class="slds-no-flex">
+                            <apex:commandButton value="{!$Label.copado__CLOSE}" onClick="lockScreen();" styleClass="btn" action="{!cancel}" />
+                            <apex:commandButton value="{!$Label.copado__DEPLOY_ALL}" onclick="lockScreen();confirmAllValidations(); return false;" styleClass="btnImportant" rendered="{!canDeployThis}"/>
+                            <apex:commandButton value="{!$Label.copado__DEPLOY_OUTSTANDING}" onclick="lockScreen();confirmDeploymentOutstandingValidation(); return false;" styleClass="btnImportant" rendered="{!canDeployThis}"/>
+                        </div>
+                    </header>
+                </div>
+                <div class="slds-card__body slds-card__body_inner">
+                    <div class="slds-grid" style="margin-bottom:20px">
+                        <div class="slds-col">
+                            <apex:outputPanel id="schedule">
+                                <apex:selectList id="if_schedule" value="{!copado__Deployment__c.copado__Schedule__c}" size="1" required="true" onchange="lockScreen();validateDate();" styleClass="js-estimation-schedule">
+                                    <apex:selectOptions value="{!scheduleOptions}"/>
+                                </apex:selectList>
+                                <apex:inputField id="if_date" value="{!copado__Deployment__c.copado__Date__c}" rendered="{!showDateField}" />
+                                <apex:actionFunction name="validateDate" action="{!scheduleShowDate}" onComplete="unlockScreen();" rerender="schedule,if_date,messagesPanel"/>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-grid">
+                        <div class="slds-col">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="{!$ObjectType.copado__Step__c.fields.Name.Label}">{!$ObjectType.copado__Step__c.fields.Name.Label}</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="{!$ObjectType.copado__Step__c.fields.copado__CheckOnly__c.Label}">{!$ObjectType.copado__Step__c.fields.copado__CheckOnly__c.Label}</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Total {!$Label.copado__CREDITS}">Total {!$Label.copado__CREDITS}</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Outstanding {!$Label.copado__CREDITS}">Outstanding {!$Label.copado__CREDITS}</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!estimations}" var="est">
+                                        <tr class="slds-hint-parent">
+                                            <td data-label="{!$ObjectType.Step__c.fields.Name.Label}" scope="row">
+                                                <div class="slds-truncate" >
+                                                    <apex:outputField value="{!est.step.Name}"/>
+                                                </div>
+                                            </td>
+                                            <td data-label="{!$ObjectType.Step__c.fields.CheckOnly__c.Label}">
+                                                <div class="slds-truncate" >
+                                                    <apex:outputField value="{!est.step.copado__CheckOnly__c}"/>
+                                                </div>
+                                            </td>
+                                            <td data-label="Total {!$Label.CREDITS}">
+                                                <div class="slds-truncate" >
+                                                    <apex:outputText value="{!est.credits}"/>
+                                                </div>
+                                            </td>
+                                            <td data-label="Outstanding {!$Label.CREDITS}">
+                                                <div class="slds-truncate" >
+                                                    <apex:outputText value="{!est.outstandingCredits}"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                    <tr>
+                                        <td></td>
+                                        <td><apex:outputText value="{!$Label.copado__TOTAL_CREDITS_ESTIMATED}"/></td>
+                                        <td><apex:outputText value="{!totalEstimations}" /></td>
+                                        <td><apex:outputText value="{!totalOutstandingEstimations}" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-card__footer">
+                    <apex:panelGrid width="100%" columns="3" id="est_totals" columnClasses="empty,col2style,col3style" rendered="{!estimations.size>0}">
+                        <apex:outputPanel ></apex:outputPanel>
+                        <apex:outputText value="{!$ObjectType.copado__Destination_Org__c.LabelPlural}" id="lbl_dest_orgs" />
+                        <apex:outputText value="{!orgCount}" id="txt_dest_orgs"/>
+                        <apex:outputPanel ></apex:outputPanel>
+                    </apex:panelGrid>
+                </footer>
+            </article>
+
+
+            <apex:outputPanel layout="block" id="proceedToDeploymentBlock">
+                <script>
+                    function proceedToDeployment() {
+                        var goToDeployment = '{!goToDeployment}';
+                        if(goToDeployment == 'true') {
+                            if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+                                sforce.one.navigateToSObject('{!deployment.Id}', 'view');
+                            } else {
+                                    window.location.href = '/{!deployment.Id}';
+                            }
+                        } else {
+                            return false;
+                        }
+                    }
+                </script>
+            </apex:outputPanel>
+
+            <apex:actionFunction action="{!creditCheckAndValidations}" name="confirmAllValidations" oncomplete="resetStatusForDeployment();" status="buttonStatus"/>
+            <apex:actionFunction action="{!creditCheckAndValidations}" name="confirmDeploymentOutstandingValidation" oncomplete="resetStatusDeploymentOutstanding();" status="buttonStatus"/>
+            <apex:actionFunction action="{!confirmAll}" name="resetStatusForDeployment" oncomplete="updateDeployment();" status="buttonStatus"/>
+            <apex:actionFunction action="{!confirmOutstanding}" name="resetStatusDeploymentOutstanding" oncomplete="updateDeployment();" reRender="messagesPanel"/>
+            <apex:actionFunction action="{!confirm}" name="confirmDeployment" oncomplete="deployCall();" status="buttonStatus"/>
+            <apex:actionFunction action="{!deployCall}" name="deployCall" oncomplete="proceedToDeployment();unlockScreen();" reRender="messagesPanel, proceedToDeploymentBlock" />
+        </apex:form>
+    </body>
+</apex:page>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Optional Base URL where this test will be run, if Credentials are not specified. --></help>
+        <label><!-- Base URL --></label>
+        <name>copado__Base_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch No. --></label>
+        <name>copado__Batch_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Environment --></label>
+        <name>copado__Environment__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>copado__External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Status Date --></label>
+        <name>copado__Last_Status_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Status Icon --></label>
+        <name>copado__Last_Status_Icon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Status --></label>
+        <name>copado__Last_Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed successfully</masterLabel>
+            <translation><!-- Completed successfully --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed with errors</masterLabel>
+            <translation><!-- Completed with errors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provider Failure</masterLabel>
+            <translation><!-- Provider Failure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Queued</masterLabel>
+            <translation><!-- Queued --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Starting</masterLabel>
+            <translation><!-- Starting --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Copado will log in to Salesforce using this Credential.  There is no need to record username and password of the Salesforce login page. --></help>
+        <label><!-- Credential --></label>
+        <name>copado__Org_Credential__c</name>
+        <relationshipLabel><!-- Selenium Test Runs --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Copado will run the Test Suites for each of the selected Platforms in these Settings. --></help>
+        <label><!-- Selenium Settings --></label>
+        <name>copado__Selenium_Settings__c</name>
+        <relationshipLabel><!-- Selenium Test Runs --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- This field should not be populated.  The value is automatically maintained. --></help>
+        <label><!-- Selenium Test Group --></label>
+        <name>copado__Selenium_Test_Group__c</name>
+        <relationshipLabel><!-- Selenium Test Runs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Selenium Test Suite --></label>
+        <name>copado__Selenium_Test_Suite__c</name>
+        <relationshipLabel><!-- Selenium Test Runs --></relationshipLabel>
+    </fields>
+    <recordTypes>
+        <description><!-- Test a generic web application --></description>
+        <label><!-- Generic Web Application --></label>
+        <name>copado__Generic_Web_Application</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Test a Salesforce Org using OAuth Authentication --></description>
+        <label><!-- Salesforce --></label>
+        <name>copado__Salesforce</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Base URL cannot be populated if Credentials were selected. --></errorMessage>
+        <name>copado__Credentials_or_BaseURL</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Add_Selection_to_a_Test_Group --></label>
+        <name>copado__Add_Selection_to_a_Test_Group</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Quick_Run --></label>
+        <name>copado__Quick_Run</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Refresh_Results --></label>
+        <name>copado__Refresh_Results</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Show_Hook_URL --></label>
+        <name>copado__Show_Hook_URL</name>
+    </webLinks>
+</CustomObjectTranslation>

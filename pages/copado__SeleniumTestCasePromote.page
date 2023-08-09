@@ -1,0 +1,44 @@
+<apex:page standardController="copado__Selenium_Test_Case__c" extensions="copado.SeleniumTestCasePromoteRollback" action="{!initPromote}" lightningStylesheets="true">
+    
+    <head>
+        <c:GAnalytics />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    </head>
+
+    <body>
+        <apex:pageMessages id="theMessages" />
+        <apex:form id="theForm" styleClass="copado-lightning-container" html-novalidate="true">
+            <apex:outputPanel id="pnlWarning" rendered="{!!showList}">
+                <apex:commandButton id="btnReturn" value="Return to previous page" action="{!cancel}" />
+            </apex:outputPanel>
+            <apex:outputPanel id="pnlSuccess" rendered="{!showList}">
+                <apex:sectionHeader title="{!$Label.copado__PROMOTE_SELENIUM_TC_VERSION}" subtitle="{!copado__Selenium_Test_Case__c.Name} ({!$Label.copado__TC_REPLACE} {!copado__Selenium_Test_Case__c.Previous_Version__r.copado__Version__c} {!$Label.copado__TC_WITH} {!copado__Selenium_Test_Case__c.copado__Version__c})"
+                                    description="{!$Label.copado__PROMOTE_TEST_CASE_DESCRIPTION}"/>
+                <apex:pageBlock id="pb" mode="edit">
+                    <apex:pageblockButtons id="pbbs" location="top">
+                        <apex:commandButton value="Done" action="{!cancel}" rendered="{!processIsDone}"/>
+                        <apex:commandButton value="{!$Label.site.save}" styleClass="btnImportant" action="{!promoteOrRollback}" rendered="{!and(!processIsDone, testCasePerSuite.size>0)}"/>
+                        <apex:commandButton value="{!$Label.site.cancel}" action="{!cancel}" rendered="{!!processIsDone}"/>
+                    </apex:pageblockButtons>
+                    <apex:pageBlockTable id="pbt" value="{!testCasePerSuite}" var="pv" rendered="{!testCasePerSuite.size>0}">
+                        <apex:column >
+                            <apex:inputCheckbox value="{!pv.selected}"/>
+                        </apex:column>
+                         <apex:column value="{!pv.tcs.Name}"/>
+                        <apex:column value="{!pv.tcs.Selenium_Test_Suite__r.Name}"/>
+                        <apex:column value="{!pv.tcs.Selenium_Test_Case__r.Name}"/>
+                        <apex:column value="{!pv.tcs.Selenium_Test_Case__r.copado__Version__c}"/>
+                    </apex:pageBlockTable>
+                </apex:pageBlock>
+            </apex:outputPanel>
+        </apex:form>
+        
+        <script>
+            ga('send', 'pageview', {
+              'page': '/SeleniumTestCasePromote',
+              'title': 'Selenium Promote Test Case Version'
+            });
+        </script>
+    </body>
+    
+</apex:page>

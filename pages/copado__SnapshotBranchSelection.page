@@ -1,0 +1,47 @@
+<!--
+ - Created by mertyalti on 30/07/2018.
+ -->
+
+<apex:page id="SnapshotBranchSelection" standardController="copado__Git_Backup__c" lightningStylesheets="true" showChat="false" extensions="copado.Settings,copado.JsRemotingController">
+    <c:IncludeStaticsResourceComponent addJQuery="true" />
+    <apex:form >
+        <c:ManageRepositoryBranches repoId="{!copado__Git_Backup__c.copado__Git_Repository__c}" />
+
+        <script>
+
+            var selectBranch = function(branchName) {
+                var ns = '{!JSENCODE(namespace)}';
+                var core = ns ? window[ns.split('__')[0]] : window;
+
+                lockScreen();
+
+                var recordId = "{!JSENCODE(copado__Git_Backup__c.Id)}";
+                var fieldName = ns+"Branch__c";
+
+                var res = (core).JsRemotingController.selectBranch(
+                    recordId,
+                    fieldName,
+                    branchName,
+                    function( result, event ) {
+                        unlockScreen();
+                        if(result === true){
+                            copadoNavigateToUrl(recordId,"{!URLFOR($Action.copado__Git_Backup__c.View,copado__Git_Backup__c.Id)}");
+                        } else {
+                            alert('Branch selection couldn\'t be completed.');
+                        }
+                    }
+                );
+            }
+
+            function copadoNavigateToUrl (id,url) {
+                // lightning/any other way to navigate
+                if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+                    sforce.one.navigateToSObject(id, 'detail');
+                } else {
+                    window.open(url, '_parent');
+                }
+            };
+
+        </script>
+    </apex:form>
+</apex:page>

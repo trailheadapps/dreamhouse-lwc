@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Child User Story Release --></label>
+        <name>copado__Child_User_Story_Release__c</name>
+        <relationshipLabel><!-- User Story Dependencies (Child User Story Release) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The Status of the child user story --></help>
+        <label><!-- Child User Story Status --></label>
+        <name>copado__Child_User_Story_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- Short description (255 chars max) of the User Story that is needed from the other team. More detailed description can be added to the Notes field. --></help>
+        <label><!-- Deliverable --></label>
+        <name>copado__Deliverable__c</name>
+    </fields>
+    <fields>
+        <help><!-- Status of the dependency between two User Stories. Example: Prioritized, Committed, or Completed. You can manually edit this field. However, it will be automatically marked as Completed when you mark the Parent User Story to Completed. --></help>
+        <label><!-- Dependency Status --></label>
+        <name>copado__Dependency_Status__c</name>
+        <picklistValues>
+            <masterLabel>Committed</masterLabel>
+            <translation><!-- Committed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deferred</masterLabel>
+            <translation><!-- Deferred --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>More Info Needed</masterLabel>
+            <translation><!-- More Info Needed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Never</masterLabel>
+            <translation><!-- Never --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prioritized</masterLabel>
+            <translation><!-- Prioritized --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The Team that is dependent on another team to provide the User Story. --></help>
+        <label><!-- Child User Story Team --></label>
+        <name>copado__Dependent_Team__c</name>
+        <relationshipLabel><!-- User Story Dependencies (Dependent Team) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The User Story that is dependent on the completion of the parent user story. --></help>
+        <label><!-- Child User Story --></label>
+        <name>copado__Dependent_User_Story__c</name>
+        <relationshipLabel><!-- Parent User Stories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Needed by (Date) --></label>
+        <name>copado__Needed_by_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notes --></label>
+        <name>copado__Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Status of the parent user story --></help>
+        <label><!-- Parent User Story Status --></label>
+        <name>copado__Parent_User_Story_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- The team that will provide the deliverable to fulfill this dependency. --></help>
+        <label><!-- Parent User Story Team --></label>
+        <name>copado__Provider_Team__c</name>
+        <relationshipLabel><!-- User Story Dependencies (Provider Team) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The record representing the User Story to satisfy the deliverable of this dependency. --></help>
+        <label><!-- Parent User Story --></label>
+        <name>copado__Provider_User_Story__c</name>
+        <relationshipLabel><!-- Child User Stories --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Enter the value for the Parent-Child relationship type for your User Stories. By default, the field value is set to &quot;Relates-to.&quot; You can add other values, as this is an unrestricted list. --></help>
+        <label><!-- Relationship Type --></label>
+        <name>copado__Relationship_Type__c</name>
+        <picklistValues>
+            <masterLabel>blocking</masterLabel>
+            <translation><!-- blocking --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>duplicating</masterLabel>
+            <translation><!-- duplicating --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>fixing</masterLabel>
+            <translation><!-- fixing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>relates to</masterLabel>
+            <translation><!-- relates to --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Parent User Story Release --></label>
+        <name>copado__Release__c</name>
+        <relationshipLabel><!-- User Story Dependencies --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The value is set to True whenever a Dependency Status is set to Completed, Deferred, or Never. --></help>
+        <label><!-- Skip Dependency --></label>
+        <name>copado__Skip_Dependency__c</name>
+    </fields>
+</CustomObjectTranslation>

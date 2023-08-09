@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableCMSC2CConnections>true</enableCMSC2CConnections>
+    <enableChatterFileLink>true</enableChatterFileLink>
+    <enableContent>true</enableContent>
+    <enableContentAutoAssign>false</enableContentAutoAssign>
+    <enableContentDistForPortalUsers>false</enableContentDistForPortalUsers>
+    <enableContentDistPwOptionsBit1>true</enableContentDistPwOptionsBit1>
+    <enableContentDistPwOptionsBit2>true</enableContentDistPwOptionsBit2>
+    <enableContentDistribution>true</enableContentDistribution>
+    <enableContentSupportMultiLanguage>false</enableContentSupportMultiLanguage>
+    <enableContentWorkspaceAccess>true</enableContentWorkspaceAccess>
+    <enableDeleteFileInContentPacks>false</enableDeleteFileInContentPacks>
+    <enableFileShareSetByRecord>false</enableFileShareSetByRecord>
+    <enableFilesUsrShareNetRestricted>false</enableFilesUsrShareNetRestricted>
+    <enableJPGPreviews>false</enableJPGPreviews>
+    <enableLibraryManagedFiles>false</enableLibraryManagedFiles>
+    <enableSiteGuestUserToUploadFiles>false</enableSiteGuestUserToUploadFiles>
+    <enableUploadFilesOnAttachments>true</enableUploadFilesOnAttachments>
+    <setValidContentTypeForAtchDocDownload>false</setValidContentTypeForAtchDocDownload>
+    <skipContentAssetTriggers>false</skipContentAssetTriggers>
+    <skipContentAssetTriggersOnDeploy>true</skipContentAssetTriggersOnDeploy>
+</ContentSettings>

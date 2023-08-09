@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Active --></label>
+        <name>copado__Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Base Page --></label>
+        <name>copado__Base_Page__c</name>
+        <picklistValues>
+            <masterLabel>GitCommitChanges</masterLabel>
+            <translation><!-- GitCommitChanges --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GitCommitMain</masterLabel>
+            <translation><!-- GitCommitMain --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter a URL of a documentation page or article to help your users understand more about this tip. Please, enter the URL with full https:// format. Example https://www.copado.com/ --></help>
+        <label><!-- Help Text Url --></label>
+        <name>copado__Help_Text_Url__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is the text that will appear in the Tip pop-up message. Try to be assertive and clear with your tip. --></help>
+        <label><!-- Help Text --></label>
+        <name>copado__Help_Text__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select if you want the tip to be display immediately or only when the triggering action is met --></help>
+        <label><!-- Triggering Action --></label>
+        <name>copado__Triggering_Action__c</name>
+        <picklistValues>
+            <masterLabel>Always show</masterLabel>
+            <translation><!-- Always show --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Copado Metadata Grid selection</masterLabel>
+            <translation><!-- Copado Metadata Grid selection --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This is a non-mandatory field. You can use it to complement the Triggering Metadata Type in case you want specific Metadata items to trigger the tips. The Metadata items can be separated by &quot;;&quot;. Example standard-Account;standard-AppLauncher. --></help>
+        <label><!-- Triggering Metadata Items --></label>
+        <name>copado__Triggering_Metadata_Items__c</name>
+    </fields>
+    <fields>
+        <help><!-- Specify the Metadata Type that will trigger the tip to be displayed --></help>
+        <label><!-- Triggering Metadata Type --></label>
+        <name>copado__Triggering_Value__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Please enter Triggering Metadata Type to populate Triggering Metadata Items --></errorMessage>
+        <name>copado__Validate_triggering_metadata_type</name>
+    </validationRules>
+</CustomObjectTranslation>

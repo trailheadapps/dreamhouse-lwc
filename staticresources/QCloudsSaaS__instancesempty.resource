@@ -1,0 +1,17 @@
+{
+    "meta":{
+        "current-page":1,
+        "per-page":100,
+        "from":null,
+        "to":null,
+        "total":0,
+        "last-page":1,
+        "total_resources":0,
+        "resources_per_page":100
+    },
+    "links":{
+        "first":"https:\/\/dev.qualityclouds.com\/api\/v2\/salesforce-instance?page%5Bnumber%5D=1&page%5Bsize%5D=100",
+        "last":"https:\/\/dev.qualityclouds.com\/api\/v2\/salesforce-instance?page%5Bnumber%5D=1&page%5Bsize%5D=100"
+    },
+    "data":[]
+}

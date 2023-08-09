@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Is Active --></label>
+        <name>copado__Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- API name of the flow used to perform more specific operations, like updating records status, creating other records, etc. --></help>
+        <label><!-- Automated Action Callback --></label>
+        <name>copado__Automated_Action_Callback__c</name>
+    </fields>
+    <fields>
+        <help><!-- Action that will be executed based on the source action and its result. --></help>
+        <label><!-- Automated Action --></label>
+        <name>copado__Automated_Action__c</name>
+    </fields>
+    <fields>
+        <help><!-- Connector that maps the payload and parameters between the source and automated actions.Select &quot;Custom&quot; if you want to specify a custom connector class --></help>
+        <label><!-- Automation Connector --></label>
+        <name>copado__Automation_Connector__c</name>
+    </fields>
+    <fields>
+        <help><!-- Represents the schedule cron expression --></help>
+        <label><!-- Cron Expression --></label>
+        <name>copado__Cron_Expression__c</name>
+    </fields>
+    <fields>
+        <help><!-- API name of the Apex class used to map the source and automated actions payloads and parameters --></help>
+        <label><!-- Custom Automation Connector --></label>
+        <name>copado__Custom_Automation_Connector__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field is used to provide a description of the purpose of this automation --></help>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of environments where the source action will be evaluated. The environments selected must belong to the pipeline specified in the Automation Rule. --></help>
+        <label><!-- Environment --></label>
+        <name>copado__Environment__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicate if the automated action should be immediately executed or it&apos;ll be scheduled --></help>
+        <label><!-- Execution --></label>
+        <name>copado__Execution__c</name>
+        <picklistValues>
+            <masterLabel>Immediate</masterLabel>
+            <translation><!-- Immediate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled</masterLabel>
+            <translation><!-- Scheduled --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Last Execution Date Time --></label>
+        <name>copado__Last_Execution_Date_Time__c</name>
+    </fields>
+    <fields>
+        <help><!-- Pipeline where this automation will be executed. If no Stage or Environment is defined, this automation will applied to the entire pipeline and can be considered the default rule --></help>
+        <label><!-- Pipeline --></label>
+        <name>copado__Pipeline__c</name>
+        <relationshipLabel><!-- Automation Rules --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Scheduled Job Id --></label>
+        <name>copado__Scheduled_Job_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Define if the automation should be triggered after a successful or failed execution of the source action --></help>
+        <label><!-- Source Action Status --></label>
+        <name>copado__Source_Action_Status__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Successful</masterLabel>
+            <translation><!-- Successful --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Action that will trigger the automation --></help>
+        <label><!-- Source Action --></label>
+        <name>copado__Source_Action__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of stages where the source action will be evaluated. The environments/stages selected must belong to the pipeline specified in the Automation Rule. --></help>
+        <label><!-- Stage --></label>
+        <name>copado__Stage__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Environment and Stage fields cannot be selected at the same time. Define the most granular filters using Environments, or broader filters using Stage. --></errorMessage>
+        <name>copado__Stage_and_Environment_both_populated</name>
+    </validationRules>
+</CustomObjectTranslation>

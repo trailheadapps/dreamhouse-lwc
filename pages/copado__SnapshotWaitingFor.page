@@ -1,0 +1,202 @@
+<apex:page id="SnapshotWaitingFor" standardController="copado__Git_Backup__c" extensions="copado.JobWaitingExtension" lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Snapshot Waiting Page">
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+
+    <head>
+        <c:IncludeStaticsResourceComponent addJquery="true" addUIjs="true" />
+
+        <style>
+            .approvalIcon {
+                color: green;
+                margin-right: 5px;
+            }
+
+            .pinIcon {
+                color: #3593c6;
+                margin-right: 5px;
+            }
+
+            .errorIcon {
+                color: red;
+                margin-right: 5px;
+            }
+
+            .warningIcon {
+                color: orange;
+                margin-right: 5px;
+            }
+        </style>
+    </head>
+
+    <body class="slds-scope">
+    <apex:form >
+        <script type="text/javascript">
+            var wasJobStarted = (window.location.hash && window.location.hash.startsWith('#&jobStarted'));
+
+            if(!wasJobStarted) {
+                var newUrl = new window.URL(window.location.href);
+                isCommitChanges = newUrl.href.indexOf('co_commitChanges')>=0;
+                newUrl.hash = '&jobStarted';
+                window.history.replaceState('copado', document.title, newUrl);
+            }
+
+            var svgButtonsId = [];
+            var svgButtonsClass = ['approvalIcon', 'errorIcon', 'pinIcon', 'warningIcon'];
+
+            var svgStruct = [];
+            var setSVGStruct = function(){
+                svgStruct['.approvalIcon'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#check')}",
+                    class:'slds-button__icon'
+                };
+                svgStruct['.errorIcon'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}",
+                    class:'slds-button__icon'
+                };
+                svgStruct['.pinIcon'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#check')}",
+                    class:'slds-button__icon'
+                };
+                svgStruct['.warningIcon'] = {
+                    imageURL: "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}",
+                    class:'slds-button__icon'
+                };
+            }
+
+            $copado(document).ready(function() {
+                setSVGStruct();
+                applyRenderSVG(svgButtonsId,svgButtonsClass);
+                if(wasJobStarted){
+                    existingJobCheck();
+                    //return; // we do not want to start a new job every time the user reloads the page
+                }
+                if(isCommitChanges) {
+                    commitCallout();
+                }
+            });
+
+            function applyRenderSVG(listIdArray,listClassArray){
+                if(listIdArray){
+                    listIdArray.forEach(function(element){
+                        renderSVG('#'+element);
+                    });
+                }
+
+                if(listClassArray) {
+                    listClassArray.forEach(function(element){
+                        renderSVG('.'+element);
+                    });
+                }
+            }
+
+            function renderSVG(elemId){
+                var elem = $copado(elemId);
+                var struct = svgStruct[elemId];
+                var imageURL = struct.imageURL;
+                var SVG = $copado('<svg/>', {
+                   class: struct.class,
+                });
+
+                var SVGUse = $copado('<use/>');
+                SVGUse.attr('xlink:href',imageURL);
+                elem.prepend(SVG.append(SVGUse));
+                elem.html(elem.html());
+            }
+
+            function autoScrollToEnd() {
+                $copado('[Id$=rightPanelOnly]').animate({scrollTop: $copado('[Id$=rightPanelOnly]').offset().top}, 10);
+            }
+        </script>
+
+        <apex:actionFunction name="existingJobCheck" action="{!checkCopadoNotificationStatus}" reRender="theDeploymentPoller,theCommitPoller,theApexTestRunPoller,rightPanelOnly" />
+        <apex:actionFunction name="commitCallout" action="{!commitCallOut}" onComplete="runCommitChanges();applyRenderSVG(svgButtonsId,['approvalIcon', 'errorIcon', 'pinIcon', 'warningIcon']);" reRender="rightPanelOnly"/>
+        <apex:actionFunction name="runCommitChanges" reRender="theCommitPoller" />
+        <apex:actionPoller action="{!waitForCommitChanges}" id="theCommitPoller" reRender="theCommitPoller,rightPanelOnly" interval="5" enabled="{!IsCommitChangesPollerEnabled}" onComplete="updateURLForRefresh();applyRenderSVG(svgButtonsId,['approvalIcon', 'errorIcon', 'pinIcon', 'warningIcon']);autoScrollToEnd();" />
+
+        <div class="slds-illustration slds-illustration_small" style="border:1px solid gray;padding:5%;margin:5% 15% 10% 15%;">
+            <div class="slds-text-longform copado-section-header">
+                <h3 class="slds-text-heading_large" style="margin-bottom:10px;">{!gitSnapshot.Name}</h3>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2" style="border-right:1px solid;">
+                    <div class="slds-box_x-small slds-m-around_x-small slds-p-around_x-small">
+                        <p class="slds-text-body_regular">
+                            <apex:outputPanel layout="block" styleClass="slds-grid slds-wrap">
+                                <apex:repeat value="{!$ObjectType.copado__Git_Backup__c.FieldSets.copado__Snapshot_Waiting_Page}" var="field">
+                                    <div class="slds-col slds-size_1-of-1">
+                                        <span>
+                                            <div class="slds-form-element slds-form-element_edit slds-form-element_stacked slds-hint-parent">
+                                                <span class="slds-form-element__label slds-float_left" style="padding-left: 20%;"><b>{!field.Label}</b></span>
+                                                <div class="slds-form-element__control" style="text-align: -webkit-auto; padding-left: 20%;">
+                                                    <apex:outputField styleClass="slds-text-body_regular" value="{!gitSnapshot[field]}" />
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </apex:repeat>
+                            </apex:outputPanel>
+                        </p>
+                    </div>
+                </div>
+                <apex:outputPanel layout="block" styleClass="slds-size_1-of-2 slds-scrollable_y" id="rightPanelOnly" style="max-height: 300px;overflow-y: auto;">
+                    <div class="slds-box_x-small slds-m-around_x-small slds-p-around_x-small">
+                        <apex:variable var="counter" value="{!0}" />
+                        <apex:outputPanel layout="none" rendered="{!pageMessagesMap != null}">
+                            <apex:repeat value="{!pageMessagesMap}" var="status">
+                                <apex:repeat value="{!pageMessagesMap[status]}" var="message">
+                                    <div class="slds-scoped-notification slds-media slds-media_center" role="status">
+                                        <div class="slds-media__figure">
+
+                                            <div class="slds-input__icon-group" style="position: relative">
+                                                <apex:outputPanel layout="none" rendered="{!AND(PageMessageSize > 0, (counter + 1 < PageMessageSize))}">
+                                                    <apex:outputPanel layout="none" rendered="{!status == 'success'}">
+                                                        <span class="slds-icon_container slds-icon__svg--default approvalIcon"></span>&nbsp;&nbsp;
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!status == 'info'}">
+                                                        <span class="slds-icon_container slds-icon__svg--default pinIcon"></span>&nbsp;&nbsp;
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!status == 'error'}">
+                                                        <span class="slds-icon_container slds-icon__svg--default errorIcon"></span>&nbsp;&nbsp;
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!status == 'warning'}">
+                                                        <span class="slds-icon_container slds-icon__svg--default warningIcon"></span>&nbsp;&nbsp;
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!AND(PageMessageSize > 0, (counter + 1 = PageMessageSize), IsCommitChangesPollerEnabled)}">
+                                                    <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_x-small slds-input__spinner">
+                                                        <div class="slds-spinner__dot-a"></div>
+                                                        <div class="slds-spinner__dot-b"></div>
+                                                    </div>
+                                                </apex:outputPanel>
+                                            </div>
+
+                                        </div>
+                                        <div class="slds-media__body" style="margin-left:10px;text-align: left;">
+                                            <p>{!message}</p>
+                                        </div>
+                                    </div>
+                                    <apex:variable var="counter" value="{!counter + 1}" />
+                                </apex:repeat>
+                            </apex:repeat>
+                        </apex:outputPanel>
+                    </div>
+                    <script>
+                        function updateURLForRefresh(){
+                            var newUrls = new window.URL(window.location.href);
+                            var copadoJobId = '{!JSENCODE(copadoNotificationId)}';
+                            newUrls.hash = '&jobStarted=' + copadoJobId;
+                            window.history.replaceState('copado', document.title, newUrls);
+                        }
+                    </script>
+                </apex:outputPanel>
+            </div>
+            <apex:outputPanel styleClass="copado-section-footer" id="continueButton">
+                <apex:commandLink styleClass="slds-button slds-button_brand" action="{!getReturnUrl}" value="{!$Label.copado__Go_Back} to the {!$ObjectType.copado__Git_Backup__c.Label}" style="margin-top:25px" />
+            </apex:outputPanel>
+
+        </div>
+
+    </apex:form>
+    </body>
+    </html>
+</apex:page>

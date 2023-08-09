@@ -1,0 +1,58 @@
+<apex:page id="DataTemplateObjectResult" controller="copado.DataTemplateObjectResultController" lightningStylesheets="true" showHeader="true" sideBar="false" docType="html-5.0" title="Data Template Object Result">
+    <apex:slds />
+    <c:WizardUtils id="cmpWizardUtilities" />
+    <c:IncludeConnectionJsComponent />
+    <c:IncludeStaticsResourceComponent addJquery="true" />
+    <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+    <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__utils)}" />
+    <apex:includeScript value="{!$Resource.copado__DataTemplateResult_javascript}" />
+    <style>
+        .template-object-result-container {
+            padding: 0.5rem 0.5rem 0;
+        }
+        .template-object-result-container .header {
+            background-color: #F7F9FB;
+        }
+        .template-object-result-container .content-result .slds-tabs_default .jqgrid {
+            width:99%;
+        }
+        .template-object-result-container .content-result .download-button {
+            display: flex; justify-content: flex-end; margin: 1rem;
+        }
+    </style>
+    <script>
+        var objDataTemplateResultVars = {
+            sourceTarget: '{!JSENCODE(sourceTargetUrlMap)}',
+            depId: '{!JSENCODE(deploymentId)}',
+            attName: '{!JSENCODE(attachmentName)}',
+            imagesURL: '{!URLFOR($Resource.copado__DTS_images)}/'
+        }
+    </script>
+    <apex:form >
+        <div class="template-object-result-container">
+            <div class="slds-page-header slds-align_absolute-center slds-m-horizontal_small header">
+                <div class="slds-page-header__row ">
+                    <h1>
+                        <span class="slds-page-header__title">{!templateName}</span>
+                    </h1>
+                </div>
+            </div>
+            <div class="content-result">
+                <div class="download-button">
+                    <div>
+                        <span>
+                            <apex:outputLink value="{!IF(csvAttachmentId != null,URLFOR($Action.Attachment.Download, csvAttachmentId),'')}" target="_blank" disabled="{!csvAttachmentId == null}">
+                                <apex:image value="{!URLFOR($Resource.copado__DTS_images,'download.png')}" style="padding-bottom:3px"/>
+                                {!IF(csvAttachmentId != null,$Label.copado__DataTemplate_Download_All_Results,$Label.copado__No_CSV_file_available)}
+                            </apex:outputLink>
+                        </span>
+                    </div>
+                </div>
+                <div class="slds-tabs_default slds-align_absolute-center slds-m-top_medium">
+                    <div id="jqxgrid" class="jqgrid"></div>
+                </div>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

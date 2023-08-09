@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>copado__Promotion__c.copado__Source_Environment__c</field>
+    </columns>
+    <columns>
+        <field>copado__Promotion__c.copado__Destination_Environment__c</field>
+    </columns>
+    <columns>
+        <field>copado__Promotion__c.copado__Back_Promotion__c</field>
+    </columns>
+    <columns>
+        <field>copado__Promotion__c.copado__Project__c</field>
+    </columns>
+    <columns>
+        <field>copado__Promotion__c.copado__Release__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>copado__Promotion__c.copado__Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Completed with errors,Merge Conflict</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>copado__Promotion__c.copado__Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>CCM - Promotions With Errors &amp; Conflicts</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$copado__Promotion__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>false</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

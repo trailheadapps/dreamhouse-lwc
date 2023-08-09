@@ -1,0 +1,222 @@
+<apex:page showHeader="true" sidebar="false" docType="html-5.0" standardController="copado__Deployment__c" extensions="copado.DeployCommits,copado.Settings" id="thePage" lightningStylesheets="true">
+    <head>
+        <c:IncludeStaticsResourceComponent addJquery="true" addCometdjs="true" addJcometdjs="true" addJSON2js="true"/>
+        <apex:includeScript value="{!URLFOR($Resource.statusManager) }" />
+        <apex:includeScript value="{!URLFOR($Resource.copadoStreamingService) }" />    
+        <script type="text/javascript" src="{!URLFOR($Resource.utils) }" />
+        <script type="text/javascript">
+            var Copado_Licenses = {!CurrentUserLicenses};
+        </script>
+        <c:WizardUtils />
+        <c:IncludeConnectionJsComponent />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <script>
+        	_config = {
+                data: {
+                	repositoryId: '{!JSENCODE(repositoryId)}',
+                    branch: '{!JSENCODE(branch)}',
+                    fromCommitId: '{!JSENCODE(startCommit)}',
+                    toCommitId: '{!JSENCODE(endCommit)}',
+                    runAllTests: ('{!JSENCODE(IF(step.Run_all_tests__c,'true','false'))}' == 'true'),
+                    checkOnly: ('{!JSENCODE(IF(step.CheckOnly__c,'true','false'))}' == 'true'),
+                    deploymentName: '{!JSENCODE(deployment.Name)}'
+                },
+                server: {
+                	url: '{!JSENCODE(urlBase)}gitDeployment/__REPOID__{!JSENCODE(urlParameters)}'
+                }
+            };
+        	copadoApp = {
+            	createDeployment: function(){
+                    var d = _config.data;
+                	var url = _config.server.url.replace('__REPOID__', d.repositoryId)+
+                        '&branch='+d.branch+
+                        '&fromCommitId='+d.fromCommitId+
+                        '&toCommitId='+d.toCommitId+
+                        '&runAllTests='+d.runAllTests+
+                        '&checkOnly='+d.checkOnly+
+                        '&deploymentName='+encodeURIComponent(d.deploymentName);
+                    lockScreen();
+                	dw.u.getRemote(url,function(res){
+                            console.log('res success', res);
+                            copadoApp.onSuccess(res);
+                        },true,true, 
+                        function(res){
+                            console.error('Callback remote', res);
+                            unlockScreen();
+                            copadoApp.showMessage('ERROR', res, -1);
+                        });
+                    return false;
+                 },
+                onSuccess: function(obj){
+                	console.log('Success response object: ', obj);
+                    if(obj.copadoJobId){
+                        statusManager.copadoJobId = obj.copadoJobId;
+                        statusManager.startStatusChecker();
+                    }
+                    if(obj.deploymentId){
+                    	location.href = '/'+obj.deploymentId;
+                    }
+            	},
+                showMessage: function(type, msg, timeout){
+                    $copado('.fixedMsg')
+                    .html($copado('[id$=js-msg-'+type+']').html().replace('__MSG__',msg))
+                    .fadeIn('slow');
+                    
+                    if(timeout == -1)return false;
+                    timeout = (timeout==0)? 7000 : timeout;
+                    
+                    setTimeout(function(){$copado('.fixedMsg').fadeOut('slow');},timeout);
+                    return false;
+                }
+            };
+        </script>
+        <script type="text/javascript">
+            $copado(document).ready(function(){
+                copadoStreamingService.ns = '{!settings.namespace}';
+                copadoStreamingService.init();
+                console.log('streaming services should be initialised...');
+                statusManager.ns = '{!settings.namespace}';
+                statusManager.herokuServer = '{!settings.herokuServer}';
+                statusManager.urlParameters = '{!settings.urlParameters}';
+                statusManager.sessionId = __sfdcSessionId;
+                statusManager.parentId = _config.data.repositoryId;
+                statusManager.initFunction = function(){};
+                statusManager.successFunction = copadoApp.onSuccess;
+                window.onbeforeunload = copadoStreamingService.disconnect;
+                setTimeout(function(){
+                    statusManager.initialise();
+                },2000);
+            });
+        </script>
+    </head>
+    <body>
+        <apex:outputPanel id="msg" styleClass="fixedMsg">
+            <apex:pageMessages id="theMessages" />
+        </apex:outputPanel>
+        
+        <div style="display:none;">
+            <apex:pageMessage title="{!$Label.copado__WARNING}" summary="__MSG__" severity="warning" strength="3" id="js-msg-WARNING" />
+            <apex:pageMessage title="{!$Label.copado__SUCCESS}" summary="__MSG__" severity="confirm" strength="3" id="js-msg-CONFIRM" />
+            <apex:pageMessage title="{!$Label.copado__ERROR}" summary="__MSG__" severity="error" strength="3" id="js-msg-ERROR" />
+        </div>
+
+    
+        <apex:form id="theForm" styleClass="copado-lightning-container">
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}" /> 
+            <apex:sectionHeader help="String" title="{!$ObjectType.copado__Deployment__c.Label}" subtitle="{!$Label.copado__CREATE_DEPLOYMENT}" description="{!$Label.copado__DEPLOY_COMMITS_DESCRIPTION}"/>
+            <apex:actionFunction name="showMessage" action="{!showMessage}" rerender="msg">
+                <apex:param name="errorLevel" assignTo="{!errorLevel}" value="" />
+                <apex:param name="messageName" assignTo="{!messageName}" value="" />
+            </apex:actionFunction> 
+            
+            <apex:pageBlock id="pb_edit" mode="edit" title="{!$Label.copado__DETAILS}">
+                <apex:pageblockButtons >
+                    <apex:commandButton value="{!$Label.copado__CREATE_DEPLOYMENT}" onclick="copadoApp.createDeployment(); return false;" id="btnDeploy" rendered="{!showDeploy}" />
+                    <apex:commandButton value="{!$Label.site.cancel}" action="{!cancel}" immediate="true" id="btnCancel"/>
+                </apex:pageblockButtons>
+                <apex:pageBlockSection id="pbes_pb1" columns="2">
+                    <apex:inputField id="if_Name" value="{!deployment.Name}" required="true" rendered="{!!showDeploy}" />
+                    <apex:inputField id="if_checkOnly" value="{!step.CheckOnly__c }" rendered="{!!showDeploy}" />
+                    <apex:inputField id="if_runAllTests" value="{!step.Run_All_Tests__c }" rendered="{!!showDeploy}" />
+                    <apex:outputField id="of_Name" value="{!deployment.Name}" rendered="{!showDeploy}" />
+                    <apex:outputField id="of_checkOnly" value="{!step.CheckOnly__c }" rendered="{!showDeploy}" />
+                    <apex:outputField id="of_runAllTests" value="{!step.Run_All_Tests__c }" rendered="{!showDeploy}" />
+                    <apex:pageBlockSectionItem rendered="{!isBlank(startCommit)}">
+                        <apex:outputLabel value="{!$ObjectType.copado__Git_Backup__c.fields.copado__Branch__c.Label}" for="if_branch"></apex:outputLabel>
+                        <apex:inputText id="if_branch" value="{!branch}">
+                            <apex:actionSupport event="onchange" rerender="theTable"/>
+                        </apex:inputText>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!isBlank(startCommit)}">
+                        <apex:outputLabel value="{!$ObjectType.copado__OrgDiff__c.fields.copado__From_Date__c.Label}" for="if_fromDate"></apex:outputLabel>
+                        <apex:inputField id="if_fromDate" value="{!dateFrom.Commit_Date__c }">
+                            <apex:actionSupport event="onchange"
+                                                rerender="theTable"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem rendered="{!isBlank(startCommit)}">
+                        <apex:outputLabel value="{!$ObjectType.copado__OrgDiff__c.fields.copado__To_Date__c.Label}" for="if_toDate"></apex:outputLabel>
+                        <apex:inputField id="if_toDate" value="{!dateTo.Commit_Date__c }">
+                            <apex:actionSupport event="onchange"
+                                                rerender="theTable"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection id="commitTable" columns="1" collapsible="false" title="{!IF(ISBLANK(startCommit),$Label.copado__SELECT_INITIAL_COMMIT,$Label.copado__SELECT_END_COMMIT)}" rendered="{!showTable}">
+                    <apex:outputPanel id="theTable" > 
+                        <apex:pageBlockTable var="cm" value="{!commits}" rendered="{!showTable}" title="Select Initial Commit" style="margin-top:16px;">
+                            <apex:column >
+                                <apex:commandLink value="{!cm.id}" action="{!chooseCommit}">
+                                    <apex:param name="commit" value="{!cm.id}" assignTo="{!chooseCommit}"/>
+                                </apex:commandLink>
+                                <apex:facet name="header">{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Id__c.Label}</apex:facet>
+                            </apex:column>
+                            <apex:column >
+                                <apex:outputText value="{!cm.branch}"/>
+                                <apex:facet name="header">{!$ObjectType.copado__Git_Commit__c.fields.copado__Branch__c.Label}</apex:facet>
+                            </apex:column>
+                            <apex:column >
+                                <apex:outputText value="{0,date,yyyy-MM-dd}">
+                                    <apex:param value="{!cm.cdate}"/>
+                                </apex:outputText>
+                                <apex:facet name="header">{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Date__c.Label}</apex:facet>
+                            </apex:column>
+                            <apex:column >
+                                <apex:outputText value="{!cm.message}"/>
+                                <apex:facet name="header">{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Message__c.Label}</apex:facet>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="{!$Label.copado__STARTING_COMMIT}" collapsible="false" rendered="{!!showTable}">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Id__c.Label}" for="scid">
+                        </apex:outputLabel>
+                        <apex:outputText id="scid">{!startGitCommit.Id}</apex:outputText>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Date__c.Label}" for="scdate">
+                        </apex:outputLabel>
+                        <apex:outputText id="scdate" value="{0,date,yyyy-MM-dd}">
+                            <apex:param value="{!startGitCommit.cdate}"/>
+                        </apex:outputText>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Message__c.Label}" for="scmsg">
+                        </apex:outputLabel>
+                        <apex:outputText id="scmsg">{!startGitCommit.message}</apex:outputText>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Git_Commit__c.fields.copado__Branch__c.Label}" for="scbranch">
+                        </apex:outputLabel>
+                        <apex:outputText id="scbranch">{!startGitCommit.branch}</apex:outputText>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="{!$Label.copado__ENDING_COMMIT}" collapsible="false" rendered="{!!showTable}">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Id__c.Label}" for="ecid">
+                        </apex:outputLabel>
+                        <apex:outputText id="ecid">{!endGitCommit.Id}</apex:outputText>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Date__c.Label}" for="ecdate">
+                        </apex:outputLabel>
+                        <apex:outputText id="ecdate" value="{0,date,yyyy-MM-dd}">
+                            <apex:param value="{!endGitCommit.cdate}"/>
+                        </apex:outputText>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Git_Commit__c.fields.copado__Commit_Message__c.Label}" for="ecmsg">
+                        </apex:outputLabel>
+                        <apex:outputText id="ecmsg">{!endGitCommit.message}</apex:outputText>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.copado__Git_Commit__c.fields.copado__Branch__c.Label}" for="ecbranch">
+                        </apex:outputLabel>
+                        <apex:outputText id="ecbranch">{!endGitCommit.branch}</apex:outputText>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+    </body>
+</apex:page>

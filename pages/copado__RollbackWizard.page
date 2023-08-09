@@ -1,0 +1,62 @@
+<apex:page id="thePage" standardController="copado__Promotion__c" extensions="copado.RollbackWizardExt" lightningStylesheets="true" sideBar="false"
+    docType="html-5.0" title="RollbackWizard">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+    <apex:includeScript value="{!$Resource.copado__DW_javascript}" />
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+    <script>
+        $copado(document).ready(() => {
+            lockScreen();
+            goToCorrectPage();
+        });
+    </script>
+    <apex:form >
+        <c:CopadoSpinner />
+        <div class="co-dw-container">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_4-of-6">
+                    <p class="subtitle">{!$Label.RollbackConfirmMessage}</p>
+                    <apex:outputPanel layout="block" id="errorPanel">
+                        <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                            <div id="divToast" class="slds-notify_container slds-is-relative">
+                                <apex:repeat value="{!pageMessagesMap}" var="severity">
+                                    <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                                        <span class="slds-assistive-text"></span>
+                                        <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                            <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                                        </span>
+                                        <div class="slds-notify__content">
+                                            <h2 class="slds-text-heading_small ">{!$Label.RollbackDeploymentCannotStart}</h2>
+                                            <apex:repeat value="{!pageMessagesMap[severity]}" var="messages">
+                                                <apex:repeat value="{!messages}" var="message">
+                                                    <p>{!SUBSTITUTE(message, "{url}", "")}
+                                                        <apex:outputPanel rendered="{!if(contains(message,'{url}'),'true','false')}">
+                                                            <a href="{!$Label.copado__RollbackDocURL}" target="_blank">{!$Label.copado__RollbackDocURL}</a>
+                                                        </apex:outputPanel>
+                                                    </p>
+                                                </apex:repeat>
+                                            </apex:repeat>
+                                        </div>
+                                        <div class="slds-notify__close">
+                                            <button type="button" class="slds-button slds-button_icon slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                                <span class="slds-icon_container slds-icon__svg--default closeToastIcon"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </apex:repeat>
+                            </div>
+                        </apex:outputPanel>
+                        <div class="buttons">
+                            <apex:commandButton styleClass="slds-button slds-button_outline-brand btn-back" onClick="lockScreen();" value="Cancel" action="{!goToDeploymentTab}"
+                                onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel" />
+                        </div>
+                    </apex:outputPanel>
+                </div>
+                <div class="slds-col slds-size_1-of-6"></div>
+            </div>
+        </div>
+        <apex:actionFunction name="goToCorrectPage" action="{!redirectToCorrectPage}" onComplete="unlockScreen();" reRender="errorPanel"
+        />
+    </apex:form>
+</apex:page>

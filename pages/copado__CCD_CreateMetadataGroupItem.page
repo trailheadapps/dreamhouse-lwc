@@ -1,0 +1,102 @@
+<apex:page id="CCD_CreateMetadataGroupItem" standardController="copado__Metadata_Group_Item__c" extensions="copado.CCD_CreateMetadataGroupItemExtension" lightningStylesheets="true" standardStylesheets="false" applyBodyTag="false" showHeader="true" docType="html-5.0">
+    <apex:slds />
+    <style>
+        .slds-form-element {
+            padding: .5em .5em;
+        }
+    </style>
+
+    <div class="slds-scope">
+        <c:CopadoSpinner />
+        <div class="slds-page-header">
+            <apex:PageMessages id="messages" />
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                      <span class="slds-icon_container slds-icon-custom-custom67">
+                        <svg class="slds-icon" aria-hidden="true">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom67')}"></use>
+                        </svg>
+                      </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.Metadata_Group_Item__c.Label}</p>
+                            <h1 class="slds-page-header__title slds-truncate slds-align-middle"
+                                title="{!$Label.NEW} {!$ObjectType.Metadata_Group_Item__c.Label}">
+                                {!$Label.NEW} {!$ObjectType.Metadata_Group_Item__c.Label}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <apex:form id="groupItemForm">
+            <apex:inputText value="{!selectedMetadataItemName}" styleClass="selectedMetadataItemName" style="display: none;" />
+            <apex:pageBlock >
+                <div class="slds-form slds-form_compound">
+                    <div class="slds-col slds-grid slds-size_1-of-2">
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="metadataTypeInput">
+                                            {!$ObjectType.copado__Metadata_Group_Item__c.Fields.copado__Type__c.Label}
+                                            <abbr class="slds-required">*</abbr>
+                                        </label>
+                                        <apex:selectList id="metadataTypeInput" value="{!thisItem.copado__Type__c}" styleClass="slds-input"
+                                                         size="1" multiSelect="false" required="true">
+                                            <apex:selectOptions value="{!itemTypeOptions}" />
+                                        </apex:selectList>
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="metadataNameOptions">
+                                            {!$Label.copado__Metadata_Name}
+                                            <abbr class="slds-required">*</abbr>
+                                        </label>
+                                        <div class="slds-form-element__control" id="metadataNameOptions">
+                                            <apex:selectRadio value="{!selectedMetadataItemName}" onChange="enableAdvancedMetadataNameFilter();">
+                                                <apex:selectOptions value="{!metadataNames}" />
+                                            </apex:selectRadio>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row" id="advancedMetadataNameFilters" style="visibility: {!IF(selectedMetadataItemName == $Label.copado__ALL, 'hidden', 'visible')};">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="operatorSelectList">
+                                            {!$ObjectType.copado__Metadata_Group_Item__c.Fields.copado__Operator__c.Label}
+                                            <abbr class="slds-required">*</abbr>
+                                        </label>
+                                        <apex:selectList id="operatorSelectList" value="{!thisItem.copado__Operator__c}" styleClass="slds-input"
+                                                         size="1" multiSelect="false" required="true">
+                                            <apex:selectOptions value="{!itemOperatorOptions}" />
+                                        </apex:selectList>
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label" for="valueInput">
+                                            {!$ObjectType.copado__Metadata_Group_Item__c.Fields.copado__Value__c.Label}
+                                        </label>
+                                        <apex:inputField id="valueInput" value="{!thisItem.copado__Value__c}" styleClass="slds-input" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-align_absolute-center">
+                    <apex:commandButton value="{!$Label.copado__Cancel}" action="{!cancel}" styleClass="slds-button slds-button_neutral" />
+                    <apex:commandButton value="{!$Label.copado__Save}" action="{!save}" styleClass="slds-button slds-button_brand" status="loadingScreen" reRender="messages" />
+                </div>
+            </apex:pageBlock>
+        </apex:form>
+    </div>
+    <script>
+    function enableAdvancedMetadataNameFilter() {
+        var advancedMetadataNameFilters = document.getElementById('advancedMetadataNameFilters');
+        if(advancedMetadataNameFilters !== null && advancedMetadataNameFilters !== undefined) {
+            var isVisible = advancedMetadataNameFilters.style.visibility;
+            advancedMetadataNameFilters.style.visibility = isVisible === 'hidden' ? 'visible' : 'hidden';
+        }
+    }
+    </script>
+</apex:page>

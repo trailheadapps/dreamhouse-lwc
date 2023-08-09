@@ -1,0 +1,7 @@
+*** NEW LEAD ASSIGNMENT NOTIFICATION ***  
+
+The following lead has been assigned to you.  
+Company:  {!Lead.Company} 
+Lead Name:  {!Lead.Name}  
+
+Click on the link to access the lead directly:  {!Lead.Link}

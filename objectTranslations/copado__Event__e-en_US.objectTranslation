@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Payload --></label>
+        <name>copado__Payload__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publisher Code --></label>
+        <name>copado__Publisher_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Topic Uri --></label>
+        <name>copado__Topic_Uri__c</name>
+    </fields>
+</CustomObjectTranslation>

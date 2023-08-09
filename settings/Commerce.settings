@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommerceSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <commerceEnabled>false</commerceEnabled>
+</CommerceSettings>

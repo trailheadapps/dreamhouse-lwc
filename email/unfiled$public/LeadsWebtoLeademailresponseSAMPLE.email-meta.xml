@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Auto-response when new lead is submitted online.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Leads:  Web-to-Lead email response (SAMPLE)</name>
+    <style>none</style>
+    <subject>{!Organization.Name}:  Thank you for your inquiry</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

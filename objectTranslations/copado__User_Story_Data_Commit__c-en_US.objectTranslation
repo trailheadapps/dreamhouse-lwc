@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Commit Date --></label>
+        <name>copado__Commit_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commit Message --></label>
+        <name>copado__Commit_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Set --></label>
+        <name>copado__Data_Set__c</name>
+        <relationshipLabel><!-- User Story Data Commits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Execution Job --></label>
+        <name>copado__Execution_Job__c</name>
+        <relationshipLabel><!-- User Story Data Commits --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>copado__User_Story__c</name>
+        <relationshipLabel><!-- User Story Data Commits --></relationshipLabel>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- It is not allowed to change the Commit Date once the User Story Data Commit has been created. Please create a new User Story Data Commit. --></errorMessage>
+        <name>copado__Prevent_change_Commit_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- It is not allowed to change the Commit Message once the User Story Data Commit has been created. Please create a new User Story Data Commit. --></errorMessage>
+        <name>copado__Prevent_change_Commit_Message</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- It is not allowed to change the Data Set once the User Story Data Commit has been created. Please create a new User Story Data Commit. --></errorMessage>
+        <name>copado__Prevent_change_Data_Set</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- It is not allowed to change the Execution Job once the User Story Data Commit has been created. Please create a new  User Story Data Commit. --></errorMessage>
+        <name>copado__Prevent_change_Execution_Job</name>
+    </validationRules>
+</CustomObjectTranslation>

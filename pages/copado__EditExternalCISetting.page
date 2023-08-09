@@ -1,0 +1,90 @@
+<apex:page showHeader="true" sidebar="true" standardController="copado__External_CI_Setting__c" extensions="copado.EditExternalCISetting" title="{!$Label.site.edit} {!$ObjectType.copado__External_CI_Setting__c.Label}" docType="html-5.0">
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="height: 100%;">
+		<head>
+		<apex:slds />
+		<c:GAnalytics />
+		</head>
+		<body class="slds-scope"  style="{!IF($User.UIThemeDisplayed == 'Theme4d','margin: 12px;background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2),linear-gradient(to top,rgba(32, 92, 159, 0), rgb(32, 92, 159));','')}">
+			<apex:form id="form" html-novalidate="true">
+				<div class="slds-page-header" style="{!IF($User.UIThemeDisplayed == 'Theme4d','background: #fdfdfd;margin-bottom: 12px;border-collapse: collapse;border-radius: 4px;','')}">
+	                <apex:outputPanel layout="block" id="pageMessages">
+	                    <apex:pagemessages id="pmessage"/>
+	                </apex:outputPanel>
+					<div class="slds-grid">
+						<div class="slds-col slds-has-flexi-truncate">
+							<div class="slds-media">
+							    <div class="slds-media__figure">
+							        <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+								        <svg class="slds-icon" aria-hidden="true">
+								        	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/standard-sprite/svg/symbols.svg#custom_notification')}"></use>
+								        </svg>
+							        </span>
+							    </div>
+							    <div class="slds-media__body">
+							    	<p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.External_CI_Setting__c.Label}</p>
+							        <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.External_CI_Setting__c.Label} {!$Label.EDIT}">{!externalCISetting.Name} {!$Label.EDIT}</h1>
+							    </div>
+							  </div>
+					  </div>
+					  <!-- ACTION BUTTONS -->
+						<div class="slds-col slds-no-flex slds-grid slds-align-top ">
+						  <div class="slds-button-group" role="group">
+						  	<apex:commandButton value="{!$Label.site.save}" styleClass="slds-button slds-button_success" action="{!save}" rendered="{!AND(showOptions,!showError)}"/>
+						    <apex:commandButton value="{!$Label.site.cancel}" action="{!cancel}" styleClass="slds-button slds-button--neutral" reRender="xxx"/>
+						  </div>
+						</div>
+						<!-- / ACTION BUTTONS -->
+					</div>
+				</div>
+				<apex:outputPanel rendered="{!AND(showOptions,!showError)}" layout="none">
+				<div style="padding:12px;background: #fdfdfd;border-collapse: collapse; background: #fdfdfd;border-radius: 4px;">
+					<fieldset class="slds-box slds-theme--default slds-container--fluid">
+						<legend id="newaccountform" class="slds-text-heading--medium " style="padding-top: 10px;">
+							{!IF(ISBLANK(externalCISetting.Name),'New '+ $ObjectType.External_CI_Job__c.Label ,externalCISetting.Name)}
+						</legend>
+						
+						<form class="slds-form--stacked">
+							<div class="slds-grid">
+								<div class="slds-col" >
+									<c:LightningReadyInputFields SObject="{!externalCISetting}" requiredView="true" Field="Name" />
+									<c:LightningReadyInputFields SObject="{!externalCISetting}" requiredView="true" Field="CI_Tool__c" />
+									<c:LightningReadyInputFields SObject="{!externalCISetting}" requiredView="true" Field="Endpoint__c" />
+
+
+
+                                    <apex:outputPanel layout="block" styleClass="slds-form-element">
+                                        <label class="slds-form-element__label" for="txtInput">
+                                            <apex:outputPanel layout="none"><abbr class="slds-required" title="required" >*</abbr></apex:outputPanel>
+                                            Username
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputText value="{!username}" required="true" styleclass="slds-input"/>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="slds-form-element">
+                                        <label class="slds-form-element__label" for="txtInput">
+                                            <apex:outputPanel layout="none"><abbr class="slds-required" title="required" >*</abbr></apex:outputPanel>
+                                            Password
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputSecret value="{!password}" required="true" styleclass="slds-input" redisplay="true"/>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="slds-form-element">
+                                        <label class="slds-form-element__label" for="txtInput">
+                                            API Token
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputSecret value="{!apiKey}" styleclass="slds-input" redisplay="true"/>
+                                        </div>
+                                    </apex:outputPanel>
+								</div>
+							</div>
+						</form>	
+					</fieldset>
+				</div>
+				</apex:outputPanel>
+			</apex:form>
+		</body>
+	</html>
+</apex:page>

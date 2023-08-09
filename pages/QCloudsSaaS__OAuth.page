@@ -1,0 +1,36 @@
+<apex:page controller="QCloudsSaaS.OAuthController">
+    <apex:stylesheet value="{!$Resource.QCloudsSaaS__listtable}" />
+    <apex:pageMessage rendered="{! message_type != null}" summary="{! message}" severity="{! message_type}" strength="3" />
+    <apex:pageMessages />
+    <apex:form >
+        <apex:pageBlock title="Edit QualityClouds OAuth Settings">
+            <apex:pageBlockSection >
+                <apex:inputField required="true" value="{! settings.API_Endpoint__c }"/>
+                <apex:inputField required="true" value="{! settings.API_Version__c }"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{! save }" value="Save" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock title="OAuth Status">
+            <apex:pageBlockSection columns="3">
+                <p><bold>Token expire date: </bold>{! settings.OAuth_expire_time__c }</p>
+                <apex:commandButton action="{! refresh_token }" value="Refresh Token"/>
+                <apex:commandButton action="{! openPopup }" value="Get Token" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:commandButton action="{! go_back }" value="Go to instances" />
+        <apex:outputPanel id="tstpopup" rendered="{!showPopup}">
+                        <apex:outputPanel styleClass="popupBackground" layout="block" />
+                            <apex:outputPanel styleClass="custPopup" layout="block" >
+                                <center>
+                                    <apex:outputLabel styleClass="right-padding" value="Username" for="username"/> <apex:inputText value="{! username }" id="username"/><br/><br/>
+                                    <apex:outputLabel styleClass="right-padding" value="Password" for="password"/> <apex:inputSecret value="{! password }" id="password"/><br/><br/>
+                                    <apex:commandButton value="Get Token"  action="{! get_token }" />
+                                    <apex:commandButton value="Cancel" action="{!Cancel}" />
+                                    <p><bold><a href="https://www.qualityclouds.com/select-trial/">Not registered in Quality Clouds?</a></bold></p>
+                                </center>
+                        </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

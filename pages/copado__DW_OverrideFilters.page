@@ -1,0 +1,32 @@
+<apex:page standardController="copado__Deployment__c" extensions="copado.DW_OverrideFiltersExtension" id="DW_OverrideFilters" lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Data Template Override Filter">
+
+    <apex:slds />
+    <c:WizardUtils />
+    <apex:includeScript value="{!URLFOR($Resource.utilsV2) }" />
+    <c:IncludeStaticsResourceComponent addJquery="true" addJSON2js="true" addCometdjs="true" addJcometdjs="true" addJSzipjs="true" />
+    <apex:includeScript value="{!$Resource.copado__DW_javascript}" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__DataTables10,'DataTables10/datatables.min.css')}" />
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+
+    <script>
+        var globalSldsResourcePath = '{!URLFOR($Asset.SLDS)}';
+        var currentStepValue = '{!currentStepValue}';
+        dataTableId = 'dataTemplateTable';
+
+         $copado(document).ready(() => {
+            dw.checkDisable();
+        });
+    </script>
+
+    <apex:form >
+        <c:CopadoSpinner />
+
+        <apex:outputPanel layout="block" id="headerComponent">
+            <c:DW_Header currentStep="{!currentStepValue}" stepNameList="{!stepsList}" />
+        </apex:outputPanel>
+
+        <c:OverrideFiltersComponent deploymentRecordId="{!deployment.Id}" />
+
+    </apex:form>
+</apex:page>

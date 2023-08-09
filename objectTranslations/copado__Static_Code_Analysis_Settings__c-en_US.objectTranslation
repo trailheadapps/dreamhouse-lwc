@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- You can get this Organization Id in CodeScan Cloud, under your profile, in the &quot;My Organizations&quot; setup menu. --></help>
+        <label><!-- Cloud Organization --></label>
+        <name>copado__Cloud_Organization__c</name>
+    </fields>
+    <fields>
+        <label><!-- CodeScan Token --></label>
+        <name>copado__CodeScan_Token__c</name>
+    </fields>
+    <fields>
+        <label><!-- CodeScan URL --></label>
+        <name>copado__CodeScan_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Cloud version requires a CodeScan Cloud license.
+On-premise SonarQube requires your SonarQube instance to be accesible through internet. --></help>
+        <label><!-- CodeScan Version --></label>
+        <name>copado__CodeScan_Version__c</name>
+        <picklistValues>
+            <masterLabel>Cloud</masterLabel>
+            <translation><!-- Cloud --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On-premise SonarQube</masterLabel>
+            <translation><!-- On-premise SonarQube --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Report Issues From Latest Commit --></label>
+        <name>copado__ReportIssuesFromLatestCommit__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Record Type for CodeScan integration. Requires CodeScan licensing. --></description>
+        <label><!-- CodeScan --></label>
+        <name>copado__CodeScan</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record Type for free of charge PMD integration --></description>
+        <label><!-- PMD --></label>
+        <name>copado__PMD</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Review the following required fields:
+Cloud Organization is required for Cloud Version.
+SonarQube Token and URL are required for On-premise Version. --></errorMessage>
+        <name>copado__CodeScan_Required_Fields</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Generate_Default_RuleSet --></label>
+        <name>copado__Generate_Default_RuleSet</name>
+    </webLinks>
+</CustomObjectTranslation>

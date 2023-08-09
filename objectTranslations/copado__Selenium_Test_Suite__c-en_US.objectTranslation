@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Optional Apex code to execute after running this test suite. You can use variable {!NS} to be replaced with the Namespace for the running Environment. --></help>
+        <label><!-- Apex code after test --></label>
+        <name>copado__Apex_code_after_test__c</name>
+    </fields>
+    <fields>
+        <help><!-- Optional Apex code to execute before running this test suite.  It can be used to clean up or create data. You can use variable {!NS} to be replaced with the Namespace for the running Environment. --></help>
+        <label><!-- Apex code before test --></label>
+        <name>copado__Apex_code_before_test__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notes --></label>
+        <name>copado__Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- This lookup relates to the Copado Change Management test scripts that are related to User Stories. --></help>
+        <label><!-- Test Script --></label>
+        <name>copado__Test_Script__c</name>
+        <relationshipLabel><!-- Selenium Test Suites --></relationshipLabel>
+    </fields>
+    <webLinks>
+        <label><!-- Add_Remove_Test_Cases --></label>
+        <name>copado__Add_Remove_Test_Cases</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_Selection_to_a_Test_Group --></label>
+        <name>copado__Add_Selection_to_a_Test_Group</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Quick_Run --></label>
+        <name>copado__Quick_Run</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MacroSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contextualMacroFiltering>true</contextualMacroFiltering>
+    <enableAdvancedSearch>false</enableAdvancedSearch>
+    <macrosInFolders>false</macrosInFolders>
+</MacroSettings>

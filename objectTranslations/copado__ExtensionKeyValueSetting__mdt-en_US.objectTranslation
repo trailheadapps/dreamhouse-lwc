@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Extension --></label>
+        <name>copado__Extension__c</name>
+        <relationshipLabel><!-- Extension Key Value Settings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>copado__Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>copado__Value__c</name>
+    </fields>
+</CustomObjectTranslation>

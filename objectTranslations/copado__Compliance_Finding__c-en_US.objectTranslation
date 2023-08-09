@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Compliance Rule --></label>
+        <name>copado__Compliance_Rule__c</name>
+        <relationshipLabel><!-- Compliance Findings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Compliance Scan Result --></label>
+        <name>copado__Compliance_Scan_Result__c</name>
+        <relationshipLabel><!-- Compliance Findings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Rule Error Message --></label>
+        <name>copado__Rule_Error_Message__c</name>
+    </fields>
+    <fields>
+        <help><!-- The severity of the Rule that has been violated --></help>
+        <label><!-- Rule Severity --></label>
+        <name>copado__Severity__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- This record type is used for scan findings produced by Copado. --></description>
+        <label><!-- Copado --></label>
+        <name>copado__Copado</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Use this record type to capture non-Salesforce scan findings. --></description>
+        <label><!-- Other --></label>
+        <name>copado__Other</name>
+    </recordTypes>
+</CustomObjectTranslation>

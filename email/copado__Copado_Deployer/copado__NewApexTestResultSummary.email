@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="Apex Test Result Summary" recipientType="User" relatedToType="copado__Apex_Test_Result__c">
+    <messaging:htmlEmailBody >
+        <c:NewApexTestResultSummaryContainer recordId="{!relatedTo.Id}"/>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

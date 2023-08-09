@@ -1,0 +1,218 @@
+<apex:page standardController="copado__Deployment__c" extensions="copado.DW_SelectChangesExtension,copado.Settings,copado.JsRemotingController" id="DW_SelectChanges"
+    lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Deployment Select Changes">
+    <apex:slds />
+    <c:WizardUtils />
+    <apex:includeScript value="{!URLFOR($Resource.utilsV2) }" />
+    <c:IncludeStaticsResourceComponent addJquery="true" addJSON2js="true" addCometdjs="true" addJcometdjs="true" addJSzipjs="true"
+    />
+    <apex:includeScript value="{!$Resource.copado__DW_javascript}" />
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+
+    <script>
+        var globalSldsResourcePath = '{!URLFOR($Asset.SLDS)}';
+        var metadataGridImagesPath = '{!URLFOR($Resource.copado__jqx_metadatagrid_images)}';
+        var currentStepValue = '{!currentStepValue}';
+        var Copado_Licenses = '{!CurrentUserLicenses}';
+        //***IMPORTANT***  use exactly the same name(jqxdatatable_config) for the configuration for future uses on new pages
+
+        var isRollback = '{!JSENCODE(deployment.Name)}'.startsWith('Rollback ');
+
+        if (isRollback) {
+            var sourceName = '{!JSENCODE(deployment.Rolled_back_Deployment__r.Name)}';
+            var jqxdatatable_config = {
+                data: {
+                    targetOrgId: '{!DestinationOrg.copado__To_Org__c}',
+                    targetOrgName: '{!JSENCODE(DestinationOrg.To_Org__r.Environment__r.Name)}',
+                    orgName: '{!JSENCODE(deployment.Rolled_back_Deployment__r.Name)}',
+                    deploymentId: '{!deployment.Id}',
+                    stepId: '{!stepId}',
+                    deleteStepId: '{!deleteStepId}',
+                },
+                elts: {},
+                server: {
+                    baseUrl: '{!JSENCODE(urlBase)}',
+                    typesUrl: '{!JSENCODE(urlBase)}gitTypes{!JSENCODE(urlParameters)}'
+                },
+                jsonData: {
+                    selectedMetadata: []
+                },
+
+                ns: '{!JSENCODE(namespace)}',
+                scalableGrid: true,
+                gridMode: 'gitCommitCompare',
+                attachmentName: 'Rollback Index.json',
+                eltMainId: 'metadataGrid',
+                height: '335px',
+                renderCondition: true
+            };
+        } else {
+            var jqxdatatable_config = {
+                data: {
+                    orgId: '{!deployment.copado__From_Org__c}' ? '{!deployment.copado__From_Org__c}' : '{!DeploymentStepRecord.copado__Git_Repository__c}',
+                    orgName: '{!JSENCODE(deployment.From_Org__r.Environment__r.Name)}',
+                    targetOrgId: '{!DestinationOrg.copado__To_Org__c}',
+                    targetOrgName: '{!JSENCODE(DestinationOrg.To_Org__r.Environment__r.Name)}',
+                    envId: '{!JSENCODE(deployment.copado__Source_Environment__c)}',
+                    deploymentId: '{!deployment.Id}',
+                    stepId: ''
+                },
+                elts: {},
+                server: {
+                    baseUrl: '{!JSENCODE(urlBase)}',
+                    metadataUrl: '{!JSENCODE(metadataURL)}&parentId={!deployment.copado__From_Org__c}',
+                    typesUrl: '{!JSENCODE(urlBase)}gitTypes{!JSENCODE(urlParameters)}'
+                },
+                jsonData: {
+                    selectedMetadata: []
+                },
+
+                ns: '{!JSENCODE(namespace)}',
+                scalableGrid: '{!AND(JSENCODE(deployment.copado__Deployment_Source_Type__c) == "org",scalableGrid)}',
+                gridMode: '{!deployment.copado__From_Org__c}' ? 'gitCommitCompare' : 'gitCommitLegacy',
+                attachmentName: '{!deployment.copado__From_Org__c}' ? 'MetaData' : '{!JSENCODE(DeploymentStepRecord.copado__Commit_Id__c)}' + '.json',
+                eltMainId: 'metadataGrid',
+                height: '335px',
+                renderCondition: "{!JSENCODE(deployment.copado__Deployment_Source_Type__c) == 'org'}"
+            };
+        }
+    </script>
+
+    <apex:includeScript value="{!URLFOR($Resource.orgMetadata) }" />
+    <apex:includeScript value="{!URLFOR($Resource.JsRemoting) }" />
+
+    <apex:form id="selectChangesForm">
+        <apex:actionFunction name="assignFileData" action="{!assignZipBytes}" reRender="compContainer">
+            <apex:param name="sourceFile" value="" />
+            <apex:param name="targetFile" value="" />
+        </apex:actionFunction>
+
+        <c:CopadoSpinner />
+
+        <apex:outputPanel layout="block" id="headerComponent">
+            <c:DW_Header currentStep="{!currentStepValue}" stepNameList="{!stepsList}" />
+        </apex:outputPanel>
+
+        <div class="co-dw-container">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-12"></div>
+                <div class="slds-col slds-size_10-of-12">
+                    <h1>{!deploymentInterface.StepGeneralHeader}</h1>
+                    <p class="subtitle">{!$Label.Compare_Deploy_Metadata}</p>
+
+                    <apex:outputPanel layout="block" id="errorPanel">
+                        <apex:outputPanel layout="none" styleClass="error-panel" rendered="{!PageMessageSize != 0}">
+                            <div id="divToast" class="slds-notify_container slds-is-relative">
+                                <apex:repeat value="{!pageMessagesMap}" var="severity">
+                                    <div class="slds-notify slds-notify_toast slds-theme_{!severity}" role="status">
+                                        <span class="slds-assistive-text"></span>
+                                        <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                                            <span class="slds-icon_container slds-icon__svg--default {!severity}ToastIcon"></span>
+                                        </span>
+                                        <div class="slds-notify__content">
+                                            <apex:repeat value="{!pageMessagesMap[severity]}" var="messages">
+                                                <h2 class="slds-text-heading_small ">{!messages}</h2>
+                                            </apex:repeat>
+                                        </div>
+                                        <div class="slds-notify__close">
+                                            <button type="button" class="slds-button slds-button_icon slds-button_icon-inverse" title="{!$Label.CLOSE}" onclick="$copado('[id=divToast]').addClass('slds-hide');">
+                                                <span class="slds-icon_container slds-icon__svg--default closeToastIcon"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </apex:repeat>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="jqxMetadataGridComponent">
+                        <c:JQX_MetadataGrid refreshMetadata="true" bigMetadata="true" tabs="true" isRollback="{!isRollback}"/>
+                    </apex:outputPanel>
+
+                    <apex:actionFunction name="goToNextPage" action="{!confirmAndGoNextStep}" onComplete="dw.buttonOnComplete();unlockScreen();"
+                        reRender="errorPanel,headerComponent" />
+                    <apex:actionFunction name="saveAndClose" action="{!saveAndCloseStep}" onComplete="dw.buttonOnComplete();unlockScreen();"
+                        reRender="errorPanel,headerComponent" />
+                    <apex:actionFunction name="getNewInstanceOfVariables" action="{!clearMessagesMap}" reRender="rightRefreshCachePanelOnly"
+                    />
+                    <apex:actionFunction action="{!initPoller}" name="rerenderRefreshCachePoller" onComplete="dw.openModals('Refresh');unlockScreen();"
+                        reRender="theRefreshCachePoller,rightRefreshCachePanelOnly">
+                        <apex:param name="operation" value="refreshCache" />
+                    </apex:actionFunction>
+                    <apex:actionPoller action="{!pollerHandler}" id="theRefreshCachePoller" reRender="theRefreshCachePoller,rightRefreshCachePanelOnly,headerComponent,metadataDiv" interval="5" enabled="{!AND(!isRefreshCacheSucceeded,startActionPoller)}"
+                        onComplete="dw.buttonOnComplete();{!IF(isRefreshCacheSucceeded,'dw.checkIfRefreshCacheCompleted(\"Refresh\");getNewInstanceOfVariables();','')}" />
+
+                    <div class="buttons slds-m-top--xx-large">
+                        <apex:commandButton styleClass="slds-button slds-button_outline-brand" onClick="lockScreen();" value="{!$Label.copado__BACK}" action="{!goToPreviousStep}"
+                            onComplete="dw.buttonOnComplete();unlockScreen();" reRender="errorPanel,headerComponent" />
+                        <a class="slds-button slds-button_outline-brand" onclick="lockScreen();dw.createStep(true);">{!$Label.SAVE_AND_CLOSE}</a>
+                        <a class="slds-button slds-button_brand" onclick="lockScreen();dw.createStep(false);">{!$Label.Confirm_Metadata}</a>
+                    </div>
+
+                </div>
+                <div class="slds-col slds-size_1-of-12"></div>
+            </div>
+        </div>
+
+
+        <!-- MODAL FOR REFRESH CACHE -->
+        <section id="notificationModalRefresh" role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper"
+            class="slds-modal slds-fade-in-open slds-modal_prompt hide" aria-modal="true">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium" id="prompt-heading-id">{!$Label.INFO} - {!$Label.Refresh_Metadata}</h2>
+                </header>
+                <apex:outputPanel layout="block" styleClass="slds-size_1-of-1 slds-scrollable_y" id="rightRefreshCachePanelOnly">
+                    <input type="hidden" value="{!isRefreshCacheSucceeded}" id="refreshDone" />
+                    <div class="slds-modal__content slds-p-around_medium" id="prompt-message-wrapper">
+                        <div class="slds-box_x-small slds-m-around_x-small slds-p-around_x-small">
+                            <apex:variable var="counter" value="{!0}" />
+                            <apex:outputPanel layout="none" rendered="{!componentMessagesMap != null}">
+                                <apex:repeat value="{!componentMessagesMap}" var="status">
+                                    <apex:repeat value="{!componentMessagesMap[status]}" var="message">
+                                        <div class="slds-scoped-notification slds-media slds-media_center" role="status">
+                                            <div class="slds-media__figure">
+
+                                                <div class="slds-input__icon-group">
+                                                    <apex:outputPanel layout="none" rendered="{!OR(AND(ComponentMessageSize > 0, (counter + 1 < ComponentMessageSize)),showRefreshCachePromtButton)}">
+                                                        <span class="slds-icon_container slds-icon__svg--default {!status}ToastIcon"></span>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!AND(ComponentMessageSize > 0, (counter + 1 = ComponentMessageSize),!isRefreshCacheSucceeded,!showRefreshCachePromtButton)}">
+                                                        <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_x-small slds-input__spinner">
+                                                            <div class="slds-spinner__dot-a"></div>
+                                                            <div class="slds-spinner__dot-b"></div>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </div>
+
+                                            </div>
+                                            <div class="slds-media__body toast-message slds-m-left">
+                                                <p>{!message}</p>
+                                            </div>
+                                        </div>
+                                        <apex:variable var="counter" value="{!counter + 1}" />
+                                    </apex:repeat>
+                                </apex:repeat>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                    <apex:outputPanel layout="none" rendered="{!showRefreshCachePromtButton}">
+                        <footer class="slds-modal__footer slds-theme_default">
+                            <button type="button" class="slds-button slds-button_outline-brand" onclick="clearMessagesMap();dw.closeModal('Refresh');">{!$Label.Close}</button>
+                        </footer>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </div>
+        </section>
+        <div id="backDropRefresh" class="slds-backdrop slds-backdrop_open hide"></div>
+        <!-- // MODAL FOR REFRESH CACHE -->
+
+    </apex:form>
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <apex:outputPanel id="compContainer">
+        <apex:outputPanel layout="none">
+            <c:ResolveConflict preDefAtt="{!zipBytesSource}" preDefAttTarget="{!zipBytesTarget}" showPromoHeader="false" />
+        </apex:outputPanel>
+    </apex:outputPanel>
+
+    </html>
+</apex:page>

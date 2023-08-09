@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Event Condition Id --></label>
+        <name>copado__Event_Condition_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Filter Condition --></label>
+        <name>copado__Filter_Condition__c</name>
+    </fields>
+    <fields>
+        <label><!-- Filter Order --></label>
+        <name>copado__Filter_Order__c</name>
+    </fields>
+</CustomObjectTranslation>

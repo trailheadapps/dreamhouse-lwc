@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <assignments>
+        <description>Obtain URL from Copado User Story</description>
+        <name>url</name>
+        <label>url</label>
+        <locationX>182</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>repo_name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getRepoName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>repo_is_found</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>repository_name</name>
+        <dataType>String</dataType>
+    </constants>
+    <decisions>
+        <description>Repo is found</description>
+        <name>repo_is_found</name>
+        <label>repo is found</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>RepoIsNotNull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>repo_name</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getQualityGate</targetReference>
+            </connector>
+            <label>RepoIsNotNull</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>getRepoName</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!$Record.copado__Project__r.copado__Deployment_Flow__r.copado__Git_Repository__r.copado__URI__c},&quot;.com&quot;), RIGHT({!$Record.copado__Project__r.copado__Deployment_Flow__r.copado__Git_Repository__r.copado__URI__c}, LEN({!$Record.copado__Project__r.copado__Deployment_Flow__r.copado__Git_Repository__r.copado__URI__c}) - (FIND(&quot;.com&quot;, {!$Record.copado__Project__r.copado__Deployment_Flow__r.copado__Git_Repository__r.copado__URI__c})+4)),
+RIGHT({!$Record.copado__Project__r.copado__Deployment_Flow__r.copado__Git_Repository__r.copado__URI__c}, LEN({!$Record.copado__Project__r.copado__Deployment_Flow__r.copado__Git_Repository__r.copado__URI__c}) - (FIND(&quot;.org&quot;, {!$Record.copado__Project__r.copado__Deployment_Flow__r.copado__Git_Repository__r.copado__URI__c})+4)))</expression>
+    </formulas>
+    <formulas>
+        <name>SetdefaultQualityGatevalue</name>
+        <dataType>String</dataType>
+        <expression>IF({!getQualityGate.Quality_Gates__c}, &quot;NOT PASSED&quot;, &quot;N/A&quot;)</expression>
+    </formulas>
+    <interviewLabel>QC Quality Gates {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>QC Quality Gates</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get whether the QC Quality Gates is enabled or not</description>
+        <name>getQualityGate</name>
+        <label>getQualityGate</label>
+        <locationX>50</locationX>
+        <locationY>551</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>set_QC_Quality_Gates_default</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>QCloudsSaaS__url__c</field>
+            <operator>EndsWith</operator>
+            <value>
+                <elementReference>repo_name</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>QCloudsSaaS__Instance__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Quality_Gates__c</queriedFields>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>set_QC_Quality_Gates_default</name>
+        <label>set QC Quality Gates default</label>
+        <locationX>50</locationX>
+        <locationY>671</locationY>
+        <inputAssignments>
+            <field>Quality_Gates_Result__c</field>
+            <value>
+                <elementReference>SetdefaultQualityGatevalue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>url</targetReference>
+        </connector>
+        <object>copado__User_Story__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>repo_name</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

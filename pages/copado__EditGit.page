@@ -1,0 +1,161 @@
+<apex:page standardController="copado__Git_Repository__c" extensions="copado.EditGit" title="{!$Label.site.edit} {!$ObjectType.copado__Git_Repository__c.Label}" id="thePage" lightningStylesheets="true" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" sidebar="{!$User.UIThemeDisplayed=='Theme3'}" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+    <head>
+        <title>Edit Git Repository {!Git_Repository__c.Name} | Copado</title>
+        <c:GAnalytics />
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+        <c:IncludeStaticsResourceComponent addJQuery="true" />
+    </head>
+    <body>
+    <div class="copado-lightning-VF">
+        <!--<apex:sectionHeader title="{!$ObjectType.Git_Repository__c.Label} {!$Label.EDIT}" subtitle="{!IF(ISBLANK(git.Id),'New '+ $ObjectType.Git_Repository__c.Label ,git.Name)}" description="{!$Label.GIT_REPOSITORY_EDIT_DESCRIPTION}" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />-->
+        <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+        <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+
+            <div class="slds-page-header">
+                <apex:outputPanel layout="block" id="pageMessages">
+                    <apex:pagemessages id="msg" />
+                </apex:outputPanel>
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-custom-custom87" title="Description of icon when needed">
+                                    <svg class="slds-icon" aria-hidden="true">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom87')}"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.Git_Repository__c.Label}</p>
+                                <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.Git_Repository__c.Label}">{!$Label.NEW} {!$ObjectType.Git_Repository__c.Label}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ACTION BUTTONS -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                        <div class="slds-button-group" role="group"></div>
+                    </div>
+                    <!-- / ACTION BUTTONS -->
+                </div>
+                <apex:outputPanel layout="block" style="background: white;" id="headerFields">
+                    <ul class="slds-grid slds-page-header__detail-row">
+                        <apex:variable value="{!1}" var="rowNum" />
+                        <apex:repeat value="{!$ObjectType.copado__Git_Repository__c.FieldSets.copado__Copado_Header_Fields}" var="field">
+                            <apex:outputPanel layout="block" rendered="{!rowNum < 8}">
+                                <li class="slds-page-header__detail-block slds-truncate" style="padding-right: 2em; padding-left: 2em;">
+                                    <c:LightningReadyOutputFields dividerBottom="false" SObject="{!copado__Git_Repository__c}" Field="{!field}" />
+                                </li>
+                            </apex:outputPanel>
+                            <apex:variable var="rowNum" value="{!rowNum + 1}" />
+                        </apex:repeat>
+                    </ul>
+                </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+            <apex:form id="theForm" styleClass="copado-lightning-container" style="padding-top:12px;" html-novalidate="true">
+                <apex:pageBlock id="pb_editGit" mode="edit" helpUrl="https://docs.copado.com/git-repository/git-repository-overview" helpTitle="{!$Label.copado__HELP_FOR_THIS_PAGE}" rendered="{!AND(showOptions,!showError)}" title="{!$Label.copado__DETAILS}">
+                    <apex:pageblockButtons >
+                        <apex:commandButton value="{!$Label.site.save}" styleClass="btnImportant" action="{!save}" />
+                        <apex:commandButton value="{!$Label.site.cancel}" action="{!cancel}" />
+                    </apex:pageblockButtons>
+
+                    <apex:pageBlockSection id="pbsMain" columns="1">
+                        <apex:pageBlockSectionItem id="gitreponame">
+                            <apex:outputLabel value="{!$ObjectType.copado__Git_Repository__c.fields.Name.Label}" />
+                            <apex:outputPanel styleClass="requiredInput" layout="block">
+                                <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                <apex:inputField id="name" value="{!git.Name}" style="width:100%;" />
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem id="gitrepoformat">
+                            <apex:outputLabel value="{!$ObjectType.copado__Git_Repository__c.fields.copado__Source_Format__c.Label}" />
+                            <apex:outputPanel layout="block">
+                                <apex:outputPanel layout="block" />
+                                <apex:inputField id="sourceFormat" value="{!git.copado__Source_Format__c}" style="width:100%;" />
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem id="pbsi_authType">
+                            <apex:outputLabel value="{!$Label.copado__AUTHENTICATION_TYPE}" />
+                            <apex:selectList value="{!authTypeValue}" id="authType" size="1" multiselect="false">
+                                <apex:selectOption itemValue="ssh" itemLabel="SSH" />
+                                <apex:selectOption itemValue="https" itemLabel="Https" />
+                                <apex:actionSupport event="onchange" rerender="pbsMain" />
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem id="gitrepouri">
+                            <apex:outputLabel value="{!$ObjectType.copado__Git_Repository__c.fields.copado__URI__c.Label}" />
+                            <apex:outputPanel styleClass="requiredInput" layout="block">
+                                <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                <apex:inputField id="uri" value="{!git.copado__URI__c}" style="width:100%;" />
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem id="pbi_username" rendered="{!authTypeValue == 'https'}">
+                            <apex:outputLabel value="{!$Label.copado__USERNAME}" />
+                            <apex:outputPanel styleClass="requiredInput" layout="block">
+                                <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                <apex:inputText id="username" value="{!c_username}" style="width:100%;" />
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem id="pbi_password" rendered="{!authTypeValue == 'https'}">
+                            <apex:outputLabel value="{!$Label.copado__PASSWORD}" />
+                            <apex:outputPanel styleClass="requiredInput" layout="block">
+                                <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                <apex:inputSecret id="password" value="{!c_password}" style="width:100%;" />
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem id="extraHeaders" rendered="{!authTypeValue == 'https'}">
+                            <apex:outputLabel value="{!$Label.copado__EXTRA_HEADERS}" />
+                            <apex:outputPanel layout="block">
+                                <apex:inputTextarea id="extraHeader" value="{!extraHeaders}" style="width:100%;" />
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection columns="1" title="{!$Label.copado__OTHER_INFORMATION}" rendered="{!showOtherInformation}" id="gitRepoOtherFlds">
+                        <apex:inputField id="gitprovider" value="{!git.copado__Git_Provider__c}" style="width:100%;">
+                            <apex:actionSupport event="onchange" action="{!populateURLFields}" reRender="gitRepoOtherFlds" />
+                        </apex:inputField>
+
+                        <apex:repeat value="{!$ObjectType.copado__Git_Repository__c.FieldSets.copado__CustomFields}" var="fld">
+                            <apex:inputField value="{!git[fld]}" required="{!OR(fld.required, fld.dbrequired)}" style="width:100%;" />
+                        </apex:repeat>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:form>
+            <script language="javascript" type="text/javascript">
+                if (typeof String.prototype.startsWith != 'function') {
+                    String.prototype.startsWith = function (str) {
+                        return this.slice(0, str.length) == str;
+                    };
+                }
+
+                $copado(document).ready(function(){
+                    //Buttons To middle No PBtitle
+                    if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+                        var mTitle = $copado('.pbTitle')[0];
+                        if(mTitle){
+                            mTitle.remove();
+                            var tdrow = $copado($copado('.pbButton')[0]);
+                            if(tdrow){
+                                tdrow.css( "text-align", "center" );
+                            }
+                        }
+                    }
+                });
+
+            </script>
+
+            <apex:outputPanel rendered="false" layout="block" styleClass="copado-lightning-container">
+                <!-- Added to make sure that all fields are included in the standard controller record -->
+                <apex:repeat value="{!$ObjectType.copado__Git_Repository__c.FieldSets.copado__CustomFields}" var="fld">
+                    <apex:outputField value="{!copado__Git_Repository__c[fld]}" />
+                </apex:repeat>
+            </apex:outputPanel>
+
+            <c:CheckFeaturesComponent />
+        </apex:outputPanel>
+    </div>
+    </body>
+</apex:page>

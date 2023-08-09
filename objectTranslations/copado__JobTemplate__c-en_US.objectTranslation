@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- API name of the job that triggered the result. --></help>
+        <label><!-- API Name --></label>
+        <name>copado__ApiName__c</name>
+    </fields>
+    <fields>
+        <help><!-- A description of the job template. --></help>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Type of Job Template --></help>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+        <picklistValues>
+            <masterLabel>Custom</masterLabel>
+            <translation><!-- Custom --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard</masterLabel>
+            <translation><!-- Standard --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The version of the Job Template. --></help>
+        <label><!-- Version --></label>
+        <name>copado__Version__c</name>
+    </fields>
+    <fields>
+        <help><!-- In this field, you can introduce a list of JSON options with the configuration for the volumes used in every new job execution. --></help>
+        <label><!-- VolumeOptions --></label>
+        <name>copado__VolumeOptions__c</name>
+    </fields>
+</CustomObjectTranslation>

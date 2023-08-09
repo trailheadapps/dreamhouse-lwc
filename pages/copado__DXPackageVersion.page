@@ -1,0 +1,76 @@
+<!--
+ - Created by mertyalti on 16/08/2018.
+ -->
+
+<apex:page id="DXPackageVersion" extensions="copado.DXPackageAsyncJobHandler" standardController="copado__Artifact__c" lightningStylesheets="true"
+    title="{!$Label.copado__EDIT} {!$ObjectType.copado__Artifact__c.Label}" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true"
+    sidebar="{!$User.UIThemeDisplayed=='Theme3'}" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="true" docType="html-5.0">
+    <style>
+        .slds-scope .slds-input {
+            width: 155px;
+        }
+
+        .slds-scope input {
+            line-height: 1.875rem;
+            border: 1px solid rgb(221, 219, 218);
+            border-radius: .25rem;
+        }
+
+        .slds-scope img {
+            max-width: 100%;
+        }
+    </style>
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" />
+    <apex:form >
+        <apex:pageMessages id="packageMsg" />
+        <c:ScreenLocker msg="{!$Label.copado__LOADING}" useJobsManager="true" possibleRunningJobs=",DXCreatePackage,,true;,DXCreatePackageVersion,,true;,DXPackageStatusTracking,,true;,DXPackageUpdate,,true;,DXPackageVersionUpdate,,true;,DXPromoteBetaReleased,,true;"
+        />
+        <script>
+            window.addEventListener('copadoJobsManagerFinished', function (evt) {
+                for (var i = 0; i < evt.detail.length; i++) {
+                    var jobFinished = evt.detail[i].isFinished;
+                    var jobSuccess = evt.detail[i].isSuccess;
+                    var jobMessage = evt.detail[i].message;
+                    var jobType = evt.detail[i].type;
+                    console.debug("Job Success: ", jobSuccess);
+                    console.debug("Job Finished: ", jobFinished);
+                    console.debug("Job Message: ", jobMessage);
+                    console.debug("Job Type: ", jobType);
+                    console.debug("job detail ", evt.detail[i]);
+                    jobstatus(jobFinished, jobSuccess, jobMessage, jobType);
+                    if (jobFinished) {
+                        if (jobSuccess) {
+                            if (jobType == 'DXCreatePackage') {
+                                location.reload();
+                            } else {
+                                location.href = '/{!copado__Artifact__c.Id}';
+                            }
+                        } else {
+                            if (jobType == 'DxPackageVersionCreateJob') {
+                                deleteInstallationKeyRecord();
+                            }
+                        }
+                        setLockScreenMessage('{!JSENCODE($Label.copado__LOADING)}');
+                    }
+                }
+            }, false);
+        </script>
+        <script>lockScreen();</script>
+        <apex:actionFunction name="jobstatus" action="{!jobStatusNotification}" reRender="packageMsg">
+            <apex:param value="" name="jobFinished" />
+            <apex:param value="" name="jobSuccess" />
+            <apex:param value="" name="jobMessage" />
+            <apex:param value="" name="jobType" />
+        </apex:actionFunction>
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Artifact_Version__c}" />
+        <apex:inputHidden value="{!copado__Artifact__c.Name}" />
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Package_Type__c}" />
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Target_Dev_Hub_Org__c}" />
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Description__c}" />
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Package_Id__c}" />
+        <apex:inputHidden value="{!copado__Artifact__c.copado__Package_Type__c}" />
+        <apex:inputHidden value="{!copado__Artifact__c.copado__No_Namespace__c}" />
+        <c:PackageVersionHelper package="{!copado__Artifact__c}" />
+    </apex:form>
+</apex:page>

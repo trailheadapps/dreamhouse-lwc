@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Access --></label>
+        <name>copado__Access__c</name>
+        <picklistValues>
+            <masterLabel>Read Only</masterLabel>
+            <translation><!-- Read Only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Run Continuous Integration</masterLabel>
+            <translation><!-- Run Continuous Integration --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Continuous Integration --></label>
+        <name>copado__Continuous_Integration__c</name>
+        <relationshipLabel><!-- Continuous Integration Permissions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Email Notification --></label>
+        <name>copado__Email_Notification__c</name>
+        <picklistValues>
+            <masterLabel>On Build Failure</masterLabel>
+            <translation><!-- On Build Failure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Build Success</masterLabel>
+            <translation><!-- On Build Success --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Deploy Failure</masterLabel>
+            <translation><!-- On Deploy Failure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Deploy Success</masterLabel>
+            <translation><!-- On Deploy Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Select here the Email Template Name. If your template is not visible here, it must be added by the Administrator by customising this picklist on the Continuous Integration Permission object. --></help>
+        <label><!-- Email Template Name --></label>
+        <name>copado__Email_Template_Name__c</name>
+        <picklistValues>
+            <masterLabel>Build Task Status Notification</masterLabel>
+            <translation><!-- Build Task Status Notification --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>copado__User__c</name>
+        <relationshipLabel><!-- Continuous Integration Permissions --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

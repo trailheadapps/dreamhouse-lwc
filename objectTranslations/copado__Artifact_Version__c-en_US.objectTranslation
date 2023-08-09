@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Package --></label>
+        <name>copado__Artifact__c</name>
+        <relationshipLabel><!-- Package Versions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The package version’s branch. Package version content is stored in this branch in the given repository. You may reach your repository information from the parent artifact record. --></help>
+        <label><!-- Branch --></label>
+        <name>copado__Branch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data JSON --></label>
+        <name>copado__Data_JSON__c</name>
+    </fields>
+    <fields>
+        <label><!-- Definition File --></label>
+        <name>copado__DefinitionFile__c</name>
+    </fields>
+    <fields>
+        <help><!-- Package versions are being created as beta and you can promote them to be released. When a version is released this checkbox will be checked. --></help>
+        <label><!-- Is released --></label>
+        <name>copado__Is_released__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Job Execution Id --></label>
+        <name>copado__LastJobExecutionId__c</name>
+    </fields>
+    <fields>
+        <help><!-- Package version id is in use in order to specify ancestry among package versions and for promoting a package version. --></help>
+        <label><!-- Package Version Id --></label>
+        <name>copado__Package_Version_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Use this URL in order to install this package in a production environment. --></help>
+        <label><!-- Production Installation URL --></label>
+        <name>copado__Production_Installation_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release Status --></label>
+        <name>copado__Release_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Release --></label>
+        <name>copado__Release__c</name>
+        <relationshipLabel><!-- Package Versions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Use this URL in order to install this package in a sandbox environment. --></help>
+        <label><!-- Sandbox Installation URL --></label>
+        <name>copado__Sandbox_Installation_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Draft indicates that a placeholder record has been created.
+
+Pre-Release indicates a package version that has been generated but not yet promoted or is not ready for release. 
+
+A package version with Published status, indicates it can be released or deployed to production. 
+
+Deprecated highlights a package version that has been deleted and is no longer available for use.
+
+Open, Locked and Cancelled are used for packages related to User Story bundles. --></help>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deprecated</masterLabel>
+            <translation><!-- Deprecated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Locked</masterLabel>
+            <translation><!-- Locked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pre-Release</masterLabel>
+            <translation><!-- Pre-Release --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Published</masterLabel>
+            <translation><!-- Published --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- In order to install a package to a Salesforce environment, installation URL requires a subscriber Id. Please refer to installation URLs. --></help>
+        <label><!-- Subscriber Version Id --></label>
+        <name>copado__Subscriber_Version_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- The package version’s tag. Package version content is stored in this tag in the given repository. Tags are created for each version number. Version with the same version number may overwrite each other. Try to keep your version numbers unique. --></help>
+        <label><!-- Tag --></label>
+        <name>copado__Tag__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>copado__User_Story__c</name>
+        <relationshipLabel><!-- Bundle Versions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The description of the package version --></help>
+        <label><!-- Version Description --></label>
+        <name>copado__Version_Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- the name of the package version which entered by user while version creation. --></help>
+        <label><!-- Version Name --></label>
+        <name>copado__Version_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Version --></label>
+        <name>copado__Version__c</name>
+    </fields>
+    <fields>
+        <help><!-- The version number of the package version. Must be in major.minor.patch.build format. --></help>
+        <label><!-- Version number --></label>
+        <name>copado__Version_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- View In Git --></label>
+        <name>copado__View_In_Git__c</name>
+    </fields>
+    <webLinks>
+        <label><!-- Merge_Version --></label>
+        <name>copado__Merge_Version</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Promote_Beta_to_Released --></label>
+        <name>copado__Promote_Beta_to_Released</name>
+    </webLinks>
+</CustomObjectTranslation>

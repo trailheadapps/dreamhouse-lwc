@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Apex Job ID --></label>
+        <name>copado__Apex_Job_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cron Expression --></label>
+        <name>copado__Cron_Expression__c</name>
+    </fields>
+    <fields>
+        <help><!-- When the Job is executed, it will check all Runs that are older than this number of days and delete the historical records. --></help>
+        <label><!-- Delete Runs after (days) --></label>
+        <name>copado__Delete_Runs_after_days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Message --></label>
+        <name>copado__Message__c</name>
+    </fields>
+    <fields>
+        <help><!-- This User must have a Copado License assigned, created an credential for his Copado user and created API Key. This API Key will be used for the webhooks. --></help>
+        <label><!-- Run as User --></label>
+        <name>copado__Run_as_User__c</name>
+        <relationshipLabel><!-- Scheduled Jobs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Failure</masterLabel>
+            <translation><!-- Failure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Webhook URL --></label>
+        <name>copado__Webhook_URL__c</name>
+    </fields>
+</CustomObjectTranslation>

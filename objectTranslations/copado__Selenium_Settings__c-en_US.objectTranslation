@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- This Credential will be used for Quick Runs. Each user has their own Quick Settings. Quick Settings are used when running tests using the Quick Run button. --></help>
+        <label><!-- Default Credential --></label>
+        <name>copado__Default_Org_Credential__c</name>
+        <relationshipLabel><!-- Selenium Settings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Desired Capabilities --></label>
+        <name>copado__Desired_Capabilities__c</name>
+    </fields>
+    <fields>
+        <help><!-- Display Size for Windows/Mac platforms. E.G. Saucelabs with Windows only supports small size ( &lt; 1280x1024 ) --></help>
+        <label><!-- Device Screen Size --></label>
+        <name>copado__Device_Screen_Size__c</name>
+        <picklistValues>
+            <masterLabel>Big screen</masterLabel>
+            <translation><!-- Big screen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medium screen</masterLabel>
+            <translation><!-- Medium screen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Small screen</masterLabel>
+            <translation><!-- Small screen --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Provider --></label>
+        <name>copado__Provider__c</name>
+        <picklistValues>
+            <masterLabel>Browser Stack</masterLabel>
+            <translation><!-- Browser Stack --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom/Other</masterLabel>
+            <translation><!-- Custom/Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sauce Labs</masterLabel>
+            <translation><!-- Sauce Labs --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Selected Platforms --></label>
+        <name>copado__Selected_Platforms__c</name>
+    </fields>
+    <fields>
+        <help><!-- Use a local proxy to access an org behind a VPN? This enables Saucelabs Connect or Browserstack Local Testing. --></help>
+        <label><!-- Webdriver Proxy --></label>
+        <name>copado__Webdriver_Proxy__c</name>
+    </fields>
+    <fields>
+        <help><!-- Eg for Browserstack:
+http://USER:TOKEN@hub.browserstack.com:80/wd/hub
+
+Eg for Saucelabs:
+http://USER:TOKEN@ondemand.saucelabs.com:80/wd/hub/ --></help>
+        <label><!-- Webdriver URL --></label>
+        <name>copado__Webdriver_URL__c</name>
+    </fields>
+</CustomObjectTranslation>

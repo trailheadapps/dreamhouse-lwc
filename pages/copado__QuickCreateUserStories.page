@@ -1,0 +1,135 @@
+<apex:page id="thePage" controller="copado.QuickCreateUserStoriesController" tabStyle="copado__User_Story__c" title="{!$Label.copado__QUICK_CREATE_USER_STORIES}" lightningStylesheets="true">
+	<head>
+		<c:GAnalytics />
+		<apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+	</head>
+	<body>
+		<apex:outputPanel layout="block" rendered="{!showLicenseError}">
+            <apex:pageMessages id="licenseMessage"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!showLicenseError}">
+			<apex:form id="theForm" styleClass="copado-lightning-container" html-novalidate="true">
+				<apex:sectionHeader id="sectionHeader" title="{!$Label.copado__COPADO_CHANGE_MANAGEMENT}" subtitle="{!$Label.copado__QUICK_CREATE_USER_STORIES}" description="{!$Label.copado__QUICK_CREATE_USERSTORY_DESCRIPTION}" />
+				<apex:pageMessages id="pageMessages" />
+				
+				<apex:actionStatus id="screenlocker" onstart="lockScreen();" onstop="unlockScreen();" />
+				<c:ScreenLocker id="cmpScreenLocker" msg="{!$Label.copado__LOADING}" />
+				
+				<apex:pageBlock id="pb" mode="edit" rendered="{!isValid}">
+					<apex:pageBlockButtons id="bpButtonsTop" location="top">
+						<apex:commandButton id="btnUpdate" value="{!$Label.copado__UPDATE}" action="{!updateFromLookups}" />
+					</apex:pageBlockButtons>
+					<apex:pageBlockButtons id="bpButtonsBottom" location="bottom">
+						<apex:commandButton id="btnDone" value="{!$Label.copado__IM_DONE}" action="{!cancel}" />
+					</apex:pageBlockButtons>
+					<apex:pageBlockSection id="pbs" >
+						<apex:inputField id="if_Project" value="{!dummyStory.copado__Project__c}" required="true" />
+						<apex:inputField id="if_Epic" value="{!dummyStory.copado__Epic__c}" />
+						<apex:inputField id="if_Sprint" value="{!dummyStory.copado__Sprint__c}" />
+						<apex:pageBlockSectionItem id="pbsiPreLoadStories" >
+							<apex:outputLabel id="lblPreLoadStories" value="{!$Label.copado__PRELOAD_FILTER_USER_STORIES}" />
+							<apex:outputPanel >
+								<apex:actionRegion >
+									<apex:inputCheckbox id="chkPreLoadStories" value="{!preLoadExisting}">
+										<apex:actionSupport event="onclick" action="{!updatePreset}" rerender="pb" status="screenlocker">
+											<apex:param name="param1" value="{!preLoadExisting}" />
+										</apex:actionSupport>
+									</apex:inputCheckbox>
+								</apex:actionRegion>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+					<table id="tbl_UserStories" boder="0" cellspacing="0" cellpadding="0" style="width:100%;" class="list">
+						<thead>
+							<tr class="headerRow" scope="col">
+								<th>{!$ObjectType.User_Story__c.Fields.RecordTypeId.Label}</th>
+								<th>{!$ObjectType.User_Story__c.Fields.User_Story_Title__c.Label}</th>
+								<th>{!$ObjectType.User_Story__c.Fields.userStory_Role__c.Label}</th>
+								<th>{!$ObjectType.User_Story__c.Fields.userStory_need__c.Label}</th>
+								<th>{!$ObjectType.User_Story__c.Fields.userStory_reason__c.Label}</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<apex:repeat id="rptUserStories" value="{!userStories}" var="row">
+								<apex:outputPanel layout="none" id="pnl">
+									<tr class="dataRow">
+										<td class="dataCell">
+											<apex:selectList value="{!row.story.RecordTypeId}" size="1" multiSelect="false">
+												<apex:selectOptions value="{!RecordType}" />
+											</apex:selectList>
+										</td>
+										<td style="margin-left:1px; margin-right:1px;" class="dataCell">
+											<input type="hidden" name="userStoryId" value="{!row.story.Id}" />
+											<apex:inputField id="if_UserStory_Title" value="{!row.story.copado__User_Story_Title__c}" style="width:99%;height:100%;" />
+										</td>
+										<td style="margin-left:1px; margin-right:1px;" class="dataCell">
+											<apex:inputField id="if_UserStory_Role" value="{!row.story.copado__userStory_Role__c}" style="width:99%;height:100%;" />
+										</td>
+										<td style="margin-left:1px; margin-right:1px;" class="dataCell">
+											<apex:inputField id="if_UserStory_Need" value="{!row.story.copado__userStory_need__c}" style="width:99%;height:100%;" />
+										</td>
+										<td style="margin-left:1px; margin-right:1px;" class="dataCell">
+											<apex:inputField id="if_UserStory_Reason" value="{!row.story.copado__userStory_reason__c}" style="width:99%;height:100%;" />
+										</td>
+										<td class="dataCell">
+											<apex:actionStatus id="saveStatus">
+												<apex:facet name="start">
+													<img src="/img/loading.gif" />
+												</apex:facet>
+												<apex:facet name="stop">
+													<apex:commandButton id="btnUpdateStory" value="Update/Save" action="{!row.saveStory}" rerender="pb" status="saveStatus"/>
+												</apex:facet>
+											</apex:actionStatus>
+										</td>
+									</tr>
+								</apex:outputPanel>
+							</apex:repeat>
+						</tbody>
+						<tfoot>
+							<tr class="dataRow">
+								<td class="dataCell">
+									<apex:selectList value="{!dummyStory.RecordTypeId}" size="1" multiSelect="false">
+										<apex:selectOptions value="{!RecordType}" />
+									</apex:selectList>
+								</td>
+								<td class="dataCell">
+									<apex:inputField id="if_Add_UserStory_Title" value="{!dummyStory.copado__User_Story_Title__c}" style="width:99%;" />
+								</td>
+								<td class="dataCell">
+									<apex:inputField id="if_Add_UserStory_Role" value="{!dummyStory.copado__userStory_Role__c}" style="width:99%;" />
+								</td>
+								<td class="dataCell">
+									<apex:inputField id="if_Add_UserStory_Need" value="{!dummyStory.copado__userStory_need__c}" style="width:99%;" />
+								</td>
+								<td class="dataCell">
+									<apex:inputField id="if_Add_UserStory_Reason" value="{!dummyStory.copado__userStory_reason__c}" style="width:99%;" />
+								</td>
+								<td class="dataCell">
+									<apex:actionStatus id="addStatus">
+										<apex:facet name="start">
+											<img src="/img/loading.gif" />
+										</apex:facet>
+										<apex:facet name="stop">
+											<apex:commandButton id="btnSave" value="{!$Label.copado__ADD_ROW}" action="{!addRow}" rerender="pb" status="addStatus"/>
+										</apex:facet>
+									</apex:actionStatus>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+					<apex:pageMessages />
+					<script type="text/javascript">
+							document.getElementsByName('{!$Component.if_Add_UserStory_Title}')[0].focus();
+					</script>
+				</apex:pageBlock>
+			</apex:form>
+		</apex:outputPanel>
+		<script>
+		    ga('send', 'pageview', {
+		      'page': '/QuickCreateUserStories',
+		      'title': 'Quick Create User Stories'
+		    });
+		</script>
+	</body>
+</apex:page>

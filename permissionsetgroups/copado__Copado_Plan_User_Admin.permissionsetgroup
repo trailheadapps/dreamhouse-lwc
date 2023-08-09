@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Copado Plan User Admin</label>
+    <permissionSets>copado__Functional_Testing_Read_Only</permissionSets>
+    <permissionSets>copado__Kanban_Board_Admin</permissionSets>
+    <permissionSets>copado__Portfolio_Management_Admin</permissionSets>
+    <permissionSets>copado__Project_Release_Sprint_Management_Admin</permissionSets>
+    <permissionSets>copado__Teams_Management_Admin</permissionSets>
+    <permissionSets>copado__User_Story_Task_Admin</permissionSets>
+    <permissionSets>copado__User_Story_User_Story_Dependency_Admin</permissionSets>
+    <permissionSets>copado__Work_Manager_Admin</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

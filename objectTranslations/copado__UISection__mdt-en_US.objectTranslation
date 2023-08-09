@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Component --></label>
+        <name>copado__Component__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extension Package Configuration --></label>
+        <name>copado__Extension_Package_Configuration__c</name>
+        <relationshipLabel><!-- UISections --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Location --></label>
+        <name>copado__Location__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Tool --></label>
+        <name>copado__TestTool__c</name>
+        <relationshipLabel><!-- UISections --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Where is this used? --></label>
+        <name>copado__WhereIsThisUsed__c</name>
+    </fields>
+</CustomObjectTranslation>

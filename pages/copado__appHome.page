@@ -1,0 +1,439 @@
+<apex:page controller="copado.appHome" title="{!$Label.copado__ACCOUNT_SUMMARY}" standardStylesheets="true" sidebar="false" showHeader="true"
+    id="thePage" cache="false" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+
+    <head>
+        <c:GAnalytics />
+        <apex:stylesheet id="lexss" value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+        <apex:outputPanel rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+            <style>
+                .rich-tabpanel-content {
+                    border-bottom-width: 0px !important;
+                    border-left-width: 0px !important;
+                    border-right-width: 0px !important;
+                    font-family: 'Salesforce Sans', Arial, sans-serif !important;
+                    background-color: transparent !important;
+                }
+
+                .rich-tab-header {
+                    font-family: 'Salesforce Sans', Arial, sans-serif !important;
+                    text-align: left !important;
+                }
+
+                .rich-tabhdr-cell-disabled,
+                .rich-tabhdr-cell-inactive {
+                    padding-top: 0px !important;
+                }
+            </style>
+        </apex:outputPanel>
+
+        <script>
+            function toggleVlocityCheckbox(vlocityEnabled) {
+                if (vlocityEnabled === 'true') {
+                    $copado('#vlocityInputCheckbox').attr('checked', 'checked');
+                } else {
+                    $copado('#vlocityInputCheckbox').removeAttr('checked');
+                }
+            }
+
+            $(document).ready(() => {
+                toggleVlocityCheckbox('{!AND(VlocityFeature != null,VlocityFeature.copado__Enabled__c)}');
+            });
+        </script>
+    </head>
+
+    <body>
+        <apex:form id="theForm">
+            <div class="copado-lightning-VF">
+                <apex:sectionHeader id="theHeader" title="Copado" subtitle="{!$Label.copado__ACCOUNT_SUMMARY}" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}">
+                    <div class="slds-grid" style="text-align: center;">
+                        <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                            <div class="slds-button-group" role="group">
+                                <apex:outputPanel id="registerApplicationClassic" layout="block">
+                                    <apex:outputPanel layout="block" rendered="{!NOT(isApplicationRegistered)}">
+                                        <apex:commandButton styleClass="slds-button_brand" onclick="return showModal();" value="Register Application" />
+                                        <c:GenericBaseModal title="Register Copado Application" actionButtonText="Register" onActionRerender="messagesContainer, registerApplication, registerApiKeyButtonContainer, serverURLContainer"
+                                            actionToInvokeParamName="{!registerCopado}">
+                                            <div class="slds-m-around_medium">
+                                                <p>{!$Label.Registration_Server_Acknowledge}</p>
+                                                <div class="slds-box slds-box_xx-small" style="width: 50%; margin: 1.5rem auto 1.5rem auto;">
+                                                    <div class="slds-media slds-media_center">
+                                                        <div class="slds-media__figure" style="border-right: 1px solid #d8dde6; padding-right: 5px;">
+                                                            <span class="slds-icon_container" style="background-color: #fff" title="Description of icon when needed">
+                                                                <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                                    aria-hidden="true" />
+                                                            </span>
+                                                        </div>
+                                                        <div class="slds-media__body">
+                                                            <p>{!defaultServerUrl}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:GenericBaseModal>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </div>
+                </apex:sectionHeader>
+                <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+                <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                    <div class="slds-page-header">
+                        <apex:outputPanel id="messagesContainer" layout="block" styleClass="fixedMsg">
+                            <apex:pageMessages id="msg" />
+                        </apex:outputPanel>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container" style="background-color: #fff" title="Description of icon when needed">
+                                            <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                aria-hidden="true" />
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p class="slds-text-heading--label slds-line-height--reset">Copado</p>
+                                        <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$Label.copado__ACCOUNT_SUMMARY}">{!$Label.copado__ACCOUNT_SUMMARY}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ACTION BUTTONS -->
+                            <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                                <div class="slds-button-group" role="group">
+                                    <apex:outputPanel id="registerApplication" layout="block">
+                                        <apex:outputPanel layout="block" rendered="{!NOT(isApplicationRegistered)}">
+                                            <apex:commandButton styleClass="slds-button_brand" onclick="return showModal();" value="Register Application" />
+                                            <c:GenericBaseModal title="Register Copado Application" actionButtonText="Register" onActionRerender="messagesContainer, registerApplication, registerApiKeyButtonContainer, serverURLContainer"
+                                                actionToInvokeParamName="{!registerCopado}">
+                                                <div class="slds-m-around_medium">
+                                                    <p>{!$Label.Registration_Server_Acknowledge}</p>
+                                                    <div class="slds-box slds-box_xx-small" style="width: 50%; margin: 1.5rem auto 1.5rem auto;">
+                                                        <div class="slds-media slds-media_center">
+                                                            <div class="slds-media__figure" style="border-right: 1px solid #d8dde6; padding-right: 5px;">
+                                                                <span class="slds-icon_container" style="background-color: #fff" title="Description of icon when needed">
+                                                                    <img src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}" class="slds-icon slds-page-header__icon" style="padding: 6px;"
+                                                                        aria-hidden="true" />
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <p>{!defaultServerUrl}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:GenericBaseModal>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                            <!-- / ACTION BUTTONS -->
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-align-middle">
+                                <p class="slds-text-body_small"></p>
+                            </div>
+                        </div>
+                        <apex:outputPanel layout="block" style="background: white;" id="headerFields">
+                            <ul class="slds-grid slds-page-header__detail-row">
+                                <li class="slds-page-header__detail-block">
+                                    <p class="slds-text-title slds-truncate slds-m-bottom_xx-small" title="{!$Label.copado__ORG_NAME}">{!$Label.copado__ORG_NAME}</p>
+                                    <p class="slds-text-body_regular slds-truncate" title="{!$Organization.Name}">{!$Organization.Name}</p>
+                                </li>
+                                <li class="slds-page-header__detail-block">
+                                    <p class="slds-text-title slds-truncate slds-m-bottom_xx-small" title="{!$Label.copado__ORG_ID}">{!$Label.copado__ORG_ID}</p>
+                                    <p class="slds-text-body_regular slds-truncate" title="{!$Organization.Id}">{!$Organization.Id}</p>
+                                </li>
+                                <li class="slds-page-header__detail-block">
+                                    <p class="slds-text-title slds-truncate slds-m-bottom_xx-small" title="{!$Label.copado__USER_NAME}">{!$Label.copado__NAME}</p>
+                                    <p class="slds-text-body_regular slds-truncate" title="">{!$User.FirstName} {!$User.LastName}</p>
+                                </li>
+                                <li class="slds-page-header__detail-block">
+                                    <p class="slds-text-title slds-truncate slds-m-bottom_xx-small" title="{!$Label.copado__USER_NAME}">{!$Label.copado__USERNAME}</p>
+                                    <p class="slds-text-body_regular slds-truncate" title="">{!$User.Username}</p>
+                                </li>
+                                <li class="slds-page-header__detail-block">
+                                    <p class="slds-text-title slds-truncate slds-m-bottom_xx-small" title="{!$Label.copado__USER_ID}">{!$Label.copado__USER_ID}</p>
+                                    <p class="slds-text-body_regular slds-truncate" title="{!$User.Id}">{!$User.Id}</p>
+                                </li>
+                                <apex:outputPanel id="serverURLContainer" styleClass="slds-page-header__detail-block">
+                                    <apex:outputPanel rendered="{!isApplicationRegistered}">
+                                        <li>
+                                            <p class="slds-text-title slds-truncate slds-m-bottom_xx-small" title="{!$Label.copado__Server_URL}">{!$Label.copado__Server_URL}</p>
+                                            <p class="slds-text-body_regular slds-truncate" title="{!defaultServerUrl}">{!defaultServerUrl}</p>
+                                        </li>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </ul>
+                        </apex:outputPanel>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+
+                    <apex:outputPanel id="thePanel" layout="block" styleClass="copado-lightning-container" style="padding-top:12px;">
+                        <c:credits id="cmp_credits" showGoToLicenseButton="true" />
+                        <style>
+                            .activeTab {
+                                background-color: #236FBD;
+                                color: white;
+                                background-image: none
+                            }
+
+                            .inactiveTab {
+                                background-color: lightgrey;
+                                color: black;
+                                background-image: none
+                            }
+
+                            /** Adding this SLDS CSS will help us apply the styling to the Vlocity toggle 
+                            button without affecting other components when in Salesforce Classic **/
+
+                            .slds-scope:not(html) {
+                                font-size: .8125rem;
+                                background: 0 0;
+                            }
+
+                            .slds-scope {
+                                font-family: "Salesforce Sans", Arial, sans-serif;
+                                font-size: 100%;
+                                line-height: 1.5;
+                                background: #fdfdfd;
+                                color: #16325c;
+                                -webkit-tap-highlight-color: transparent;
+                            }
+
+                            .slds-scope *,
+                            .slds-scope :after,
+                            .slds-scope :before {
+                                box-sizing: border-box;
+                            }
+
+                            .slds-scope .slds-grid {
+                                display: -ms-flexbox;
+                                display: flex;
+                            }
+
+                            .slds-scope .slds-form-element {
+                                position: relative;
+                            }
+
+                            .slds-scope .slds-checkbox_toggle {
+                                width: 100%;
+                            }
+
+                            .slds-scope .slds-checkbox_toggle [type=checkbox] {
+                                width: 1px;
+                                height: 1px;
+                                border: 0;
+                                clip: rect(0 0 0 0);
+                                margin: -1px;
+                                overflow: hidden;
+                                padding: 0;
+                                position: absolute;
+                            }
+
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]+.slds-checkbox_faux_container {
+                                font-size: .625rem;
+                                color: #54698d;
+                            }
+
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux {
+                                border-color: #0070d2;
+                                background-color: #0070d2;
+                            }
+
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:before {
+                                display: block;
+                                position: relative;
+                                width: 3rem;
+                                height: 1.5rem;
+                                border: 1px solid #9faab5;
+                                padding: .125rem;
+                                background-color: #9faab5;
+                                border-radius: 15rem;
+                                transition: background-color .2s cubic-bezier(.75, 0, .08, 1);
+                            }
+
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:after {
+                                content: ' ';
+                                position: absolute;
+                                top: .25rem;
+                                left: .6rem;
+                                height: .7rem;
+                                width: .45rem;
+                                border-bottom: 2px solid #fff;
+                                border-right: 2px solid #fff;
+                                border-radius: 0;
+                                background-color: transparent;
+                                transform: rotate(45deg);
+                            }
+
+                            .slds-scope .slds-form-element__label {
+                                display: inline-block;
+                                color: #54698d;
+                                font-size: .75rem;
+                                line-height: 1.5;
+                                margin-right: .75rem;
+                                margin-bottom: .25rem;
+                            }
+
+                            .slds-scope .slds-m-bottom_none {
+                                margin-bottom: 0;
+                            }
+
+                            .slds-scope .slds-checkbox_toggle .slds-checkbox_faux {
+                                display: block;
+                                position: relative;
+                                width: 3rem;
+                                height: 1.5rem;
+                                border: 1px solid #9faab5;
+                                padding: .125rem;
+                                background-color: #9faab5;
+                                border-radius: 15rem;
+                                transition: background-color .2s cubic-bezier(.75, 0, .08, 1);
+                            }
+
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:before,
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox--faux:before,
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox_faux:before {
+                                content: '';
+                                position: absolute;
+                                top: 1px;
+                                right: 1px;
+                                width: 1.25rem;
+                                height: 1.25rem;
+                                background-color: #fdfdfd;
+                                border-radius: 15rem;
+                                transition: transform .2s cubic-bezier(.75, 0, .08, 1);
+                            }
+
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:after,
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox--faux:after,
+                            .slds-scope .slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox_faux:after {
+                                content: ' ';
+                                position: absolute;
+                                top: .25rem;
+                                left: .6rem;
+                                height: .7rem;
+                                width: .45rem;
+                                border-bottom: 2px solid #fff;
+                                border-right: 2px solid #fff;
+                                border-radius: 0;
+                                background-color: transparent;
+                                transform: rotate(45deg);
+                            }
+
+                            .slds-scope .slds-checkbox_toggle .slds-checkbox_faux:after {
+                                content: '';
+                                position: absolute;
+                                top: 1px;
+                                left: 1px;
+                                width: 1.25rem;
+                                height: 1.25rem;
+                                background-color: #fdfdfd;
+                                border-radius: 15rem;
+                            }
+                        </style>
+                        <apex:tabPanel switchType="client" selectedTab="features" id="theTabPanel" tabClass="{!IF($User.UIThemeDisplayed=='Theme3','activeTab','')}"
+                            inactiveTabClass="{!IF($User.UIThemeDisplayed=='Theme3','inactiveTab','')}">
+                            <apex:tab label="{!$Label.copado__FEATURES}" name="t_features" id="tabOne" rendered="true">
+                                <apex:pageBlock id="pbFeatures" title="{!$Label.copado__FEATURES}">
+                                    <apex:pageBlockButtons location="top">
+                                        <div class="slds-scope" style="display: flex;justify-content: flex-end;">
+                                            <apex:outputPanel title="{!$Label.copado__Vlocity_Activation_Info}" layout="block" styleClass="slds-form-element" style="width: 150px;margin-top: 7px;"
+                                                rendered="{!canToggleVlocity}">
+                                                <label class="slds-checkbox_toggle slds-grid">
+                                                    <span class="slds-form-element__label slds-m-bottom_none">{!$Label.Toggle_Vlocity}</span>
+                                                    <input id="vlocityInputCheckbox" type="checkbox" name="checkbox-toggle" value="checkbox-toggle" aria-describedby="checkbox-toggle"
+                                                        onClick="vlocityToggle();" />
+                                                    <span id="checkbox-toggle" class="slds-checkbox_faux_container" aria-live="assertive">
+                                                        <span class="slds-checkbox_faux"></span>
+                                                    </span>
+                                                </label>
+                                                <apex:actionFunction name="vlocityToggle" action="{!vlocityFeatureOperations}" oncomplete="toggleVlocityCheckbox('{!AND(VlocityFeature != null,VlocityFeature.copado__Enabled__c)}');"
+                                                    reRender="pbFeatures" />
+                                            </apex:outputPanel>
+                                            <apex:commandButton action="{!refreshFeatures}" value="{!$Label.copado__Refresh_Feature}" />
+                                        </div>
+                                    </apex:pageBlockButtons>
+
+                                    <apex:pageBlockTable value="{!featuresList}" var="f" columnsWidth="40%,20%,20%,20%">
+                                        <apex:column value="{!f.Name}" />
+                                        <apex:column value="{!f.copado__Enabled__c}" />
+                                        <apex:column value="{!f.copado__Quantity__c}" />
+                                        <apex:column >
+                                            <apex:outputLink rendered="{!!f.copado__Enabled__c || !isblank(f.copado__Expiration_Date__c)}" value="mailto:success@copado.com">
+                                                {!$Label.copado__CONTACT_SALES}
+                                            </apex:outputLink>
+                                        </apex:column>
+                                    </apex:pageBlockTable>
+                                </apex:pageBlock>
+                            </apex:tab>
+                            <apex:tab label="{!$Label.copado__API_KEY}" name="t_api_key" id="tabTwo" rendered="true">
+                                <apex:pageBlock id="pbAPIKey" title="{!$Label.copado__PESONAL_API_KEY} {!$User.FirstName} {!$User.LastName}">
+                                    <apex:pageBlockButtons location="top">
+
+                                        <apex:outputPanel id="registerApiKeyButtonContainer" layout="block">
+                                            <apex:commandButton disabled="{!NOT(isApplicationRegistered)}" action="{!createAPIKey}" value="{!IF(isApplicationRegistered, $Label.copado__CREATE + ' / ' + $Label.copado__RESET, 'Application must be registered to create an API KEY')}"
+                                                onComplete="doPrivateSettingUdate()" />
+                                        </apex:outputPanel>
+
+                                    </apex:pageBlockButtons>
+                                    <apex:pageBlockSection >
+                                        <apex:pageBlockSectionItem >
+                                            <apex:outputLabel value="{!$Label.copado__API_KEY}" for="api_key" />
+                                            <apex:outputText value="{!APIKey}" id="api_key" />
+                                        </apex:pageBlockSectionItem>
+                                    </apex:pageBlockSection>
+                                </apex:pageBlock>
+                                <apex:actionFunction name="doPrivateSettingUdate" action="{!updatePrivateSettings}" reRender="messagesContainer, pbAPIKey" />
+                            </apex:tab>
+                            <apex:tab label="{!$Label.copado__TRANSACTIONS}" name="transactions" id="tabThree">
+                                <apex:pageBlock id="pbTrans" title="{!$Label.copado__TRANSACTIONS}" helpUrl="https://docs.copado.com/copado-licenses/credit-usage"
+                                    helpTitle="{!$Label.copado__HELP_FOR_THIS_PAGE}">
+                                    <apex:pageBlockTable value="{!transactions}" var="t">
+                                        <apex:column >
+                                            <apex:facet name="header">{!$ObjectType.User.Label}</apex:facet>
+                                            <apex:outputText value="{!t.userName}" />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">{!$Label.copado__DATE}</apex:facet>
+                                            <apex:outputText value="{!t.ddate}" />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">{!$Label.copado__CREDITS}</apex:facet>
+                                            <apex:outputText value="{!t.credits}" />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">{!$ObjectType.copado__Selenium_Test_Result__c.fields.copado__Elapsed_Time_Seconds__c.Label}</apex:facet>
+                                            <apex:outputText value="{0, number, ####,##0}">
+                                                <apex:param value="{!t.minutes * 60}" />
+                                            </apex:outputText>
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">{!$Label.copado__DEPLOYMENT}</apex:facet>
+                                            <apex:outputText value="{!t.deployment}" />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">{!$ObjectType.copado__Step__c.Fields.Name.label}</apex:facet>
+                                            <apex:outputText value="{!t.stepName}" />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">{!$Label.copado__DEPLOYMENT_JOB}</apex:facet>
+                                            <apex:outputText value="{!t.job}" />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header">{!$Label.copado__DESTINATION_ORG}</apex:facet>
+                                            <apex:outputText value="{!t.destinationOrg}" />
+                                        </apex:column>
+                                    </apex:pageBlockTable>
+                                </apex:pageBlock>
+                            </apex:tab>
+                        </apex:tabPanel>
+                        <c:CheckFeaturesComponent />
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </div>
+        </apex:form>
+    </body>
+</apex:page>

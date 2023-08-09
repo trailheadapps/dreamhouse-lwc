@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Copado Alert Message Channel to communicate with Copado Alert components using message service</description>
+    <isExposed>false</isExposed>
+    <lightningMessageFields>
+        <description>A string representing the body of the message</description>
+        <fieldName>message</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Changes the appearance of the alert. Valid values are: info, success, warning, and error.</description>
+        <fieldName>variant</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>Whether the alert can be dismissed or not</description>
+        <fieldName>dismissible</fieldName>
+    </lightningMessageFields>
+    <masterLabel>CopadoAlerts</masterLabel>
+</LightningMessageChannel>

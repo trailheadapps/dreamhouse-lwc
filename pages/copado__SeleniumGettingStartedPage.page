@@ -1,0 +1,109 @@
+<apex:page id="thePage" controller="copado.appHome" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" sidebar="{!$User.UIThemeDisplayed=='Theme3'}" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds />
+    <head>
+        <title>Selenium Getting Started | Copado</title>
+        <c:GAnalytics />
+        <script>
+            ga('send', 'pageview', {
+                'page': '/SeleniumGetingStartedPage',
+                'title': 'Selenium Getting Started Page'
+            });
+        </script>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" /> 
+    </head>
+
+    <body>
+        <div class="copado-lightning-VF">
+            <apex:pageMessages id="theMessages" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+            <apex:pageMessage id="theWarning" severity="WARNING" strength="2" summary="{!$Label.copado__SELENIUM_NOT_ENABLED}" rendered="{!AND(!$Setup.copado__Copado_License__c.copado__Enable_CST__c,$User.UIThemeDisplayed != 'Theme4d')}"></apex:pageMessage>
+            <apex:sectionHeader id="theHeader" title="{!$Label.copado__SELENIUM_GETTING_STARTED_HEADER_TITLE}" subtitle="{!$Label.copado__SELENIUM_GETTING_STARTED_HEADER_SUBTITLE}" description="{!$Label.copado__SELENIUM_GETTING_STARTED_HEADER_DESCRIPTION}" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+
+            <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                <div class="slds-page-header">
+                  <apex:outputPanel layout="block" id="pageMessages">
+                    <apex:pagemessages id="msg"/>
+                    <apex:pageMessage id="theWarning2" severity="WARNING" strength="2" summary="{!$Label.copado__SELENIUM_NOT_ENABLED}" rendered="{!!$Setup.copado__Copado_License__c.copado__Enable_CST__c}"></apex:pageMessage>
+                  </apex:outputPanel>
+                  <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                      <div class="slds-media">
+                          <div class="slds-media__figure">
+                              <span class="slds-icon_container slds-icon-custom-custom47" title="Description of icon when needed">
+                                <svg class="slds-icon" aria-hidden="true">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom47')}"></use>
+                                </svg>
+                              </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <p class="slds-text-heading--label slds-line-height--reset">{!$Label.copado__SELENIUM_GETTING_STARTED_HEADER_TITLE}</p>
+                              <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.User_Story__c.Label}">{!$Label.copado__SELENIUM_GETTING_STARTED_HEADER_SUBTITLE}</h1>
+                          </div>
+                      </div>
+                    </div>
+                    <!-- ACTION BUTTONS -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                      <div class="slds-button-group" role="group">
+                        
+                      </div>
+                    </div>
+                    <!-- / ACTION BUTTONS -->
+                  </div>
+                  <div class="slds-grid">
+                    <div class="slds-col slds-align-middle">
+                        <p class="slds-text-body_small">{!$Label.copado__SELENIUM_GETTING_STARTED_HEADER_DESCRIPTION}</p>
+                    </div>
+                  </div>
+                  <div style="background: white; height: 25px;">
+                    <!-- Header details buffer-->
+                  </div>
+                </div>
+            </apex:outputPanel>            
+            
+            <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+                
+                <apex:outputPanel rendered="{!$Setup.copado__Copado_License__c.copado__Enable_CST__c}">
+                    <br/>
+                    <div id="copadoRecorderExtensionInstalled" style="display:none">
+                        <apex:form >
+                            <apex:outputPanel rendered="{!APIKey!=''}" layout="none">
+                                <!-- non-classic button -->
+                                <apex:commandButton action="{!cstBindExtensionToOrg}" html-href="{!LinkCstBindExtensionToOrg}" value="{!$Label.copado__SELENIUM_GETTING_STARTED_BIND} ({!$Organization.Name})" immediate="true" styleClass="slds-button slds-button--neutral" rendered="{!$User.UIThemeDisplayed != 'Theme3'}" />
+                                <!-- classic button -->
+                                <apex:outputPanel rendered="{!$User.UIThemeDisplayed == 'Theme3'}" layout="none">
+                                <a id="copadoRecorderExtensionNotInstalled1" href="{!LinkCstBindExtensionToOrg}" class="slds-button slds-button--neutral"><apex:outputText value="{!$Label.copado__SELENIUM_GETTING_STARTED_BIND} ({!$Organization.Name})"></apex:outputText></a>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                            <!-- common to both, disabled button -->
+                            <apex:commandButton action="{!cstBindExtensionToOrg}" value="{!$Label.copado__SELENIUM_GETTING_STARTED_APIKEY}" rendered="{!APIKey=''}" immediate="true" onclick="return false;" styleClass="slds-button slds-button--neutral" />
+                        </apex:form>                        
+                    </div>
+
+                    <div id="copadoRecorderExtensionNotInstalled">
+                        <br />
+                        <div class="message warningM3" role="alert">
+                            <table border="0" cellpadding="0" cellspacing="0" class="messageTable" style="padding:0px;margin:0px;">
+                                <tbody><tr valign="top">
+                                    <td>
+                                        <img alt="WARNING" class="msgIcon" src="/s.gif" title="WARNING"/>
+                                    </td>
+                                    <td class="messageCell"><div id="msg_not_installed" class="messageText"><span>
+                                        <h4></h4></span>{!$Label.COPADO_EXTENSION_NOT_INSTALLED}<br/></div>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                </apex:outputPanel>
+                
+                <iframe frameBorder="0" src="https://docs.copado.com/copado-selenium-testing/selenium-setup" style="width: 100%; min-height: 1200px"></iframe>
+            </apex:outputPanel>
+        </div>
+    </body>
+</apex:page>

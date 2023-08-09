@@ -1,0 +1,3 @@
+<apex:page showHeader="false" sidebar="false" standardController="copado__Deployment_Flow__c" extensions="copado.BranchManagementExtension,copado.Settings,copado.FeatureHelper,copado.JsRemotingController">
+ 
+</apex:page>

@@ -1,0 +1,143 @@
+<apex:page controller="QCloudsSaaS.ScanDetailController" readOnly="false">
+    <apex:stylesheet value="{!$Resource.QCloudsSaaS__listtable}" />
+    <apex:pageMessage rendered="{! message_type != null}" summary="{! message}" severity="{! message_type}" strength="3" />
+    <apex:pageMessages />
+    <apex:form >
+        <apex:pageBlock title="Scan Details">
+            <apex:pageBlockSection >
+                <apex:outputField value="{! scan.Date__c }" />
+                <apex:outputField value="{! scan.State__c }" />
+                <apex:outputField value="{! scan.Total_Issues__c }" />
+                <apex:outputField value="{! scan.Technical_Debt_hours__c }" />
+                <apex:outputField value="{! scan.Quality_of_Cloud__c }" />
+                <apex:outputField value="{! scan.Configuration_Elements__c }" />
+                <apex:outputField rendered="{! scan.Scan_Type__c == 'feature-branch-scan'}" value="{! scan.Branch_Name__c }" />
+                <apex:outputField value="{! scan.ID__c }" />
+                <apex:pageBlockSectionItem rendered="{! scan.Scan_Type__c == 'feature-branch-scan'}">
+                    <apex:outputLabel value=""/>
+                        <apex:outputLink html-class="btn" target="_blank" value="/apex/CsvDownload">
+                            Download Issues
+                            <apex:param name="id" value="{!scan.QCloudsSaaS__ID__c}"/>
+                        </apex:outputLink>
+                </apex:pageBlockSectionItem>
+                <apex:outputField value="{! scan.Quality_Gate_Result__c }" />
+                <apex:outputField value="{! scan.Quality_Gate_Message__c }" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:commandButton action="{! go_back }" value="Go to instance detail" />
+        <apex:pageBlock >
+            <apex:panelgrid columns="8">
+                <apex:outputText value="Sort by:" />
+                <apex:selectList value="{!selectedField }" size="1">
+                    <apex:selectOption itemValue="Issue__c" itemLabel="Issue"/>
+                    <apex:selectOption itemValue="Severity__c" itemLabel="Severity"/>
+                    <apex:selectOption itemValue="Impact_Area__c" itemLabel="Impact Area"/>
+                    <apex:selectOption itemValue="Element_Name__c" itemLabel="Affected Element Name"/>
+                    <apex:selectOption itemValue="Line_Number__c" itemLabel="Line Number"/>
+                </apex:selectList>
+                <apex:selectList value="{!selectedDirection }" size="1">
+                    <apex:selectOption itemValue="DESC" itemLabel="DESC"/>
+                    <apex:selectOption itemValue="ASC" itemLabel="ASC"/>
+                </apex:selectList>
+                <apex:outputText value="Filter by:" />
+                <apex:inputText value="{!selectedIssue}" id="theTextInput" html-placeholder="Issue type"/>
+                <apex:selectList value="{!selectedImpact }" size="1">
+                    <apex:selectOption itemValue="ALL" itemLabel="ALL IMPACT AREAS"/>
+                    <apex:selectOption itemValue="SECURITY" itemLabel="SECURITY"/>
+                    <apex:selectOption itemValue="MANAGEABILITY" itemLabel="MANAGEABILITY"/>
+                    <apex:selectOption itemValue="PERFORMANCE" itemLabel="PERFORMANCE"/>
+                    <apex:selectOption itemValue="SCALABILITY" itemLabel="SCALABILITY"/>
+                </apex:selectList>
+                <apex:selectList value="{!selectedSeverity }" size="1">
+                    <apex:selectOption itemValue="ALL" itemLabel="ALL SEVERITIES"/>
+                    <apex:selectOption itemValue="HIGH" itemLabel="HIGH"/>
+                    <apex:selectOption itemValue="MEDIUM" itemLabel="MEDIUM"/>
+                    <apex:selectOption itemValue="LOW" itemLabel="LOW"/>
+                    <apex:selectOption itemValue="WARNING" itemLabel="WARNING"/>
+                </apex:selectList>
+                <apex:commandButton value="Sort/Filter Table" action="{!sortfilter}" reRender="issues"/>
+            </apex:panelgrid>
+        </apex:pageBlock>
+        <apex:pageBlock rendered="{! scan.Scan_Type__c == 'feature-branch-scan'}" title="Issues" id="issues">
+            <apex:pageBlockSection columns="1">
+                <apex:dataTable value="{! issues}" var="issue" id="theTable" styleClass="v-table" rowClasses="odd,even" width="100%">
+                    <apex:column >
+                        <apex:facet name="header">Issue</apex:facet>
+                        <apex:outputText value="{!issue.QCloudsSaaS__Issue__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Severity</apex:facet>
+                        <apex:outputText value="{!issue.QCloudsSaaS__Severity__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Impact Area</apex:facet>
+                        <apex:outputText value="{!issue.QCloudsSaaS__Impact_Area__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Affected Element Name</apex:facet>
+                        <apex:outputText value="{!issue.QCloudsSaaS__Element_Name__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Line Number</apex:facet>
+                        <apex:outputText value="{!issue.QCloudsSaaS__Line_Number__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Link to Element</apex:facet>
+                        <apex:outputLink target="_blank" rendered="{! issue.Link_to_Element__c != null}" value="{!issue.QCloudsSaaS__Link_to_Element__c}">Go to element</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Documentation</apex:facet>
+                        <apex:outputLink target="_blank" rendered="{! issue.Documentation__c != null}" value="{!issue.QCloudsSaaS__Documentation__c}">Documentation</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Write off</apex:facet>
+                        <apex:inputField value="{! issue.Write_off__c }">
+                            <!-- <apex:actionSupport event="onchange" action="{!updateWriteoff}" reRender="issues"  >
+                                <apex:param name="issueupdate" value="{! issue.id }" assignTo="{! issue_toupdate}" />
+                            </apex:actionSupport> -->
+
+                            <apex:actionSupport event="onclick" action="{!openPopup}" reRender="issues" >
+                               <apex:param name="issueupdate" value="{! issue.id }" assignTo="{! issueIdToUpdate}" />
+                            </apex:actionSupport>
+                        </apex:inputField>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Baseline</apex:facet>
+                        <apex:outputText value="{!issue.QCloudsSaaS__Baseline__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">View Detail</apex:facet>
+                        <apex:commandLink action="{! openDetail }" value="Issue Detail">
+                            <apex:param name="idissue" value="{! issue.ID__c}" assignTo="{! id_issue}" />
+                        </apex:commandLink>
+                    </apex:column>
+
+                </apex:dataTable>
+                <apex:outputPanel id="tstpopup" rendered="{!showPopup}">
+                                <apex:outputPanel styleClass="popupBackground" layout="block" />
+                                    <apex:outputPanel styleClass="custPopup" layout="block" >
+                                        <center>
+                                            <apex:outputLabel value="Write Off Request"  style="font-weight:bold" rendered="{! issueToUpdate.Write_Off__c}"/> 
+                                            <apex:outputLabel value="Unwrite Off Request"  style="font-weight:bold" rendered="{! !issueToUpdate.Write_Off__c}"/><br/> 
+                                            <apex:outputLabel styleClass="right-padding" value="Write Off Request Reason:" for="reason" rendered="{! issueToUpdate.Write_Off__c}"/> 
+                                            <apex:inputField value="{! issueToUpdate.Write_Off_Request_Reason__c }" id="reason" rendered="{! issueToUpdate.Write_Off__c}"/><br/><br/>
+                                            <apex:outputLabel styleClass="right-padding" value="Description:" for="description"/> 
+                                            <apex:inputText value="{! issueToUpdate.Write_Off_Request_Description__c }" id="description"/><br/><br/>
+                                            <apex:commandButton value="Write off"  action="{! requestWriteOff }" rendered="{! issueToUpdate.Write_Off__c}" />
+                                            <apex:commandButton value="Unwrite off"  action="{! requestWriteOff }" rendered="{! !issueToUpdate.Write_Off__c}" />
+                                            <apex:commandButton value="Cancel" action="{!cancel}" />
+                                        </center>
+                                </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <apex:pageblockButtons >
+                <apex:commandButton value="<<" rerender="issues" action="{!beginning}" disabled="{!prev}"/>
+                <apex:commandButton value="<" rerender="issues" action="{!previous}" disabled="{!prev}"/>
+                <apex:commandButton value=">" rerender="issues" action="{!next}" disabled="{!nxt}"/>
+                <apex:commandButton value=">>" rerender="issues" action="{!end}" disabled="{!nxt}"/>
+                <!-- <apex:commandButton title="Writes Off current filtered Issues" alt="Writes Off current filtered Issues" value="Bulk Write Off"  action="{!massiveWriteoff}" reRender="issues"/>
+                <apex:commandButton title="Writes Off current filtered Issues" alt="Writes Off current filtered Issues" value="Bulk Un-Write Off"  action="{!massiveUnWriteoff}" reRender="issues"/> -->
+            </apex:pageblockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Restriction will be active if this checkbox is checked. --></help>
+        <label><!-- Active --></label>
+        <name>copado__Active__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the names of Git Operations you want to restrict seperated with semi-colon (;) For example; if you want to restrict Destructive Changes and Full Profiles &amp; Permission Sets enter Destructive Changes;Full Profiles &amp; Permission Sets --></help>
+        <label><!-- Git Operation Name --></label>
+        <name>copado__Git_Operation_Name__c</name>
+    </fields>
+</CustomObjectTranslation>

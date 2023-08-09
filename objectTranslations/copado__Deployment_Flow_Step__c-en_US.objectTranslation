@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Automatically Merge and Deploy --></label>
+        <name>copado__Automatically_Merge_and_Deploy__c</name>
+    </fields>
+    <fields>
+        <help><!-- Git branch linked to the source environment. --></help>
+        <label><!-- Branch --></label>
+        <name>copado__Branch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commits Ahead --></label>
+        <name>copado__Commits_Ahead__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commits Behind --></label>
+        <name>copado__Commits_Behind__c</name>
+    </fields>
+    <fields>
+        <label><!-- Connection Behavior Override --></label>
+        <name>copado__Connection_Behavior_Override__c</name>
+        <relationshipLabel><!-- Pipeline Connections --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Connection Behavior --></label>
+        <name>copado__Connection_Behavior__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pipeline --></label>
+        <name>copado__Deployment_Flow__c</name>
+        <relationshipLabel><!-- Pipeline Connections --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Value updated automatically by Copado. This is defined in the Deployment Flow Step of the Destination Environment. --></help>
+        <label><!-- Destination Branch --></label>
+        <name>copado__Destination_Branch__c</name>
+    </fields>
+    <fields>
+        <label><!-- Destination Environment --></label>
+        <name>copado__Destination_Environment__c</name>
+        <relationshipLabel><!-- Pipeline Connections (Destination Environment) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Enable as Scratch Org Target --></label>
+        <name>copado__Enable_as_Scratch_Org_Destination__c</name>
+        <picklistValues>
+            <masterLabel>DX Patch Target</masterLabel>
+            <translation><!-- DX Patch Target --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DX Target</masterLabel>
+            <translation><!-- DX Target --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Default DX Target</masterLabel>
+            <translation><!-- Default DX Target --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Last date and time when the source and target branch were in Sync (no commits ahead or behind). --></help>
+        <label><!-- Last Merge Base --></label>
+        <name>copado__Last_Merge_Base__c</name>
+    </fields>
+    <fields>
+        <help><!-- Last date and time when the CBM Sync button was clicked to merge and deploy changes to the destination environment. --></help>
+        <label><!-- Last Merge CBM Sync --></label>
+        <name>copado__Last_Merge_CBM_Sync__c</name>
+    </fields>
+    <fields>
+        <help><!-- Last date and time when the CBM Sync button was clicked to merge and deploy changes to the source environment. --></help>
+        <label><!-- Last Pull CBM Sync --></label>
+        <name>copado__Last_Pull_CBM_Sync__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of conflicted files auto resolved by Copado when merging the source branch into the destination branch. --></help>
+        <label><!-- Merge Auto Resolved Files --></label>
+        <name>copado__Merge_Auto_Resolved_Files__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next Stage --></label>
+        <name>copado__Next_Stage__c</name>
+    </fields>
+    <fields>
+        <help><!-- List of conflicted files auto resolved by Copado when merging the destination branch into the source branch. --></help>
+        <label><!-- Pull Auto Resolved Files --></label>
+        <name>copado__Pull_Auto_Resolved_Files__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Environment --></label>
+        <name>copado__Source_Environment__c</name>
+        <relationshipLabel><!-- Pipeline Connections (Source Environment) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Stage Connection where the source environment belongs to. --></help>
+        <label><!-- Stage Connection --></label>
+        <lookupFilter>
+            <errorMessage><!-- You can only select Stage Connections that belong to the same Pipeline. --></errorMessage>
+        </lookupFilter>
+        <name>copado__Stage_Connection__c</name>
+        <relationshipLabel><!-- Stage Connections --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Stage to which the source environment belongs. --></help>
+        <label><!-- Stage --></label>
+        <name>copado__Stage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sync Merge State --></label>
+        <name>copado__Sync_Merge_State__c</name>
+        <picklistValues>
+            <masterLabel>In sync</masterLabel>
+            <translation><!-- In sync --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Needs recalculating</masterLabel>
+            <translation><!-- Needs recalculating --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalculating</masterLabel>
+            <translation><!-- Recalculating --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Syncing</masterLabel>
+            <translation><!-- Syncing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validated</masterLabel>
+            <translation><!-- Validated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validation errors</masterLabel>
+            <translation><!-- Validation errors --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sync Pull State --></label>
+        <name>copado__Sync_Pull_State__c</name>
+        <picklistValues>
+            <masterLabel>In sync</masterLabel>
+            <translation><!-- In sync --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Needs recalculating</masterLabel>
+            <translation><!-- Needs recalculating --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalculating</masterLabel>
+            <translation><!-- Recalculating --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Syncing</masterLabel>
+            <translation><!-- Syncing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validated</masterLabel>
+            <translation><!-- Validated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validation errors</masterLabel>
+            <translation><!-- Validation errors --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Recommended Test Level: &quot;Run Local Tests&quot; --></help>
+        <label><!-- Test Level --></label>
+        <name>copado__Test_Level__c</name>
+        <picklistValues>
+            <masterLabel>No Test Run</masterLabel>
+            <translation><!-- No Test Run --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Run All Tests In Org</masterLabel>
+            <translation><!-- Run All Tests In Org --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Run Local Tests</masterLabel>
+            <translation><!-- Run Local Tests --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Run Specified Tests</masterLabel>
+            <translation><!-- Run Specified Tests --></translation>
+        </picklistValues>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Platform for pipeline and Environment must match --></errorMessage>
+        <name>copado__EnvironmentAndPipelinePlatformMustBeSame</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Select_Branch --></label>
+        <name>copado__Select_Branch</name>
+    </webLinks>
+</CustomObjectTranslation>

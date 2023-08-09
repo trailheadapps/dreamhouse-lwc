@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Related List --></label>
+        <name>copado__RelatedList</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Environment --></label>
+        <name>copado__Environment__c</name>
+        <relationshipLabel><!-- Environment Variables --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Use this field to define a Scope for this Environment Variable. For more information, please check our documentation about Environment Variables Scope. --></help>
+        <label><!-- Scope --></label>
+        <name>copado__Scope__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>copado__Value__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Value is required --></errorMessage>
+        <name>copado__Value_is_required</name>
+    </validationRules>
+</CustomObjectTranslation>

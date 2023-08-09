@@ -1,0 +1,319 @@
+<apex:page id="thePage" controller="copado.GitCommitLookupController" extensions="copado.Settings" sidebar="false" showHeader="false" tabStyle="copado__Git_Org_Commit__c" lightningStylesheets="true">
+    <head>
+        <c:GAnalytics />
+        <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" addUIcss="true" addWizardcss="true"/>
+        <c:IncludeConnectionJsComponent />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <c:WizardUtils />
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+        <style type="text/css">
+        .jqx-grid-cell{
+            cursor: pointer;
+        }
+        </style>
+    </head>
+
+    <body>
+    <apex:form id="theForm" styleClass="copado-lightning-container" style="margin-top:16px;">
+        <apex:pageMessages id="theMessages" />
+
+        <apex:pageBlock id="pb" mode="detail" title="Search by any of the following" >
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+
+                    <apex:outputPanel >
+                        <table>
+                            <tr>
+                                <td>
+                                    <apex:outputLabel value="Repository"/>
+                                </td>
+                                <td>
+                                    <apex:selectList value="{!selectedRepository}" size="1" id="repoSelection" >
+                                        <apex:selectOptions value="{!repositories}" />
+                                    </apex:selectList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><apex:outputLabel value="CommitId: " for="commitSearch"/></td>
+                                <td><apex:inputText id="commitSearch"/></td>
+                            </tr>
+                            <tr>
+                                <td><apex:outputLabel value="BranchName: " for="branchSearch"/></td>
+                                <td><apex:inputText id="branchSearch"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="float:left;"><input type="button" onclick="copadoApp.search(); return false;" value="{!$Label.Search}" class="btn" /></td>
+                            </tr>
+                        </table>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+
+        <apex:pageBlock id="pbResults">
+            <div id="tableLoader" style="text-align:center;"><img src="/img/loading.gif"/>&nbsp;&nbsp;{!$Label.Loading}</div>
+            <div id="jqxgrid"> </div>
+        </apex:pageBlock>
+    </apex:form>
+
+    <script type="text/javascript">
+            copadoApp = {
+                ns: '',
+                Idindex: [],
+                data: [],
+                mode: '',
+                formTag: '',
+                textBox: '',
+
+                getUrlParameter: function(sParam){
+                    var sPageURL = window.location.search.substring(1);
+                    var sURLVariables = sPageURL.split('&');
+                    console.info('sURLVariables', sURLVariables);
+                    for (var i=0; i<sURLVariables.length; i++){
+                        var sParameterName = sURLVariables[i].split('=');
+                        if (sParameterName[0] == sParam){
+                            return sParameterName[1];
+                        }
+                    }
+                    return '';
+                },
+                init: function(){
+                    var me = copadoApp;
+                    me.mode = me.getUrlParameter('mode');
+                    me.formTag = me.getUrlParameter('frm');
+                    me.textBox = me.getUrlParameter('txt');
+                    console.info('Mode set to ', me.mode);
+                    me.doSearch();
+                },
+                escape: function(s){
+                    var tagsToReplace = {
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;'
+                    };
+                    return s.replace(/[&<>]/g, function(tag) {
+                        return tagsToReplace[tag] || tag;
+                    });
+                },
+                objectifyRecord: function(r, t){
+                    var me = copadoApp;
+                    var record = {},
+                    isGitCommit = t == 'GitCommit';
+                    console.log(r)
+                    /*record.cc = (t=='GitCommit')?
+                        r[me.ns+'Git_Repository__r'].Name+'|'+r[me.ns+'Branch__c']+'|'+r[me.ns+'Commit_Id__c']+'|'+r[me.ns+'Git_Repository__c']+'|'+r.Name+'|'+r[me.ns+'Git_Repository__c']:
+                        r[me.ns+'Git_Backup__r'][me.ns+'Git_Repository__r'].Name+'|'+r[me.ns+'Git_Backup__r'][me.ns+'Branch__c']+'|'+r[me.ns+'Commit_Id__c']+'|'+r[me.ns+'Git_Backup__r'][me.ns+'Git_Repository__c']+'|'+r.Name;*/
+                    record.n = r.Name;
+                    record.r = isGitCommit? r[me.ns+'Git_Repository__r'].Name :r[me.ns+'Git_Backup__r'][me.ns+'Git_Repository__r'].Name;
+                    record.b = isGitCommit? r[me.ns+'Branch__c'] : r[me.ns+'Git_Backup__r'][me.ns+'Branch__c'];
+                    record.d = r[me.ns+'Commit_Date__c'];
+                    record.m = me.escape(r[me.ns+'Commit_Message__c']);
+                    record.i = r[me.ns+'Commit_Id__c'];
+                    record.rid = isGitCommit? r[me.ns+'Git_Repository__c'] : r[me.ns+'Git_Backup__r'][me.ns+'Git_Repository__c'];
+                    record.cid = r.Id;
+                    console.info('record',record);
+                    return record;
+                },
+                queryGitCommit: function(repoId,commitId,branchName){
+                    var me = copadoApp;
+                    var records = [];
+                    var baseQuery = 'select Id, Name, '+me.ns+'Git_Repository__c, '+me.ns+'Git_Repository__r.Name, '+me.ns+'Commit_Date__c, '+me.ns+'Commit_Id__c, '+me.ns+'Commit_Message__c, '+me.ns+'Branch__c, '+me.ns+'Changes__c from '+me.ns+'Git_Commit__c where '+me.ns+'Commit_Id__c!=\'\' and '+me.ns+'Commit_Date__c!=null ';
+                    if((repoId && repoId.length>15) || commitId || branchName){
+                        if(repoId && repoId.length>15) baseQuery+= ' and '+me.ns +'Git_Repository__c=\''+repoId+'\'';
+                        if(commitId) baseQuery+= ' and '+me.ns +'Commit_Id__c=\''+commitId+'\'';
+                        if(branchName) baseQuery+= ' and '+me.ns +'Branch__c=\''+branchName+'\'';
+                        baseQuery+= ' order by '+me.ns+'Commit_Date__c DESC limit 500';
+                        console.debug('queryGitCommit:::baseQuery',baseQuery);
+                        records = sforce.connection.query(baseQuery);
+                    }
+                    else{
+                        baseQuery += ' order by '+me.ns+'Commit_Date__c DESC limit 20';
+                        records = sforce.connection.query(baseQuery);
+                    }
+                    console.debug('Records found: ',records);
+                    return records;
+                },
+                queryGitOrgCommit: function(repoId,commitId,branchName){
+                    var me = copadoApp;
+                    var records = [];
+                    var baseQuery = 'SELECT Id, Name, '+me.ns+'Commit_Id__c, '+me.ns+'Changes__c, '+me.ns+'Commit_Message__c, '+me.ns+'Git_Backup__r.'+me.ns+'Git_Repository__c, '+me.ns+'Git_Backup__r.'+me.ns+'Git_Repository__r.Name, '+me.ns+'Git_Backup__r.'+me.ns+'Branch__c, '+me.ns+'Commit_Date__c FROM '+me.ns+'Git_Org_Commit__c where '+me.ns+'Commit_Id__c!=\'\' and '+me.ns+'Commit_Date__c!=null ';
+                    if((repoId && repoId.length>15) || commitId || branchName){
+                        if(repoId && repoId.length>15) baseQuery+= ' and '+me.ns+'Git_Backup__r.'+me.ns+'Git_Repository__c=\''+repoId+'\'';
+                        if(commitId) baseQuery+= ' and '+me.ns +'Commit_Id__c=\''+commitId+'\'';
+                        if(branchName) baseQuery+= ' and '+me.ns+'Git_Backup__r.'+me.ns+'Branch__c=\''+branchName+'\'';
+                        baseQuery+= ' order by '+me.ns+'Commit_Date__c DESC limit 500';
+                        console.debug('queryGitOrgCommit:::baseQuery',baseQuery);
+                        records = sforce.connection.query(baseQuery);
+                    }
+                    else{
+                        baseQuery += ' order by '+me.ns+'Commit_Date__c DESC limit 20';
+                        records = sforce.connection.query(baseQuery);
+                    }
+                    console.debug('Git Org Commit Records found: ',records);
+                    return records;
+                },
+                valueInArray: function(arr, val) {
+                    return $copado.inArray(val, arr)>-1;
+                },
+                doSearch: function(searchParam,commitParam,branchParam){
+                    var me = copadoApp;
+                    var result = me.queryGitOrgCommit(searchParam,commitParam,branchParam);
+                    var records = result.getArray("records") || [];
+                    me.Idindex = [];
+                    me.data = [];
+                    //console.info('Records 1', records);
+                    if(records && records.length>0){
+                        for(var i=0; i<records.length; i++){
+                            var r = me.objectifyRecord(records[i],'GitOrgCommit');
+                            me.Idindex.push(records[i][me.ns+'Commit_Id__c']);
+                            me.data.push(r);
+                        }
+                    }
+                    console.info('Mode is ', me.mode, me.mode!='GitOrgCommit');
+                    if(me.mode!='GitOrgCommit'){
+                        result = me.queryGitCommit(searchParam,commitParam,branchParam);
+                        records = result.getArray("records") || [];
+                        //console.info('Records 2', records);
+                        if(records && records.length>0){
+                            for(var i=0; i<records.length; i++){
+                                if(me.valueInArray(me.Idindex, records[i][me.ns+'Commit_Id__c'])==false){
+                                    var r = me.objectifyRecord(records[i],'GitCommit');
+                                    me.Idindex.push(records[i][me.ns+'Commit_Id__c']);
+                                    me.data.push(r);
+                                }
+                            }
+                        }
+                    }
+                    console.info('About to initialise grid with data', me.data);
+                    gcl.initGrid();
+                    $copado('#tableLoader').hide();
+                    $copado('#jqxgrid').show();
+                },
+                search: function(){
+                    var me = copadoApp;
+                    var v = $copado("[id$='repoSelection']");
+                    var c = $copado("[id$='commitSearch']");
+                    var b = $copado("[id$='branchSearch']");
+                    console.info('Search by repo Id: ', v.val());
+                    console.info('Search by commit Id: ', c.val());
+                    console.info('Search by branch Id: ', b.val());
+                    $copado('#tableLoader').show();
+                    $copado('#jqxgrid').hide();
+                    me.doSearch(v.val(),c.val(),b.val());
+                }
+            };
+
+            var gcl = gcl || {};
+            gcl.initGrid = function(){
+                try{
+                    var theme = 'base';
+
+                    var source = {
+                        localdata: copadoApp.data,
+                        datafields: [
+                            { name: 'cc', type: 'string' }, //concat string
+                            { name: 'r', type: 'string' }, //repository name
+                            { name: 'b', type: 'string' }, //branch
+                            { name: 'd', type: 'date' }, //commit date
+                            { name: 'm', type: 'string' }, //commit Message
+                            { name: 'n', type: 'string' }, //commit Name
+                            { name: 'rid', type: 'string' }, //repo id
+                            { name: 'cid', type: 'string' }, //commit sf id
+                            { name: 'i', type: 'string' } // commit id
+                        ],
+                        datatype: "array"
+                    };
+
+                    var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+                        /*var v = value.split('|');
+                        var obj = {repository:v[5], branch:v[1], commitId:v[2], repositoryId:v[3]};
+                        console.log( 'javascript:top.window.opener.lookupPick2("'+copadoApp.formTag+'", "'+copadoApp.textBox+'_lkid", "'+copadoApp.textBox+'", "'+v[3]+'", "'+v[4]+'", false);');
+                        */
+
+                        return defaulthtml;
+
+                    }
+
+                    dataAdapter = new $copado.jqx.dataAdapter(source);
+                    $grid = $copado('<div>');
+
+                    $copado("#jqxgrid").html($grid);
+                    $grid.jqxGrid({
+                        width: '100%',
+                        source: dataAdapter,
+                        showfilterrow: true,
+                        filterable: true,
+                        theme: theme,
+                        editable: false,
+                        selectionmode: 'singlerow',
+                        enablebrowserselection: true,
+                        pageable: true,
+                        pagesizeoptions: ['10', '20', '50'],
+                        pagesize: 50,
+                        sortable: true,
+                        columnsresize: true,
+                        localization: localizationobj,
+                        columns: [
+                          {text: copadoLabels.name, columntype:'textbox', filtertype: 'input', editable:false, datafield: 'n', width: '10%' },
+                          {text: 'Repository',  columntype:'textbox', filtertype:'input', editable:false, datafield: 'r', width: '10%' },
+                          {text: 'Branch',  columntype:'textbox', filtertype: 'input', editable:false, datafield: 'b', width: '10%'},
+                          {text: 'Commit Date', cellsformat: 'yyyy-MM-dd', filtertype: 'range', editable:false, datafield: 'd', width: '10%'},
+                          {text: 'Commit Id', columntype:'textbox', filtertype: 'input',  editable:false, datafield: 'i', width: '30%'},
+                          {text: 'Commit Message', columntype:'textbox', filtertype: 'input', editable:false, datafield: 'm', width: '30%'}
+
+                        ]
+                    });
+
+                    //bind row selection action
+                    $grid.bind('rowselect', function (event) {
+
+                        //this retrieve the complete row obj
+                        var row = event.args.row;
+
+
+                        //depending of lookup mode, callback
+                        if(copadoApp.mode == 'GitOrgCommit'){
+                            top.window.opener.lookupPick2(copadoApp.formTag,
+                                decodeURIComponent(copadoApp.textBox)+'_lkid',
+                                decodeURIComponent(copadoApp.textBox),
+                                row.cid,  //commit SFDC ID
+                                row.n, // Commit Name
+                                false
+                            );
+                    return;
+                        }else{
+                            var obj = {
+                                repository: row.r,
+                                branch: row.b,
+                                commitId: row.i,
+                                repositoryId: row.rid,
+                                name:row.n
+                            };
+                            top.window.opener.copadoGitMetadataStep.lookupCB(obj);
+                        }
+
+                        setTimeout(window.close,33);
+                    });
+
+                }
+                catch(e){
+                    console.error(e);
+                }
+            }
+        </script>
+
+    <script>
+            $copado(document).ready(function() {
+                copadoApp.ns = '{!JSENCODE(namespace)}';
+                copadoApp.init();
+            });
+        </script>
+    <script>
+            ga('send', 'pageview', {
+              'page': '/GitCommitLookup',
+              'title': 'Git Commit Lookup'
+            });
+        </script>
+    </body>
+</apex:page>

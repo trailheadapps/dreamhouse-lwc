@@ -1,0 +1,14 @@
+<!--
+ - Created by dineshdk on 14/08/2018.
+ - Last Modified By kunal kaushik 24/02/2022.
+ -->
+<apex:page standardController="copado__OrgDiff__c" readOnly="true" extensions="copado.GenericMDAPIDiffCSV"  contentType="text/csv#ViewOrgDiffCSV.csv" id="ViewOrgDiffCSV"><apex:outputText rendered="{!typeOrgDiffflag}"> <apex:outputText rendered="{!jsonValflag}">{!$Label.copado__SnapshotDiff_Status},{!$Label.copado__SnapshotDiff_Name},{!$Label.copado__OrgDiff_Type},{!$Label.copado__OrgDiff_Last_ModifiedBy},{!$Label.copado__OrgDiff_Last_ModifiedDate},{!$Label.copado__OrgDiff_CreatedById},{!$Label.copado__OrgDiff_Created_Date}</apex:outputText>
+<apex:repeat value="{!jwOrgDiffsList}" var="subList">
+    <apex:repeat value="{!subList}" var="item">
+    {!item.s},{!item.n},{!item.t},{!item.b},{!item.d},{!item.cb},{!item.cd}
+    </apex:repeat>
+</apex:repeat>
+<apex:outputText rendered="{!!jsonValflag}">
+{!$Label.copado__SnapshotDiff_Message}
+</apex:outputText></apex:outputText>
+</apex:page>

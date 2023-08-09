@@ -1,0 +1,369 @@
+<apex:page standardController="copado__Scheduled_Job__c" extensions="copado.ScheduledJobExtension" id="thePage" lightningStylesheets="true">    
+    <head>
+        <TITLE>Scheduled Job {!copado__Scheduled_Job__c.Name} | Copado</TITLE>
+        <c:IncludeStaticsResourceComponent addJquery="true" addUIjs="true"/>
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+        <script type="text/javascript" src="{!URLFOR($Resource.cronExpression) }"></script>
+    	<style> 
+                #jqxTabs .apexp .bPageBlock.apexDefaultPageBlock .pbBody {margin:0;}
+                .jqx-tabs-content {font-family: Arial,Helvetica,sans-serif; }
+        </style>
+
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+        <c:GAnalytics />
+    </head>
+    
+    <body class="copado-lightning-container">
+        <apex:sectionHeader id="theHeader" title="{!$ObjectType.copado__Scheduled_Job__c.Label}" subtitle="{!copado__Scheduled_Job__c.Name}"/>
+    	<apex:form id="theForm">
+            <apex:pageMessages id="theMessages"/>
+        	<apex:pageBlock id="pb_main" mode="edit" rendered="{!AND(showOptions,!showError)}">
+            <apex:pageBlockButtons id="pbb_main" title="{!$Label.copado__DETAILS}">
+                <apex:commandButton action="{!save_job}" value="{!$Label.copado__Save}" id="btnSave"/>
+                <apex:commandButton action="{!cancel}" value="{!$Label.copado__Cancel}" id="btnCancel" immediate="true"/>
+            </apex:pageBlockButtons>
+    		<apex:pageBlockSection title="{!$Label.copado__BASIC_INFORMATION}" id="pbs_info" columns="1">
+    			<div id="jqxTabs">
+                    <ul>
+                        <li style="margin-left: 30px;" onclick="cronExpression.selectedTab='hourly';">{!$Label.HOURLY}</li>
+                        <li onclick="cronExpression.selectedTab='daily';">{!$Label.DAILY}</li>
+                        <li onclick="cronExpression.selectedTab='weekly';">{!$Label.WEEKLY}</li>
+                    </ul>
+                    <div id="pnlHourly" style="overflow:hidden;">
+                        <input name="radHourly" id="hourlyRadio1" type="radio" onclick="cronExpression.hourly.RADIOGROUP='every';" />
+                        {!$Label.EVERY} <input type="text" id="hourlyEvery" value="" /> {!$Label.HOUR_S}<br />
+
+                        <input name="radHourly" id="hourlyRadio2" type="radio" onclick="cronExpression.hourly.RADIOGROUP='starts';" />
+                        {!$Label.STARTS_AT}
+                        <select id="hourlyHourPart">
+                            <option value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option selected="selected" value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                        </select>
+                        <select id="hourlyMinPart">
+                            <option selected="selected" value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                            <option value="49">49</option>
+                            <option value="50">50</option>
+                            <option value="51">51</option>
+                            <option value="52">52</option>
+                            <option value="53">53</option>
+                            <option value="54">54</option>
+                            <option value="55">55</option>
+                            <option value="56">56</option>
+                            <option value="57">57</option>
+                            <option value="58">58</option>
+                            <option value="59">59</option>
+                        </select>
+                    </div>
+                    <div id="pnlDaily" style="overflow:hidden;">
+                        <input name="radDaily" id="dailyRadio1" type="radio" onclick="cronExpression.daily.RADIOGROUP='every';" />
+                        {!$Label.EVERY} <input type="text" id="dailyEvery" value="" /> {!$Label.DAY_S}<br />
+
+                        <input name="radDaily" id="dailyRadio2" type="radio" onclick="cronExpression.daily.RADIOGROUP='weekdays';" />
+                        {!$Label.EVERY_WEEK_DAY}<br />
+                        <br />
+    					{!$Label.START_TIME}
+                        <select id="dailyHourPart">
+                            <option value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option selected="selected" value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                        </select>
+                        <select id="dailyMinPart">
+                            <option selected="selected" value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                            <option value="49">49</option>
+                            <option value="50">50</option>
+                            <option value="51">51</option>
+                            <option value="52">52</option>
+                            <option value="53">53</option>
+                            <option value="54">54</option>
+                            <option value="55">55</option>
+                            <option value="56">56</option>
+                            <option value="57">57</option>
+                            <option value="58">58</option>
+                            <option value="59">59</option>
+                        </select>
+                    </div>
+                    <div id="pnlWeekly" style="overflow:hidden;">
+                        <div id="divWeekdays">
+    	                    <ul>
+    	                    	<li><input type="checkbox" class="js-chk" name="mon" value="MON" />{!$Label.MONDAY}</li>
+    							<li><input type="checkbox" class="js-chk" name="tue" value="TUE" />{!$Label.TUESDAY}</li>
+    							<li><input type="checkbox" class="js-chk" name="wed" value="WED" />{!$Label.WEDNESDAY}</li>
+    							<li><input type="checkbox" class="js-chk" name="thu" value="THU" />{!$Label.THURSDAY}</li>
+    							<li><input type="checkbox" class="js-chk" name="fri" value="FRI" />{!$Label.FRIDAY}</li>
+    							<li><input type="checkbox" class="js-chk" name="sat" value="SAT" />{!$Label.SATURDAY}</li>
+    							<li><input type="checkbox" class="js-chk" name="sun" value="SUN" />{!$Label.SUNDAY}</li>
+                            </ul>
+                        </div>
+    					{!$Label.START_TIME}
+                        <select id="weeklyHourPart">
+                            <option value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option selected="selected" value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                        </select>
+                        <select id="weeklyMinPart">
+                            <option selected="selected" value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                            <option value="49">49</option>
+                            <option value="50">50</option>
+                            <option value="51">51</option>
+                            <option value="52">52</option>
+                            <option value="53">53</option>
+                            <option value="54">54</option>
+                            <option value="55">55</option>
+                            <option value="56">56</option>
+                            <option value="57">57</option>
+                            <option value="58">58</option>
+                            <option value="59">59</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="cronEx" style="display:none;">
+                    <br/>
+                    	<apex:pageBlockSectionItem >
+                            <apex:outputPanel ></apex:outputPanel>
+                            <button id="btnCreateCron" class="{!IF($User.UIThemeDisplayed=='Theme3','','copado-lightning')}" onclick="cronExpression.calculate(); return false;">
+                                {!$Label.CREATE_CRON_EXPRESSION}
+                            </button>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:inputField required="true" value="{!job.copado__Cron_Expression__c}" id="if_cronExpression" />
+                    
+                    <apex:pageBlockSectionItem >
+                    	<apex:outputPanel ></apex:outputPanel>
+                        <apex:outputText >{!$Label.copado__USE_CRONMAKER}</apex:outputText>
+                    </apex:pageBlockSectionItem>
+                </div>
+            </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+        <script type="text/javascript">
+            $copado('#jqxTabs').jqxTabs({ width:'100%', height:200, position:'top'});
+        </script>
+    	<style>
+            #divWeekdays ul {
+            	padding-left:0px;
+            }
+    		#divWeekdays ul li{
+    			display: inline;
+    			list-style-type: none;
+    		}
+            #pnlHourly, #pnlDaily, #pnlWeekly{
+            	padding:10px;
+            	line-height:2;
+            }
+    	</style>
+        <script>
+            ga('send', 'pageview', {
+                'page': '/ScheduledJobSchedule',
+                'title': 'Schedule a Scheduled Job'
+            });
+        </script>
+    </body>
+</apex:page>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Group of permission set to provide access to data deploy functionalities.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Data Deploy Admin PSG</label>
+    <permissionSets>copado__Data_Deploy_Admin</permissionSets>
+    <permissionSets>copado__Portfolio_Management_Read_Only</permissionSets>
+    <permissionSets>copado__Project_Release_Sprint_Management_Read_Only</permissionSets>
+    <permissionSets>copado__User_Story_User_Story_Dependency_Read_Only</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

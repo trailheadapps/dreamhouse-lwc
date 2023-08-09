@@ -1,0 +1,5 @@
+<apex:page standardController="copado__Selenium_Test_Group__c" extensions="copado.SeleniumTestGroupExtension" action="{!runGroup}">
+    <apex:pageMessages >
+    </apex:pageMessages>
+    <button style="margin-left: 20px;" onclick="location.href = '/{!grp.Id}'">{!$Label.Goback2SeleniumGroup}</button>
+</apex:page>

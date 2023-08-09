@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Requirements and thresholds that must be met to pass this quality gate successfully --></help>
+        <label><!-- Acceptance Criteria --></label>
+        <name>copado__AcceptanceCriteria__c</name>
+    </fields>
+    <fields>
+        <label><!-- Copado Actions --></label>
+        <name>copado__Actions__c</name>
+    </fields>
+    <fields>
+        <help><!-- Environment where this Quality Gate Condition will be evaluated. If no Pipeline is defined, this Condition will apply to all Pipelines where this Environment is connected to. --></help>
+        <label><!-- Environment --></label>
+        <name>copado__Environment__c</name>
+        <relationshipLabel><!-- Quality Gate Rule Conditions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Execution Sequence --></label>
+        <name>copado__ExecutionSequence__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extension Configuration --></label>
+        <name>copado__Extension_Configuration__c</name>
+        <relationshipLabel><!-- Quality Gate Rule Conditions --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Define a filter criteria to evaluate the condition only when the specified files are present in the configured Copado Action --></help>
+        <label><!-- Filter Criteria --></label>
+        <name>copado__Filter_Criteria__c</name>
+    </fields>
+    <fields>
+        <help><!-- Pipeline where this Quality Gate Condition will be evaluated. --></help>
+        <label><!-- Pipeline --></label>
+        <name>copado__Pipeline__c</name>
+        <relationshipLabel><!-- Quality Gate Rule Conditions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Platform --></label>
+        <name>copado__Platform__c</name>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salesforce</masterLabel>
+            <translation><!-- Salesforce --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Quality Gate Rule --></label>
+        <name>copado__Quality_Gate_Rule__c</name>
+        <relationshipLabel><!-- Quality Gate Rule Conditions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tool --></label>
+        <name>copado__Tool__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- The selected platform does not match the chosen pipeline or environment platform value. --></errorMessage>
+        <name>copado__ConsistentPlatform</name>
+    </validationRules>
+</CustomObjectTranslation>

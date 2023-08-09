@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Base Object --></label>
+        <name>copado__Base_Object__c</name>
+    </fields>
+    <fields>
+        <label><!-- Old Value --></label>
+        <name>copado__Old_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record ID --></label>
+        <name>copado__Record_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subscriber Code --></label>
+        <name>copado__Subscriber_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Triggering Action --></label>
+        <name>copado__Triggering_Action__c</name>
+    </fields>
+</CustomObjectTranslation>

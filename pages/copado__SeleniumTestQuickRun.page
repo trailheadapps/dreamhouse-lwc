@@ -1,0 +1,75 @@
+<apex:page controller="copado.SeleniumTestQuickRun" tabStyle="copado__Selenium_Test_Run__c" extensions="copado.LicenseHelper" id="thePage" lightningStylesheets="true">
+    <head>
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <c:IncludeStaticsResourceComponent addJQuery="true" />
+    </head>
+
+    <body>
+    <apex:sectionHeader id="theHeader" title="Copado Selenium Testing" subtitle="{!IF(mode=='create', $Label.copado__CREATE_SELENIUM_SETTINGS, suite.Name)}" />
+
+    <!-- check that the feature is enabled, and the user has a license assigned -->
+    <apex:pageMessage severity="WARNING" strength="2" summary="{!possibleCSTErrorMsg}" rendered="{!!ISNULL(possibleCSTErrorMsg)}" />
+
+    <c:GAnalytics />
+
+    <script>
+        $copado(document).ready(function() {
+            lockScreen();
+            quickRunJob();
+        });
+
+    </script>
+    <apex:form id="theForm" rendered="{!$Setup.copado__Copado_License__c.copado__Enable_CST__c}" styleClass="copado-lightning-container">
+        <c:ScreenLocker msg="Loading..."/>
+        <apex:actionFunction name="quickRunJob" action="{!quickRun}" reRender="pb" onComplete="unlockScreen();"/>
+        <apex:pageBlock id="pb" mode="edit">
+            <apex:pageBlockButtons id="pbs">
+                <apex:commandButton id="btnContinue" action="{!quickRunConfirmed}" value="Continue" rendered="{!mode=='confirm'}" />
+                <apex:commandButton id="btnSave" action="{!save}" value="{!$Label.copado__Save_And_Run}" rendered="{!mode=='create'}" />
+                <apex:commandButton action="{!cancel}" value="{!$Label.site.cancel}" immediate="true" />
+            </apex:pageBlockButtons>
+            <apex:pageMessages />
+            <apex:outputPanel rendered="{!mode=='create'}">
+                <apex:pageMessage summary="{!$Label.copado__CREATE_SELENIUM_SETTINGS_INFO}" severity="INFO" strength="2" />
+                <apex:pageBlockSection title="{!$Label.copado__CreateQuickTestSettings}" columns="1">
+                    <script>
+                        if(confirm("{!$Label.copado__Warning2CreateSeleniumSetting}")){
+                            location.href = '{!JSENCODE(hostUrl)}/apex/editSeleniumSettingOverride'+location.search+'&fromQuickRun={!JSENCODE($User.Alias)}';
+                        }else{
+                            history.back();
+                        }
+                    </script>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!mode!='create'}">
+                <apex:pageBlockSection title="Test Run" columns="1">
+                    <apex:outputField value="{!run.Name}" />
+                    <apex:outputField value="{!run.copado__Last_Status__c}" />
+                    <apex:outputField value="{!run.Org_Credential__r.Name}" />
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection title="Test Suite" columns="1">
+                    <apex:outputField value="{!suite.Name}" />
+
+                    <apex:outputText value="{!count_cases} test cases in this suite" />
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection title="Selenium Settings" columns="1">
+                    <apex:outputField value="{!settings.Name}" />
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+
+        </apex:pageBlock>
+    </apex:form>
+
+    <script>
+            ga('send', 'pageview', {
+                'page': '/SeleniumTestQuickRun',
+                'title': 'Selenium Test Quick Run'
+            });
+
+
+    </script>
+    </body>
+</apex:page>

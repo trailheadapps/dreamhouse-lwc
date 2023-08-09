@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UserEngagementSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <canGovCloudUseAdoptionApps>false</canGovCloudUseAdoptionApps>
+    <doesScheduledSwitcherRunDaily>false</doesScheduledSwitcherRunDaily>
+    <enableCustomHelpGlobalSection>false</enableCustomHelpGlobalSection>
+    <enableHelpMenuShowFeedback>true</enableHelpMenuShowFeedback>
+    <enableHelpMenuShowHelp>true</enableHelpMenuShowHelp>
+    <enableHelpMenuShowNewUser>true</enableHelpMenuShowNewUser>
+    <enableHelpMenuShowSearch>true</enableHelpMenuShowSearch>
+    <enableHelpMenuShowSfdcContent>true</enableHelpMenuShowSfdcContent>
+    <enableHelpMenuShowShortcut>true</enableHelpMenuShowShortcut>
+    <enableHelpMenuShowSupport>true</enableHelpMenuShowSupport>
+    <enableHelpMenuShowTrailhead>true</enableHelpMenuShowTrailhead>
+    <enableIBILOptOutDashboards>false</enableIBILOptOutDashboards>
+    <enableIBILOptOutEvents>false</enableIBILOptOutEvents>
+    <enableIBILOptOutReports>false</enableIBILOptOutReports>
+    <enableIBILOptOutTasks>false</enableIBILOptOutTasks>
+    <enableLexToClassicFeedbackEnable>false</enableLexToClassicFeedbackEnable>
+    <enableOrchestrationInSandbox>false</enableOrchestrationInSandbox>
+    <enableOrgUserAssistEnabled>true</enableOrgUserAssistEnabled>
+    <enableScheduledSwitcher>true</enableScheduledSwitcher>
+    <enableSfdcProductFeedbackSurvey>true</enableSfdcProductFeedbackSurvey>
+    <enableShowSalesforceUserAssist>true</enableShowSalesforceUserAssist>
+    <isAutoTransitionDelayed>false</isAutoTransitionDelayed>
+    <isCrucNotificationDisabled>false</isCrucNotificationDisabled>
+    <isCustomProfileAutoTransitionDelayed>false</isCustomProfileAutoTransitionDelayed>
+    <isLEXWelcomeMatDisabled>false</isLEXWelcomeMatDisabled>
+    <isMeetTheAssistantDisabledInClassic>false</isMeetTheAssistantDisabledInClassic>
+    <isMeetTheAssistantDisabledInLightning>false</isMeetTheAssistantDisabledInLightning>
+    <isSmartNudgesDisabled>false</isSmartNudgesDisabled>
+    <optimizerAppEnabled>false</optimizerAppEnabled>
+</UserEngagementSettings>

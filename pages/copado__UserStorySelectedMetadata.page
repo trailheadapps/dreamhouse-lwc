@@ -1,0 +1,62 @@
+<apex:page id="thePage" standardController="copado__User_Story__c" extensions="copado.MetadataselectorExtension,copado.Settings" showHeader="false" sidebar="false" standardStyleSheets="true" lightningStylesheets="true"> 
+    <head>
+        <c:GAnalytics />
+        <c:WizardUtils />
+        <c:IncludeStaticsResourceComponent addJquery="true" addWizardcss="true"/>
+        <c:IncludeJqxResourceComponent addjqxAlljs="true" addjqxBasecss="true"/>
+
+        <apex:stylesheet value="{!URLFOR($Resource.copado__CopadoLightningCSS)}" />
+        <apex:includeScript value="{!URLFOR($Resource.utilsV2) }"/>
+        <apex:includeScript value="{!URLFOR($Resource.UserStorySelectedMetadata) }"/>
+        <script> 
+            var Copado_Licenses = {!CurrentUserLicenses};
+        </script>
+        <c:IncludeConnectionJsComponent />
+    </head>
+    
+    <apex:pageMessages id="theMessages" />
+    <apex:form ><c:ScreenLocker id="cmpScreenLocker" msg="{!$Label.copado__LOADING}" /></apex:form>
+        
+    <apex:form id="theForm" rendered="{!hasOrg}">      
+        <apex:pageBlock id="pb">
+            <apex:pageBlockButtons id="pbb" location="top">
+                <input id="btnLoadGitData" type="button" onclick="USselectedMetadata.getGitMetadata()" value="{!$Label.REFRESH_GIT_SELECTIONS}" class="btn" />
+                <input id="btnAddTestClasses" type="button" onclick="addtestclasses();" value="{!$Label.ADD_TEST_CLASSES}" class="btn" />
+            </apex:pageBlockButtons>
+            <div id="loadingDiv"><center><img src="/img/loading.gif" /> <i>{!$Label.copado__LOADING}<span id="retry-label"></span></i></center></div>  
+            <div id="jqxgrid_metadata"></div>
+        </apex:pageBlock>
+
+        <apex:actionFunction name="addtestclasses" action="{!openAddTestClass}"/>
+        <script>
+            window.onload = function() {
+                $copado('input[type=textarea]').blur();
+            };
+            var _config = {
+                data:{
+                    userStoryId: '{!JSENCODE(copado__User_Story__c.Id)}',
+                    hasError: {!hasError},
+                },
+                server: {
+                    USgitMetadataUrl: '{!JSENCODE(urlBase)}userStoryGitMetadata/__USERSTORYID__{!JSENCODE(urlParameters)}&repositoryId=__repoId__&branch=__branch__'
+                },
+                ns: '{!JSENCODE(namespace)}',
+                platform: '{!JSENCODE(copado__User_Story__c.Org_Credential__r.copado__Platform__c)}',
+            };
+            var copadoApp = {
+                init: function(){
+                    USselectedMetadata.init(_config);
+                }
+            }
+            copadoApp.init( );
+        </script>
+    </apex:form>
+    
+    <style> #jqxTabs .apexp .bPageBlock.apexDefaultPageBlock .pbBody {margin:0;}</style>
+    <script>
+        ga('send', 'pageview', {
+          'page': '/UserStorySelectedMetadata',
+          'title': 'User Story Selected Metadata'
+        });
+    </script>
+</apex:page>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Edit --></label>
+        <name>copado__Edit</name>
+    </fieldSets>
+    <fields>
+        <help><!-- SOQL Query to retrieve the columns. Id and Name fields will be used to generate the list. --></help>
+        <label><!-- Columns from SOQL --></label>
+        <name>copado__Columns_SOQL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Field to read/update for each Item. In &quot;object.field&quot; format --></help>
+        <label><!-- Field to read/update --></label>
+        <name>copado__Field_to_read_update__c</name>
+    </fields>
+    <fields>
+        <label><!-- JSON Settings --></label>
+        <name>copado__JSON_Settings__c</name>
+    </fields>
+    <fields>
+        <help><!-- SOQL Query to retrieve each Id, Title (second field in the query), and the &quot;Status&quot; field, as defined in Field to read/update. Every other field will be shown as the text content of the item. --></help>
+        <label><!-- SOQL Query --></label>
+        <name>copado__SOQL_Query__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sprint --></label>
+        <name>copado__Sprint__c</name>
+        <relationshipLabel><!-- Kanban Boards --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

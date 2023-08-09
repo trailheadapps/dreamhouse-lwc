@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Step --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Step --></value>
+    </caseValues>
+    <fieldSets>
+        <label><!-- Deployment Steps --></label>
+        <name>copado__Deployment_Steps</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- ViewDeploymentColumns --></label>
+        <name>copado__ViewDeploymentColumns</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Api Name --></label>
+        <name>copado__ApiName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attachment Id --></label>
+        <name>copado__Attachment_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Automation that originated this deployment step. --></help>
+        <label><!-- Automated Behaviour --></label>
+        <name>copado__Automated_Behaviour__c</name>
+        <relationshipLabel><!-- Execution History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Branch --></label>
+        <name>copado__Branch__c</name>
+    </fields>
+    <fields>
+        <help><!-- This only Apply for Metadata Steps. None of the other Steps types are affected by this checkbox. 
+WARNING: Credits consumption will apply as a regular deployment since resource-wise is exactly the same as a real deployment. --></help>
+        <label><!-- CheckOnly --></label>
+        <name>copado__CheckOnly__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commit Id --></label>
+        <name>copado__Commit_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Commit Name --></label>
+        <name>copado__Commit_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Completed --></label>
+        <name>copado__Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- # Completed --></label>
+        <name>copado__Count_Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Deployed --></label>
+        <name>copado__Deployed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deployment --></label>
+        <name>copado__Deployment__c</name>
+        <relationshipLabel><!-- Steps --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Git Repository --></label>
+        <name>copado__Git_Repository__c</name>
+        <relationshipLabel><!-- Steps --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- JsonResult --></label>
+        <name>copado__JsonResult__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manual Task Notified --></label>
+        <name>copado__Manual_Task_Notified__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notify Task Owner --></label>
+        <name>copado__Notify_Task_Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>copado__Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Credential Count --></label>
+        <name>copado__Org_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Id --></label>
+        <name>copado__ParentId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Read Only --></label>
+        <name>copado__Read_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- Run all tests --></label>
+        <name>copado__Run_all_tests__c</name>
+    </fields>
+    <fields>
+        <label><!-- SUM Deployed --></label>
+        <name>copado__SUM_Deployed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Flag --></label>
+        <name>copado__Status_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed Successfully</masterLabel>
+            <translation><!-- Completed Successfully --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed with Errors</masterLabel>
+            <translation><!-- Completed with Errors --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not started</masterLabel>
+            <translation><!-- Not started --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+        <picklistValues>
+            <masterLabel>Apex</masterLabel>
+            <translation><!-- Apex --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Automation</masterLabel>
+            <translation><!-- Automation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bulk Data</masterLabel>
+            <translation><!-- Bulk Data --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom Settings</masterLabel>
+            <translation><!-- Custom Settings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data</masterLabel>
+            <translation><!-- Data --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data Template</masterLabel>
+            <translation><!-- Data Template --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delete MetaData</masterLabel>
+            <translation><!-- Delete MetaData --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Full Permission Sets</masterLabel>
+            <translation><!-- Full Permission Sets --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Full Profiles</masterLabel>
+            <translation><!-- Full Profiles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Function</masterLabel>
+            <translation><!-- Function --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Git MetaData</masterLabel>
+            <translation><!-- Git MetaData --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MetaData</masterLabel>
+            <translation><!-- MetaData --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test</masterLabel>
+            <translation><!-- Test --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Translations</masterLabel>
+            <translation><!-- Translations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>URL Callout</masterLabel>
+            <translation><!-- URL Callout --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Users</masterLabel>
+            <translation><!-- Users --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- View Attachment --></label>
+        <name>copado__View_Attachment__c</name>
+    </fields>
+    <fields>
+        <label><!-- dataJson --></label>
+        <name>copado__dataJson__c</name>
+    </fields>
+    
+    <nameFieldLabel><!-- Step Name --></nameFieldLabel>
+</CustomObjectTranslation>

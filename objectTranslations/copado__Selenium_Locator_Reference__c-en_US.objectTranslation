@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- External ID --></label>
+        <name>copado__External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selenium Locator --></label>
+        <name>copado__Selenium_Locator__c</name>
+        <relationshipLabel><!-- Selenium Locator References --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Selenium Test Case Version --></label>
+        <name>copado__Selenium_Test_Case_Version__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selenium Test Case --></label>
+        <name>copado__Selenium_Test_Case__c</name>
+        <relationshipLabel><!-- Selenium Locator References --></relationshipLabel>
+    </fields>
+</CustomObjectTranslation>

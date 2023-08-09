@@ -1,0 +1,39 @@
+<apex:page id="SetupWizardStart" controller="copado.SetupWizardStartController" lightningStylesheets="true" sideBar="false" action="{!goToManager}" title="Wizard Setup Start">
+    <apex:slds />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__SetupDashboardJS)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.copado__SetupDashboard)}" />
+    <script>
+        $copado(document).ready(function(){
+            lockScreen();
+            checkForLastStep();
+        });
+    </script>
+    <body class="slds-scope">
+    <apex:form id="setupWizardForm">
+        <c:CopadoSpinner />
+        <apex:actionFunction name="checkForLastStep" action="{!checkLastStepForWizard}" onComplete="unlockScreen();" reRender="reRenderNeeded" />
+        <apex:outputPanel layout="block" id="wizardstart">
+            <apex:outputPanel layout="none" rendered="{!errorMessageJSON == null}">
+                <div class="start-container">
+                    <div class="slds-illustration slds-illustration_small">
+                        <div class="slds-text-longform">
+                            <div id="image-container">
+                                <img height="50" src="{!URLFOR($Resource.Statics,'img/icons/Copado-logo.png')}" />
+                            </div>
+                            <h3 class="slds-text-heading_medium">{!$Label.Pipeline_Wizard_Start_Message}</h3>
+                        </div>
+                        <c:SetupWizardSvg svgName="WizardStart" />
+                        <div class="slds-text-longform" style="margin-top:50px;">
+                            <apex:commandButton action="{!startWizard}" onClick="lockScreen();" styleClass="slds-button slds-button_brand" value="{!$Label.copado__START}" reRender="wizardstart"/>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!errorMessageJSON != null}">
+                <c:ErrorHandling messageJSON="{!errorMessageJSON}" />
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+    </body>
+</apex:page>

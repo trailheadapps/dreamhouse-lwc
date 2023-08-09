@@ -1,0 +1,20 @@
+<apex:page controller="copado.OverrideTemplateFiltersController" lightningStylesheets="true" sideBar="false" docType="html-5.0" title="Override Template Filters">
+    <apex:slds />
+    <apex:includeLightning />
+    <c:IncludeStaticsResourceComponent addJQuery="true" addUIjs="true" addUIcss="true" />
+    <apex:stylesheet value="{!$Resource.copado__DW_custom_css}" />
+    <c:GAnalytics />
+
+    <script>
+        ga('send', 'pageview', {
+            'page': '/OverrideTemplateFilters',
+            'title': 'Override Template Filters'
+        });
+    </script>
+
+    <apex:form >
+        <c:CopadoSpinner />
+
+        <c:OverrideFiltersComponent deploymentRecordId="{!deploymentId}" />
+    </apex:form>
+</apex:page>

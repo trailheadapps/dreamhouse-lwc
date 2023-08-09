@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- InputFields --></label>
+        <name>copado__InputFields</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- OutputFields --></label>
+        <name>copado__OutputFields</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Environment --></label>
+        <name>copado__Environment__c</name>
+        <relationshipLabel><!-- Test Runs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Overall Test Comments --></label>
+        <name>copado__Overall_Test_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Passed --></label>
+        <name>copado__Percent_Passed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>copado__Project__c</name>
+        <relationshipLabel><!-- Test Runs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sprint --></label>
+        <name>copado__Sprint__c</name>
+        <relationshipLabel><!-- Test Runs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passed</masterLabel>
+            <translation><!-- Passed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passed with comments</masterLabel>
+            <translation><!-- Passed with comments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready for testing</masterLabel>
+            <translation><!-- Ready for testing --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Steps Completed --></label>
+        <name>copado__Steps_Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Steps Passed --></label>
+        <name>copado__Steps_Passed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Completion --></label>
+        <name>copado__Test_Completion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Phase --></label>
+        <name>copado__Test_Phase__c</name>
+        <picklistValues>
+            <masterLabel>Developer</masterLabel>
+            <translation><!-- Developer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Peer Review</masterLabel>
+            <translation><!-- Peer Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Production</masterLabel>
+            <translation><!-- Production --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Acceptance</masterLabel>
+            <translation><!-- User Acceptance --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Test Script --></label>
+        <name>copado__Test_Script__c</name>
+        <relationshipLabel><!-- Test Runs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Tester --></label>
+        <name>copado__Tester__c</name>
+        <relationshipLabel><!-- Test Runs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Total Steps --></label>
+        <name>copado__Total_Steps__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+        <picklistValues>
+            <masterLabel>Peer-Review</masterLabel>
+            <translation><!-- Peer-Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Performance</masterLabel>
+            <translation><!-- Performance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regression</masterLabel>
+            <translation><!-- Regression --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Usability</masterLabel>
+            <translation><!-- Usability --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Acceptance Testing</masterLabel>
+            <translation><!-- User Acceptance Testing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Interface</masterLabel>
+            <translation><!-- User Interface --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User Story --></label>
+        <name>copado__User_Story__c</name>
+        <relationshipLabel><!-- Test Runs --></relationshipLabel>
+    </fields>
+    <webLinks>
+        <label><!-- Copado_DX --></label>
+        <name>copado__Copado_DX</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_Test_Scratch_Org --></label>
+        <name>copado__Create_Test_Scratch_Org</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Execute_Test_Run --></label>
+        <name>copado__Execute_Test_Run</name>
+    </webLinks>
+</CustomObjectTranslation>

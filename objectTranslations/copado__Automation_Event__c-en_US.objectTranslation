@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Action Name --></label>
+        <name>copado__Action_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action Result --></label>
+        <name>copado__Action_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action Status --></label>
+        <name>copado__Action_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Environment Id --></label>
+        <name>copado__Environment_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Job Execution Id --></label>
+        <name>copado__Job_Execution_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Automation Log --></label>
+        <name>copado__Log__c</name>
+    </fields>
+    <fields>
+        <label><!-- Pipeline Id --></label>
+        <name>copado__Pipeline_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stage Id --></label>
+        <name>copado__Stage_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target Action Job Execution Ids --></label>
+        <name>copado__Target_Action_Job_Execution_Ids__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Target Actions --></label>
+        <name>copado__Target_Action_Number__c</name>
+    </fields>
+</CustomObjectTranslation>

@@ -1,0 +1,284 @@
+<apex:page docType="html-5.0" standardController="copado__External_CI_Job__c" applyHtmlTag="true" showHeader="true" sidebar="true" standardStylesheets="true" extensions="copado.ExternalCIJobsExtension" title="{!$ObjectType.copado__External_CI_Job__c.Label}" lightningStylesheets="true">
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="height: 100%;">
+	<head>
+		<c:GAnalytics />
+		<apex:slds />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<c:IncludeStaticsResourceComponent addJquery="true" addFAcss="true"/>
+		<apex:stylesheet value="{!URLFOR($Resource.copado__SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+		<style type="text/css">
+                .col-right{
+                    margin-left : 15px;
+                }
+                .msgIcon {
+                    display: none!important
+                }
+                .customMessage * {
+                    color: #fff!important
+                }
+                .customMessage {
+                    margin: 5px 0!important;
+                    max-width: 1280px;
+                    opacity: 1!important;
+                    width: 100%;
+                    font-size: 12px;
+                    border: 0px;
+                    padding-left: 10px;
+                }
+                .message {
+                    opacity: 1
+                }
+                .slds-col{
+                	padding-right: 20px;
+                }
+                .title{
+                	text-transform: uppercase;
+                }
+                #overlay {
+				  background-color: black;
+				  position: fixed;
+				  top: 0; right: 0; bottom: 0; left: 0;
+				  opacity: 0.5;
+				  -moz-opacity:0.5;
+				  -khtml-opacity: 0.5;
+				  z-index: 10;
+				}
+				.slds-has-flexi-truncate{
+                    padding: 4px 0 4px 0;
+                }
+            </style>
+		<script>
+                var j$ = jQuery.noConflict();
+
+                j$(document).ready(function(){
+                   if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+	               		// No override in LEX
+	           		} else {
+	           			overridePageMessages();
+	           		}
+                });
+
+                function overridePageMessages(){
+
+                    textureEffect = 'slds-theme--alert-texture';
+
+                    j$('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
+                    j$('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);
+                    j$('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);
+                    j$('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);
+
+                    j$('.errorM3').removeClass('errorM3');
+                    j$('.confirmM3').removeClass('confirmM3');
+                    j$('.infoM3').removeClass('infoM3');
+                    j$('.warningM3').removeClass('warningM3');
+                }
+            </script>
+	</head>
+	<body class="slds-scope" style="{!IF($User.UIThemeDisplayed == 'Theme4d','margin: 0 12px 12px 12px;background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2),linear-gradient(to top,rgba(32, 92, 159, 0), rgb(32, 92, 159));','')}">
+	<apex:form >
+		<apex:inputHidden id="dataJSON" value="{!tempJSON}" />
+		<div class="slds-page-header" style="{!IF($User.UIThemeDisplayed == 'Theme4d','background: #fdfdfd;margin-bottom: 12px;border-collapse: collapse;border-radius: 4px;','')}">
+			<apex:outputPanel layout="block" id="pageMessages">
+				<apex:pagemessages id="pmessage"/>
+			</apex:outputPanel>
+			<div class="slds-grid">
+				<div class="slds-col slds-has-flexi-truncate">
+					<div class="slds-media">
+						<div class="slds-media__figure">
+	                                <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+	                                    <svg class="slds-icon" aria-hidden="true">
+	                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/standard-sprite/svg/symbols.svg#process')}"></use>
+	                                    </svg>
+	                                </span>
+						</div>
+						<div class="slds-media__body">
+							<p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.copado__External_CI_Job__c.Label}</p>
+							<h1 class="slds-page-header__title slds-truncate slds-align-middle" >
+                                {!IF(ISBLANK(externalCIJob.ID),'' ,externalCIJob.Name)}
+							</h1>
+
+						</div>
+					</div>
+				</div>
+				<!-- ACTION BUTTONS -->
+				<div class="slds-col slds-no-flex slds-grid slds-align-top ">
+					<div class="slds-button-group" role="group">
+						<apex:commandButton value="{!$Label.copado__EDIT}" action="{!edit}" styleClass="slds-button slds-button--neutral" rendered="{!AND(showOptions,!showError)}"/>
+						<apex:outputLink rendered="{!AND(externalCIJob.Id != null,(AND(showOptions,!showError)))}" value="{!URLFOR($Action.copado__External_CI_Job__c.Clone,externalCIJob.Id)}" styleClass="slds-button slds-button--neutral">
+							<span class="slds-truncate" title="Menu Item One">{!$Label.copado__CLONE}</span>
+						</apex:outputLink>
+						<apex:commandButton value="{!$Label.copado__DELETE}" action="{!deleteJob}" styleClass="slds-button slds-button--neutral" reRender="pageMessages" oncomplete="overridePageMessages()" rendered="{!AND(showOptions,!showError)}"/>
+						<apex:commandButton value="{!$Label.copado__BUILD_JOB}" status="status" action="{!BuildJob}" styleClass="slds-button slds-button--neutral" reRender="pageMessages, stdRelatedList, relatedLists" oncomplete="overridePageMessages()" rendered="{!AND(showOptions,!showError)}"/>
+
+					</div>
+				</div>
+				<!-- / ACTION BUTTONS -->
+			</div>
+			<!-- HEADER DETAIL ROW-->
+			<ul class="slds-grid slds-page-header__detail-row">
+				<li class="slds-page-header__detail-block">
+					<c:LightningReadyOutputFields dividerBottom="false" SObject="{!externalCIJob}" Field="Name"></c:LightningReadyOutputFields>
+				</li>
+				<li class="slds-page-header__detail-block">
+					<c:LightningReadyOutputFields dividerBottom="false" SObject="{!externalCIJob}" Field="External_CI_Setting__c"></c:LightningReadyOutputFields>
+				</li>
+				<li class="slds-page-header__detail-block">
+					<c:LightningReadyOutputFields dividerBottom="false" SObject="{!externalCIJob}" Field="Job_Api_Name__c"></c:LightningReadyOutputFields>
+				</li>
+
+			</ul>
+		</div>
+	</apex:form>
+	<apex:outputPanel rendered="{!AND(showOptions,!showError)}">
+		<div style="background: #fdfdfd;border-collapse: collapse; background: #fdfdfd;border-radius: 4px;">
+			<div class="slds-tabs_default" style="padding: 24px;">
+				<ul class="slds-tabs_default__nav" role="tablist">
+					<li class="slds-tabs_default__item title" title="{!$Label.RELATED_LIST}" role="presentation">
+						<a class="slds-tabs_default__link slds-text-heading--small" href="javascript:void(0);" role="tab" tabindex="=1" aria-selected="false" aria-controls="related" id="relatedList">
+							<span class="title">{!$Label.RELATED_LIST}</span>
+						</a>
+					</li>
+					<li class="slds-tabs_default__item slds-is-active" title="{!$Label.DETAIL}" role="presentation">
+						<a class="slds-tabs_default__link title slds-text-heading--small" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="Information" id="detailInfo">
+							<span class="title">{!$Label.DETAIL}</span>
+						</a>
+					</li>
+
+				</ul>
+				<div id="Information" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="detailInfo">
+					<!--<fieldset class="slds-box slds-theme--default slds-container--fluid">-->
+					<!--<legend id="newaccountform" class="slds-text-heading--medium slds-p-vertical--medium">
+									{!$ObjectType.copado__External_CI_Job__c.Label} Information
+								</legend>-->
+					<div class="slds-form--stacked">
+						<div class="slds-grid">
+							<div class="slds-col" >
+								<c:LightningReadyOutputFields SObject="{!externalCIJob}" Field="Name"></c:LightningReadyOutputFields>
+								<c:LightningReadyOutputFields SObject="{!externalCIJob}" Field="Environment__c"></c:LightningReadyOutputFields>
+								<c:LightningReadyOutputFields SObject="{!externalCIJob}" Field="User_Story__c"></c:LightningReadyOutputFields>
+								<c:LightningReadyOutputFields SObject="{!externalCIJob}" Field="Invoke_on__c"></c:LightningReadyOutputFields>
+								<c:LightningReadyOutputFields SObject="{!externalCIJob}" Field="Continue_on_failure__c"></c:LightningReadyOutputFields>
+								<c:LightningReadyOutputFields SObject="{!externalCIJob}" Field="Timeout_in_minutes__c"></c:LightningReadyOutputFields>
+								<c:LightningReadyOutputFields SObject="{!externalCIJob}" Field="Order__c"></c:LightningReadyOutputFields>
+							</div>
+							<div class="slds-col" style="border-right: 1px solid #d8dde6;margin-right: 5px;">
+								<c:LightningReadyOutputFields SObject="{!externalCIJob}"  Field="External_CI_Setting__c"></c:LightningReadyOutputFields>
+								<c:LightningReadyOutputFields SObject="{!externalCIJob}"  Field="Job_Api_Name__c"></c:LightningReadyOutputFields>
+							</div>
+							<div class="slds-col slds-region-sidebar--right" style="margin-left:20px;border: 1px solid darkgray;border-collapse: collapse;padding:10px;">
+								<span class="slds-form-element__label">Parameters</span>
+								<div id="urlParameters">
+
+								</div>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col" ><c:LightningReadyOutputFields SObject="{!externalCIJob}" Field="CreatedById"></c:LightningReadyOutputFields></div>
+							<div class="slds-col" ><c:LightningReadyOutputFields SObject="{!externalCIJob}" Field="LastModifiedById"></c:LightningReadyOutputFields></div>
+						</div>
+					</div>
+
+					<!--</fieldset>-->
+				</div>
+
+
+				<div id="related" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="relatedList">
+
+					<div class="slds-form--stacked">
+						<apex:outputPanel layout="block" id="relatedLists" >
+							<!--<c:LightningReadyRelatedList parentId="{!externalCIJob.Id}" parentsObjectAPI="External_CI_Job__c" showButtons="true" sObjectAPI="External_CI_Job_Result__c" relationName="External_CI_Job_Results__r" sObjectList="{!jobResults}" title="{!$ObjectType.External_CI_Job_Result__c.Label}" viewFieldName="Name" fieldSetName="relatedListFields" iconPath="/assets/icons/custom-sprite/svg/symbols.svg#custom87"/>-->
+							<apex:relatedList list="External_CI_Job_Results__r" id="stdRelatedList"/> <!--rendered="{!$User.UIThemeDisplayed == 'Theme3'}"-->
+						</apex:outputPanel>
+					</div>
+
+				</div>
+
+				<apex:actionStatus id="status" styleClass="overlay" style="align:center;" >
+					<apex:facet name="start" >
+						<div id="overlay" style="height: 100%;">
+							<div role="status" class="slds-spinner slds-spinner_medium">
+								<span class="slds-assistive-text">Loading</span>
+								<div class="slds-spinner__dot-a"></div>
+								<div class="slds-spinner__dot-b"></div>
+							</div>
+						</div>
+					</apex:facet>
+				</apex:actionStatus>
+
+				<script type="text/javascript">
+							var j$ = jQuery.noConflict();
+
+							var ciJob = ciJob || {};
+							ciJob.bindings = ciJob.bindings || {};
+							ciJob.param = ciJob.param || {};
+							ciJob.urlParams = ciJob.urlParams?ciJob.urlParams:[];
+							ciJob.template = ciJob.template || {};
+
+							/* TEMPLATES */
+							ciJob.template.paramRow = function(rowNumber, keyPair){
+								var n = keyPair?keyPair[0]:'';
+								var v = keyPair?keyPair[1]:'';
+
+								var nameField =   '<span type="text" class="ci-param slds-form-element__static" id="param-'+rowNumber+'-name" data-type="name" data-al="'+rowNumber+'" >'+n+'<span/>';
+								var valueField = '<span type="text"  class="ci-param slds-form-element__static" id="param-'+rowNumber+'-value" data-type="value" data-al="'+rowNumber+'" >'+v+'<span/>';
+								var wrapper = '<div class="slds-form-element__control slds-border_bottom" id="paramWrapper-'+rowNumber+'" style="clear:both;"><i class="fa fa-link fa-2" aria-hidden="true"></i>&nbsp;&nbsp;'+nameField+' = '+valueField+'</div>';
+								return wrapper;
+							};
+
+							ciJob.createChildRows = function(array){
+								var parentId = 'urlParameters';
+
+								var parent = j$('#urlParameters');
+								while (parent.firstChild) {
+									parent.removeChild(parent.firstChild);
+								}
+
+								if(array.length==0){
+									ciJob.urlParams = [];
+									return;
+								}
+								for(var i=0; i<array.length; i++){
+									var wrapper = ciJob.template.paramRow(i, array[i]);
+									j$(wrapper).appendTo('#'+parentId);
+								}
+							};
+
+
+
+							j$('.slds-tabs_default__item').on('click', function(){
+								j$(this).addClass('slds-is-active');
+								j$(this).addClass('slds-has-focus');
+								j$(this).find('a').attr('aria-selected', true);
+								var j$contentToShow = j$('#'+j$(this).find('a').attr('aria-controls'));
+								j$contentToShow.removeClass('slds-hide');
+								j$contentToShow.addClass('slds-show');
+
+								j$(this).siblings().removeClass('slds-is-active');
+								j$(this).siblings().removeClass('slds-has-focus');
+								j$(this).siblings().find('a').attr('aria-selected', false);
+								j$contentToShow.siblings('.slds-tabs_default__content').removeClass('slds-show');
+								j$contentToShow.siblings('.slds-tabs_default__content').addClass('slds-hide');
+							});
+							j$(document).ready(function(){
+
+								if(j$("[Id$=dataJSON]").val() != "" && j$("[Id$=dataJSON]").val() != null ){
+									console.log('json: '+j$("[Id$=dataJSON]").val())
+									var parsed = JSON.parse(j$("[Id$=dataJSON]").val());
+									console.log('parsed json: '+parsed)
+									var paramArray = parsed.parameters;
+									console.log('array: '+paramArray);
+									for(i = 0; i < paramArray.length; i++){
+										ciJob.urlParams.push([paramArray[i].name,paramArray[i].value]);
+									}
+									ciJob.createChildRows(ciJob.urlParams);
+								}
+							});
+
+
+						</script>
+			</div>
+		</div>
+	</apex:outputPanel>
+	</body>
+	</html>
+</apex:page>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permission to change the Base Branch from which the user story feature branch gets created. The default Base Branch is the Main Branch of the Deployment Flow. This option is available when committing in a user story.</description>
+    <isLicensed>false</isLicensed>
+    <label>Edit User Story Commit Base Branch</label>
+</CustomPermission>

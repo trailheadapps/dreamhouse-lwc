@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Copado Actions List --></label>
+        <name>copado__ActionsList__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select the Copado Action to which this Quality Gate Rule will be applied to. --></help>
+        <label><!-- Copado Actions --></label>
+        <name>copado__Actions__c</name>
+    </fields>
+    <fields>
+        <help><!-- Define when, during runtime, a quality gate rule should be evaluated for the action selected. --></help>
+        <label><!-- Execution Sequence --></label>
+        <name>copado__Execution_sequence__c</name>
+        <picklistValues>
+            <masterLabel>After</masterLabel>
+            <translation><!-- After --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Before</masterLabel>
+            <translation><!-- Before --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>When branch is ready</masterLabel>
+            <translation><!-- When branch is ready --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Tool used to execute Tests if the related conditions are met. This value will be matched against the Tool of the Test record. --></help>
+        <label><!-- Tool --></label>
+        <name>copado__Tool__c</name>
+    </fields>
+    <fields>
+        <help><!-- Identifies the type of quality gate related to the selected tool. --></help>
+        <label><!-- Type --></label>
+        <name>copado__Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- dataJson --></label>
+        <name>copado__dataJson__c</name>
+    </fields>
+</CustomObjectTranslation>

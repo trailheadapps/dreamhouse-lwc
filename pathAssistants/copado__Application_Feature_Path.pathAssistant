@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>copado__Application_Feature__c</entityName>
+    <fieldName>copado__Status__c</fieldName>
+    <masterLabel>Feature Path</masterLabel>
+    <recordTypeName>__MASTER__</recordTypeName>
+</PathAssistant>

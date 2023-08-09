@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <help><!-- Calculated by adding up the points of User Stories based on their status changes to Completed. This can be changed in the &quot;Actual Velocity Statuses&quot; Custom Metadata Type. Refer to Copado Docs for more info. --></help>
+        <label><!-- Actual Velocity --></label>
+        <name>copado__ActualVelocity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Days in sprint --></label>
+        <name>copado__Days_in_sprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>copado__End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full time resources in sprint --></label>
+        <name>copado__Full_time_resources_in_sprint__c</name>
+    </fields>
+    <fields>
+        <help><!-- Calculated when the Sprint status is changed to In Progress by adding up the points assigned to all User Stories in the Sprint. This value is only calculated once at the beginning of a Sprint. --></help>
+        <label><!-- Initial Planned Velocity --></label>
+        <name>copado__InitialPlannedVelocity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sprint Goal --></label>
+        <name>copado__Objective__c</name>
+    </fields>
+    <fields>
+        <help><!-- Recalculated with every change made to the points assigned to all User Stories in the Sprint. It also gets recalculated when new User Stories are added. --></help>
+        <label><!-- Planned Velocity --></label>
+        <name>copado__PlannedVelocity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project --></label>
+        <name>copado__Project__c</name>
+        <relationshipLabel><!-- Sprints --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Release --></label>
+        <name>copado__Release__c</name>
+        <relationshipLabel><!-- Sprints --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>copado__Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Total Capacity (Points) --></label>
+        <name>copado__Story_points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Team --></label>
+        <name>copado__Team__c</name>
+        <relationshipLabel><!-- Sprints --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Working Days Left --></label>
+        <name>copado__Working_Days_Left__c</name>
+    </fields>
+    <fields>
+        <label><!-- Working days in sprint --></label>
+        <name>copado__Working_days_in_sprint__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- You must introduce an End Date greater than the Start Date. --></errorMessage>
+        <name>copado__EndDate_Should_be_Greater_than_StartDate</name>
+    </validationRules>
+</CustomObjectTranslation>

@@ -1,0 +1,153 @@
+<apex:page standardController="copado__Git_Backup__c" extensions="copado.EditBackupExtension" action="{!init}" id="thePage" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" sidebar="{!$User.UIThemeDisplayed=='Theme3'}" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds rendered="{!$User.UIThemeDisplayed == 'Theme4d'}" />
+    <head>
+      <title>Edit Git Snapshot {!Git_Backup__c.Name} | Copado</title>
+        <c:GAnalytics />
+        <c:IncludeStaticsResourceComponent addJquery="true"/>
+        <style type="text/css">
+            /*to force center multiselect component*/
+            div.duelingListBox{
+                margin-right: auto;
+                margin-left: auto;
+                width: 600px;
+            }
+        </style>
+        <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    </head>
+
+    <body>
+        <div class="copado-lightning-VF">
+            <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+            <apex:sectionHeader title="{!$ObjectType.copado__Git_Backup__c.Label} {!$Label.copado__EDIT}" subtitle="{!IF(ISBLANK(backup.Name),'New ' + $ObjectType.copado__Git_Backup__c.Label ,backup.Name)}" description="{!$Label.copado__GIT_BACKUP_EDIT_DESCRIPTION}" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+            <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+                    
+                <div class="slds-page-header">
+                  <apex:outputPanel layout="block" id="pageMessages">
+                    <apex:pagemessages id="msg"/>
+                  </apex:outputPanel>
+                  <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                      <div class="slds-media">
+                          <div class="slds-media__figure">
+                              <span class="slds-icon_container slds-icon-custom-custom87" title="Description of icon when needed">
+                                <svg class="slds-icon" aria-hidden="true">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom87')}"></use>
+                                </svg>
+                              </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.Git_Backup__c.Label}</p>
+                              <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!IF(ISBLANK(backup.Name),'New ' + $ObjectType.copado__Git_Backup__c.Label ,backup.Name)}">{!IF(ISBLANK(backup.Name),'New ' + $ObjectType.copado__Git_Backup__c.Label ,backup.Name)}</h1>
+                          </div>
+                      </div>
+                    </div>
+                    <!-- ACTION BUTTONS -->
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+                      <div class="slds-button-group" role="group">
+                        
+                      </div>
+                    </div>
+                    <!-- / ACTION BUTTONS -->
+                  </div>
+                  <div class="slds-grid">
+                    <div class="slds-col slds-align-middle">
+                        <p class="slds-text-body_small">{!$Label.copado__GIT_BACKUP_EDIT_DESCRIPTION}</p>
+                    </div>
+                  </div>
+                    <apex:outputPanel layout="block" style="background: white;" id="headerFields">
+                    <ul class="slds-grid slds-page-header__detail-row">
+                      <apex:variable value="{!1}" var="rowNum"/>
+                      <apex:repeat value="{!$ObjectType.copado__Git_Backup__c.FieldSets.copado__Copado_Header_Fields}" var="f"> 
+                        <apex:outputPanel layout="block" rendered="{!rowNum < 8}">
+                        <li class="slds-page-header__detail-block slds-truncate" style="padding-right: 2em; padding-left: 2em;">
+                            <c:LightningReadyOutputFields dividerBottom="false" SObject="{!copado__Git_Backup__c}" Field="{!f}"></c:LightningReadyOutputFields>
+                        </li>
+                        </apex:outputPanel>
+                        <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                      </apex:repeat>
+                    </ul>
+                  </apex:outputPanel>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+                <apex:outputPanel rendered="false">
+                    <apex:outputField rendered="false" value="{!backup.Name}" />
+                    <apex:outputField value="{!backup.copado__Metadata_Types__c}"/>
+                    <!-- Added to make sure that all fields are included in the standard controller record -->
+                    <apex:repeat value="{!$ObjectType.copado__Git_Backup__c.FieldSets.copado__CustomFields}" var="f">
+                        <apex:outputField value="{!backup[f]}"/>
+                    </apex:repeat>
+                </apex:outputPanel>
+                <apex:form id="theForm" rendered="{!AND(showOptions,!showError)}" styleClass="copado-lightning-container" style="padding-top:12px;" html-novalidate="true">
+                    <apex:pageBlock id="pb_viewGitBackup"  mode="edit" helpUrl="https://docs.copado.com/git-snapshot/git-snapshot-overview" helpTitle="{!$Label.copado__HELP_FOR_THIS_PAGE}" title="{!$Label.copado__DETAILS}">
+                        <apex:pageblockButtons >
+                            <apex:commandButton action="{!save}" value="{!$Label.site.save}"/>
+                            <apex:commandButton action="{!cancel}" value="{!$Label.site.cancel}"/>
+                        </apex:pageblockButtons>
+                
+                        <apex:actionRegion >  
+                            <apex:actionFunction action="{!orgChanged}" name="orgChanged" reRender="pbsTypesSection" >
+                                <apex:param name="orgID" assignTo="{!orgID}" value="" />
+                            </apex:actionFunction>
+                       </apex:actionRegion>
+                
+                        <apex:pageBlockSection showHeader="true" title="{!$Label.copado__BASIC_INFORMATION}">
+                            <apex:inputField required="true" value="{!backup.Name}" />
+                            <apex:selectList required="true" value="{!backup.copado__Frequency__c}" size="1">
+                                <apex:selectOptions value="{!frequencyOptions}"/>
+                            </apex:selectList>
+                            <apex:inputField required="true" value="{!backup.copado__Git_Repository__c}" />
+                            <apex:inputField required="true" value="{!backup.copado__Org__c}" id="iOrg" onchange="reTypes()" />
+                            <apex:inputField required="true" value="{!backup.copado__Branch__c}" />
+                            <apex:outputField value="{!backup.copado__Last_Backup__c}" />
+                            <apex:inputField required="true" value="{!backup.copado__Git_Snapshot_Permissions__c}" />
+                        </apex:pageBlockSection>
+                            
+                        <apex:pageBlockSection columns="1" title="{!$Label.copado__OTHER_INFORMATION}" rendered="{!showOtherInformation}">
+                            <apex:repeat value="{!$ObjectType.copado__Git_Backup__c.FieldSets.copado__CustomFields}" var="f">
+                                <apex:inputField value="{!backup[f]}" required="{!OR(f.required, f.dbrequired)}"/>
+                            </apex:repeat>
+                        </apex:pageBlockSection>
+                
+                        <apex:pageBlockSection title="{!$Label.copado__ADVANCED_METADATA_FILTERS}" collapsible="true" showHeader="true" id="pbsTypesSection" columns="1">
+                
+                            <apex:pageBlockSectionItem >
+                                <c:MultiselectPicklist leftLabel="{!$ObjectType.copado__Git_Backup__c.fields.copado__Metadata_Types__c.Label}" pleftOptions="{!types}" rightLabel="{!$Label.copado__SELECTED_TYPES}" prightOptions="{!selectedTypes}" size="14" width="250px" id="siTypes"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+
+                        <script>
+                            //this method is a helper to refresh the org in the contorller
+                            //and rerender the metadataTypes block
+                            function reTypes(){
+                                // get from hidden lookup's input
+                                if( $copado('[id$="iOrg_lkid"]').val() != "000000000000000" ){
+                                    //set spin
+                                    $copado('[id$="siTypes"]').html('<center><img src="/img/loading.gif" /> <i>{!$Label.copado__LOADING}<span id="retry-label"></span></i></center>');
+                                    //controller refresh and later rerender
+                                    orgChanged($copado('[id$="iOrg_lkid"]').val());
+                                }
+                            }
+
+                              $copado(document).ready(function(){
+                                      //Buttons To middle No PBtitle
+                                      if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+                                      var mTitle = $copado('.pbTitle')[0];
+                                      if(mTitle){
+                                        mTitle.remove();
+                                        var tdrow = $copado($copado('.pbButton')[0]);
+                                        if(tdrow){
+                                            tdrow.css( "text-align", "center" );
+                                        }  
+                                      } 
+                                  }
+                                });
+                        </script>
+                    </apex:pageBlock>
+                </apex:form>
+                <c:CheckFeaturesComponent />
+            </apex:outputPanel>
+        </div>
+    </body>
+</apex:page>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Category --></label>
+        <name>copado__Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deprecated - ExecuteVia --></label>
+        <name>copado__ExecuteVia__c</name>
+    </fields>
+    <fields>
+        <label><!-- JobTemplate --></label>
+        <name>copado__JobTemplate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deprecated - Namespace --></label>
+        <name>copado__Namespace__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tool --></label>
+        <name>copado__Tool__c</name>
+    </fields>
+</CustomObjectTranslation>
