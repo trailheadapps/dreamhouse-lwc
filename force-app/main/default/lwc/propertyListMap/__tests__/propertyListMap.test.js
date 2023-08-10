@@ -99,6 +99,7 @@ describe('c-property-list-map', () => {
         element.addEventListener(ShowToastEventName, handler);
 
         // Wait for any asynchronous DOM updates
+        // We wait twice here in order to ensure that style and script are loaded
         await flushPromises();
         await flushPromises();
 
