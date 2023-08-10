@@ -36,7 +36,6 @@
         "@prettier/plugin-xml": "^3.2.0",
         "@sa11y/jest": "^5.2.0",
         "@salesforce/eslint-config-lwc": "^3.5.2",
-        "@salesforce/eslint-plugin-aura": "^2.1.0",
         "@salesforce/eslint-plugin-lightning": "^1.0.0",
         "@salesforce/sfdx-lwc-jest": "^1.4.1",
         "eslint": "^8.46.0",
