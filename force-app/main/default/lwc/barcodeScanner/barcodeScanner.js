@@ -31,9 +31,8 @@ export default class BarcodeScanner extends NavigationMixin(LightningElement) {
 
             // Try starting the scanning process, then using the result to navigate to a property record
             try {
-                const captureResult = await this.myScanner.beginCapture(
-                    scanningOptions
-                );
+                const captureResult =
+                    await this.myScanner.beginCapture(scanningOptions);
 
                 // Extract QR code data
                 this.scannedQrCode = captureResult.value;

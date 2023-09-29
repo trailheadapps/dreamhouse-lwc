@@ -52,6 +52,7 @@ public with sharing class PropertyController {
         result.records = [
             SELECT
                 Id,
+                Name,
                 Address__c,
                 City__c,
                 State__c,
