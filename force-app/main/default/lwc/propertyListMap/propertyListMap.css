@@ -1,3 +1,34 @@
 .map {
     height: 550px;
 }
+
+.tooltip-picture {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.tooltip-picture .lower-third {
+    position: absolute;
+    /* @sldsValidatorIgnore */
+    bottom: 0;
+    /* @sldsValidatorIgnore */
+    left: 0;
+    /* @sldsValidatorIgnore */
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 0.15rem;
+}
+
+.lower-third h1 {
+    font-weight: bold;
+    /* @sldsValidatorIgnore */
+    white-space: nowrap;
+    overflow: hidden;
+    /* @sldsValidatorIgnore */
+    text-overflow: ellipsis;
+}

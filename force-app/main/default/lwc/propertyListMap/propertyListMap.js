@@ -13,11 +13,15 @@ import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import LEAFLET from '@salesforce/resourceUrl/leafletjs';
 import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPropertyList';
 
+const LEAFLET_NOT_LOADED = 0;
+const LEAFLET_LOADING = 1;
+const LEAFLET_READY = 2;
+
 export default class PropertyListMap extends LightningElement {
     properties = [];
 
     // Map
-    isLeafletInitialized = false;
+    leafletState = LEAFLET_NOT_LOADED;
     map;
     propertyLayer;
 
@@ -73,22 +77,46 @@ export default class PropertyListMap extends LightningElement {
     }
 
     async renderedCallback() {
-        if (this.isLeafletInitialized) {
-            return;
+        if (this.leafletState === LEAFLET_NOT_LOADED) {
+            await this.initializeLeaflet();
         }
-        this.isLeafletInitialized = true;
+    }
 
+    async initializeLeaflet() {
         try {
+            // Leaflet is loading
+            this.leafletState = LEAFLET_LOADING;
+
+            // Load resource files
             await Promise.all([
                 loadScript(this, `${LEAFLET}/leaflet.js`),
                 loadStyle(this, `${LEAFLET}/leaflet.css`)
             ]);
-            this.initializeLeaflet();
+
+            // Configure map
+            const mapElement = this.template.querySelector('.map');
+            this.map = L.map(mapElement, {
+                zoomControl: true,
+                tap: false
+                // eslint-disable-next-line no-magic-numbers
+            });
+            this.map.setView([42.356045, -71.08565], 13);
+            this.map.scrollWheelZoom.disable();
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(this.map);
+
+            // Leaflet is ready
+            this.leafletState = LEAFLET_READY;
+
+            // Display properties
+            this.displayProperties();
         } catch (error) {
             const message = error.message || error.body.message;
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'Error loading Leaflet',
+                    title: 'Error while loading Leaflet',
                     message,
                     variant: 'error'
                 })
@@ -96,26 +124,9 @@ export default class PropertyListMap extends LightningElement {
         }
     }
 
-    initializeLeaflet() {
-        const mapElement = this.template.querySelector('.map');
-        this.map = L.map(mapElement, {
-            zoomControl: true,
-            tap: false
-            // eslint-disable-next-line no-magic-numbers
-        }).setView([42.356045, -71.08565], 13);
-        this.map.scrollWheelZoom.disable();
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-        }).addTo(this.map);
-
-        // Display properties
-        this.displayProperties();
-    }
-
     displayProperties() {
         // Stop if leaflet isn't ready yet
-        if (!this.isLeafletInitialized) {
+        if (this.leafletState !== LEAFLET_READY) {
             return;
         }
 
@@ -143,9 +154,11 @@ export default class PropertyListMap extends LightningElement {
                 property.Location__Latitude__s,
                 property.Location__Longitude__s
             ];
+            const tooltipMarkup = this.getTooltipMarkup(property);
             const marker = L.marker(latLng, { icon });
             marker.propertyId = property.Id;
             marker.on('click', markerClickHandler);
+            marker.bindTooltip(tooltipMarkup, { offset: [45, -40] });
             return marker;
         });
 
@@ -159,5 +172,14 @@ export default class PropertyListMap extends LightningElement {
         this.maxPrice = filters.maxPrice;
         this.minBedrooms = filters.minBedrooms;
         this.minBathrooms = filters.minBathrooms;
+    }
+
+    getTooltipMarkup(property) {
+        return `<div class="tooltip-picture" style="background-image:url(${property.Thumbnail__c})">  
+  <div class="lower-third">
+    <h1>${property.Name}</h1>
+    <p>Beds: ${property.Beds__c} - Baths: ${property.Baths__c}</p>
+  </div>
+</div>`;
     }
 }

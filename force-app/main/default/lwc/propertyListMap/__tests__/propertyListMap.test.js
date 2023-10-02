@@ -31,20 +31,46 @@ const MOCK_PROPERTIES = {
 
 // Sample error for loadScript error
 const LOAD_SCRIPT_ERROR = {
-    body: { message: 'An internal server error has occurred' },
+    body: { message: 'Mock load script error has occurred' },
     ok: false,
     status: 400,
     statusText: 'Bad Request'
 };
 
+const LEAFLET_STUB = {
+    map: () => ({
+        setView: () => {},
+        scrollWheelZoom: {
+            disable: () => {}
+        },
+        removeLayer: () => {}
+    }),
+    tileLayer: () => ({
+        addTo: () => {}
+    }),
+    divIcon: () => {},
+    marker: () => ({
+        on: () => {},
+        bindTooltip: () => {}
+    }),
+    layerGroup: () => ({
+        addTo: () => {}
+    })
+};
+
 describe('c-property-list-map', () => {
+    beforeEach(() => {
+        // Inject Leaflet stub as a global 'L' variable
+        global.L = LEAFLET_STUB;
+    });
+
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
         while (document.body.firstChild) {
             document.body.removeChild(document.body.firstChild);
         }
-        // Clear mocks so that every test run has a clean implementation
-        jest.clearAllMocks();
+        // Reset mocks so that every test run has a clean implementation
+        jest.resetAllMocks();
         // Clear leaflet global
         global.L = undefined;
     });
@@ -106,7 +132,7 @@ describe('c-property-list-map', () => {
         // Check if toast event has been fired
         expect(handler).toHaveBeenCalled();
         expect(handler.mock.calls[0][0].detail.title).toBe(
-            'Error loading Leaflet'
+            'Error while loading Leaflet'
         );
         expect(handler.mock.calls[0][0].detail.variant).toBe('error');
     });
@@ -140,7 +166,8 @@ describe('c-property-list-map', () => {
     it('updates map when properties are received', async () => {
         // Mock leaflet and add it as a global 'L' variable
         const markerMock = jest.fn(() => ({
-            on: () => {}
+            on: () => {},
+            bindTooltip: () => {}
         }));
         const layerGroupAddToMock = jest.fn();
         const leafletMock = {
@@ -173,6 +200,9 @@ describe('c-property-list-map', () => {
 
         // Emit mock properties
         getPagedPropertyList.emit(MOCK_PROPERTIES);
+
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
 
         // Check that markers are set up with property data
         expect(markerMock).toHaveBeenCalledTimes(
