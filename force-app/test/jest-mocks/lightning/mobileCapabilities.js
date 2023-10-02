@@ -11,8 +11,10 @@ export const getLocationService = jest.fn().mockImplementation(() => {
         isAvailable: jest.fn().mockReturnValue(_deviceLocationServiceAvailable),
         getCurrentPosition: jest.fn().mockImplementation(() =>
             Promise.resolve({
-                latitude: 42.361145,
-                longitude: -71.057083
+                coords: {
+                    latitude: 42.361145,
+                    longitude: -71.057083
+                }
             })
         )
     };
