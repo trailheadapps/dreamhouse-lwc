@@ -143,7 +143,7 @@
             "State__c": "MA",
             "Zip__c": "02420",
             "Price__c": 450000,
-            "Beds__c": 3,
+            "Beds__c": 5,
             "Baths__c": 1,
             "Location__Longitude__s": -71.057352,
             "Location__Latitude__s": 42.365003,
