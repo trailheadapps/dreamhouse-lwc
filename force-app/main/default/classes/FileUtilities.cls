@@ -30,4 +30,18 @@ public with sharing class FileUtilities {
             throw new AuraHandledException('Error creating file: ' + e);
         }
     }
+
+    @AuraEnabled
+    public static List<ContentDocumentLink> getFilesLinkedToRecord(String recordId) {
+        try {
+            List<ContentDocumentLink> files = [
+                SELECT ContentDocumentId, ContentDocument.Title
+                FROM ContentDocumentLink
+                WHERE LinkedEntityId = :recordId
+            ];
+            return files;
+        } catch (Exception e) {
+            throw new AuraHandledException('Error retrieving files: ' + e);
+        }
+    }
 }
