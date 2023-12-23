@@ -28,6 +28,7 @@ private with sharing class FileUtilitiesTest {
         String fileName = 'file.png';
         String recordId = 'INVALID_ID';
         System.debug('print test!');
+        System.debug('print test2!');
 
         try {
             // WHEN
