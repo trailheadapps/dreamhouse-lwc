@@ -16,7 +16,7 @@ private with sharing class FileUtilitiesTest {
             fileName,
             recordId
         );
-|
+
         // THEN
         Assert.isNotNull(contentDocumentLinkId);
     }
