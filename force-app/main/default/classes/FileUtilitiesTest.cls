@@ -16,7 +16,7 @@ private with sharing class FileUtilitiesTest {
             fileName,
             recordId
         );
-
+|
         // THEN
         Assert.isNotNull(contentDocumentLinkId);
     }
@@ -29,6 +29,7 @@ private with sharing class FileUtilitiesTest {
         String recordId = 'INVALID_ID';
         System.debug('print test!');
         System.debug('print test2!');
+        System.debug('print test3!');
 
         try {
             // WHEN
