@@ -11,17 +11,29 @@ public with sharing class NeighbourhoodInfoService {
         Property__c property = properties[0];
 
         // Query Google Search API
-        String path =
-            'q=' +
-            property.Address__c +
-            property.City__c +
-            property.Zip__c;
+        String body =
+            '{' +
+            '    "includedTypes": ["restaurant"],' +
+            '    "maxResultCount": 10,' +
+            '    "locationRestriction": {' +
+            '        "circle": {' +
+            '            "center": {' +
+            '                "latitude": 37.7937,' +
+            '                "longitude": -122.3965' +
+            '             },' +
+            '        "radius": 500.0' +
+            '        }' +
+            '    }' +
+            '}';
 
         HttpRequest apiRequest = new HttpRequest();
-        apiRequest.setMethod('GET');
-        apiRequest.setEndpoint('callout:Google_Search_API' + path);
+        apiRequest.setMethod('POST');
+        apiRequest.setEndpoint('callout:Google_Search_API');
+        apiRequest.setBody(body);
+
         Http http = new Http();
         HttpResponse response = http.send(apiRequest);
+        System.debug(response.getBody());
 
         // Create expected response
         List<Response> responses = new List<Response>();
