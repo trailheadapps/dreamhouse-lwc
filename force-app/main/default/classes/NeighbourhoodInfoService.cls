@@ -20,10 +20,10 @@ public with sharing class NeighbourhoodInfoService {
             '        "circle": {' +
             '            "center": {' +
             '                "latitude": ' +
-            Location__Latitude__s +
+            property.Location__Latitude__s +
             ',' +
             '                "longitude": ' +
-            Location__Longitude__s +
+            property.Location__Longitude__s +
             ',' +
             '             },' +
             '        "radius": 500.0' +
