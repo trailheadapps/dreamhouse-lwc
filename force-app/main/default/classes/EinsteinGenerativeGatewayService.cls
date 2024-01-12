@@ -1,6 +1,7 @@
 public with sharing class EinsteinGenerativeGatewayService {
     /*
      * Invokes the Generative Generative API to generate a response for a prompt (/einstein/llm/generations)
+     * Eg: System.debug(EinsteinGenerativeGatewayService.generateResponseFromPrompt('Give me information about Salesforce\'s Dreamhouse sample app', null, null));
      */
     public static String generateResponseFromPrompt(
         String prompt,
@@ -32,8 +33,9 @@ public with sharing class EinsteinGenerativeGatewayService {
 
     /*
      * Invokes the Generative Generative API to generate an embedding (/einstein/llm/embeddings)
-     * Embeddings are mathematical representations of text, that capture the relationship between words.
-     * They are designed to be consumed by machine learning models and semantic search algorithms.
+     * Embeddings are vector mathematical representations that measure the relatedness of text strings.
+     * They are commonly used for semantic search, recommendations, classification and more.
+     * Eg: System.debug(EinsteinGenerativeGatewayService.generateEmbeddingsFromPrompts(new List<String>{'run','sprint','race','dart', 'rush'}, null, null));
      */
     public static String generateEmbeddingsFromPrompts(
         List<String> prompts,
@@ -43,6 +45,7 @@ public with sharing class EinsteinGenerativeGatewayService {
         // Create input
         ConnectApi.EinsteinLlmEmbeddingsInput embeddingsInput = new ConnectApi.EinsteinLlmEmbeddingsInput();
         embeddingsInput.prompts = prompts;
+        embeddingsInput.additionalConfig = new ConnectApi.EinsteinLlmEmbeddingsAdditionalConfigInput();
         embeddingsInput.additionalConfig.enablePiiMasking = true;
         if (llmProvider != null) {
             embeddingsInput.provider = llmProvider;
@@ -68,7 +71,8 @@ public with sharing class EinsteinGenerativeGatewayService {
      *  - Related object (optional)
      * For Field Generation Template:
      *  - Object
-     * This is an example of inputParams for a Sales Email template that uses the lead Name and its Owner:
+     * Eg: This is an example of inputParams for a Sales Email template that uses the lead Name and its Owner:
+     *
      * Map<String, ConnectApi.WrappedValue> inputParams = new Map<String, Object>();
      * Map<String, Object> lead = new Map<String, Object>();
      * Map<String, Object> owner = new Map<String, Object>();
@@ -83,10 +87,13 @@ public with sharing class EinsteinGenerativeGatewayService {
      * ConnectApi.WrappedValue replyEmailIdValue = new ConnectApi.WrappedValue();
      * replyEmailIdValue.value = '00xxxx';
      * inputParams.put('replyEmailId', replyEmailIdValue);
+     *
+     * System.debug(EinsteinGenerativeGatewayService.generateResponseFromPromptTemplate('0hfHr000000XZLUIA4', inputParams, null, null));
      */
     // public static String generateResponseFromPromptTemplate(String promptTemplateDeveloperName, Map<String, ConnectApi.WrappedValue> inputParams, String llmProvider, String model) {
     //     // Create input
     //     ConnectApi.EinsteinPromptTemplateGenerationsInputRepresentation executeTemplateInput = new ConnectApi.EinsteinPromptTemplateGenerationsInputRepresentation();
+    //     executeTemplateInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
     //     executeTemplateInput.additionalConfig.enablePiiMasking = true;
 
     //     if (llmProvider!=null) {
@@ -110,15 +117,19 @@ public with sharing class EinsteinGenerativeGatewayService {
 
     /*
      * Invokes the Generative Generative API to generate feedback for a generated response
-     * Pass in a ConnectApi.EinsteinLLMGenerationItemOutput response.responseId
+     * Eg: Having a ConnectApi.EinsteinLLMGenerationItemOutput response:
+     *
+     * ConnectApi.EinsteinLlmFeedbackInput feedbackInput = new ConnectApi.EinsteinLlmFeedbackInput();
+     * feedbackInput.id = 'connect-api-feedback-1';
+     * feedbackInput.generationId = responseId;
+     * feedbackInput.feedbackText = 'This is feedback text';
+     * feedbackInput.source = 'HUMAN';
+     *
+     * System.debug(EinsteinGenerativeGatewayService.giveFeedbackForResponse(response.responseId, feedbackInput));
      */
-    // public static String giveFeedbackForResponse(String responseId) {
+    // public static String giveFeedbackForResponse(String responseId, ConnectApi.EinsteinLlmFeedbackInput feedbackInput) {
     //     // Create feedback input
-    //     ConnectApi.EinsteinLlmFeedbackInput feedbackInput = new ConnectApi.EinsteinLlmFeedbackInput();
-    //     feedbackInput.id = 'connect-api-feedback-1';
-    //     feedbackInput.generationId = responseId;
-    //     feedbackInput.feedbackText = 'This is feedback text';
-    //     feedbackInput.source = 'HUMAN';
+    //
 
     //     // Create `appFeedback` map (within feedback input)
     //     Map<String, ConnectApi.WrappedValue> appFeedback = new Map<String, ConnectApi.WrappedValue>();
