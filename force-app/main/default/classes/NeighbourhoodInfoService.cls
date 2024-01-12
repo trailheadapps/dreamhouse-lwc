@@ -11,6 +11,12 @@ public with sharing class NeighbourhoodInfoService {
         Assert.areEqual(1, properties.size());
         Property__c property = properties[0];
 
+        property = [
+            SELECT Location__Latitude__s, Location__Longitude__s
+            FROM Property__c
+            WHERE Id = :property.Id
+        ];
+
         // Query Google Places API
         String body =
             '{' +
