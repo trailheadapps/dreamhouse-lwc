@@ -19,7 +19,7 @@
     <externalCredentialPrincipalAccesses>
         <enabled>true</enabled>
         <externalCredentialPrincipal
-        >Google_Search_API-Developer Access</externalCredentialPrincipal>
+        >Google_Places_API-Developer Access</externalCredentialPrincipal>
     </externalCredentialPrincipalAccesses>
     <fieldPermissions>
         <editable>true</editable>

@@ -185,6 +185,16 @@
                 <identifier>RecordOwnerIdField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Location__c</fieldItem>
+                <identifier>RecordLocation_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-eb9c4d7e-6868-43e8-9851-85aacdd3a54d</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -197,6 +207,20 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Picture_IMG__c</fieldItem>
                 <identifier>RecordPicture_IMG_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>generativePromptTemplate</name>
+                    <value>Neighbourhood_Summary</value>
+                </fieldInstanceProperties>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Neighbourhood_Summary__c</fieldItem>
+                <identifier>RecordNeighbourhood_Summary_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-41d5d7e8-b344-4110-9175-150a259f72a8</name>

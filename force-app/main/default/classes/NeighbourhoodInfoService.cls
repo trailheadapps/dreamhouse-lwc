@@ -6,11 +6,12 @@ public with sharing class NeighbourhoodInfoService {
     public static List<Response> getNeighbourhoodInfo(
         List<Property__c> properties
     ) {
+        System.debug(properties);
         // Validate the expected number of properties as an input
         Assert.areEqual(1, properties.size());
         Property__c property = properties[0];
 
-        // Query Google Search API
+        // Query Google Places API
         String body =
             '{' +
             '    "includedTypes": ["restaurant"],' +
@@ -18,8 +19,12 @@ public with sharing class NeighbourhoodInfoService {
             '    "locationRestriction": {' +
             '        "circle": {' +
             '            "center": {' +
-            '                "latitude": 37.7937,' +
-            '                "longitude": -122.3965' +
+            '                "latitude": ' +
+            Location__Latitude__s +
+            ',' +
+            '                "longitude": ' +
+            Location__Longitude__s +
+            ',' +
             '             },' +
             '        "radius": 500.0' +
             '        }' +
@@ -28,7 +33,7 @@ public with sharing class NeighbourhoodInfoService {
 
         HttpRequest apiRequest = new HttpRequest();
         apiRequest.setMethod('POST');
-        apiRequest.setEndpoint('callout:Google_Search_API');
+        apiRequest.setEndpoint('callout:Google_Places_API');
         apiRequest.setBody(body);
 
         Http http = new Http();
