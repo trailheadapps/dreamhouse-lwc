@@ -1,7 +1,11 @@
 {
     "orgName": "Dreamhouse",
     "edition": "Developer",
-    "features": ["Walkthroughs", "EnableSetPasswordInApi"],
+    "features": [
+        "Walkthroughs",
+        "EnableSetPasswordInApi",
+        "EinsteinGPTForDevelopers"
+    ],
     "settings": {
         "lightningExperienceSettings": {
             "enableS1DesktopEnabled": true

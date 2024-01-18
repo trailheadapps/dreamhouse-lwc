@@ -1,0 +1,21 @@
+------------
+TEXT PROMPTS
+------------
+
+Write a method that selects property records ordered by name.
+
+Write a method that retrieve brokers with properties in a given city.
+
+Write a method that get properties sold in the last days.
+
+Write a method that retrieve the properties associated with a given broker.
+
+
+
+------------
+CODE PROMPTS
+------------
+
+public static String getBrokerEmailFromProperty(Id propertyId) {}
+
+
