@@ -1,0 +1,14 @@
+<template>
+    <lightning-card>
+        <div class="slds-clearfix slds-m-around_medium">
+            <lightning-input
+                type="toggle"
+                label="Tile View"
+                class="slds-float_left"
+                onchange={handleToggleChange}
+            >
+            </lightning-input>
+        </div>
+        <lwc:component lwc:is={componentConstructor}></lwc:component>
+    </lightning-card>
+</template>

@@ -1,0 +1,38 @@
+<template>
+    <div class ="slds-var-p-around_small">
+    <lightning-datatable
+        key-field="Id"
+        data={data}
+        show-row-number-column
+        hide-checkbox-column
+        columns={columns}
+    >
+    </lightning-datatable>
+</div>
+
+    <div
+        class="slds-grid slds-grid_vertical-align-center slds-var-m-horizontal_x-medium slds-var-m-top_medium"
+    >
+        <div class="slds-col slds-size_2-of-12 slds-var-p-around_small">
+            <lightning-button-icon
+                disabled={isFirstPage}
+                class="reset"
+                icon-name="utility:skip_back"
+                onclick={handleReset}
+                ><label>Restart</label></lightning-button-icon
+            >
+        </div>
+        <div class="slds-col slds-size_8-of-12 slds-text-align_center status">
+            {totalCount} items • page {currentPageNumber} of {totalPages}
+        </div>
+        <div class="slds-col slds-size_2-of-12 slds-text-align_right slds-var-p-around_small">
+            <lightning-button-icon
+                disabled={isLastPage}
+                class="next"
+                icon-name="utility:chevronright"
+                onclick={handleNext}
+                ><label>Next</label></lightning-button-icon
+            >
+        </div>
+    </div>
+</template>
