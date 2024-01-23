@@ -1,14 +1,13 @@
 public with sharing class ContactPropertyInterestService {
     @InvocableMethod(
-        label='Property Interest Info'
-        description='Get information of the properties in which the contact is interested'
+        CapabilityType='PromptTemplateType://einstein_gpt__salesEmail'
     )
     public static List<Response> getContactsPropertyInterest(
-        List<Contact> contacts
+        List<Request> requests
     ) {
-        // Validate the expected number of properties as an input
-        Assert.areEqual(1, contacts.size());
-        Contact contact = contacts[0];
+        Request input = requests[0];
+        Contact contact = input.Recipient;
+        Property__c property = input.RelatedObject;
 
         // Query property interests for this contact
         List<Property_Interest__c> propertyInterests = [
@@ -18,7 +17,7 @@ public with sharing class ContactPropertyInterestService {
                 Property__r.Baths__c,
                 Property__r.Price__c
             FROM Property_Interest__c
-            WHERE Contact__c = :contact.Id
+            WHERE Contact__c = :contact.Id AND Property__c != :property.Id
             WITH USER_MODE
         ];
 
@@ -49,6 +48,17 @@ public with sharing class ContactPropertyInterestService {
         responses.add(res);
         return responses;
     }
+
+    // All inputs will be passed from the template into the apex class
+    public class Request {
+        @InvocableVariable
+        public User Sender;
+        @InvocableVariable
+        public Contact Recipient;
+        @InvocableVariable
+        public Property__c RelatedObject;
+    }
+
     public class Response {
         @InvocableVariable(required=true)
         public String Prompt;

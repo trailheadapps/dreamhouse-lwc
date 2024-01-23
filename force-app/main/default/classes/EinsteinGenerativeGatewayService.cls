@@ -37,7 +37,7 @@ public with sharing class EinsteinGenerativeGatewayService {
      * They are commonly used for semantic search, recommendations, classification and more.
      * Eg: System.debug(EinsteinGenerativeGatewayService.generateEmbeddingsFromPrompts(new List<String>{'run','sprint','race','dart', 'rush'}, null, null));
      */
-    public static String generateEmbeddingsFromPrompts(
+    public static ConnectApi.EinsteinLLMEmbeddingsOutput generateEmbeddingsFromPrompts(
         List<String> prompts,
         String llmProvider,
         String model
@@ -55,13 +55,7 @@ public with sharing class EinsteinGenerativeGatewayService {
         }
 
         // Call the service
-        ConnectApi.EinsteinLLMEmbeddingsOutput embeddingsOutput = ConnectApi.EinsteinLLM.createEmbeddings(
-            embeddingsInput
-        );
-
-        // Consume response
-        ConnectApi.EinsteinLLMEmbeddingItemOutput embedding = embeddingsOutput.embeddings[0];
-        return String.valueOf(embedding);
+        return ConnectApi.EinsteinLLM.createEmbeddings(embeddingsInput);
     }
     /*
      * Invokes the Generative Generative API to generate a response based on a prompt template (/einstein/prompt-templates/${promptTemplateDevName}/generations)

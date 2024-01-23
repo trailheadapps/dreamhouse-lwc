@@ -1,15 +1,10 @@
 public with sharing class NeighbourhoodInfoService {
     @InvocableMethod(
-        label='Neighbourhood Info'
-        description='Get neighbourhood info for a property'
+        CapabilityType='PromptTemplateType://einstein_gpt__fieldCompletion'
     )
-    public static List<Response> getNeighbourhoodInfo(
-        List<Property__c> properties
-    ) {
-        System.debug(properties);
-        // Validate the expected number of properties as an input
-        Assert.areEqual(1, properties.size());
-        Property__c property = properties[0];
+    public static List<Response> getNeighbourhoodInfo(List<Request> requests) {
+        Request input = requests[0];
+        Property__c property = input.RelatedEntity;
 
         property = [
             SELECT Location__Latitude__s, Location__Longitude__s
@@ -53,6 +48,12 @@ public with sharing class NeighbourhoodInfoService {
         responses.add(res);
         return responses;
     }
+
+    public class Request {
+        @InvocableVariable
+        public Property__c RelatedEntity;
+    }
+
     public class Response {
         @InvocableVariable(required=true)
         public String Prompt;
