@@ -84,30 +84,38 @@ public with sharing class EinsteinGenerativeGatewayService {
      *
      * System.debug(EinsteinGenerativeGatewayService.generateResponseFromPromptTemplate('0hfHr000000XZLUIA4', inputParams, null, null));
      */
-    // public static String generateResponseFromPromptTemplate(String promptTemplateDeveloperName, Map<String, ConnectApi.WrappedValue> inputParams, String llmProvider, String model) {
-    //     // Create input
-    //     ConnectApi.EinsteinPromptTemplateGenerationsInputRepresentation executeTemplateInput = new ConnectApi.EinsteinPromptTemplateGenerationsInputRepresentation();
-    //     executeTemplateInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
-    //     executeTemplateInput.additionalConfig.enablePiiMasking = true;
+    public static String generateResponseFromPromptTemplate(
+        String promptTemplateDeveloperName,
+        Map<String, ConnectApi.WrappedValue> inputParams,
+        String llmProvider,
+        String model
+    ) {
+        // Create input
+        ConnectApi.EinsteinPromptTemplateGenerationsInput executeTemplateInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
+        executeTemplateInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
+        executeTemplateInput.additionalConfig.enablePiiMasking = true;
 
-    //     if (llmProvider!=null) {
-    //         executeTemplateInput.provider = llmProvider;
-    //         if (model != null) {
-    //             executeTemplateInput.additionalConfig.model = model;
-    //         }
-    //     }
+        if (llmProvider != null) {
+            executeTemplateInput.provider = llmProvider;
+            if (model != null) {
+                executeTemplateInput.additionalConfig.model = model;
+            }
+        }
 
-    //     // Set additional values
-    //     executeTemplateInput.isPreview = false;
-    //     executeTemplateInput.inputParams = inputParams;
+        // Set additional values
+        executeTemplateInput.isPreview = false;
+        executeTemplateInput.inputParams = inputParams;
 
-    //     // Call the service
-    //     ConnectApi.EinsteinPromptTemplateGenerationsRepresentation generationsOutput = ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate(promptTemplateDeveloperName,  executeTemplateInput);
+        // Call the service
+        ConnectApi.EinsteinPromptTemplateGenerationsRepresentation generationsOutput = ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate(
+            promptTemplateDeveloperName,
+            executeTemplateInput
+        );
 
-    //     // Consume response
-    //     ConnectApi.EinsteinLLMGenerationItemOutput response = generationsOutput.generations[0];
-    //     return response.text;
-    // }
+        // Consume response
+        ConnectApi.EinsteinLLMGenerationItemOutput response = generationsOutput.generations[0];
+        return response.text;
+    }
 
     /*
      * Invokes the Generative Generative API to generate feedback for a generated response
@@ -123,7 +131,6 @@ public with sharing class EinsteinGenerativeGatewayService {
      */
     // public static String giveFeedbackForResponse(String responseId, ConnectApi.EinsteinLlmFeedbackInput feedbackInput) {
     //     // Create feedback input
-    //
 
     //     // Create `appFeedback` map (within feedback input)
     //     Map<String, ConnectApi.WrappedValue> appFeedback = new Map<String, ConnectApi.WrappedValue>();
