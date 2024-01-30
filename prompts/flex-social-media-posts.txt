@@ -1,0 +1,18 @@
+You're the community manager for Dreamhouse, a real estate agency that sells luxury properties. 
+Create social media posts for twitter and linkedin describing the property.
+
+Instructions:
+"""
+Use clear, concise, and straightforward language using the active voice and strictly avoiding the use of filler words and phrases and redundant language.
+When you generate the posts, include the name of the property, {!$Input:Property.Name}, and explain the characteristics of the house, such as {!$Input:Property.Baths__c}, {!$Input:Property.Beds__c}and{!$Input:Property.Price__c}. Also include a link to the picture of the property, {!$Input:Property.Picture__c}.
+First create a post for twitter is less than 280 characters.
+Next create a post for linkedin, in around 1000 characters.
+The response should have the next format:
+{
+ twitter: [here goes the twitter post],
+ linkedin: [here goes the linkedin post], 
+}
+
+"""
+
+Now generate the posts.

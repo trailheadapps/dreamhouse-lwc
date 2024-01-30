@@ -67,7 +67,7 @@ public with sharing class EinsteinGenerativeGatewayService {
      *  - Object
      * Eg: This is an example of inputParams for a Sales Email template that uses the lead Name and its Owner:
      *
-     * Map<String, ConnectApi.WrappedValue> inputParams = new Map<String, Object>();
+     * Map<String, ConnectApi.WrappedValue> inputParams = new Map<String, ConnectApi.WrappedValue>();
      * Map<String, Object> lead = new Map<String, Object>();
      * Map<String, Object> owner = new Map<String, Object>();
      * lead.put('Id', '001xxx');
@@ -94,6 +94,7 @@ public with sharing class EinsteinGenerativeGatewayService {
         ConnectApi.EinsteinPromptTemplateGenerationsInput executeTemplateInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
         executeTemplateInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
         executeTemplateInput.additionalConfig.enablePiiMasking = true;
+        executeTemplateInput.additionalConfig.applicationName = 'PromptBuilderPreview';
 
         if (llmProvider != null) {
             executeTemplateInput.provider = llmProvider;

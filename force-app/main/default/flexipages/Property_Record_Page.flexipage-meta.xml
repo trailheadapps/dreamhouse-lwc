@@ -581,6 +581,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>generateSocialMediaPosts</componentName>
+                <identifier>c_generateSocialMediaPosts</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>daysOnMarket</componentName>
                 <identifier>daysOnMarket</identifier>
                 <visibilityRule>

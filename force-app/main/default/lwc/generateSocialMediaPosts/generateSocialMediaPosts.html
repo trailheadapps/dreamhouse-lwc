@@ -1,0 +1,33 @@
+<template>
+    <lightning-card
+        title="Generate Social Media Posts"
+        icon-name="utility:socialshare"
+    >
+        <div class="slds-var-p-around_small">
+            <template lwc:if={error}>
+                <c-error-panel
+                    friendly-message="Error generating social media posts."
+                    errors={error}
+                ></c-error-panel>
+            </template>
+            <template lwc:else>
+                <lightning-button
+                    onclick={generateSocialMediaPosts}
+                    label="Generate Social Media Posts"
+                ></lightning-button>
+                <lightning-textarea
+                    name="twitter"
+                    readonly
+                    value={twitterPost}
+                    label="Twitter Post"
+                ></lightning-textarea>
+                <lightning-textarea
+                    name="linkedin"
+                    readonly
+                    value={linkedinPost}
+                    label="Linkedin Post"
+                ></lightning-textarea>
+            </template>
+        </div>
+    </lightning-card>
+</template>

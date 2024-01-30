@@ -1,4 +1,4 @@
-public with sharing class ContactPropertyInterestService {
+public with sharing class ContactInterestSalesEmail {
     @InvocableMethod(
         CapabilityType='PromptTemplateType://einstein_gpt__salesEmail'
     )
@@ -21,30 +21,12 @@ public with sharing class ContactPropertyInterestService {
             WITH USER_MODE
         ];
 
-        String responseData = '';
-        if (propertyInterests.isEmpty()) {
-            responseData = 'The prospect didn\'t demostrate interest in any other property.';
-        } else {
-            for (Property_Interest__c propertyInterest : propertyInterests) {
-                responseData += 'Property Details: ';
-                responseData += 'Name: ' + propertyInterest.Property__r.Name;
-                responseData += ', ';
-                responseData +=
-                    'Bedrooms: ' + propertyInterest.Property__r.Beds__c;
-                responseData += ', ';
-                responseData +=
-                    'Bathrooms ' + propertyInterest.Property__r.Baths__c;
-                responseData += ', ';
-                responseData +=
-                    'Price: ' + propertyInterest.Property__r.Price__c;
-                responseData += '.';
-            }
-        }
-
         // Create expected response
         List<Response> responses = new List<Response>();
         Response res = new Response();
-        res.Prompt = responseData;
+        res.Prompt = PropertyInterestService.formatPropertiesInterest(
+            propertyInterests
+        );
         responses.add(res);
         return responses;
     }

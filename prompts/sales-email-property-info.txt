@@ -12,7 +12,7 @@ Generate the body of the email, in which you'll include:
 <img src="{!$Input:Property__c.Picture__c}" alt="{!$Input:Property__c.Name}"/>
 
 - Add CSS styles to the img tag so the picture is centered.
-- Also include a comparison with the other properties for which the prospect demonstrated interest, only if there are some. This is what I found: {!$Apex:ContactPropertyInterestService.Prompt}
+- Also include a comparison with the other properties for which the prospect demonstrated interest, only if there are some. This is what I found: {!$Apex:ContactPropertySalesEmail.Prompt}
 - Propose a visit to the house with your prospect, and express a desire to learn more about their needs. Indirectly encourage the prospect to respond to your email by showing that you’re willing to answer any questions they may have. 
 - End the email with a clear call to action for the prospect to respond and schedule a visit.
 """
