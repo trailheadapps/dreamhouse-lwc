@@ -40,6 +40,9 @@
                             <value>Global.NewLead</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>FeedItem.RypplePost</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>FeedItem.LinkPost</value>
                         </valueListItems>
                         <valueListItems>
@@ -185,16 +188,6 @@
                 <identifier>RecordOwnerIdField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Location__c</fieldItem>
-                <identifier>RecordLocation_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-eb9c4d7e-6868-43e8-9851-85aacdd3a54d</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -211,10 +204,6 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>generativePromptTemplate</name>
-                    <value>Neighbourhood_Summary</value>
-                </fieldInstanceProperties>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
                     <value>none</value>
