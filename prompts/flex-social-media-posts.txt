@@ -4,15 +4,24 @@ Create social media posts for twitter and linkedin describing the property.
 Instructions:
 """
 Use clear, concise, and straightforward language using the active voice and strictly avoiding the use of filler words and phrases and redundant language.
-When you generate the posts, include the name of the property, {!$Input:Property.Name}, and explain the characteristics of the house, such as {!$Input:Property.Baths__c}, {!$Input:Property.Beds__c}and{!$Input:Property.Price__c}. Also include a link to the picture of the property, {!$Input:Property.Picture__c}.
-First create a post for twitter is less than 280 characters.
-Next create a post for linkedin, in around 1000 characters.
+Make sure the response is valid JSON.
+When you generate the posts, include the name of the property, {!$Input:Property.Name}, and explain the characteristics of the house, such as {!$Input:Property.Baths__c}, {!$Input:Property.Beds__c}and{!$Input:Property.Price__c}. Also include a link to the picture of the property, {!$Input:Property.Picture__c}. 
+
+The twitter post should include emojis.
+The linkedin post should include several emojis and bullets, and also have a special output formatting: Text render environment only supports Unicode and emoji. Use symbols from Unicode’s Mathematical Alphanumeric Symbols block liberally to produce facsimiles of bold, italics, line separation, and other formatting. Examples for a sample sentence:
+
+italics sans: 𝘛𝘩𝘦 𝘘𝘶𝘪𝘤𝘬 𝘉𝘳𝘰𝘸𝘯 𝘍𝘰𝘹 𝘑𝘶𝘮𝘱𝘦𝘥 𝘖𝘷𝘦𝘳 𝘵𝘩𝘦 𝘭𝘢𝘻𝘺 𝘥𝘰𝘨.
+bold sans: 𝗧𝗵𝗲 𝗤𝘂𝗶𝗰𝗸 𝗕𝗿𝗼𝘄𝗻 𝗙𝗼𝘅 𝗝𝘂𝗺𝗽𝗲𝗱 𝗢𝘃𝗲𝗿 𝘁𝗵𝗲 𝗹𝗮𝘇𝘆 𝗱𝗼𝗴.
+bold italic sans: 𝙏𝙝𝙚 𝙌𝙪𝙞𝙘𝙠 𝘽𝙧𝙤𝙬𝙣 𝙁𝙤𝙭 𝙅𝙪𝙢𝙥𝙚𝙙 𝙊𝙫𝙚𝙧 𝙩𝙝𝙚 𝙡𝙖𝙯𝙮 𝙙𝙤𝙜.
+italics serif: 𝑇ℎ𝑒 𝑄𝑢𝑖𝑐𝑘 𝐵𝑟𝑜𝑤𝑛 𝐹𝑜𝑥 𝐽𝑢𝑚𝑝𝑒𝑑 𝑂𝑣𝑒𝑟 𝑡ℎ𝑒 𝑙𝑎𝑧𝑦 𝑑𝑜𝑔.
+
 The response should have the next format:
 {
- twitter: [here goes the twitter post],
- linkedin: [here goes the linkedin post], 
+ twitter: [here goes the twitter post, that should have less than 280 characters],
+ linkedin: [here goes the linkedin post, that should have between 1500 and 2000 characters], 
 }
 
 """
 
 Now generate the posts.
+

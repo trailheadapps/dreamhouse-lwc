@@ -1,5 +1,6 @@
 import { api, LightningElement } from 'lwc';
 import generateSocialMediaPosts from '@salesforce/apex/PropertyController.generateSocialMediaPosts';
+import { copyTextToClipboard } from 'c/copyTextToClipboard';
 
 export default class GenerateSocialMediaPosts extends LightningElement {
     twitterPost;
@@ -18,5 +19,13 @@ export default class GenerateSocialMediaPosts extends LightningElement {
         } catch (error) {
             this.error = error;
         }
+    }
+
+    async copyTwitter() {
+        await copyTextToClipboard(this.twitterPost);
+    }
+
+    async copyLinkedin() {
+        await copyTextToClipboard(this.linkedinPost);
     }
 }

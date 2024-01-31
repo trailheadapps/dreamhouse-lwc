@@ -4,17 +4,18 @@ Instructions:
 """
 Use clear, concise, and straightforward language using the active voice and strictly avoiding the use of filler words and phrases and redundant language.
 Generate a subject line that can increase open rate using words and content that is related to the email body content.
-Generate the body of the email, in which you'll include:
-- A title that includes the name of the property, in html: <h1>{!$Input:Property__c.Name}</h1>
-- A paragraph explaining the characteristics of the house, such as , {!$Input:Property__c.Baths__c}, {!$Input:Property__c.Beds__c}.
-- An HTML img tag, that references {!$Input:Property__c.Picture__c}, like this:
+Generate the body of the email, which will have the next format:
 
+
+<h1>[Should be a title in bold that includes the name of the property: {!$Input:Property__c.Name}]</h1>
+<p>[Should be a paragraph explaining the characteristics of the house, such as, {!$Input:Property__c.Baths__c}, {!$Input:Property__c.Beds__c}.]</p>
 <img src="{!$Input:Property__c.Picture__c}" alt="{!$Input:Property__c.Name}"/>
+<p>[Should include a comparison with the other properties for which the prospect demonstrated interest, only if there are some. This is what I found: {!$Apex:ContactPropertyInterestService.Prompt}]</p>
+<p>[Should include a paragraph proposing a visit to the house with your prospect, and express a desire to learn more about their needs.]</p>
+<p>[End the email including here a clear call to action for the prospect to respond and schedule a visit.]</p>
 
-- Add CSS styles to the img tag so the picture is centered.
-- Also include a comparison with the other properties for which the prospect demonstrated interest, only if there are some. This is what I found: {!$Apex:ContactPropertySalesEmail.Prompt}
-- Propose a visit to the house with your prospect, and express a desire to learn more about their needs. Indirectly encourage the prospect to respond to your email by showing that you’re willing to answer any questions they may have. 
-- End the email with a clear call to action for the prospect to respond and schedule a visit.
+
+Add CSS styles to the img tag so the picture is centered, and to the paragraphs so they look nice.
 """
 
 Now generate the introduction email to your prospect.ow generate the introduction email to your prospect.

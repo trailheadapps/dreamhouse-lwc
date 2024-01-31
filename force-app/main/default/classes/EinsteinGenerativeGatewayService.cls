@@ -93,7 +93,6 @@ public with sharing class EinsteinGenerativeGatewayService {
         // Create input
         ConnectApi.EinsteinPromptTemplateGenerationsInput executeTemplateInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
         executeTemplateInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
-        executeTemplateInput.additionalConfig.enablePiiMasking = true;
         executeTemplateInput.additionalConfig.applicationName = 'PromptBuilderPreview';
 
         if (llmProvider != null) {

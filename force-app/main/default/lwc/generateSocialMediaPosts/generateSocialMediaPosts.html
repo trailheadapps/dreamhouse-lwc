@@ -15,18 +15,42 @@
                     onclick={generateSocialMediaPosts}
                     label="Generate Social Media Posts"
                 ></lightning-button>
-                <lightning-textarea
-                    name="twitter"
-                    readonly
-                    value={twitterPost}
-                    label="Twitter Post"
-                ></lightning-textarea>
-                <lightning-textarea
-                    name="linkedin"
-                    readonly
-                    value={linkedinPost}
-                    label="Linkedin Post"
-                ></lightning-textarea>
+                <div class="slds-var-p-top_small">
+                    <lightning-button-icon
+                        onclick={copyTwitter}
+                        icon-name="utility:copy_to_clipboard"
+                        alternative-text="Copy Twitter Post"
+                        title="Copy"
+                        variant="bare"
+                        class="right"
+                    >
+                        <label>Copy</label>
+                    </lightning-button-icon>
+                    <lightning-textarea
+                        name="twitter"
+                        readonly
+                        value={twitterPost}
+                        label="Twitter Post"
+                    ></lightning-textarea>
+                </div>
+                <div class="slds-var-p-top_small">
+                    <lightning-button-icon
+                        onclick={copyLinkedin}
+                        icon-name="utility:copy_to_clipboard"
+                        alternative-text="Copy LinkedIn Post"
+                        title="Copy"
+                        variant="bare"
+                        class="right"
+                    >
+                        <label>Copy</label>
+                    </lightning-button-icon>
+                    <lightning-textarea
+                        name="linkedin"
+                        readonly
+                        value={linkedinPost}
+                        label="Linkedin Post"
+                    ></lightning-textarea>
+                </div>
             </template>
         </div>
     </lightning-card>
