@@ -18,9 +18,10 @@ export default class GenerateSocialMediaPosts extends LightningElement {
             const parsedPosts = JSON.parse(posts);
             this.twitterPost = parsedPosts.twitter;
             this.linkedinPost = parsedPosts.linkedin;
-            this.showSpinner = false;
         } catch (error) {
             this.error = error;
+        } finally {
+            this.showSpinner = false;
         }
     }
 
