@@ -9,6 +9,10 @@
                     friendly-message="Error generating social media posts."
                     errors={error}
                 ></c-error-panel>
+                <lightning-button
+                    onclick={generateSocialMediaPosts}
+                    label="Try again!"
+                ></lightning-button>
             </template>
             <template lwc:else>
                 <lightning-button
@@ -51,6 +55,10 @@
                         label="Linkedin Post"
                     ></lightning-textarea>
                 </div>
+            </template>
+            <template lwc:if={showSpinner}>
+                <lightning-spinner alternative-text="Loading..." size="small">
+                </lightning-spinner>
             </template>
         </div>
     </lightning-card>
