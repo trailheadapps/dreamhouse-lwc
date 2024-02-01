@@ -82,25 +82,16 @@ public with sharing class EinsteinGenerativeGatewayService {
      * replyEmailIdValue.value = '00xxxx';
      * inputParams.put('replyEmailId', replyEmailIdValue);
      *
-     * System.debug(EinsteinGenerativeGatewayService.generateResponseFromPromptTemplate('0hfHr000000XZLUIA4', inputParams, null, null));
+     * System.debug(EinsteinGenerativeGatewayService.generateResponseFromPromptTemplate('0hfHr000000XZLUIA4', inputParams));
      */
     public static String generateResponseFromPromptTemplate(
         String promptTemplateDeveloperName,
-        Map<String, ConnectApi.WrappedValue> inputParams,
-        String llmProvider,
-        String model
+        Map<String, ConnectApi.WrappedValue> inputParams
     ) {
         // Create input
         ConnectApi.EinsteinPromptTemplateGenerationsInput executeTemplateInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
         executeTemplateInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
-        executeTemplateInput.additionalConfig.applicationName = 'PromptBuilderPreview';
-
-        if (llmProvider != null) {
-            executeTemplateInput.provider = llmProvider;
-            if (model != null) {
-                executeTemplateInput.additionalConfig.model = model;
-            }
-        }
+        executeTemplateInput.additionalConfig.enablePiiMasking = true;
 
         // Set additional values
         executeTemplateInput.isPreview = false;

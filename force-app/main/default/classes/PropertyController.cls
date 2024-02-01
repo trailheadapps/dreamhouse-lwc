@@ -127,9 +127,7 @@ public with sharing class PropertyController {
 
         return EinsteinGenerativeGatewayService.generateResponseFromPromptTemplate(
             'Generate_Social_Media_Post',
-            inputParams,
-            'gpt-35-turbo',
-            null
+            inputParams
         );
     }
 }
