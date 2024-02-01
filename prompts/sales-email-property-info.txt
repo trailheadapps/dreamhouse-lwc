@@ -18,4 +18,4 @@ Generate the body of the email, which will have the next format:
 Add CSS styles to the img tag so the picture is centered, and to the paragraphs so they look nice.
 """
 
-Now generate the introduction email to your prospect.ow generate the introduction email to your prospect.
+Now generate the introduction email to your prospect.

@@ -116,7 +116,7 @@ public with sharing class PropertyController {
 
     @AuraEnabled
     public static String generateSocialMediaPosts(String propertyId) {
-        Map<String, Object> property = new Map<String, Object>();
+        Map<String, String> property = new Map<String, String>();
         property.put('id', propertyId);
 
         ConnectApi.WrappedValue propertyValue = new ConnectApi.WrappedValue();
