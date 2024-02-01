@@ -1,25 +1,15 @@
 public with sharing class EinsteinGenerativeGatewayService {
     /*
      * Invokes the Generative Generative API to generate a response for a prompt (/einstein/llm/generations)
-     * Eg: System.debug(EinsteinGenerativeGatewayService.generateResponseFromPrompt('Give me information about Salesforce\'s Dreamhouse sample app', null, null));
+     * Eg: System.debug(EinsteinGenerativeGatewayService.generateResponseFromPrompt('Give me information about Salesforce\'s Dreamhouse sample app'));
      */
-    public static String generateResponseFromPrompt(
-        String prompt,
-        String llmProvider,
-        String model
-    ) {
+    public static String generateResponseFromPrompt(String prompt) {
         // Create the input
         ConnectApi.EinsteinLlmGenerationsInput generationsInput = new ConnectApi.EinsteinLlmGenerationsInput();
         generationsInput.promptTextorId = prompt;
         generationsInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
         generationsInput.additionalConfig.maxTokens = 512;
         generationsInput.additionalConfig.enablePiiMasking = true;
-        if (llmProvider != null) {
-            generationsInput.provider = llmProvider;
-            if (model != null) {
-                generationsInput.additionalConfig.model = model;
-            }
-        }
 
         // Call the service
         ConnectApi.EinsteinLLMGenerationsOutput generationsOutput = ConnectApi.EinsteinLLM.generateMessages(
@@ -38,21 +28,13 @@ public with sharing class EinsteinGenerativeGatewayService {
      * Eg: System.debug(EinsteinGenerativeGatewayService.generateEmbeddingsFromPrompts(new List<String>{'run','sprint','race','dart', 'rush'}, null, null));
      */
     public static ConnectApi.EinsteinLLMEmbeddingsOutput generateEmbeddingsFromPrompts(
-        List<String> prompts,
-        String llmProvider,
-        String model
+        List<String> prompts
     ) {
         // Create input
         ConnectApi.EinsteinLlmEmbeddingsInput embeddingsInput = new ConnectApi.EinsteinLlmEmbeddingsInput();
         embeddingsInput.prompts = prompts;
         embeddingsInput.additionalConfig = new ConnectApi.EinsteinLlmEmbeddingsAdditionalConfigInput();
         embeddingsInput.additionalConfig.enablePiiMasking = true;
-        if (llmProvider != null) {
-            embeddingsInput.provider = llmProvider;
-            if (model != null) {
-                embeddingsInput.additionalConfig.model = model;
-            }
-        }
 
         // Call the service
         return ConnectApi.EinsteinLLM.createEmbeddings(embeddingsInput);
@@ -107,36 +89,4 @@ public with sharing class EinsteinGenerativeGatewayService {
         ConnectApi.EinsteinLLMGenerationItemOutput response = generationsOutput.generations[0];
         return response.text;
     }
-
-    /*
-     * Invokes the Generative Generative API to generate feedback for a generated response
-     * Eg: Having a ConnectApi.EinsteinLLMGenerationItemOutput response:
-     *
-     * ConnectApi.EinsteinLlmFeedbackInput feedbackInput = new ConnectApi.EinsteinLlmFeedbackInput();
-     * feedbackInput.id = 'connect-api-feedback-1';
-     * feedbackInput.generationId = responseId;
-     * feedbackInput.feedbackText = 'This is feedback text';
-     * feedbackInput.source = 'HUMAN';
-     *
-     * System.debug(EinsteinGenerativeGatewayService.giveFeedbackForResponse(response.responseId, feedbackInput));
-     */
-    // public static String giveFeedbackForResponse(String responseId, ConnectApi.EinsteinLlmFeedbackInput feedbackInput) {
-    //     // Create feedback input
-
-    //     // Create `appFeedback` map (within feedback input)
-    //     Map<String, ConnectApi.WrappedValue> appFeedback = new Map<String, ConnectApi.WrappedValue>();
-
-    //     // Create `feedack_detail` map (within appFeedback)
-    //     ConnectApi.WrappedValue feedbackDetail = new ConnectApi.WrappedValue();
-    //     Map<String, String> detailValue = new Map<String, String>{'action' => 'thumbs-up'};
-    //     feedbackDetail.value = detailValue;
-
-    //     // Add `feedback_detail` to appFeedback
-    //     appFeedback.put('feedback_detail', feedbackDetail);
-    //     feedbackInput.appFeedback = appFeedback;
-
-    //     // Consume feedback response
-    //     ConnectApi.InlineResponse202 feedbackOutput = ConnectApi.EinsteinLLM.feedback(feedbackInput);
-    //     return feedbackOutput.message;
-    // }
 }
