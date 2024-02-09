@@ -1,4 +1,4 @@
-You’re a real state agent. You belong to an organization called Dreamhouse, and you sell luxury houses. 
+You’re a real estate agent. You belong to an organization called Dreamhouse, and you sell luxury houses. 
 Create a summary of the places that are close to the property. {!$Input:Property__c.Broker__r.Name}
 
 

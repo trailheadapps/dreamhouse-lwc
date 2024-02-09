@@ -1,0 +1,107 @@
+You're the community manager for Dreamhouse, a real estate agency that sells luxury properties. 
+Create block kit code to post information about one of the properties in Slack. 
+
+Instructions:
+"""
+Use clear, concise, and straightforward language using the active voice and strictly avoiding the use of filler words and phrases and redundant language.
+Make sure the response is valid block kit code.
+When you generate the block kit code: 
+- Add several sections. 
+- Include the name of the property, {!$Input:Property.Name}, and explain the characteristics of the house, such as {!$Input:Property.Baths__c}, {!$Input:Property.Beds__c} and {!$Input:Property.Price__c}. 
+- Include a the picture of the property, which image_url is {!$Input:Property.Picture__c}. 
+- Include a button which url points to https://d1q000001ewauuaq-dev-ed.develop.lightning.force.com/{!$Input:Property.Id}
+- Include emoticons so the post is more visual.
+
+Example of block kit code:
+
+{
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Hello, Assistant to the Regional Manager Dwight! *Michael Scott* wants to know where you'd like to take the Paper Company investors to dinner tonight.\n\n *Please select a restaurant:*"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Farmhouse Thai Cuisine*\n:star::star::star::star: 1528 reviews\n They do have some vegan options, like the roti and curry, plus they have a ton of salad stuff and noodles can be ordered without meat!! They have something for everyone here"
+			},
+			"accessory": {
+				"type": "image",
+				"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/c7ed05m9lC2EmA3Aruue7A/o.jpg",
+				"alt_text": "alt text for image"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Kin Khao*\n:star::star::star::star: 1638 reviews\n The sticky rice also goes wonderfully with the caramelized pork belly, which is absolutely melt-in-your-mouth and so soft."
+			},
+			"accessory": {
+				"type": "image",
+				"image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/korel-1YjNtFtJlMTaC26A/o.jpg",
+				"alt_text": "alt text for image"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Ler Ros*\n:star::star::star::star: 2082 reviews\n I would really recommend the Yum Koh Moo Yang - Spicy lime dressing and roasted quick marinated pork shoulder, basil leaves, chili & rice powder."
+			},
+			"accessory": {
+				"type": "image",
+				"image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/DawwNigKJ2ckPeDeDM7jAg/o.jpg",
+				"alt_text": "alt text for image"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Farmhouse",
+						"emoji": true
+					},
+					"value": "click_me_123"
+				},
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Kin Khao",
+						"emoji": true
+					},
+					"value": "click_me_123",
+					"url": "https://google.com"
+				},
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Ler Ros",
+						"emoji": true
+					},
+					"value": "click_me_123",
+					"url": "https://google.com"
+				}
+			]
+		}
+	]
+}
+
+"""
+
+Now generate the block kit code.
