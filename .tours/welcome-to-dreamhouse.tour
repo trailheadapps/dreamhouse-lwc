@@ -35,7 +35,7 @@
     {
       "title": "Property Controller",
       "file": "force-app/main/default/classes/PropertyController.cls",
-      "line": 13,
+      "line": 16,
       "description": "The `getPagedPropertyList` method from the `PropertyController` Apex class is where properties are retrieved from the Platform.\n\nThe method builds a SOQL query with the provided filters and returns a paginated list of `Property__c` records wrapped in a `PagedResult` object.\n\n`getPagedPropertyList` is exposed to Lightning Web Components thanks to the `@AuraEnabled` annotation. The `cacheable=true` attribute indicates that the returned data is cached.\n\n---\n\nWhile there is a lot to get to know in Dreamhouse, and a lot of code, we'd like to leave off the code tour at this point and suggest you explore the app further in a couple of other ways. \n- One way you can do this is to use our [Quick Start](https://trailhead.salesforce.com/en/content/learn/projects/quick-start-dreamhouse-sample-app) on Trailhead. This will walk you through deploying the app and getting to know it a bit, as well as explore some of the other code samples. \n- But if you prefer to take yourself through the app, you can skip right to the installation instructions that are available in the git repo's [README](https://github.com/trailheadapps/dreamhouse-lwc). From there you can explore the examples bit by bit. There is also an in-app tour that will familiarize you with the app. \n- Lastly, if notice any issue with the app, please open an [issue](https://github.com/trailheadapps/dreamhouse-lwc/issues/new/choose) and let us know.\n\nThanks! And enjoy the Dreamhouse sample app. "
     }
   ],
