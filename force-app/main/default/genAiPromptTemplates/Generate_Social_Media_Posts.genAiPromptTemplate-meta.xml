@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersion>1</activeVersion>
+    <description
+    >Creates a twitter, linkedin and slack post for a property</description>
+    <developerName>Generate_Social_Media_Posts</developerName>
+    <masterLabel>Generate Social Media Posts</masterLabel>
+    <templateVersions>
+        <content
+        >You&apos;re the community manager for Dreamhouse, a real estate agency that sells luxury properties. 
+Create social media posts for twitter, linkedin and slack (block kit format) describing the property.
+
+Instructions:
+&quot;&quot;&quot;
+Use clear, concise, and straightforward language using the active voice and strictly avoiding the use of filler words and phrases and redundant language.
+Make sure the response is valid JSON.
+When you generate the posts, include the name of the property, {!$Input:Property.Name}, and explain the characteristics of the house, such as {!$Input:Property.Baths__c}, {!$Input:Property.Beds__c}and{!$Input:Property.Price__c}. Also include a link to the picture of the property, {!$Input:Property.Picture__c}. 
+
+The twitter post should include emojis.
+The linkedin post should include several emojis and bullets, and also have a special output formatting: Text render environment only supports Unicode and emoji. Use symbols from Unicode’s Mathematical Alphanumeric Symbols block liberally to produce facsimiles of bold, italics, line separation, and other formatting. Examples for a sample sentence:
+
+italics sans: 𝘛𝘩𝘦 𝘘𝘶𝘪𝘤𝘬 𝘉𝘳𝘰𝘸𝘯 𝘍𝘰𝘹 𝘑𝘶𝘮𝘱𝘦𝘥 𝘖𝘷𝘦𝘳 𝘵𝘩𝘦 𝘭𝘢𝘻𝘺 𝘥𝘰𝘨.
+bold sans: 𝗧𝗵𝗲 𝗤𝘂𝗶𝗰𝗸 𝗕𝗿𝗼𝘄𝗻 𝗙𝗼𝘅 𝗝𝘂𝗺𝗽𝗲𝗱 𝗢𝘃𝗲𝗿 𝘁𝗵𝗲 𝗹𝗮𝘇𝘆 𝗱𝗼𝗴.
+bold italic sans: 𝙏𝙝𝙚 𝙌𝙪𝙞𝙘𝙠 𝘽𝙧𝙤𝙬𝙣 𝙁𝙤𝙭 𝙅𝙪𝙢𝙥𝙚𝙙 𝙊𝙫𝙚𝙧 𝙩𝙝𝙚 𝙡𝙖𝙯𝙮 𝙙𝙤𝙜.
+italics serif: 𝑇ℎ𝑒 𝑄𝑢𝑖𝑐𝑘 𝐵𝑟𝑜𝑤𝑛 𝐹𝑜𝑥 𝐽𝑢𝑚𝑝𝑒𝑑 𝑂𝑣𝑒𝑟 𝑡ℎ𝑒 𝑙𝑎𝑧𝑦 𝑑𝑜𝑔.
+
+The block kit code should be valid block kit code.
+When you generate the block kit code: 
+- Add several sections. 
+- Include the name of the property, {!$Input:Property.Name}, and explain the characteristics of the house, such as {!$Input:Property.Baths__c}, {!$Input:Property.Beds__c} and {!$Input:Property.Price__c}. 
+- Include a the picture of the property, which image_url is {!$Input:Property.Picture__c}. 
+- Include a button which url points to https://d1q000001ewauuaq-dev-ed.develop.lightning.force.com/{!$Input:Property.Id}
+- Include emoticons so the post is more visual.
+
+Example of block kit code:
+
+{
+    &quot;blocks&quot;: [
+        {
+            &quot;type&quot;: &quot;section&quot;,
+            &quot;text&quot;: {
+                &quot;type&quot;: &quot;mrkdwn&quot;,
+                &quot;text&quot;: &quot;Hello, Assistant to the Regional Manager Dwight! *Michael Scott* wants to know where you&apos;d like to take the Paper Company investors to dinner tonight.\n\n *Please select a restaurant:*&quot;
+            }
+        },
+        {
+            &quot;type&quot;: &quot;divider&quot;
+        },
+        {
+            &quot;type&quot;: &quot;section&quot;,
+            &quot;text&quot;: {
+                &quot;type&quot;: &quot;mrkdwn&quot;,
+                &quot;text&quot;: &quot;*Farmhouse Thai Cuisine*\n:star::star::star::star: 1528 reviews\n They do have some vegan options, like the roti and curry, plus they have a ton of salad stuff and noodles can be ordered without meat!! They have something for everyone here&quot;
+            },
+            &quot;accessory&quot;: {
+                &quot;type&quot;: &quot;image&quot;,
+                &quot;image_url&quot;: &quot;https://s3-media3.fl.yelpcdn.com/bphoto/c7ed05m9lC2EmA3Aruue7A/o.jpg&quot;,
+                &quot;alt_text&quot;: &quot;alt text for image&quot;
+            }
+        },
+        {
+            &quot;type&quot;: &quot;section&quot;,
+            &quot;text&quot;: {
+                &quot;type&quot;: &quot;mrkdwn&quot;,
+                &quot;text&quot;: &quot;*Kin Khao*\n:star::star::star::star: 1638 reviews\n The sticky rice also goes wonderfully with the caramelized pork belly, which is absolutely melt-in-your-mouth and so soft.&quot;
+            },
+            &quot;accessory&quot;: {
+                &quot;type&quot;: &quot;image&quot;,
+                &quot;image_url&quot;: &quot;https://s3-media2.fl.yelpcdn.com/bphoto/korel-1YjNtFtJlMTaC26A/o.jpg&quot;,
+                &quot;alt_text&quot;: &quot;alt text for image&quot;
+            }
+        },
+        {
+            &quot;type&quot;: &quot;section&quot;,
+            &quot;text&quot;: {
+                &quot;type&quot;: &quot;mrkdwn&quot;,
+                &quot;text&quot;: &quot;*Ler Ros*\n:star::star::star::star: 2082 reviews\n I would really recommend the Yum Koh Moo Yang - Spicy lime dressing and roasted quick marinated pork shoulder, basil leaves, chili &amp; rice powder.&quot;
+            },
+            &quot;accessory&quot;: {
+                &quot;type&quot;: &quot;image&quot;,
+                &quot;image_url&quot;: &quot;https://s3-media2.fl.yelpcdn.com/bphoto/DawwNigKJ2ckPeDeDM7jAg/o.jpg&quot;,
+                &quot;alt_text&quot;: &quot;alt text for image&quot;
+            }
+        },
+        {
+            &quot;type&quot;: &quot;divider&quot;
+        },
+        {
+            &quot;type&quot;: &quot;actions&quot;,
+            &quot;elements&quot;: [
+                {
+                    &quot;type&quot;: &quot;button&quot;,
+                    &quot;text&quot;: {
+                        &quot;type&quot;: &quot;plain_text&quot;,
+                        &quot;text&quot;: &quot;Farmhouse&quot;,
+                        &quot;emoji&quot;: true
+                    },
+                    &quot;value&quot;: &quot;click_me_123&quot;
+                },
+                {
+                    &quot;type&quot;: &quot;button&quot;,
+                    &quot;text&quot;: {
+                        &quot;type&quot;: &quot;plain_text&quot;,
+                        &quot;text&quot;: &quot;Kin Khao&quot;,
+                        &quot;emoji&quot;: true
+                    },
+                    &quot;value&quot;: &quot;click_me_123&quot;,
+                    &quot;url&quot;: &quot;https://google.com&quot;
+                },
+                {
+                    &quot;type&quot;: &quot;button&quot;,
+                    &quot;text&quot;: {
+                        &quot;type&quot;: &quot;plain_text&quot;,
+                        &quot;text&quot;: &quot;Ler Ros&quot;,
+                        &quot;emoji&quot;: true
+                    },
+                    &quot;value&quot;: &quot;click_me_123&quot;,
+                    &quot;url&quot;: &quot;https://google.com&quot;
+                }
+            ]
+        }
+    ]
+}
+
+The response should have the next format:
+{
+ &quot;twitter&quot;: [here goes the twitter post, that should have less than 280 characters],
+ &quot;linkedin&quot;: [here goes the linkedin post, that should have between 1500 and 2000 characters], 
+ &quot;blockkit&quot;: [here goes the block kit post], 
+}
+
+&quot;&quot;&quot;
+
+Now generate the posts.
+
+
+</content>
+        <inputs>
+            <apiName>Property</apiName>
+            <definition>SOBJECT://Property__c</definition>
+            <masterLabel>Property</masterLabel>
+            <referenceName>Input:Property</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT35Turbo</primaryModel>
+        <status>Published</status>
+        <versionNumber>1</versionNumber>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

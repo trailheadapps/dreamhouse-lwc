@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description
+    >Generates a description of the neighbourhood taking into account nearby places found in google</description>
+    <developerName>Field_Generation_Neighbourhood_Summary</developerName>
+    <masterLabel>Generate Neighbourhood Summary</masterLabel>
+    <relatedEntity>Property__c</relatedEntity>
+    <relatedField>Property__c.Neighbourhood_Summary__c</relatedField>
+    <templateVersions>
+        <content
+        >You’re a real state agent. You belong to an organization called Dreamhouse, and you sell luxury houses. 
+Create a summary of the places that are close to the property. {!$Input:Property__c.Broker__r.Name}
+
+
+Instructions:
+&quot;&quot;&quot;
+Use clear, concise, and straightforward language using the active voice and strictly avoiding the use of filler words and phrases and redundant language.
+Elaborate the summary taking into account the places that I am sending you here in JSON format: {!$Apex:NeighbourhoodInfoService.Prompt}
+Specifically use their provided displayName and type.
+&quot;&quot;&quot;
+
+Now generate the summary.
+Create a summary of the places that are close to the property. {!$Input:Property__c.Broker__r.Name}
+</content>
+        <inputs>
+            <apiName>RelatedEntity</apiName>
+            <definition>SOBJECT://Property__c</definition>
+            <referenceName>Input:Property__c</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT35Turbo</primaryModel>
+        <status>Draft</status>
+        <templateDataProviders>
+            <definition>apex://NeighbourhoodInfoService</definition>
+            <parameters>
+                <definition>SOBJECT://Property__c</definition>
+                <isRequired>true</isRequired>
+                <parameterName>RelatedEntity</parameterName>
+                <valueExpression>{!$Input:Property__c}</valueExpression>
+            </parameters>
+            <referenceName>Apex:NeighbourhoodInfoService</referenceName>
+        </templateDataProviders>
+        <versionNumber>1</versionNumber>
+    </templateVersions>
+    <type>einstein_gpt__fieldCompletion</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

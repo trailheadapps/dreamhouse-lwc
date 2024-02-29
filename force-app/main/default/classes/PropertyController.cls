@@ -126,7 +126,7 @@ public with sharing class PropertyController {
         inputParams.put('Input:Property', propertyValue);
 
         return EinsteinGenerativeGatewayService.generateResponseFromPromptTemplate(
-            'Generate_Social_Media_Post',
+            'Generate_Social_Media_Posts',
             inputParams
         );
     }

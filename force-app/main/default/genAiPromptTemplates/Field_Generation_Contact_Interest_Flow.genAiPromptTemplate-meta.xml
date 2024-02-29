@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersion>1</activeVersion>
+    <description
+    >Creates a description that includes info about the properties the contact demonstrated interest in</description>
+    <developerName>Field_Generation_Contact_Interest_Flow</developerName>
+    <masterLabel>Generate Contact Interest Summary - Flow</masterLabel>
+    <relatedEntity>Contact</relatedEntity>
+    <relatedField>Contact.Property_Interest_Summary__c</relatedField>
+    <templateVersions>
+        <content
+        >You’re a real estate agent for Dreamhouse. The contacts in the system can demonstrate interest in the properties being sold.
+Create a summary of the properties the contact has demonstrated interest in, so yourself or other brokers can quickly reading when interacting with the contact.
+
+Instructions:
+&quot;&quot;&quot;
+Use clear, concise, and straightforward language using the active voice and strictly avoiding the use of filler words and phrases and redundant language.
+Elaborate the summary taking into account these properties that the contact has demonstrated interest in: {!$Flow:Get_Contact_Interest_Summary.Prompt}.
+Don&apos;t need to write it in an email format or include thank you at the end, it&apos;s just an internal summary that brokers can take a look at. 
+&quot;&quot;&quot;
+
+Now generate the summary.
+</content>
+        <inputs>
+            <apiName>RelatedEntity</apiName>
+            <definition>SOBJECT://Contact</definition>
+            <referenceName>Input:Contact</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT35Turbo</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>flow://Get_Contact_Interest_Summary</definition>
+            <parameters>
+                <definition>SOBJECT://Contact</definition>
+                <isRequired>true</isRequired>
+                <parameterName>RelatedEntity</parameterName>
+                <valueExpression>{!$Input:Contact}</valueExpression>
+            </parameters>
+            <referenceName>Flow:Get_Contact_Interest_Summary</referenceName>
+        </templateDataProviders>
+        <versionNumber>1</versionNumber>
+    </templateVersions>
+    <type>einstein_gpt__fieldCompletion</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

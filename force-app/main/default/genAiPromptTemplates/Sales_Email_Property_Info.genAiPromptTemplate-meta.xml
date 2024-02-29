@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersion>1</activeVersion>
+    <description
+    >Generate email to be sent to a lead when they are interested in a property.</description>
+    <developerName>Sales_Email_Property_Info</developerName>
+    <masterLabel>Sales Email Property Info</masterLabel>
+    <relatedEntity>Contact</relatedEntity>
+    <templateVersions>
+        <content
+        >You’re a real estate agent, and your name is{!$Input:Sender.Name}, with phone {!$Input:Sender.Phone}and email {!$Input:Sender.Email}. You belong to an organization called Dreamhouse, and you sell luxury houses. Your prospect is {!$Input:Recipient.Name}. You want to tell your prospect the characteristics of the house they demonstrated interest in and highlight its most relevant features.
+
+Instructions:
+&quot;&quot;&quot;
+Use clear, concise, and straightforward language using the active voice and strictly avoiding the use of filler words and phrases and redundant language.
+Generate a subject line that can increase open rate using words and content that is related to the email body content.
+Generate the body of the email, which will have the next format:
+
+- First add a title that includes the name of the property: {!$Input:Property__c.Name}.
+- Then add a paragraph explaining the characteristics of the house, such as, {!$Input:Property__c.Baths__c}, {!$Input:Property__c.Beds__c}.
+- Then add a link to the property picture, {!$Input:Property__c.Picture__c}.
+- Include a comparison with the other properties for which the prospect demonstrated interest, only if there are some. This is what I found: {!$Apex:ContactInterestSalesEmail.Prompt}
+- Include a paragraph proposing a visit to the house with your prospect, and express a desire to learn more about their needs.
+- End the email including here a clear call to action for the prospect to respond and schedule a visit.
+
+&quot;&quot;&quot;
+
+Now generate the introduction email to your prospect.ow generate the introduction email to your prospect.
+</content>
+        <inputs>
+            <apiName>Recipient</apiName>
+            <definition>SOBJECT://Contact</definition>
+            <referenceName>Input:Recipient</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Sender</apiName>
+            <definition>SOBJECT://User</definition>
+            <referenceName>Input:Sender</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>RelatedObject</apiName>
+            <definition>SOBJECT://Property__c</definition>
+            <referenceName>Input:Property__c</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT35Turbo</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>apex://ContactInterestSalesEmail</definition>
+            <parameters>
+                <definition>SOBJECT://Contact</definition>
+                <isRequired>true</isRequired>
+                <parameterName>Recipient</parameterName>
+                <valueExpression>{!$Input:Recipient}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>SOBJECT://User</definition>
+                <isRequired>true</isRequired>
+                <parameterName>Sender</parameterName>
+                <valueExpression>{!$Input:Sender}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>SOBJECT://Property__c</definition>
+                <isRequired>true</isRequired>
+                <parameterName>RelatedObject</parameterName>
+                <valueExpression>{!$Input:Property__c}</valueExpression>
+            </parameters>
+            <referenceName>Apex:ContactInterestSalesEmail</referenceName>
+        </templateDataProviders>
+        <versionNumber>1</versionNumber>
+    </templateVersions>
+    <type>einstein_gpt__salesEmail</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

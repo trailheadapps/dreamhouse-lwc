@@ -1,45 +1,5 @@
 public with sharing class EinsteinGenerativeGatewayService {
     /*
-     * Invokes the Generative Generative API to generate a response for a prompt (/einstein/llm/generations)
-     * Eg: System.debug(EinsteinGenerativeGatewayService.generateResponseFromPrompt('Give me information about Salesforce\'s Dreamhouse sample app'));
-     */
-    public static String generateResponseFromPrompt(String prompt) {
-        // Create the input
-        ConnectApi.EinsteinLlmGenerationsInput generationsInput = new ConnectApi.EinsteinLlmGenerationsInput();
-        generationsInput.promptTextorId = prompt;
-        generationsInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
-        generationsInput.additionalConfig.maxTokens = 512;
-        generationsInput.additionalConfig.enablePiiMasking = true;
-
-        // Call the service
-        ConnectApi.EinsteinLLMGenerationsOutput generationsOutput = ConnectApi.EinsteinLLM.generateMessages(
-            generationsInput
-        );
-
-        // Consume response
-        ConnectApi.EinsteinLLMGenerationItemOutput response = generationsOutput.generations[0];
-        return response.text;
-    }
-
-    /*
-     * Invokes the Generative Generative API to generate an embedding (/einstein/llm/embeddings)
-     * Embeddings are vector mathematical representations that measure the relatedness of text strings.
-     * They are commonly used for semantic search, recommendations, classification and more.
-     * Eg: System.debug(EinsteinGenerativeGatewayService.generateEmbeddingsFromPrompts(new List<String>{'run','sprint','race','dart', 'rush'}, null, null));
-     */
-    public static ConnectApi.EinsteinLLMEmbeddingsOutput generateEmbeddingsFromPrompts(
-        List<String> prompts
-    ) {
-        // Create input
-        ConnectApi.EinsteinLlmEmbeddingsInput embeddingsInput = new ConnectApi.EinsteinLlmEmbeddingsInput();
-        embeddingsInput.prompts = prompts;
-        embeddingsInput.additionalConfig = new ConnectApi.EinsteinLlmEmbeddingsAdditionalConfigInput();
-        embeddingsInput.additionalConfig.enablePiiMasking = true;
-
-        // Call the service
-        return ConnectApi.EinsteinLLM.createEmbeddings(embeddingsInput);
-    }
-    /*
      * Invokes the Generative Generative API to generate a response based on a prompt template (/einstein/prompt-templates/${promptTemplateDevName}/generations)
      * To execute a prompt template, you need to specify its related records.
      * For Sales Email templates:
@@ -73,20 +33,23 @@ public with sharing class EinsteinGenerativeGatewayService {
         // Create input
         ConnectApi.EinsteinPromptTemplateGenerationsInput executeTemplateInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
         executeTemplateInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
-        executeTemplateInput.additionalConfig.enablePiiMasking = true;
+        executeTemplateInput.additionalConfig.applicationName = 'PromptBuilderPreview';
 
         // Set additional values
         executeTemplateInput.isPreview = false;
         executeTemplateInput.inputParams = inputParams;
 
-        // Call the service
-        ConnectApi.EinsteinPromptTemplateGenerationsRepresentation generationsOutput = ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate(
-            promptTemplateDeveloperName,
-            executeTemplateInput
-        );
-
-        // Consume response
-        ConnectApi.EinsteinLLMGenerationItemOutput response = generationsOutput.generations[0];
-        return response.text;
+        try {
+            // Call the service
+            ConnectApi.EinsteinPromptTemplateGenerationsRepresentation generationsOutput = ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate(
+                promptTemplateDeveloperName,
+                executeTemplateInput
+            );
+            ConnectApi.EinsteinLLMGenerationItemOutput response = generationsOutput.generations[0];
+            return response.text;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            throw e;
+        }
     }
 }

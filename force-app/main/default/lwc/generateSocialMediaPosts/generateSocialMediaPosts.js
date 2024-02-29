@@ -5,6 +5,7 @@ import { copyTextToClipboard } from 'c/copyTextToClipboard';
 export default class GenerateSocialMediaPosts extends LightningElement {
     twitterPost;
     linkedinPost;
+    slackPost;
     error;
     showSpinner = false;
     @api recordId;
@@ -18,6 +19,7 @@ export default class GenerateSocialMediaPosts extends LightningElement {
             const parsedPosts = JSON.parse(posts);
             this.twitterPost = parsedPosts.twitter;
             this.linkedinPost = parsedPosts.linkedin;
+            this.slackPost = JSON.stringify(parsedPosts.blockkit);
             this.error = undefined;
         } catch (error) {
             this.twitterPost = undefined;
@@ -34,5 +36,9 @@ export default class GenerateSocialMediaPosts extends LightningElement {
 
     async copyLinkedin() {
         await copyTextToClipboard(this.linkedinPost);
+    }
+
+    async copySlack() {
+        await copyTextToClipboard(this.slackPost);
     }
 }
