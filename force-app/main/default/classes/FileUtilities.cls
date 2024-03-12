@@ -1,6 +1,6 @@
 public with sharing class FileUtilities {
     
-    //File Stuff
+    //File Stuff - its a comment
     @AuraEnabled
     public static String createFile(
         String base64data,
