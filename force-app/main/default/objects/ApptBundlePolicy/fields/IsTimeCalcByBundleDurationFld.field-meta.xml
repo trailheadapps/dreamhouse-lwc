@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsTimeCalcByBundleDurationFld</fullName>
+    <inlineHelpText>Subtract the bundle’s start time from the bundle’s end time and compare it to the bundle’s Duration.</inlineHelpText>
+</CustomField>

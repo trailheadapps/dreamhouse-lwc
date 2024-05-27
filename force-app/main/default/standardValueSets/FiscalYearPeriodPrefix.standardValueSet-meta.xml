@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Period</fullName>
+        <default>true</default>
+        <label>Period</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FP</fullName>
+        <default>false</default>
+        <label>FP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>P</fullName>
+        <default>false</default>
+        <label>P</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Month</fullName>
+        <default>false</default>
+        <label>Month</label>
+    </standardValue>
+</StandardValueSet>

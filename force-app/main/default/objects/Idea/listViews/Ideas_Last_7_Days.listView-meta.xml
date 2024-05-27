@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ideas_Last_7_Days</fullName>
+    <columns>IDEA.CREATED_DATE</columns>
+    <columns>IDEA.TITLE</columns>
+    <columns>IDEA.CREATED_BY_NICKNAME</columns>
+    <columns>VOTE_STATS.WEIGHTED_SUM</columns>
+    <columns>IDEA.NUM_COMMENTS</columns>
+    <columns>IDEA.STATUS</columns>
+    <columns>IDEA.CATEGORIES</columns>
+    <columns>COMMUNITY.NAME</columns>
+    <columns>IDEA.IDEA_THEME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>IDEA.CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>LAST_N_DAYS:7</value>
+    </filters>
+    <label>Last 7 Days</label>
+</ListView>

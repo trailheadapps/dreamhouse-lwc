@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>StatusesNotToUpdateOnUnbundle</fullName>
+    <inlineHelpText>Select the statuses that aren’t updated when a bundle is unbundled. Use an empty value to update service appointments when unbundling.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+</CustomField>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ToBundleMemberNumber</fullName>
+    <inlineHelpText>Enter the last bundle member’s number that the downscale applies to. To always downscale to the last bundle member, use an empty value.</inlineHelpText>
+</CustomField>

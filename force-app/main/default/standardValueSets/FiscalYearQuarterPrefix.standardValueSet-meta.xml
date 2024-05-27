@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Quarter</fullName>
+        <default>true</default>
+        <label>Quarter</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FQ</fullName>
+        <default>false</default>
+        <label>FQ</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Q</fullName>
+        <default>false</default>
+        <label>Q</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Trimester</fullName>
+        <default>false</default>
+        <label>Trimester</label>
+    </standardValue>
+</StandardValueSet>

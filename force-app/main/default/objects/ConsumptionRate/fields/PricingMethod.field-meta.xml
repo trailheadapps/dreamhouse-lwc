@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PricingMethod</fullName>
+    <inlineHelpText>Choose whether the usage is priced per unit or quantity or as a flat fee</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CustomLogic</fullName>
+    <inlineHelpText>Define the logic of the conditions. To group conditions, use parentheses around the parameters, for example 1 AND (2 OR 3). If you add another condition, the custom logic is updated automatically to 1 AND (2 OR 3) AND 4.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

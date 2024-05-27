@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DoesAddTravelTime</fullName>
+    <inlineHelpText>If the bundle member service appointments aren&apos;t in the same location, add travel time between them to the bundle&apos;s duration according to their sort order.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

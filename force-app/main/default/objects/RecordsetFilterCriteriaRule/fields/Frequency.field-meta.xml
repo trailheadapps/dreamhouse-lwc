@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Frequency</fullName>
+    <inlineHelpText>Set the frequency of maintenance. For example if this field is “1000”, this will schedule at every 1000 increments. This can either be a positive value for an incrementing Usage Field, or a negative value for a decreasing Usage Field.</inlineHelpText>
+</CustomField>

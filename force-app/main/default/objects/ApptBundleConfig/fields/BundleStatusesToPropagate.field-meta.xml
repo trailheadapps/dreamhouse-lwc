@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BundleStatusesToPropagate</fullName>
+    <inlineHelpText>Select the bundle service appointment statuses that are added to the bundle member service appointments. Use an empty value to propagate all statuses.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+</CustomField>

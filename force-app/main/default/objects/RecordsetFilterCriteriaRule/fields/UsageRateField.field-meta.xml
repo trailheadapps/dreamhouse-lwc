@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UsageRateField</fullName>
+    <inlineHelpText>This field stores the daily usage rate of the asset. The unit for the usage rate must be per day.</inlineHelpText>
+</CustomField>

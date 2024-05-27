@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MaxReduction</fullName>
+    <inlineHelpText>Enter the maximum reduction for a bundle member service appointment, in minutes.</inlineHelpText>
+</CustomField>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DoesAllowEmpty</fullName>
+    <inlineHelpText>Allow a bundle member service appointment with an empty Restriction Field Name to be bundled.</inlineHelpText>
+</CustomField>

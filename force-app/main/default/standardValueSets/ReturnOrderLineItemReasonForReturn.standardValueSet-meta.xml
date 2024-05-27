@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Damaged</fullName>
+        <default>true</default>
+        <label>Damaged</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Defective</fullName>
+        <default>false</default>
+        <label>Defective</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Duplicate Order</fullName>
+        <default>false</default>
+        <label>Duplicate Order</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong Item</fullName>
+        <default>false</default>
+        <label>Wrong Item</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong Quantity</fullName>
+        <default>false</default>
+        <label>Wrong Quantity</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Satisfied</fullName>
+        <default>false</default>
+        <label>Not Satisfied</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Outdated</fullName>
+        <default>false</default>
+        <label>Outdated</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+</StandardValueSet>

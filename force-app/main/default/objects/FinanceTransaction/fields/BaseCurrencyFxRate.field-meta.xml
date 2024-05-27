@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BaseCurrencyFxRate</fullName>
+    <inlineHelpText>Rate of exchange according to the Base Currency FX Date. Define this value to use later when you calculate currency conversions.</inlineHelpText>
+</CustomField>

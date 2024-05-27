@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MaintenanceWindowEndDays</fullName>
+    <inlineHelpText>The number of days after the work order’s suggested service date in which the service appointment can be scheduled.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>
