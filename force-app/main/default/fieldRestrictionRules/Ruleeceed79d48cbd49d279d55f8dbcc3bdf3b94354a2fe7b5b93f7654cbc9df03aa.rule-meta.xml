@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldRestrictionRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <classification>0IXB0000000LuSG</classification>
+    <classificationType>FieldSet</classificationType>
+    <description>Field Restriction Rule for Portal PersonalInfo_EPIM</description>
+    <enforcementType>FieldRestrict</enforcementType>
+    <masterLabel>Ruleeceed79d48cbd49d279d55f8dbcc3bdf3b94354a2fe7b5b93f7654cbc9df03aa</masterLabel>
+    <recordFilter>Id=$User.Id</recordFilter>
+    <targetEntity>User</targetEntity>
+    <userCriteria>CASE($User.UserType,&apos;Standard&apos;,0,&apos;AutomatedProcess&apos;,0,&apos;CloudIntegrationUser&apos;,0,&apos;LicenseManager&apos;,0,&apos;Guest&apos;,0,1)=1</userCriteria>
+    <version>0</version>
+</FieldRestrictionRule>

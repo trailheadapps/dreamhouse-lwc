@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RecurrencePattern</fullName>
+    <inlineHelpText>Define a recurrence pattern only for a calendar based work rule. The frequency is how frequently the event occurs during the selected time period. For example, if you select a weekly recurrence period and a frequency of 2, the event occurs every 2 weeks.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

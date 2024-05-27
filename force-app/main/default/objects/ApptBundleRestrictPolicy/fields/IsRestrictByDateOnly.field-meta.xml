@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsRestrictByDateOnly</fullName>
+    <inlineHelpText>Restriction Field Name must be of type Date/Time. Restrict bundle based on the calendar date only, ignoring the time of day.</inlineHelpText>
+</CustomField>

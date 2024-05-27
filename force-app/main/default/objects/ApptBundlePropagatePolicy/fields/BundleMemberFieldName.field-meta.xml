@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BundleMemberFieldName</fullName>
+    <inlineHelpText>Select a bundle member service appointment field. The value is pulled from the bundle service appointment.</inlineHelpText>
+</CustomField>

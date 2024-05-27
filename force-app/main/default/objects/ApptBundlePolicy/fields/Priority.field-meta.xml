@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Priority</fullName>
+    <inlineHelpText>Enter a policy priority number. Must be unique. When the bundle policies are evaluated with automatic bundling, the priority determines the order that the policies are applied.</inlineHelpText>
+</CustomField>

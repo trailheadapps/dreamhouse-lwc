@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>mine</fullName>
+    <columns>Name</columns>
+    <columns>Balance</columns>
+    <columns>ReferenceEntity</columns>
+    <columns>TransactionDate</columns>
+    <columns>EffectiveDate</columns>
+    <filterScope>Mine</filterScope>
+    <label>My Finance Balance Snapshots</label>
+</ListView>

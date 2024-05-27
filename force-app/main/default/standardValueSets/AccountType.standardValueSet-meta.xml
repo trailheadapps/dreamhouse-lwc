@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Prospect</fullName>
+        <default>false</default>
+        <label>Prospect</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Customer - Direct</fullName>
+        <default>false</default>
+        <label>Customer - Direct</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Customer - Channel</fullName>
+        <default>false</default>
+        <label>Customer - Channel</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Channel Partner / Reseller</fullName>
+        <default>false</default>
+        <label>Channel Partner / Reseller</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Installation Partner</fullName>
+        <default>false</default>
+        <label>Installation Partner</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Technology Partner</fullName>
+        <default>false</default>
+        <label>Technology Partner</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+</StandardValueSet>

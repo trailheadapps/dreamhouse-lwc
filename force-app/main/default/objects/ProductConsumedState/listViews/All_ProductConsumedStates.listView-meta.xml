@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_ProductConsumedStates</fullName>
+    <filterScope>Everything</filterScope>
+    <label>All Product Consumed States</label>
+</ListView>

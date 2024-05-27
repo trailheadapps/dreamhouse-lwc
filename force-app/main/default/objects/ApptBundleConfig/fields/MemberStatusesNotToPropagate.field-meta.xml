@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MemberStatusesNotToPropagate</fullName>
+    <inlineHelpText>Select the bundle member service appointment statuses that aren’t overridden when the bundle service appointment&apos;s status is updated. Use an empty value to propagate all statuses.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+</CustomField>

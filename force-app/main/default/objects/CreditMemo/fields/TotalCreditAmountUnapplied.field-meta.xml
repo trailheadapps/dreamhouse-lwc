@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TotalCreditAmountUnapplied</fullName>
+    <inlineHelpText>Amount unapplied from invoices and returned to the credit memo.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

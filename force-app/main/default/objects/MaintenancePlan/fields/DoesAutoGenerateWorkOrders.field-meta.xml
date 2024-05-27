@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DoesAutoGenerateWorkOrders</fullName>
+    <inlineHelpText>Define whether work orders are generated automatically. This rule disables the ability to manually generate work orders.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

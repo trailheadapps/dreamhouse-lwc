@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BundleMemberAddiFieldName</fullName>
+    <inlineHelpText>The additional source field comes from the bundle member service appointment. If you select the aggregation action Sum Based on Bundle Fields or Subtract Based on Bundle Fields, the additional source field comes from the bundle service appointment.</inlineHelpText>
+</CustomField>

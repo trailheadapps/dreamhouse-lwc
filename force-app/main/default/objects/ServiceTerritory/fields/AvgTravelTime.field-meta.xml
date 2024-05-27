@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AvgTravelTime</fullName>
+    <inlineHelpText>Enter the average travel time for this service territory. The value is added to the Work Capacity Usage for each scheduled service appointment in the service territory.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SvcApptGenerationMethod</fullName>
+    <inlineHelpText>Specify how service appointments are generated when more than one asset is associated with the maintenance plan and work order generation method is One work order line item per asset.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

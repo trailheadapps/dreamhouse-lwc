@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AggregationAction</fullName>
+    <inlineHelpText>Select an action that can be used with the Bundle Field Name. For help, check the documentation.</inlineHelpText>
+</CustomField>

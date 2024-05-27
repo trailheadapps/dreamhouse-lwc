@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SortType</fullName>
+    <inlineHelpText>Sort Within a Bundle defines the order of bundle members. It’s also used when you unbundle to define the order that the service appointments are scheduled on the Gantt.
+            Sort for Automated Bundling defines the order that automated bundling uses to examine the candidate service appointments to be bundled.</inlineHelpText>
+</CustomField>
