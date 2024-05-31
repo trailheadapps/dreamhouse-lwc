@@ -27,6 +27,7 @@ export const setDeviceLocationServiceAvailable = (value = true) => {
 // To stub getBarcodeScanner.isAvailable(), add the following to your test:
 // import { setBarcodeScannerAvailable } from 'lightning/mobileCapabilities';
 // setBarcodeScannerAvailable(true);
+//SET NEW BARCODE
 
 // Mock getBarcodeScanner stubs that can be altered from within test files
 let _barcodeScannerAvailable = false;
