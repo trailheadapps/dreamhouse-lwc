@@ -15,7 +15,7 @@
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <startDate>2020-06-29</startDate>
         <stepNumber>1</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Finder</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <timesToDisplay>1</timesToDisplay>
@@ -35,7 +35,7 @@
         <shouldDisplayActionButton>false</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>2</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Finder</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <title>Third party JavaScript libraries</title>
@@ -54,7 +54,7 @@
         <shouldDisplayActionButton>false</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>3</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Finder</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <title>Next Tour</title>

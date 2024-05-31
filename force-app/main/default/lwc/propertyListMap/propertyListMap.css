@@ -1,12 +1,17 @@
-.tile {
+.map {
+    height: 550px;
+}
+
+.tooltip-picture {
     position: relative;
-    height: 220px;
+    width: 150px;
+    height: 150px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.lower-third {
+.tooltip-picture .lower-third {
     position: absolute;
     /* @sldsValidatorIgnore */
     bottom: 0;
@@ -15,9 +20,12 @@
     /* @sldsValidatorIgnore */
     right: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 0.15rem;
 }
 
-.truncate {
+.lower-third h1 {
+    font-weight: bold;
     /* @sldsValidatorIgnore */
     white-space: nowrap;
     overflow: hidden;

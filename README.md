@@ -2,7 +2,8 @@
 
 [![CI Workflow](https://github.com/trailheadapps/dreamhouse-lwc/workflows/CI/badge.svg)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3ACI) [![Packaging Workflow](https://github.com/trailheadapps/dreamhouse-lwc/workflows/Packaging/badge.svg)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3APackaging) [![codecov](https://codecov.io/gh/trailheadapps/dreamhouse-lwc/branch/main/graph/badge.svg)](https://codecov.io/gh/trailheadapps/dreamhouse-lwc)
 
-> IMPORTANT: This is the new Lightning Web Components version of the Dreamhouse sample application. If you are looking for the Aura version, click [here](https://github.com/dreamhouseapp/dreamhouse-sfdx).
+> [!IMPORTANT]
+> This is the modern Lightning Web Components version of the Dreamhouse sample application. If you are looking for the legacy Aura version, click [here](https://github.com/dreamhouseapp/dreamhouse-sfdx).
 
 ![dreamhouse-logo](dreamhouse-logo.png)
 
@@ -10,7 +11,7 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 
 <div>
     <img src="https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70,w_50/learn/projects/quick-start-dreamhouse-sample-app/17d9a9454cb84973b3adfe25e9f12b01_badge.png" align="left" alt="Trailhead Badge"/>
-    Learn more about this app by completing the <a href="https://trailhead.salesforce.com/en/content/learn/projects/quick-start-dreamhouse-sample-app">Quick Start: Explore the Dreamhouse Sample App</a> Trailhead project.
+    Learn more about this app by completing the <a href="https://trailhead.salesforce.com/en/content/learn/projects/quick-start-dreamhouse-sample-app">Quick Start: Explore the Dreamhouse Sample App</a> Trailhead project or by watching this <a href="https://www.youtube.com/watch?v=UvUDi8acq2w&list=PLgIMQe2PKPSJcuCwM61dEc4jFG_jHqV2t&index=4">short presentation video</a>.
     <br/>
     <br/>
     <br/>
@@ -44,7 +45,7 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 1. If you haven't already done so, authorize your hub org and provide it with an alias (**myhuborg** in the command below):
 
     ```
-    sfdx auth:web:login -d -a myhuborg
+    sf org login web -d -a myhuborg
     ```
 
 1. Clone this repository:
@@ -57,19 +58,19 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 1. Create a scratch org and provide it with an alias (**dreamhouse** in the command below):
 
     ```
-    sfdx force:org:create -s -f config/project-scratch-def.json -a dreamhouse
+    sf org create scratch -d -f config/project-scratch-def.json -a dreamhouse
     ```
 
 1. Push the app to your scratch org:
 
     ```
-    sfdx force:source:push
+    sf project deploy start
     ```
 
 1. Assign the **dreamhouse** permission set to the default user:
 
     ```
-    sfdx force:user:permset:assign -n dreamhouse
+    sf org assign permset -n dreamhouse
     ```
 
 1. (Optional) Assign the `Walkthroughs` permission set to the default user.
@@ -77,19 +78,19 @@ DreamHouse is a sample application that demonstrates the unique value propositio
     > Note: this will enable your user to use In-App Guidance Walkthroughs, allowing you to be taken through a guided tour of the sample app. The Walkthroughs permission set gets auto-created with In-App guidance activation.
 
     ```
-    sfdx force:user:permset:assign -n Walkthroughs
+    sf org assign permset -n Walkthroughs
     ```
 
 1. Import sample data:
 
     ```
-    sfdx force:data:tree:import -p data/sample-data-plan.json
+    sf data tree import -p data/sample-data-plan.json
     ```
 
 1. Open the scratch org:
 
     ```
-    sfdx force:org:open
+    sf org open
     ```
 
 1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
@@ -104,7 +105,7 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 
 1. Log in to your org
 
-1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3h000004mBpiAAE) to install the Dreamhouse unlocked package in your org.
+1. Click [this link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3h000001RcBxAAK) to install the Dreamhouse unlocked package in your org.
 
 1. Select **Install for All Users**
 
@@ -140,31 +141,31 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 1. Authorize your Trailhead Playground or Developer org and provide it with an alias (**mydevorg** in the command below):
 
     ```
-    sfdx auth:web:login -s -a mydevorg
+    sf org login web -s -a mydevorg
     ```
 
 1. Run this command in a terminal to deploy the app.
 
     ```
-    sfdx force:source:deploy -p force-app
+    sf project deploy start -d force-app
     ```
 
 1. Assign the `dreamhouse` permission set to the default user.
 
     ```
-    sfdx force:user:permset:assign -n dreamhouse
+    sf org assign permset -n dreamhouse
     ```
 
 1. Import some sample data.
 
     ```
-    sfdx force:data:tree:import -p ./data/sample-data-plan.json
+    sf data tree import -p ./data/sample-data-plan.json
     ```
 
 1. If your org isn't already open, open it now:
 
     ```
-    sfdx force:org:open -u mydevorg
+    sf org open -o mydevorg
     ```
 
 1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.

@@ -2,6 +2,7 @@ import { createElement } from 'lwc';
 import PropertyTile from 'c/propertyTile';
 
 const PROPERTY = {
+    Name: 'My House',
     City__c: 'Some City',
     Beds__c: '3',
     Baths__c: '1',
@@ -32,7 +33,9 @@ describe('c-property-tile', () => {
         document.body.appendChild(element);
 
         const headerEl = element.shadowRoot.querySelector('.truncate');
-        expect(headerEl.textContent).toBe(PROPERTY.City__c);
+        expect(headerEl.textContent).toBe(
+            `${PROPERTY.City__c} • ${PROPERTY.Name}`
+        );
 
         const paragraphEl = element.shadowRoot.querySelector('p');
         expect(paragraphEl.textContent).toBe(

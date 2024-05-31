@@ -15,7 +15,7 @@
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <startDate>2020-06-29</startDate>
         <stepNumber>1</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Explorer</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <timesToDisplay>1</timesToDisplay>
@@ -35,7 +35,7 @@
         <shouldDisplayActionButton>false</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>2</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Explorer</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <title>Property Explorer</title>
@@ -54,7 +54,7 @@
         <shouldDisplayActionButton>false</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>3</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Explorer</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <title>App Builder</title>
@@ -73,7 +73,7 @@
         <shouldDisplayActionButton>false</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>4</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Explorer</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <title>Lightning Message Service</title>
@@ -92,7 +92,7 @@
         <shouldDisplayActionButton>false</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>5</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Explorer</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <title>Property List Component</title>
@@ -111,7 +111,7 @@
         <shouldDisplayActionButton>false</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>6</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Explorer</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <title>lightning-map</title>
@@ -132,7 +132,7 @@
         <shouldDisplayActionButton>true</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>7</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property_Explorer</targetPageKey1>
         <targetPageType>standard__navItemPage</targetPageType>
         <title>Next Tour</title>

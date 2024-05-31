@@ -15,7 +15,7 @@
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <startDate>2020-06-29</startDate>
         <stepNumber>1</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property__c</targetPageKey1>
         <targetPageKey2>view</targetPageKey2>
         <targetPageType>standard__recordPage</targetPageType>
@@ -36,7 +36,7 @@
         <shouldDisplayActionButton>false</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>2</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property__c</targetPageKey1>
         <targetPageKey2>view</targetPageKey2>
         <targetPageType>standard__recordPage</targetPageType>
@@ -56,7 +56,7 @@
         <shouldDisplayActionButton>false</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>3</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property__c</targetPageKey1>
         <targetPageKey2>view</targetPageKey2>
         <targetPageType>standard__recordPage</targetPageType>
@@ -79,7 +79,7 @@
         <shouldDisplayActionButton>true</shouldDisplayActionButton>
         <shouldIgnoreGlobalDelay>true</shouldIgnoreGlobalDelay>
         <stepNumber>4</stepNumber>
-        <targetAppDeveloperName>Dreamhouse</targetAppDeveloperName>
+        <customApplication>Dreamhouse</customApplication>
         <targetPageKey1>Property__c</targetPageKey1>
         <targetPageKey2>view</targetPageKey2>
         <targetPageType>standard__recordPage</targetPageType>

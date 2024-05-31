@@ -22,15 +22,11 @@ public with sharing class PropertyController {
         Integer pageNumber
     ) {
         // Normalize inputs
-        Decimal safeMaxPrice = (maxPrice == null
-            ? DEFAULT_MAX_PRICE
-            : maxPrice);
-        Integer safeMinBedrooms = (minBedrooms == null ? 0 : minBedrooms);
-        Integer safeMinBathrooms = (minBathrooms == null ? 0 : minBathrooms);
-        Integer safePageSize = (pageSize == null
-            ? DEFAULT_PAGE_SIZE
-            : pageSize);
-        Integer safePageNumber = (pageNumber == null ? 1 : pageNumber);
+        Decimal safeMaxPrice = maxPrice ?? DEFAULT_MAX_PRICE;
+        Integer safeMinBedrooms = minBedrooms ?? 0;
+        Integer safeMinBathrooms = minBathrooms ?? 0;
+        Integer safePageSize = pageSize ?? DEFAULT_PAGE_SIZE;
+        Integer safePageNumber = pageNumber ?? 1;
 
         String searchPattern = '%' + searchKey + '%';
         Integer offset = (safePageNumber - 1) * safePageSize;
@@ -52,6 +48,7 @@ public with sharing class PropertyController {
         result.records = [
             SELECT
                 Id,
+                Name,
                 Address__c,
                 City__c,
                 State__c,
