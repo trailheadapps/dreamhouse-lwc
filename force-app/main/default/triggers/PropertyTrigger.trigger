@@ -11,7 +11,7 @@ trigger PropertyTrigger on Property__c(
         Trigger.new,
         Trigger.newMap,
         Trigger.oldMap,
-        System.TriggerOperation
+        Trigger.operationType
     );
 
 }

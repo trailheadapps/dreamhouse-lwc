@@ -12,7 +12,7 @@ public with sharing class PropertyTriggerHandler {
     public static void handleTrigger(
         List<Property__c> workingRecords,
         Map<Id, Property__c> workingMap,
-        List<Property__c> oldMap,
+        Map<Id, Property__c> oldMap,
         System.TriggerOperation triggerEvent
     ) {
         switch on triggerEvent {
@@ -54,15 +54,15 @@ public with sharing class PropertyTriggerHandler {
                 campaigns.add(newCampaign);
             }
         }
-        Database.insert(campaign);
+        Database.insert(campaigns);
     }
 
     public static void updateCampaignOnPropertyUpdate(
         Map<Id, Property__c> workingMap,
-        List<Property__c> oldMap
+        Map<Id, Property__c> oldMap
     ) {
-        List<Property__c> propsUpdateStatus = new List<Property>();
-        List<Property__c> propsUpdatePrice = new List<Property>();
+        List<Property__c> propsUpdateStatus = new List<Property__c>();
+        List<Property__c> propsUpdatePrice = new List<Property__c>();
 
         for (Property__c prop : workingMap.values()) {
             if (prop.Price__c != oldMap.get(prop.Id).Price__c) {
