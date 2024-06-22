@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.ExcessiveParameterList')
+@SuppressWarnings('PMD.ExcessiveParameterList,PMD.ApexCRUDViolation')
 public with sharing class PropertyTriggerHandler {
     /*
     This contrived example exists to illustrate two different transaction profiles of Audicity. First, 
@@ -71,15 +71,13 @@ public with sharing class PropertyTriggerHandler {
 
             if (
                 prop.Status__c != oldMap.get(prop.Id).Status__c &&
-                prop.Status__c == 'Available' &&
-                prop.Status__c != 'Available'
+                prop.Status__c == 'Available'
             ) {
                 propsUpdateStatus.add(prop);
             }
         }
 
         if (propsUpdateStatus?.size() > 0) {
-            //invoke queuable
             PropertyCampaignStatusUpdateQueueable asyncStatus = new PropertyCampaignStatusUpdateQueueable(
                 propsUpdateStatus
             );
@@ -87,7 +85,6 @@ public with sharing class PropertyTriggerHandler {
         }
 
         if (propsUpdatePrice?.size() > 0) {
-            //invoke queuable
             PropertyCampaignPriceUpdateQueueable asyncPrice = new PropertyCampaignPriceUpdateQueueable(
                 propsUpdateStatus
             );
