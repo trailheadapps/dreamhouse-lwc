@@ -69,10 +69,7 @@ public with sharing class PropertyTriggerHandler {
                 propsUpdatePrice.add(prop);
             }
 
-            if (
-                prop.Status__c != oldMap.get(prop.Id).Status__c &&
-                prop.Status__c == 'Available'
-            ) {
+            if (prop.Status__c != oldMap.get(prop.Id).Status__c) {
                 propsUpdateStatus.add(prop);
             }
         }
