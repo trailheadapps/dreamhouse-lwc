@@ -53,6 +53,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Campaign.Property__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Property__c.Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -119,11 +124,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Property__c.Location__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Property__c.Name</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
