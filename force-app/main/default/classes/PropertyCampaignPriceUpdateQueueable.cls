@@ -6,6 +6,17 @@ public with sharing class PropertyCampaignPriceUpdateQueueable implements Queuea
     }
 
     public void execute(QueueableContext context) {
-        System.debug('do price update queueable');
+        Map<Id, Property__c> propMap = new Map<Id, Property__c>(properties);
+
+        List<Campaign> campaigns = [
+            SELECT Id, ExpectedRevenue, Property__c
+            FROM Campaign
+            WHERE Property__c IN :propMap.keyset()
+        ];
+        for (Campaign campgn : campaigns) {
+            campgn.ExpectedRevenue = propMap.get(campgn.Property__c).Price__c;
+        }
+
+        Database.update(campaigns);
     }
 }

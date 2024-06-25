@@ -86,7 +86,7 @@ public with sharing class PropertyTriggerHandler {
 
         if (propsUpdatePrice?.size() > 0) {
             PropertyCampaignPriceUpdateQueueable asyncPrice = new PropertyCampaignPriceUpdateQueueable(
-                propsUpdateStatus
+                propsUpdatePrice
             );
             Id jobId = System.enqueueJob(asyncPrice);
         }
