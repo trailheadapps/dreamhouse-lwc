@@ -10,6 +10,7 @@ package.xml
 **/objectTranslations/**
 **/profiles/**
 **/settings/**
+**/apexemailnotifications/**
 
 # LWC configuration files
 **/jsconfig.json
