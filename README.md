@@ -1,29 +1,16 @@
 # Dreamhouse Lightning Web Components Sample Application
 
+<!--
 [![CI Workflow](https://github.com/trailheadapps/dreamhouse-lwc/workflows/CI/badge.svg)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3ACI) [![Packaging Workflow](https://github.com/trailheadapps/dreamhouse-lwc/workflows/Packaging/badge.svg)](https://github.com/trailheadapps/dreamhouse-lwc/actions?query=workflow%3APackaging) [![codecov](https://codecov.io/gh/trailheadapps/dreamhouse-lwc/branch/main/graph/badge.svg)](https://codecov.io/gh/trailheadapps/dreamhouse-lwc)
-
-> [!IMPORTANT]
-> This is the modern Lightning Web Components version of the Dreamhouse sample application. If you are looking for the legacy Aura version, click [here](https://github.com/dreamhouseapp/dreamhouse-sfdx).
+-->
 
 ![dreamhouse-logo](dreamhouse-logo.png)
 
-DreamHouse is a sample application that demonstrates the unique value proposition of the Salesforce platform for building Employee Productivity and Customer Engagement apps.
-
-<div>
-    <img src="https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70,w_50/learn/projects/quick-start-dreamhouse-sample-app/17d9a9454cb84973b3adfe25e9f12b01_badge.png" align="left" alt="Trailhead Badge"/>
-    Learn more about this app by completing the <a href="https://trailhead.salesforce.com/en/content/learn/projects/quick-start-dreamhouse-sample-app">Quick Start: Explore the Dreamhouse Sample App</a> Trailhead project or by watching this <a href="https://www.youtube.com/watch?v=UvUDi8acq2w&list=PLgIMQe2PKPSJcuCwM61dEc4jFG_jHqV2t&index=4">short presentation video</a>.
-    <br/>
-    <br/>
-    <br/>
-</div>
-
-> This sample application is designed to run on Salesforce Platform. If you want to experience Lightning Web Components on any platform, please visit https://lwc.dev, and try out our Lightning Web Components sample application [LWC Recipes OSS](https://github.com/trailheadapps/lwc-recipes-oss).
+This is a fork of the Dreamhouse [sample application](https://github.com/trailheadapps/dreamhouse-lwc) created by Salesforce developer relations team. This fork has been customized for the purpose of of installing and running the Audicity data tracking and field data history app.
 
 ## Table of contents
 
 -   [Installing Dreamhouse Using a Scratch Org](#installing-dreamhouse-using-a-scratch-org): This is the recommended installation option. Use this option if you are a developer who wants to experience the app and the code.
-
--   [Installing Dreamhouse Using an Unlocked Package](#installing-dreamhouse-using-an-unlocked-package): This option allows anybody to experience the sample app without installing a local development environment.
 
 -   [Installing Dreamhouse using a Developer Edition Org or a Trailhead Playground](#installing-dreamhouse-using-a-developer-edition-org-or-a-trailhead-playground): Useful when tackling Trailhead Badges or if you want the app deployed to a more permanent environment than a Scratch org.
 
@@ -31,13 +18,11 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 
 -   [Optional installation instructions](#optional-installation-instructions)
 
--   [Code tours](#code-tours)
-
 ## Installing Dreamhouse using a Scratch Org
 
 1. Set up your environment. Follow the steps in the [Quick Start: Lightning Web Components](https://trailhead.salesforce.com/content/learn/projects/quick-start-lightning-web-components/) Trailhead project. The steps include:
 
-    - Enable Dev Hub in your Trailhead Playground
+    - Enable Dev Hub in your Trailhead Playground or Developer Edition org
     - Install Salesforce CLI
     - Install Visual Studio Code
     - Install the Visual Studio Code Salesforce extensions, including the Lightning Web Components extension
@@ -51,14 +36,14 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 1. Clone this repository:
 
     ```
-    git clone https://github.com/dreamhouseapp/dreamhouse-lwc
-    cd dreamhouse-lwc
+    git clone https://github.com/processity/dreamhouse-audicity.git
+    cd dreamhouse-audicity
     ```
 
-1. Create a scratch org and provide it with an alias (**dreamhouse** in the command below):
+1. Create a scratch org and provide it with an alias (**dreamhouse-audicity** in the command below):
 
     ```
-    sf org create scratch -d -f config/project-scratch-def.json -a dreamhouse
+    sf org create scratch -d -f config/project-scratch-def.json -a dreamhouse-audicity
     ```
 
 1. Push the app to your scratch org:
@@ -73,6 +58,7 @@ DreamHouse is a sample application that demonstrates the unique value propositio
     sf org assign permset -n dreamhouse
     ```
 
+<!--
 1. (Optional) Assign the `Walkthroughs` permission set to the default user.
 
     > Note: this will enable your user to use In-App Guidance Walkthroughs, allowing you to be taken through a guided tour of the sample app. The Walkthroughs permission set gets auto-created with In-App guidance activation.
@@ -80,6 +66,7 @@ DreamHouse is a sample application that demonstrates the unique value propositio
     ```
     sf org assign permset -n Walkthroughs
     ```
+-->
 
 1. Import sample data:
 
@@ -97,6 +84,7 @@ DreamHouse is a sample application that demonstrates the unique value propositio
 
 1. In App Launcher, select the **Dreamhouse** app.
 
+<!--
 ## Installing Dreamhouse using an Unlocked Package
 
 Follow this set of instructions if you want to deploy the app to a more permanent environment than a Scratch org or if you don't want to install the local developement tools. You can use a non source-tracked orgs such as a free [Developer Edition Org](https://developer.salesforce.com/signup) or a [Trailhead Playground](https://trailhead.salesforce.com/).
@@ -123,6 +111,7 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
 
 1. In App Launcher, select the **Dreamhouse** app.
+-->
 
 ## Installing Dreamhouse using a Developer Edition Org or a Trailhead Playground
 
@@ -134,8 +123,8 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
 1. Clone this repository:
 
     ```
-    git clone https://github.com/dreamhouseapp/dreamhouse-lwc
-    cd dreamhouse-lwc
+    git clone https://github.com/processity/dreamhouse-audicity.git
+    cd dreamhouse-audicity
     ```
 
 1. Authorize your Trailhead Playground or Developer org and provide it with an alias (**mydevorg** in the command below):
@@ -167,8 +156,6 @@ Make sure to start from a brand-new environment to avoid conflicts with previous
     ```
     sf org open -o mydevorg
     ```
-
-1. In **Setup**, under **Themes and Branding**, activate the **Lightning Lite** theme.
 
 1. In App Launcher, select the **Dreamhouse** app.
 
@@ -207,10 +194,22 @@ npm run lint
 npm run prettier
 ```
 
-## Code Tours
-
-Code Tours are guided walkthroughs that will help you understand the app code better. To be able to run them, install the [CodeTour VSCode extension](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour).
-
 ## Credits
 
 The app GeocodingService uses OpenStreetMap API to geocode property addresses. OpenStreetMap® is open data, licensed under the [Open Data Commons Open Database License (ODbL)](https://opendatacommons.org/licenses/odbl/) by the [OpenStreetMap Foundation (OSMF)](https://wiki.osmfoundation.org/wiki/Main_Page). You are free to copy, distribute, transmit and adapt OpenStreetMap data, as long as you credit OpenStreetMap and its contributors. If you alter or build upon our data, you may distribute the result only under the same licence. The [full legal code](https://opendatacommons.org/licenses/odbl/1-0/) explains your rights and responsibilities in regard to the service.
+
+## Notes and Additions for Audicity
+
+-   Installation instructions for Audicity package on AppExchange (generate org password and then login to org during appexchange install)
+-   Assigning Audicity Permset
+    `> sf org assign permset -n AudicityLoggingAdministrator`
+-   turn on audicity tracking
+-   configure Property object and some fields for tracking
+    -   make sure to save object settings even when changing fields
+-   add the Audit Trail LWC to the property record page with Lightning app builder
+-   instrument the `PropertyTrigger` trigger with `mantra.AudicityApex.track()`
+-   test creating and editing a Property record
+-   add the trigger for campaign and instrument it with `mantra.AudicityApex.track()`
+-   (maybe test again here)
+-   instrument the `jobId` in the trigger handler and `execute()` method of each Queueable
+-   test an update action again
