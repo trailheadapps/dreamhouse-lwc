@@ -1,7 +1,7 @@
 {
     "name": "dreamhouse-lwc",
     "version": "1.0.0",
-    "description": "DreamHouse Sample App - Lightning Web Components",
+    "description": "Dreamhouse Sample App - Lightning Web Components",
     "scripts": {
         "lint": "eslint **/lwc/**/*.js",
         "test": "npm run test:unit",
