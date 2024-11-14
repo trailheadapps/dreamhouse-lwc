@@ -88,11 +88,10 @@ describe('c-paginator', () => {
         const element = createElement('c-paginator', {
             is: Paginator
         });
-        //Set the public property values
+        // Set the public property values
         element.pageNumber = 0;
         element.pageSize = 9;
         element.totalItemCount = 0;
-
         document.body.appendChild(element);
 
         // Query div for validating the display message on component init
@@ -108,12 +107,12 @@ describe('c-paginator', () => {
         const element = createElement('c-paginator', {
             is: Paginator
         });
-        document.body.appendChild(element);
 
-        //Set the public properties for item count greater than zero
+        // Set the public properties for item count greater than zero
         element.pageNumber = 1;
         element.pageSize = 9;
         element.totalItemCount = 12;
+        document.body.appendChild(element);
 
         // Query div for validating the display message on component init
         const lightningLayoutItemEl =
@@ -127,6 +126,28 @@ describe('c-paginator', () => {
         expect(lightningLayoutItemEl.textContent).toBe(
             '12 items • page 1 of 2'
         );
+    });
+
+    it('does not display next page button when reaching max page offset', async () => {
+        // Create initial element
+        const element = createElement('c-paginator', {
+            is: Paginator
+        });
+
+        // Set the public properties to be just below SOQL max offset (2000)
+        element.pageNumber = 200;
+        element.pageSize = 10;
+        element.totalItemCount = 12;
+        document.body.appendChild(element);
+
+        // Wait for any asynchronous DOM updates
+        await flushPromises();
+
+        // Check for next page button
+        const btnNextEl = element.shadowRoot.querySelector(
+            '.nav-next lightning-button-icon'
+        );
+        expect(btnNextEl).toBeNull();
     });
 
     it('is accessible', async () => {
