@@ -1,5 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
+const MAX_ITEM_OFFSET = 2000;
+
 export default class Paginator extends LightningElement {
     /** The current page number. */
     @api pageNumber;
@@ -27,7 +29,10 @@ export default class Paginator extends LightningElement {
     }
 
     get isNotLastPage() {
-        return this.pageNumber < this.totalPages;
+        return (
+            this.pageNumber < this.totalPages &&
+            this.pageNumber * this.pageSize < MAX_ITEM_OFFSET
+        );
     }
 
     get totalPages() {
