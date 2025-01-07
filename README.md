@@ -7,6 +7,8 @@
 
 ![dreamhouse-logo](dreamhouse-logo.png)
 
+This is a test line that the developer put for no other reason other than to test his sanity 
+
 Dreamhouse is a sample application that demonstrates the unique value proposition of the Salesforce platform for building Employee Productivity and Customer Engagement apps.
 
 <div>
