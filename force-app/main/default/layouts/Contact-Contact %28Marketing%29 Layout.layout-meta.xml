@@ -41,6 +41,10 @@
                 <behavior>Edit</behavior>
                 <field>Rollback001__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OPen_Space__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
