@@ -44,10 +44,8 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Pflegekassennummer__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>KundenId__c</field>
+                <field>Source__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
