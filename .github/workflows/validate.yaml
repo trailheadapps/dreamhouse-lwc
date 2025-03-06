@@ -1,0 +1,28 @@
+name: Validate pull request
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize]
+    paths:
+      - 'force-app/**'
+
+jobs:
+  validate-deployment:
+    runs-on: ubuntu-latest
+    container:
+      image: salesforce/cli:latest-slim
+    steps:      
+      - name: 'Checkout source code'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: 'Authenticate using SFDX_AUTH_URL'
+        run: | 
+          echo ${{ secrets.SFDX_AUTH_URL }} | sf org login sfdx-url -s -u
+
+      - name: 'Validate'
+        run: |
+          sf project deploy validate -d force-app/ -l RunLocalTests -w 30          
