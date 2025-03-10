@@ -3,7 +3,7 @@
     <fullName>KundenId__c</fullName>
     <externalId>false</externalId>
     <label>KundenId</label>
-    <length>10</length>
+    <length>11</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Text</type>
