@@ -14,10 +14,16 @@ jobs:
     container:
       image: salesforce/cli:latest-slim
     steps:      
+      - name: Install SGD
+        run: echo y | sf plugins install "sfdx-git-delta@${{ vars.SGD_VERSION }}"
       - name: 'Checkout source code'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: 'Create delta packages for new, modified or deleted metadata'
+        run: | 
+            mkdir changed-sources
+            sf sgd source delta --to "HEAD" --from "HEAD^" --output-dir "." --generate-delta --source-dir force-app/
       
       - name: 'Authenticate using SFDX_AUTH_URL'
         run: | 
@@ -25,4 +31,4 @@ jobs:
 
       - name: 'Validate'
         run: |
-          sf project deploy validate -d force-app/ -l RunLocalTests -w 30          
+          sf project deploy validate -x package/package.xml -l RunLocalTests -w 30          
