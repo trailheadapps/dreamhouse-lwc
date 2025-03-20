@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import DaysOnMarket from 'c/daysOnMarket';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import {

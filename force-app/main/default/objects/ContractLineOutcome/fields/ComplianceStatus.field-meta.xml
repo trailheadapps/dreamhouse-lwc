@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ComplianceStatus</fullName>
+    <inlineHelpText>Select a status:
+
+        Compliant–The outcome is compliant with the contract. 
+
+        Not Compliant–The outcome isn’t compliant with the contract. 
+
+        Not Available–The outcome’s compliance information isn’t available yet. 
+
+        Invalid–The outcome isn’t valid because the option selected for the Criteria Field of the recordset filter criteria was deleted. To restart the calculation, create a new contract line outcome.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

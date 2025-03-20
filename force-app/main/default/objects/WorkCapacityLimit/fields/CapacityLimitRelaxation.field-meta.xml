@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CapacityLimitRelaxation</fullName>
+    <inlineHelpText>Define when this limit is overridden.
+            If the limit override policy is set per limit in Field Service Settings:
+            Empty value - no override.
+            0 - override starts at midnight on the day of service.
+            Positive integer - override starts this number of hours after midnight.
+            Negative integer - override starts this number of hours before midnight.
+            If the limit override policy isn’t set per limit, this value is ignored.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

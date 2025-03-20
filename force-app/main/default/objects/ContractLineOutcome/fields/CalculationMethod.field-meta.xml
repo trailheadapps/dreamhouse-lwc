@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CalculationMethod</fullName>
+    <inlineHelpText>Select Average or As Captured to calculate the contract line outcome. 
+
+            Average calculates the final outcome value based on the average of all data captured to date. 
+
+            As Captured considers the asset’s current data at the time of the compliance check.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

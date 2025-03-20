@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SortOrder</fullName>
+    <inlineHelpText>Set the precedence that determines how work orders are generated when a maintenance plan or maintenance asset has two or more maintenance work rules generating a work order for the same date. The lowest sort order value takes precedence.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

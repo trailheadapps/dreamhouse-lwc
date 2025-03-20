@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsExcluded</fullName>
+    <inlineHelpText>When the checkbox is ticked, this record is excluded from calculations of availability and reliability because it is outside the Uptime Record Start Date and Uptime Record End Date for the asset. Read only.</inlineHelpText>
+</CustomField>

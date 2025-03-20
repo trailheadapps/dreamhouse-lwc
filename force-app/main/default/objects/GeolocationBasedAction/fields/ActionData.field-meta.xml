@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActionData</fullName>
+    <inlineHelpText>For Platform Alert, leave this field empty. For Quick Action, enter the API name of the quick action, for example, &quot;quickAction&quot;: &quot;Global.LogACall&quot;. For View Record, enter the ID of the record, for example, &quot;viewRecord&quot;: &quot;1WLxx000000003FGAQ&quot;.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

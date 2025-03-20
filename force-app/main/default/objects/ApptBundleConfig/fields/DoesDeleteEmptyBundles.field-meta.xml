@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DoesDeleteEmptyBundles</fullName>
+    <inlineHelpText>If the bundle has no remaining bundle members, the bundle is deleted.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

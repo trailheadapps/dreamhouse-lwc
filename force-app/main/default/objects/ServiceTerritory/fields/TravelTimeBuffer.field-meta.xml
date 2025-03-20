@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TravelTimeBuffer</fullName>
+    <inlineHelpText>Add additional time to driving time, such as time to find parking or to walk to the site. This value overrides the Travel Time Buffer value defined in Field Service Settings | Scheduling | Routing.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

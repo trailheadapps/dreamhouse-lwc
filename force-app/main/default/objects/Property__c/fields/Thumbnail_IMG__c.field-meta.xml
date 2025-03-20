@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Thumbnail_IMG__c</fullName>
     <externalId>false</externalId>
-    <formula
-    >if(ISBLANK(Thumbnail__c), "", IMAGE(Thumbnail__c, "Picture", 200, 200))</formula>
+    <formula>if(ISBLANK(Thumbnail__c), &quot;&quot;, IMAGE(Thumbnail__c, &quot;Picture&quot;, 200, 200))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Main Thumbnail</label>
     <required>false</required>

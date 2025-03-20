@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FinanceTransactionId</fullName>
+    <inlineHelpText>Parent finance transaction for the snapshot. The snapshot&apos;s fields inherit the transaction&apos;s values only if the finance transaction&apos;s reference entity type is an invoice, payment, credit memo, debit memo, or refund.</inlineHelpText>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FilterCriteriaId</fullName>
+    <inlineHelpText>Enter the recordset filter criteria used to aggregate the bundle members. You can aggregate only service appointments that meet this criteria.</inlineHelpText>
+    <type>Lookup</type>
+</CustomField>

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Picture_IMG__c</fullName>
     <externalId>false</externalId>
-    <formula>if(ISBLANK(Picture__c), '', IMAGE(Picture__c, "Picture"))</formula>
+    <formula>if(ISBLANK(Picture__c), &apos;&apos;, IMAGE(Picture__c, &quot;Picture&quot;))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Main Picture</label>
     <required>false</required>

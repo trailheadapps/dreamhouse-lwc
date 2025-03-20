@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ConstantTimeValue</fullName>
+    <inlineHelpText>Use this option only if Time Calculation by Bundle Duration Field is enabled. Enter the bundle’s total time as a constant value, in minutes.</inlineHelpText>
+</CustomField>

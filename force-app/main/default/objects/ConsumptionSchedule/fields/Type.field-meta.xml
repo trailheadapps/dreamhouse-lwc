@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type</fullName>
+    <inlineHelpText>Range: The schedule prices only using the tier that applies to the usage quantity. Slab: Usage within a given bound receives pricing equal to its tier&apos;s value.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

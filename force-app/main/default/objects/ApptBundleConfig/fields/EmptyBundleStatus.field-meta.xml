@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EmptyBundleStatus</fullName>
+    <inlineHelpText>Select a status from the Canceled category that a bundle service appointment changes to if it has no remaining bundle members, but still appears in the appointment list.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+</CustomField>

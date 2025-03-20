@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type</fullName>
+    <inlineHelpText>Calendar-based defines a recurrence pattern, such as schedule on the first Monday of every Month. Criteria-based selects a recordset filter criteria that defines conditions, such as if engine temperature exceeds 200°F or miles exceed 10K.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

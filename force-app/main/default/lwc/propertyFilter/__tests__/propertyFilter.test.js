@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import PropertyFilter from 'c/propertyFilter';
 import { publish } from 'lightning/messageService';
 import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';

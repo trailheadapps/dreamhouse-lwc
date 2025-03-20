@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreWorkBriefPromptTemplate</fullName>
+    <inlineHelpText>Enter the ID of your activated Pre-Work Brief prompt template. To find your ID, open the template in Prompt Builder and copy the characters after &quot;EinsteinPromptStudio/&quot; from the URL. For example, in this URL:  https://testcom98.test1.my.pc-rnd.salesforce-setup.com/lightning/setup/EinsteinPromptStudio/0hfSG000001SUFVYA4/edit?c__versionId=3vNSG0000000g8v2AA, the ID is 0hfSG000001SUFVYA4.</inlineHelpText>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+</CustomField>

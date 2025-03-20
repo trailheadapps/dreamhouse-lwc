@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type</fullName>
+    <inlineHelpText>Type of measurement. For example, period, weight, or distance.</inlineHelpText>
+    <type>Picklist</type>
+</CustomField>

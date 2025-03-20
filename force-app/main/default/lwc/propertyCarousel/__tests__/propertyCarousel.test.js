@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import PropertyCarousel from 'c/propertyCarousel';
 import { getRecord } from 'lightning/uiRecordApi';
 import { processImage } from 'lightning/mediaUtils';

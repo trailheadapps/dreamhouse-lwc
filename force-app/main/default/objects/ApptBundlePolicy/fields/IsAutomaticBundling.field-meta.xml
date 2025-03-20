@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsAutomaticBundling</fullName>
+    <inlineHelpText>Make this policy available when automatic bundling is triggered by an automated process. You can have manual bundling and automatic bundling enabled at the same time.</inlineHelpText>
+</CustomField>
