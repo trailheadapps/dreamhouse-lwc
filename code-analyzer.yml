@@ -1,0 +1,3 @@
+engines:
+    eslint:
+        auto_discover_eslint_config: true
