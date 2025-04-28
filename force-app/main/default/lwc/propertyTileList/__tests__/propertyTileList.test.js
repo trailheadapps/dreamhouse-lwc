@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import PropertyTileList from 'c/propertyTileList';
 import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPropertyList';
 import { publish, subscribe, MessageContext } from 'lightning/messageService';

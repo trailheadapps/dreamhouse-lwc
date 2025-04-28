@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import NavigateToRecord from 'c/navigateToRecord';
 import { getNavigateCalledWith } from 'lightning/navigation';
 

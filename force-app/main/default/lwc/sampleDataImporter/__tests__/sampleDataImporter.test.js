@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import SampleDataImporter from 'c/sampleDataImporter';
 import { ShowToastEventName } from 'lightning/platformShowToastEvent';
 import importSampleData from '@salesforce/apex/SampleDataController.importSampleData';

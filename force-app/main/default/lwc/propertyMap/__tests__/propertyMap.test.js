@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import PropertyMap from 'c/propertyMap';
 import { getRecord } from 'lightning/uiRecordApi';
 

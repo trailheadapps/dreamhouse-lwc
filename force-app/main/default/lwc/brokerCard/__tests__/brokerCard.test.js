@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import BrokerCard from 'c/brokerCard';
 import { getNavigateCalledWith } from 'lightning/navigation';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';

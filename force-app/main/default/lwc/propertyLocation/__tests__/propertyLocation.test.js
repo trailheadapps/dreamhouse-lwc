@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import PropertyLocation from 'c/propertyLocation';
 import { getRecord } from 'lightning/uiRecordApi';
 import { setDeviceLocationServiceAvailable } from 'lightning/mobileCapabilities';
