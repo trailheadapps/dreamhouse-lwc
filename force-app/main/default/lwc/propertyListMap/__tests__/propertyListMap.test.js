@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+import { createElement } from '@lwc/engine-dom';
 import PropertyListMap from 'c/propertyListMap';
 import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPropertyList';
 
