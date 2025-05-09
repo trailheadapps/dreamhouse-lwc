@@ -32,22 +32,23 @@
         "url": "git+https://github.com/trailheadapps/dreamhouse-lwc"
     },
     "devDependencies": {
-        "@lwc/eslint-plugin-lwc": "^2.1.0",
+        "@lwc/eslint-plugin-lwc": "^3.0.0",
         "@prettier/plugin-xml": "^3.4.1",
-        "@sa11y/jest": "^7.0.0",
-        "@salesforce/eslint-config-lwc": "^3.7.1",
-        "@salesforce/eslint-plugin-lightning": "^1.0.1",
+        "@sa11y/jest": "^7.0.1",
+        "@salesforce/eslint-config-lwc": "^4.0.0",
+        "@salesforce/eslint-plugin-aura": "^3.0.0-beta.1",
+        "@salesforce/eslint-plugin-lightning": "^2.0.0",
         "@salesforce/sfdx-lwc-jest": "^7.0.1",
-        "eslint": "^8.57.1",
+        "eslint": "^9.26.0",
         "eslint-plugin-import": "^2.31.0",
         "eslint-plugin-jest": "^28.11.0",
+        "globals": "^15.15.0",
         "husky": "^9.1.7",
-        "lint-staged": "^15.5.1",
+        "lint-staged": "^15.5.2",
         "prettier": "^3.5.3",
         "prettier-plugin-apex": "^2.2.6"
     },
-    "dependencies": {},
     "volta": {
-        "node": "20.15.0"
+        "node": "22.15.0"
     }
 }
