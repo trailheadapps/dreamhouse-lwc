@@ -1,5 +1,5 @@
 {
-    "name": "dreamhouse-lwc",
+    "name": "@salesforce/dreamhouse-lwc",
     "version": "1.0.0",
     "description": "Dreamhouse Sample App - Lightning Web Components",
     "scripts": {
