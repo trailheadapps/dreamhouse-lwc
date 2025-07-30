@@ -1,0 +1,33 @@
+name: Deploy to Production
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Install Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20'
+
+            - name: Install Salesforce CLI
+              run: npm install -g sfdx-cli
+
+            - name: Authorize with the dev hub
+              run: |
+                  echo "${{ secrets.SFDX_AUTH_URL_DEVHUB }}"
+                  sf org login sfdx-url --alias DevHub --set-default-dev-hub --sfdx-url-stdin
+
+            - name: Deploy Metadata to Prod
+              run: |
+                  sf project deploy start --source-dir force-app --target-org DevHub --wait 30

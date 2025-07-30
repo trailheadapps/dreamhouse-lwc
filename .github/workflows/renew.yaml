@@ -1,0 +1,33 @@
+name: Renew Agentforce Dev Org Lease
+
+on:
+    schedule:
+        - cron: '30 20 * * MON'
+    workflow_dispatch:
+
+jobs:
+    dev-org-renew:
+        runs-on: ubuntu-latest
+        environment: AFDevOrgRenew
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Install Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20'
+
+            - name: 'Install CLI'
+              run: npm install @salesforce/cli --location=global
+
+            - name: Authorize with the dev hub
+              run: |
+                  echo "${{ secrets.SFDX_AUTH_URL_DEVHUB }}"
+                  sf org login sfdx-url --alias DevHub --set-default-dev-hub --sfdx-url-stdin
+
+            - name: 'Query data'
+              run: |
+                  sf data query --query "SELECT Name FROM Organization" --target-org DevHub

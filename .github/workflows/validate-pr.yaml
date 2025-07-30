@@ -1,0 +1,58 @@
+name: Validate Pull Request
+
+on:
+    pull_request:
+        branches: [main]
+    workflow_dispatch:
+
+jobs:
+    deploy-to-scratch-org-and-run-tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+
+            - name: Install Salesforce CLI
+              run: |
+                  npm install @salesforce/cli --global
+                  sf plugins install @salesforce/sfdx-scanner@latest
+
+            - name: Run SF Code Scanner
+              run: |
+                  sf scanner run --target="force-app" --outfile sf-code-scanner-results.html
+
+            - name: Upload SF Code Scanner Analysis
+              uses: actions/upload-artifact@v4
+              with:
+                  name: sf-code-scanner-results
+                  path: |
+                      sf-code-scanner-results.html
+
+            - name: Authorize with the dev hub
+              run: |
+                  echo "${{ secrets.SFDX_AUTH_URL_DEVHUB }}"
+                  sf org login sfdx-url --alias DevHub --set-default-dev-hub --sfdx-url-stdin
+
+            - name: Create scratch org
+              run: sf org create scratch --definition-file config/project-scratch-def.json --alias ScratchOrg --wait 30 --duration-days 1 --set-default --json
+
+            - name: Push source
+              run: sf project deploy start --target-org ScratchOrg --wait 30
+
+            - name: Run tests
+              run: sf apex run test --target-org ScratchOrg --code-coverage --result-format human --output-dir ./tests/apex --test-level RunLocalTests --wait 30
+
+            - name: Upload coverage reports to Codecov
+              uses: codecov/codecov-action@v4.0.1
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  flags: Apex
+
+            - name: Delete scratch org
+              if: always()
+              run: sf org delete scratch --target-org ScratchOrg --no-prompt
