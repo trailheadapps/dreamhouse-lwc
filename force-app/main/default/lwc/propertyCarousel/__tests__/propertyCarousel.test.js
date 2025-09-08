@@ -163,7 +163,7 @@ describe('c-property-carousel', () => {
             lightningInputEl.dispatchEvent(new CustomEvent('change'));
 
             // eslint-disable-next-line @lwc/lwc/no-async-operation
-            await new Promise((resolve) => setTimeout(() => resolve(), 10));
+            await new Promise((resolve) => setTimeout(resolve, 100));
 
             // Assertions
             expect(processImage).toHaveBeenCalled();
