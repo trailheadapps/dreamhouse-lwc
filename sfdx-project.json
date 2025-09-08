@@ -5,11 +5,11 @@
       "default": true,
       "package": "DreamhouseLWC",
       "versionName": "Summer '25",
-      "versionNumber": "64.0.0.NEXT"
+      "versionNumber": "65.0.0.NEXT"
     }
   ],
   "namespace": "",
-  "sourceApiVersion": "64.0",
+  "sourceApiVersion": "65.0",
   "packageAliases": {
     "DreamhouseLWC": "0Ho3h000000PBghCAG",
     "DreamhouseLWC@61.0.0-4": "04tKY000000LP3aYAG"
