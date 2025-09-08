@@ -98,7 +98,6 @@ export default class PropertyListMap extends LightningElement {
             this.map = L.map(mapElement, {
                 zoomControl: true,
                 tap: false
-                // eslint-disable-next-line no-magic-numbers
             });
             this.map.setView([42.356045, -71.08565], 13);
             this.map.scrollWheelZoom.disable();
