@@ -2,4 +2,4 @@
 git reset --hard
 
 # Redeploy clean metadata
-sf project deploy start --ignore-conflicts
+sf project deploy start --ignore-conflicts -d force-app
