@@ -14,7 +14,7 @@
         </customErrorMessages>
     </customErrors>
     <decisions>
-        <description>this decision will check if the contact is blank or has anything</description>
+        <description>this decision will check if the contact is blank or has TESThing</description>
         <name>check_if_contact_exists_with_same</name>
         <label>check if contact exists with same</label>
         <locationX>0</locationX>
