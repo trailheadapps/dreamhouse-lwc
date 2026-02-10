@@ -9,7 +9,7 @@ public static class canISeeYou{
     List<Decimal> my_decimals = new List<Decimal>();
     List<Id> my_ids = new List<Id>();
     Map<Id,SObject> accts = new Map<Id,SObject>();
-   System.debug(logLevel,o);
+   
   }
 
 }
