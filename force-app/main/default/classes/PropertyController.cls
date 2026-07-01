@@ -1,3 +1,8 @@
+/**
+ * Controller class for Property Explorer LWC
+ * Handles property search, filtering, pagination and image retrieval
+ */
+
 public with sharing class PropertyController {
     private static final Decimal DEFAULT_MAX_PRICE = 9999999;
     private static final Integer DEFAULT_PAGE_SIZE = 9;
