@@ -22,6 +22,12 @@ public with sharing class SampleDataController {
             brokersJSON,
             List<Broker__c>.class
         );
+        // Stamp the installing user as the realtor so tour-request approvals
+        // route to a real user out-of-box (User Ids can't be seeded from JSON).
+        Id currentUserId = UserInfo.getUserId();
+        for (Broker__c broker : brokers) {
+            broker.Realtor_User__c = currentUserId;
+        }
         insert brokers;
     }
 
