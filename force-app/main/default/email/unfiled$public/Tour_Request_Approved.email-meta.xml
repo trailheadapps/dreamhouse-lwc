@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Tour Request Approved</name>
+    <style>none</style>
+    <subject
+    >Your tour request {!Tour_Request__c.Name} has been approved</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

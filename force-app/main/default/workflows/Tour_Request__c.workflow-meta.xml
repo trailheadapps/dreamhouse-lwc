@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Tour_Request_Approved_Customer</fullName>
+        <description
+        >Notifies the customer that their tour request has been approved.</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Customer__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Tour_Request_Approved</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Set_Status_Approved</fullName>
+        <description
+        >Final-approval action: marks the tour request Approved.</description>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Set Status Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Status_Pending_Approval</fullName>
+        <description
+        >Initial-submission action: marks the tour request Pending Approval.</description>
+        <field>Status__c</field>
+        <literalValue>Pending Approval</literalValue>
+        <name>Set Status Pending Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Status_Rejected</fullName>
+        <description
+        >Final-rejection action: marks the tour request Rejected.</description>
+        <field>Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Set Status Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

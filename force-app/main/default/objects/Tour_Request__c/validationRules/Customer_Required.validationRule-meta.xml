@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Required</fullName>
+    <active>true</active>
+    <description
+    >A tour request must always name a customer. Enforces D1 at the record level because a Lookup(User) cannot be marked required at the schema level.</description>
+    <errorConditionFormula>ISBLANK(Customer__c)</errorConditionFormula>
+    <errorDisplayField>Customer__c</errorDisplayField>
+    <errorMessage>Please select a customer for this tour request.</errorMessage>
+</ValidationRule>

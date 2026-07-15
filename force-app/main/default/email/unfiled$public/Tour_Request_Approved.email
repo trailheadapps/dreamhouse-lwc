@@ -1,0 +1,11 @@
+Hi {!Receiving_User.FirstName},
+
+Good news — your tour request {!Tour_Request__c.Name} has been approved!
+
+Property: {!Tour_Request__c.Property__c}
+Requested date/time: {!Tour_Request__c.Requested_Date_Time__c}
+
+Your realtor will be in touch to confirm the details. We look forward to showing you the home.
+
+Thank you,
+The Dreamhouse Team

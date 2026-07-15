@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Submit_Requires_Realtor</fullName>
+    <active>true</active>
+    <description
+    >A tour request cannot leave Draft (be submitted for approval) unless a realtor is assigned to approve it. Complements the approval process entry criteria with a friendly, user-facing guard.</description>
+    <errorConditionFormula
+    >AND(ISBLANK(Realtor_User__c), NOT(ISPICKVAL(Status__c, "Draft")))</errorConditionFormula>
+    <errorMessage
+    >This tour request has no realtor to approve it. A realtor is set automatically from the property's broker — pick a property whose broker has a realtor before submitting.</errorMessage>
+</ValidationRule>
