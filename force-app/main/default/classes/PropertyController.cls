@@ -56,6 +56,7 @@ public with sharing class PropertyController {
                 Price__c,
                 Baths__c,
                 Beds__c,
+                Commission_Rate__c,
                 Thumbnail__c,
                 Location__Latitude__s,
                 Location__Longitude__s

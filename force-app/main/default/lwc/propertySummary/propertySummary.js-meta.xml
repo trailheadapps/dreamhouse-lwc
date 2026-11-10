@@ -18,6 +18,12 @@
             <objects>
                 <object>Property__c</object>
             </objects>
+            <property
+                name="showCommissionRate"
+                type="Boolean"
+                label="Show Commission Rate"
+                default="true"
+            />
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
                 <supportedFormFactor type="Small" />
